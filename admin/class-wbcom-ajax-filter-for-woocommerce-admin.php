@@ -44,13 +44,13 @@ class Wbcom_Ajax_Filter_For_Woocommerce_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of this plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -75,6 +75,10 @@ class Wbcom_Ajax_Filter_For_Woocommerce_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wbcom-ajax-filter-for-woocommerce-admin.css', array(), $this->version, 'all' );
 
+		if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
+			wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', array(), $this->version, 'all' );
+		}
+
 	}
 
 	/**
@@ -98,6 +102,122 @@ class Wbcom_Ajax_Filter_For_Woocommerce_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wbcom-ajax-filter-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	/**
+	 * Add Woo ajax filter Menu in admin.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wpc_admin_menu() {
+
+		/* add sub menu in wnplugin setting page */
+		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
+			add_menu_page( esc_html__( 'WB Plugins', 'wb-ajaxfilter' ), esc_html__( 'WB Plugins', 'wb-ajaxfilter' ), 'manage_options', 'wbcomplugins', array( $this, 'wpc_admin_settings_page_welcome' ), 'dashicons-lightbulb', 59 );
+			add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'wb-ajaxfilter' ), esc_html__( 'General', 'wb-ajaxfilter' ), 'manage_options', 'wbcomplugins' );
+		}
+
+		add_submenu_page( 'wbcomplugins', esc_html__( 'WB Ajax Filter', 'wb-ajaxfilter' ), esc_html__( 'WB Ajax Filter', 'wb-ajaxfilter' ), 'manage_options', 'wb-ajaxfilter', array( $this, 'wpc_admin_settings_page' ) );
+	}
+
+	/**
+	 * display welcome page in admin.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wpc_admin_settings_page_welcome() {
+		$wbc_woo_commerce_settings_page = new Wbc_WooCommerce_Settings_Page();
+		$current                        = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
+
+		?>
+
+		<div class="wrap">
+			<div class="ess-admin-header">
+			<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+			<h1 class="wbcom-plugin-heading">
+				<?php esc_html_e( 'WB Ajax Filter', 'wb-ajaxfilter' ); ?>
+			</h1>
+		</div>
+		<div class="wbcom-admin-settings-page">
+			<?php $this->wpc_plugin_settings_tabs_wbcom(); ?>
+			<?php include 'wbcom-welcome-page.php'; ?>
+		</div>
+	</div>
+		<?php
+	}
+
+	/**
+	 * display welcome page in admin.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wpc_admin_settings_page() {
+		$wbc_woo_commerce_settings_page = new Wbc_WooCommerce_Settings_Page();
+		$current                        = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-welcome';
+		if ( 'wpc-welcome' === $current ) {
+			self::wpc_admin_settings_page_welcome();
+			exit;
+		}
+		?>
+
+		<div class="wrap">
+			<div class="ess-admin-header">
+				<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+				<h1 class="wbcom-plugin-heading">
+					<?php esc_html_e( 'WB Ajax Filter', 'wb-ajaxfilter' ); ?>
+				</h1>
+			</div>
+			<div class="wbcom-admin-settings-page">
+				<?php $this->wpc_plugin_settings_tabs(); ?>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Register all settings.
+	 */
+	public function wpc_add_admin_register_setting() {
+		$this->plugin_settings_tabs['wpc-welcome']['name'] = esc_html__( 'Welcome', 'wb-ajaxfilter' );
+		$this->plugin_settings_tabs['wpc-welcome']['icon'] = 'dashicons-admin-home';
+
+		$this->plugin_settings_tabs['wpc-general']['name'] = esc_html__( 'General', 'wb-ajaxfilter' );
+		$this->plugin_settings_tabs['wpc-general']['icon'] = 'dashicons-admin-generic';
+	}
+
+	/**
+	 * Add tab in setting page
+	 */
+	public function wpc_plugin_settings_tabs() {
+		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
+
+		$tab_html = '<div class="wbcom-tabs-section"><h2 class="nav-tab-wrapper">';
+
+		foreach ( $this->plugin_settings_tabs as $edd_tab => $tab_name ) {
+			$class     = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
+			$page      = 'wb-ajaxfilter';
+			$tab_html .= '<a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $page . '&tab=' . $edd_tab . '"><span class="dashicons ' . $tab_name['icon'] . '"></span>&nbsp;' . $tab_name['name'] . '</a>';
+		}
+		$tab_html .= '</h2></div>';
+		echo $tab_html;
+	}
+
+	/**
+	 * Template Class Doc Comment
+	 *
+	 * Template Class.
+	 */
+	public function wpc_plugin_settings_tabs_wbcom() {
+		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-welcome';
+
+		$tab_html = '<div class="wbcom-tabs-section"><h2 class="nav-tab-wrapper">';
+		foreach ( $this->plugin_settings_tabs as $edd_tab => $tab_name ) {
+			$class     = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
+			$page      = 'wb-ajaxfilter';
+			$tab_html .= '<a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $page . '&tab=' . $edd_tab . '"><span class="dashicons ' . $tab_name['icon'] . '"></span>&nbsp;' . $tab_name['name'] . '</a>';
+		}
+		$tab_html .= '</h2></div>';
+		echo $tab_html;
 	}
 
 }
