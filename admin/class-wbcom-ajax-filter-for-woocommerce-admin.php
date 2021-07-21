@@ -113,24 +113,39 @@ class Wbcom_Ajax_Filter_For_Woocommerce_Admin {
 
 		/* add sub menu in wnplugin setting page */
 		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
-			add_menu_page( esc_html__( 'WB Plugins', 'wb-ajaxfilter' ), esc_html__( 'WB Plugins', 'wb-ajaxfilter' ), 'manage_options', 'wbcomplugins', array( $this, 'wpc_admin_settings_page_welcome' ), 'dashicons-lightbulb', 59 );
+			add_menu_page( esc_html__( 'WB Plugins', 'wb-ajaxfilter' ), esc_html__( 'WB Plugins', 'wb-ajaxfilter' ), 'manage_options', 'wbcomplugins', array( $this, 'get_page' ), 'dashicons-lightbulb', 59 );
 			add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'wb-ajaxfilter' ), esc_html__( 'General', 'wb-ajaxfilter' ), 'manage_options', 'wbcomplugins' );
 		}
 
-		add_submenu_page( 'wbcomplugins', esc_html__( 'WB Ajax Filter', 'wb-ajaxfilter' ), esc_html__( 'WB Ajax Filter', 'wb-ajaxfilter' ), 'manage_options', 'wb-ajaxfilter', array( $this, 'wpc_admin_settings_page' ) );
+		add_submenu_page( 'wbcomplugins', esc_html__( 'WB Ajax Filter', 'wb-ajaxfilter' ), esc_html__( 'WB Ajax Filter', 'wb-ajaxfilter' ), 'manage_options', 'wb-ajaxfilter', array( $this, 'get_page' ) );
 	}
+
 
 	/**
 	 * display welcome page in admin.
 	 *
 	 * @since    1.0.0
 	 */
+	public function get_page()
+	{
+		$page = ( filter_input( INPUT_GET, 'page' ) !== null ) ? filter_input( INPUT_GET, 'page' ) : 'wb-ajaxfilter';
+		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : '';
+		if('wb-ajaxfilter' == $page && empty($current)){
+			self::wpc_admin_settings_page_welcome();
+		}elseif(empty($current) && $page=='wbcomplugins'){
+			$current = 'wpc-general';
+			self::wpc_admin_settings_page($current);
+		}else{
+			self::wpc_admin_settings_page($current);
+		}
+	}
+	/**
+	 * display welcome page in admin.
+	 *
+	 * @since    1.0.0
+	 */
 	public function wpc_admin_settings_page_welcome() {
-		$wbc_woo_commerce_settings_page = new Wbc_WooCommerce_Settings_Page();
-		$current                        = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
-
 		?>
-
 		<div class="wrap">
 			<div class="ess-admin-header">
 			<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
@@ -151,15 +166,8 @@ class Wbcom_Ajax_Filter_For_Woocommerce_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function wpc_admin_settings_page() {
-		$wbc_woo_commerce_settings_page = new Wbc_WooCommerce_Settings_Page();
-		$current                        = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-welcome';
-		if ( 'wpc-welcome' === $current ) {
-			self::wpc_admin_settings_page_welcome();
-			exit;
-		}
+	public function wpc_admin_settings_page($current) {
 		?>
-
 		<div class="wrap">
 			<div class="ess-admin-header">
 				<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
@@ -169,6 +177,10 @@ class Wbcom_Ajax_Filter_For_Woocommerce_Admin {
 			</div>
 			<div class="wbcom-admin-settings-page">
 				<?php $this->wpc_plugin_settings_tabs(); ?>
+				<form method="post" id="wbrecaptcha" action="" enctype="multipart/form-data">
+				<?php echo $current; ?>
+				<button name="save" class="button-primary woocommerce-save-button" type="submit" value="Save changes">Save changes</button>
+				</form>
 			</div>
 		</div>
 		<?php
@@ -183,6 +195,9 @@ class Wbcom_Ajax_Filter_For_Woocommerce_Admin {
 
 		$this->plugin_settings_tabs['wpc-general']['name'] = esc_html__( 'General', 'wb-ajaxfilter' );
 		$this->plugin_settings_tabs['wpc-general']['icon'] = 'dashicons-admin-generic';
+
+		$this->plugin_settings_tabs['wpc-filter-preset']['name'] = esc_html__( 'Filter Preset', 'wb-ajaxfilter' );
+		$this->plugin_settings_tabs['wpc-filter-preset']['icon'] = 'dashicons-admin-home';
 	}
 
 	/**

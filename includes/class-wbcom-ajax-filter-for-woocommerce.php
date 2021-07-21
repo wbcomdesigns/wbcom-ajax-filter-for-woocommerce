@@ -67,6 +67,7 @@ class Wbcom_Ajax_Filter_For_Woocommerce {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
+		define('plugin_url',plugins_url() . '/wbcom-ajax-filter-for-woocommerce/');
 		if ( defined( 'WBCOM_AJAX_FILTER_FOR_WOOCOMMERCE_VERSION' ) ) {
 			$this->version = WBCOM_AJAX_FILTER_FOR_WOOCOMMERCE_VERSION;
 		} else {
@@ -161,9 +162,7 @@ class Wbcom_Ajax_Filter_For_Woocommerce {
 
 		// Load setting in woocommerce setting tab.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wpc_admin_menu', 100 );
-		$this->loader->add_filter( 'woocommerce_get_settings_pages', $plugin_admin, 'woocomm_load_custom_settings_tab' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wpc_add_admin_register_setting' );
-
 	}
 
 	/**
@@ -179,7 +178,6 @@ class Wbcom_Ajax_Filter_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
 	}
 
 	/**

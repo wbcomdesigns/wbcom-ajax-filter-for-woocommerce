@@ -361,7 +361,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 
 				wp_register_script(
 					$handle    = 'wbcom_admin_setting_js',
-					$src       = BP_ACTIVITY_SHARE_PLUGIN_URL . 'admin/wbcom/assets/js/wbcom-admin-setting.js',
+					$src       = plugin_dir_url( __FILE__ ) . 'assets/js/wbcom-admin-setting.js',
 					$deps      = array( 'jquery' ),
 					$ver       = time(),
 					$in_footer = true
@@ -380,14 +380,14 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			}
 
 			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) {
-				wp_enqueue_style( 'wbcom-admin-setting-css', BP_ACTIVITY_SHARE_PLUGIN_URL . 'admin/wbcom/assets/css/wbcom-admin-setting.css' );
+				wp_enqueue_style( 'wbcom-admin-setting-css', plugin_dir_url( __FILE__ ) . 'assets/css/wbcom-admin-setting.css' );
 			}
 
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
 				if ( 'toplevel_page_wbcomplugins' === $screen->base ) {
-					wp_enqueue_style( 'buddypress-share-css', BP_ACTIVITY_SHARE_PLUGIN_URL . 'admin/css/buddypress-share-admin.css', array() );
-					wp_enqueue_script( 'buddypress-share-js', BP_ACTIVITY_SHARE_PLUGIN_URL . 'admin/js/buddypress-share-admin.js', array( 'jquery' ) );
+					wp_enqueue_style( 'buddypress-share-css', plugins_url() . 'wbcom-ajax-filter-for-woocommerce/admin/css/buddypress-share-admin.css', array() );
+					wp_enqueue_script( 'buddypress-share-js', plugins_url() . 'wbcom-ajax-filter-for-woocommerce/admin/js/buddypress-share-admin.js', array( 'jquery' ) );
 					wp_localize_script(
 						'buddypress-share-js',
 						'my_ajax_object',
@@ -409,24 +409,24 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		public function wbcom_admin_additional_pages() {
 			add_submenu_page(
 				'wbcomplugins',
-				esc_html__( 'Our Plugins', 'buddypress-share' ),
-				esc_html__( 'Our Plugins', 'buddypress-share' ),
+				esc_html__( 'Our Plugins', 'wb-ajaxfilter' ),
+				esc_html__( 'Our Plugins', 'wb-ajaxfilter' ),
 				'manage_options',
 				'wbcom-plugins-page',
 				array( $this, 'wbcom_plugins_submenu_page_callback' )
 			);
 			add_submenu_page(
 				'wbcomplugins',
-				esc_html__( 'Our Themes', 'buddypress-share' ),
-				esc_html__( 'Our Themes', 'buddypress-share' ),
+				esc_html__( 'Our Themes', 'wb-ajaxfilter' ),
+				esc_html__( 'Our Themes', 'wb-ajaxfilter' ),
 				'manage_options',
 				'wbcom-themes-page',
 				array( $this, 'wbcom_themes_submenu_page_callback' )
 			);
 			add_submenu_page(
 				'wbcomplugins',
-				esc_html__( 'Support', 'buddypress-share' ),
-				esc_html__( 'Support', 'buddypress-share' ),
+				esc_html__( 'Support', 'wb-ajaxfilter' ),
+				esc_html__( 'Support', 'wb-ajaxfilter' ),
 				'manage_options',
 				'wbcom-support-page',
 				array( $this, 'wbcom_support_submenu_page_callback' )
@@ -492,7 +492,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			<div id="wb_admin_header" class="wp-clearfix">
 
 				<div id="wb_admin_logo">
-					<img src="<?php echo esc_url( BP_ACTIVITY_SHARE_PLUGIN_URL . 'admin/wbcom/assets/imgs/logowbcom.png' ); ?>">
+					<img src="<?php echo esc_url( plugin_url . 'admin/wbcom/assets/imgs/logowbcom.png' ); ?>">
 					<div class="wb_admin_right"></div>
 				</div>
 
