@@ -177,10 +177,7 @@ class Wbcom_Ajax_Filter_For_Woocommerce_Admin {
 			</div>
 			<div class="wbcom-admin-settings-page">
 				<?php $this->wpc_plugin_settings_tabs(); ?>
-				<form method="post" id="wbrecaptcha" action="" enctype="multipart/form-data">
-				<?php echo $current; ?>
-				<button name="save" class="button-primary woocommerce-save-button" type="submit" value="Save changes">Save changes</button>
-				</form>
+				
 			</div>
 		</div>
 		<?php
