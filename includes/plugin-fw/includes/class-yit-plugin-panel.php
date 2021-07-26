@@ -295,9 +295,9 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 
 				// YITH text must NOT be translated.
 				if ( ! ! $show ) {
-					add_menu_page( 'wb-ajaxfilter', 'YITH', $capability, 'wb-ajaxfilter', null, yith_plugin_fw_get_default_logo(), $position );
+					// add_menu_page( 'wb-ajaxfilter', 'YITH', $capability, 'wb-ajaxfilter', null, yith_plugin_fw_get_default_logo(), $position );
 					// Prevent issues for backward compatibility.
-					$admin_page_hooks['wb-ajaxfilter'] = 'yith-plugins'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+					// $admin_page_hooks['wb-ajaxfilter'] = 'yith-plugins'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				}
 			}
 		}
@@ -370,6 +370,8 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 			$parent                     = $this->settings['parent_slug'] . $this->settings['parent_page'];
 
 			if ( ! empty( $parent ) ) {
+				echo $this->settings['page_title'];
+				exit;
 				add_submenu_page( $parent, $this->settings['page_title'], $this->settings['menu_title'], $this->settings['capability'], $this->settings['page'], array( $this, 'yit_panel' ) );
 			} else {
 				add_menu_page( $this->settings['page_title'], $this->settings['menu_title'], $this->settings['capability'], $this->settings['page'], array( $this, 'yit_panel' ), $this->settings['icon_url'], $this->settings['position'] );
@@ -446,7 +448,7 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 
 			global $submenu;
 			if ( apply_filters( 'yit_show_upgrade_to_premium_version', isset( $submenu['wb-ajaxfilter'] ) ) ) {
-				$how_to_menu                            = array(
+				$how_to_menu                        = array(
 					sprintf( '%s%s%s', '<span id="yith-how-to-premium">', __( 'How to install premium version', 'yith-plugin-fw' ), '</span>' ),
 					'install_plugins',
 					'//support.yithemes.com/hc/en-us/articles/217840988',

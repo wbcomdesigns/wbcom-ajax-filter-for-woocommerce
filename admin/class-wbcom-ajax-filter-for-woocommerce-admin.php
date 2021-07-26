@@ -126,17 +126,16 @@ class Wbcom_Ajax_Filter_For_Woocommerce_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function get_page()
-	{
-		$page = ( filter_input( INPUT_GET, 'page' ) !== null ) ? filter_input( INPUT_GET, 'page' ) : 'wb-ajaxfilter';
+	public function get_page() {
+		$page    = ( filter_input( INPUT_GET, 'page' ) !== null ) ? filter_input( INPUT_GET, 'page' ) : 'wb-ajaxfilter';
 		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : '';
-		if('wb-ajaxfilter' == $page && empty($current)){
+		if ( 'wb-ajaxfilter' == $page && empty( $current ) ) {
 			self::wpc_admin_settings_page_welcome();
-		}elseif(empty($current) && $page=='wbcomplugins'){
+		} elseif ( empty( $current ) && $page == 'wbcomplugins' ) {
 			$current = 'wpc-general';
-			self::wpc_admin_settings_page($current);
-		}else{
-			self::wpc_admin_settings_page($current);
+			self::wpc_admin_settings_page( $current );
+		} else {
+			self::wpc_admin_settings_page( $current );
 		}
 	}
 	/**
@@ -166,7 +165,7 @@ class Wbcom_Ajax_Filter_For_Woocommerce_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function wpc_admin_settings_page($current) {
+	public function wpc_admin_settings_page( $current ) {
 		?>
 		<div class="wrap">
 			<div class="ess-admin-header">
@@ -177,7 +176,7 @@ class Wbcom_Ajax_Filter_For_Woocommerce_Admin {
 			</div>
 			<div class="wbcom-admin-settings-page">
 				<?php $this->wpc_plugin_settings_tabs(); ?>
-				
+
 			</div>
 		</div>
 		<?php
