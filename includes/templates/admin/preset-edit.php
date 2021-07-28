@@ -52,7 +52,7 @@ if ( ! defined( 'YITH_WCAN' ) ) {
 				</tbody>
 			</table>
 
-			<?php include( YITH_WCAN_DIR . 'templates/admin/preset-filters.php' ); ?>
+			<?php require YITH_WCAN_DIR . 'templates/admin/preset-filters.php'; ?>
 
 			<p class="submit">
 				<input type="submit" class="button button-primary" value="<?php echo esc_attr_x( 'Save preset', '[Admin] Preset save button, in new/edit preset page', 'yith-woocommerce-ajax.navigation' ); ?>"/>

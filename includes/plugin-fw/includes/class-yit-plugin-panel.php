@@ -297,7 +297,7 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 				if ( ! ! $show ) {
 					// add_menu_page( 'wb-ajaxfilter', 'YITH', $capability, 'wb-ajaxfilter', null, yith_plugin_fw_get_default_logo(), $position );
 					// Prevent issues for backward compatibility.
-					// $admin_page_hooks['wb-ajaxfilter'] = 'yith-plugins'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+					$admin_page_hooks['wb-ajaxfilter'] = 'yith-plugins'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				}
 			}
 		}
@@ -370,8 +370,6 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 			$parent                     = $this->settings['parent_slug'] . $this->settings['parent_page'];
 
 			if ( ! empty( $parent ) ) {
-				echo $this->settings['page_title'];
-				exit;
 				add_submenu_page( $parent, $this->settings['page_title'], $this->settings['menu_title'], $this->settings['capability'], $this->settings['page'], array( $this, 'yit_panel' ) );
 			} else {
 				add_menu_page( $this->settings['page_title'], $this->settings['menu_title'], $this->settings['capability'], $this->settings['page'], array( $this, 'yit_panel' ), $this->settings['icon_url'], $this->settings['position'] );
@@ -379,7 +377,6 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 			// Duplicate Items Hack.
 			$this->remove_duplicate_submenu_page();
 			do_action( 'yit_after_add_settings_page' );
-
 		}
 
 		/**
@@ -913,7 +910,8 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 		 * @author   Emanuela Castorina <emanuela.castorina@yithemes.it>
 		 */
 		public function get_tabs_path_files() {
-			$option_files_path = $this->settings['options-path'] . '/';
+			$YIT_Plugin_Panel  = new YIT_Plugin_Panel();
+			$option_files_path = $YIT_Plugin_Panel->settings['options-path'] . '/';
 			$tabs              = array();
 
 			foreach ( (array) glob( $option_files_path . '*.php' ) as $filename ) {
@@ -926,7 +924,6 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 				$tab          = $filename_parts[1];
 				$tabs[ $tab ] = $filename;
 			}
-
 			return $tabs;
 		}
 
@@ -1488,7 +1485,7 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 				<div class="yith-plugin-fw-wp-page-wrapper">
 				<?php
 				echo '<div class="' . esc_attr( $wrap_class ) . '">';
-				$this->add_plugin_banner( $this->settings['page'] );
+				// $this->add_plugin_banner( $this->settings['page'] );
 				$this->print_tabs_nav( self::$panel_tabs_in_wp_pages );
 				echo '</div>';
 			}
