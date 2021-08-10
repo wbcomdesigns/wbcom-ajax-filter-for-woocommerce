@@ -85,3 +85,7 @@ span.view-all-presets {
 .wb-ajax-filter-toggle-content-row button {
     float: right;
 }
+
+.wb-ajax-filter-onoff-container {
+    display: inline;
+}

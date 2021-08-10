@@ -52,7 +52,7 @@
 			</div>
 			<div class="wb-ajax-filter-toggle-content-row">
 				<label><?php esc_html_e( 'Choose terms', 'wb-ajax-filter' ); ?></label>
-				<select name="filters[terms][]" class="wc-enhanced-select term-search enhanced" tabindex="-1" aria-hidden="true">
+				<select id="wb_ajax_filter_select2_terms" name="wb_ajax_filter_select2_terms[]" multiple="multiple" style="width:99%;max-width:25em;">
 				</select>
 				<span class="description"><?php esc_html_e( 'Select which terms to use for filtering', 'wb-ajax-filter' ); ?></span>
 			</div>
@@ -292,3 +292,5 @@
 		</div>
 	</form>
 <div>
+<?php
+

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -173,7 +172,7 @@ class Wb_Ajax_Filter {
 		$plugin_admin = new Wb_Ajax_Filter_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts', 999 );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_ajax_filter_add_admin_settings' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wb_ajax_filter_init_plugin_settings' );
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'wb_ajax_filter_add_modal_to_admin_footer' );
@@ -182,6 +181,9 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wp_ajax_check_filter_preset_title_wb', $plugin_admin, 'check_filter_preset_title_wb_callback' );
 		$this->loader->add_action( 'wp_ajax_duplicate_filter_preset_wb', $plugin_admin, 'duplicate_filter_preset_wb_callback' );
 		$this->loader->add_action( 'wp_ajax_delete_filter_preset_wb', $plugin_admin, 'delete_filter_preset_wb_callback' );
+		$this->loader->add_action( 'wp_ajax_enable_disable_filter_preset_wb', $plugin_admin, 'enable_disable_filter_preset_wb_callback' );
+		$this->loader->add_action( 'wp_ajax_select2_get_terms_wb', $plugin_admin, 'select2_get_terms_wb_callback' );
+		add_shortcode( 'wb_ajax_filters', array( $this, 'filter_preset_shortcode_callback' ) );
 	}
 
 	/**
@@ -254,6 +256,27 @@ class Wb_Ajax_Filter {
 		if ( ! defined( $name ) ) {
 			define( $name, $value );
 		}
+	}
+
+	/**
+	 * Filter preset shortcode callback.
+	 *
+	 * @param attr $attr The params for shortcode.
+	 */
+	public function filter_preset_shortcode_callback( $attr ) {
+		$post_name = $attr['slug'];
+		$args      = array(
+			'name'        => $post_name,
+			'post_type'   => 'wb_filter_preset',
+			'post_status' => 'publish',
+			'numberposts' => 1,
+		);
+		$preset    = get_posts( $args );
+		if ( $preset ) {
+			$preset_id = $preset[0]->ID;
+			$filters   = get_post_meta( $preset_id, '_wb_filter', true );
+		}
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
 	}
 
 }

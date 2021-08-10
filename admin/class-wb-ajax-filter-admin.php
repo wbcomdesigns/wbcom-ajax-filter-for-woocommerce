@@ -57,8 +57,10 @@ class Wb_Ajax_Filter_Admin {
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param screen $screen Current screen.
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles( $screen ) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -73,15 +75,19 @@ class Wb_Ajax_Filter_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wb-ajax-filter-admin.css', array(), $this->version, 'all' );
-
+		if ( 'wb-plugins_page_wb-ajax-filter-integration-settings' === $screen ) {
+			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2/dist/css/select2.min.css', array(), $this->version, 'all');	
+		}
 	}
 
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param screen $screen Current screen.
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $screen ) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -94,9 +100,11 @@ class Wb_Ajax_Filter_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-admin.js', array( 'jquery' ), $this->version, false );
-
+		if ( 'wb-plugins_page_wb-ajax-filter-integration-settings' === $screen ) {
+			wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2/dist/js/select2.full.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( 'wb-select2-full', WB_AJAX_FILTER_URL . 'assets/js/select2/dist/js/select2.min.js', array( 'jquery' ), $this->version, true );
+		}
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-admin.js', array( 'jquery' ), $this->version, true );
 	}
 
 	/** Register post type for presets */
@@ -170,7 +178,7 @@ class Wb_Ajax_Filter_Admin {
 	 * Add modal wrapper to the footer of admin section.
 	 */
 	public function wb_ajax_filter_add_modal_to_admin_footer() {
-		$page = ( isset( $_REQUEST['tab'] ) && 'wb-ajax-filter-presets' === wp_unslash( $_REQUEST['tab'] ) ) ? true : false;
+		$page = ( isset( $_REQUEST['tab'] ) && 'wb-ajax-filter-presets' === sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) ) ? true : false;
 		if ( is_admin() && $page ) {
 			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-modal.php';
 		}
@@ -199,8 +207,8 @@ class Wb_Ajax_Filter_Admin {
 			exit();
 		} else {
 			if ( isset( $_POST['form_data'] ) ) {
-				$filters = array();
-				$form_data = wp_unslash( $_POST['form_data'] );
+				$filters   = array();
+				$form_data = sanitize_text_field( wp_unslash( $_POST['form_data'] ) );
 				foreach ( $form_data as $field ) {
 					$str_after_brack  = explode( '[', $field['name'] );
 					$str_before_brack = explode( ']', $str_after_brack[1] );
@@ -212,8 +220,8 @@ class Wb_Ajax_Filter_Admin {
 				}
 				$post_title = $filters['title'];
 				unset( $filters['title'] );
-				$post_id = wp_insert_post( 
-					array (
+				$post_id = wp_insert_post(
+					array(
 						'post_type'      => 'wb_filter_preset',
 						'post_title'     => $post_title,
 						'post_content'   => 'Wb Ajax filter Preset',
@@ -241,7 +249,7 @@ class Wb_Ajax_Filter_Admin {
 			if ( ! isset( $_POST['title'] ) ) {
 				exit;
 			}
-			$args = array(
+			$args    = array(
 				'post_type'    => 'wb_filter_preset',
 				'post_status'  => 'publish',
 				'number_posts' => -1,
@@ -269,7 +277,7 @@ class Wb_Ajax_Filter_Admin {
 			if ( ! isset( $_POST['preset'] ) ) {
 				exit;
 			}
-			$preset_id   = wp_unslash( $_POST['preset'] );
+			$preset_id   = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
 			$preset_data = get_post( $preset_id );
 			$filters     = get_post_meta( $preset_id, '_wb_filter', true );
 			$args        = array(
@@ -315,9 +323,24 @@ class Wb_Ajax_Filter_Admin {
 			if ( ! isset( $_POST['preset'] ) ) {
 				exit;
 			}
-			$preset_id = wp_unslash( $_POST['preset'] );
+			$preset_id = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
 			wp_delete_post( $preset_id, false );
-			echo 'preset_deleted';	
+			echo 'preset_deleted';
+		}
+		exit();
+	}
+
+	/**
+	 * Enable/Disable filter preset.
+	 */
+	public function enable_disable_filter_preset_wb_callback() {
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		} else {
+			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['enabled'] ) ) {
+				exit;
+			}
+			update_post_meta( sanitize_text_field( wp_unslash( $_POST['preset'] ) ), 'preset_enabled', sanitize_text_field( wp_unslash( $_POST['enabled'] ) ) );
 		}
 		exit();
 	}
@@ -334,6 +357,39 @@ class Wb_Ajax_Filter_Admin {
 			echo '<li><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=wb-ajax-filter-integration-settings&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
 		}
 		echo '</div></ul></div>';
+	}
+
+	/**
+	 * Search terms ajax callabck for select2.
+	 */
+	public function select2_get_terms_wb_callback() {
+		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		} else {
+			if ( ! isset( $_GET['q'] ) && ! isset( $_GET['cat'] ) ) {
+				exit;
+			}
+			$terms   = get_terms(
+				array(
+					'taxonomy'   => wp_unslash( $_GET['cat'] ),
+					'hide_empty' => false,
+				),
+			);
+			$results = array();
+			foreach ( $terms as $term ) {
+				if ( strpos( $term->name, strtoupper( wp_unslash( $_GET['q'] ) ) ) === false && strpos( $term->name, strtolower( wp_unslash( $_GET['q'] ) ) ) === false ) {
+					continue;
+				}
+				if ( 0 === $term->parent ) {
+					$results[] = array( $term->term_id, $term->name );
+				} else {
+						$parent    = get_term_by( 'id', $term->parent, wp_unslash( $_GET['cat'] ) );
+						$results[] = array( $term->term_id, $parent->name . ' > ' . $term->name );
+				}
+			}
+			echo wp_json_encode( $results );
+		}
+		die();
 	}
 
 	/**

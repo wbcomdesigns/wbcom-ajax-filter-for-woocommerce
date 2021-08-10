@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -44,13 +43,13 @@ class Wb_Ajax_Filter_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param    string $plugin_name   The name of the plugin.
+	 * @param    string $version       The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -97,6 +96,7 @@ class Wb_Ajax_Filter_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-public.js', array( 'jquery' ), $this->version, false );
+		wp_register_script( 'wb_ajax_filter_shortcode', plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-shortcode.js', array( 'jquery' ), $this->version, false );
 
 	}
 
