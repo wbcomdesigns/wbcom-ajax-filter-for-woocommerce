@@ -256,14 +256,4 @@ class Wb_Ajax_Filter {
 		}
 	}
 
-	/**
-	 * Define constant if not already defined
-	 *
-	 * @param data $data Data.
-	 *
-	 * @return void
-	 */
-	public static function printit( $data ) {
-		$myfile = file_put_contents( 'C:\xampp3\htdocs\wordpress\wp-content\plugins\custom/logs.php', print_r( $data, true ) . PHP_EOL, FILE_APPEND | LOCK_EX );
-	}
 }
