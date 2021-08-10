@@ -22,7 +22,7 @@
  * @link       https://wbcomdesigns.com/
  * @since      1.0.0
  *
- * @package    Wbcom_Ajax_Filter_For_Woocommerce
+ * @package    Wb_Ajax_Filter
  */
 
 // If uninstall not called from WordPress, then exit.
