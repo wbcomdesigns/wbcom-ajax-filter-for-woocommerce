@@ -16,9 +16,6 @@ if ( ! isset( $_REQUEST['preset'] ) ) {
 	$name   = $preset->post_title;
 }
 
-echo '<pre>';
-print_r( $filters );
-echo '</pre>';
 ?>
 <input type="hidden" name="filters[preset_id]" value="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_html( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>">
 <div class="wb-ajax-filter-toggle-content-row">
