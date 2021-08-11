@@ -176,6 +176,7 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_ajax_filter_add_admin_settings' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wb_ajax_filter_init_plugin_settings' );
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'wb_ajax_filter_add_modal_to_admin_footer' );
+		// Ajax callbacks.
 		$this->loader->add_action( 'wp_ajax_load_create_filter_template_wb', $plugin_admin, 'load_create_filter_template_wb_callback' );
 		$this->loader->add_action( 'wp_ajax_create_filter_preset_wb', $plugin_admin, 'create_filter_preset_wb_callback' );
 		$this->loader->add_action( 'wp_ajax_check_filter_preset_title_wb', $plugin_admin, 'check_filter_preset_title_wb_callback' );
@@ -183,7 +184,19 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wp_ajax_delete_filter_preset_wb', $plugin_admin, 'delete_filter_preset_wb_callback' );
 		$this->loader->add_action( 'wp_ajax_enable_disable_filter_preset_wb', $plugin_admin, 'enable_disable_filter_preset_wb_callback' );
 		$this->loader->add_action( 'wp_ajax_select2_get_terms_wb', $plugin_admin, 'select2_get_terms_wb_callback' );
-		add_shortcode( 'wb_ajax_filters', array( $this, 'filter_preset_shortcode_callback' ) );
+		// Hook callback.
+		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_name_field', 10 );
+		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_for_field', 20 );
+		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_tax_field', 30 );
+		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_price_slider_field', 40 );
+		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_order_by_field', 50 );
+		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_price_range_field', 60 );
+		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_stock_field', 70 );
+		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_toggle_field', 80 );
+		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_count_field', 90 );
+		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_adoptive_filtering_field', 100 );
+		$this->loader->add_action( 'wb_ajax_filter_after_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_save_button', 10 );
+		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_admin, 'filter_preset_shortcode_callback' );
 	}
 
 	/**
@@ -255,37 +268,6 @@ class Wb_Ajax_Filter {
 	private function define( $name, $value ) {
 		if ( ! defined( $name ) ) {
 			define( $name, $value );
-		}
-	}
-
-	/**
-	 * Filter preset shortcode callback.
-	 *
-	 * @param attr $attr The params for shortcode.
-	 */
-	public function filter_preset_shortcode_callback( $attr ) {
-		$post_name = $attr['slug'];
-		$args      = array(
-			'name'        => $post_name,
-			'post_type'   => 'wb_filter_preset',
-			'post_status' => 'publish',
-			'numberposts' => 1,
-		);
-		$preset    = get_posts( $args );
-		if ( $preset ) {
-			$preset_id       = $preset[0]->ID;
-			$filters         = get_post_meta( $preset_id, '_wb_filter', true );
-			$enabled         = get_post_meta( $preset_id, 'preset_enabled', true );
-			if ( 'yes' === $enabled ) {
-				$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/preset-filter.php';
-				if ( file_exists( $custom_template ) ) {
-					include_once $custom_template;
-				} else {
-					include_once WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
-				}
-			} else {
-				echo esc_html__( 'This filter is disabled.', 'wb-ajax-filter' );
-			}
 		}
 	}
 

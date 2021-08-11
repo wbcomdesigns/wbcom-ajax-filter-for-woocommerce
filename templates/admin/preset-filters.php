@@ -6,19 +6,21 @@
  * @since      1.0.0
  *
  * @package    Wb_Ajax_Filter
- * @subpackage Wb_Ajax_Filter/admin
+ * @subpackage Wb_Ajax_Filter/template/admin
  */
 
 ?>
 <div class="wb-ajax-filter-list-table-section">
 	<div class="wb-ajax-filter-list-table-section-content">
-		<h2><?php esc_html_e( 'Filter Presets', 'wb-ajax-filter' ); ?></h2>
-		<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=create&<?php echo ( isset( $_SERVER['QUERY_STRING'] ) ) ? wp_unslash( $_SERVER['QUERY_STRING'] ) : ''; ?>" class="yith-add-button">
-		<?php esc_html_e( 'Add preset', 'wb-ajax-filter' ); ?>
-		</a>
+		<h2 class="wp-heading-inline"><?php esc_html_e( 'Filter Presets', 'wb-ajax-filter' ); ?></h2>
+		<div class="wb-ajax-filter-add-preset-button">
+			<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=create&<?php echo ( isset( $_SERVER['QUERY_STRING'] ) ) ? wp_unslash( $_SERVER['QUERY_STRING'] ) : ''; ?>" class="page-title-action">
+				<?php esc_html_e( 'Add preset', 'wb-ajax-filter' ); ?>
+			</a>
+		</div>
 	</div>
 	<div class="wb-ajax-filter-list-table-content">
-		<table>
+		<table class="wb-ajax-filter-table wp-list-table widefat fixed striped table-view-list affiliates">
 			<thead>
 				<tr>
 					<th scope="col"><?php esc_html_e( 'Preset Name', 'wb-ajax-filter' ); ?></th>

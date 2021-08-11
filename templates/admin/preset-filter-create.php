@@ -2,7 +2,7 @@
 	<div class="wb-ajax-filter-create-preset-section-content">
 		<span class="view-all-presets">
 			<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?page=wb-ajax-filter-integration-settings&tab=wb-ajax-filter-presets">
-				<?php esc_html_e( '< Back to presets list', 'wb-ajax-filter' ); ?>				
+				<?php esc_html_e( '< Back to presets list', 'wb-ajax-filter' ); ?>
 			</a>
 		</span>
 		<h2><?php esc_html_e( 'Add new filter preset', 'wb-ajax-filter' ); ?></h2>
@@ -35,7 +35,6 @@
 					</p>
 				</div>
 			</div>
-			<a href="#" id="wb_add_new_filter" class="wb-add-new-filter" data-filters="1">+ Add filter</a>
 		</div>
 	</div>
 </div>

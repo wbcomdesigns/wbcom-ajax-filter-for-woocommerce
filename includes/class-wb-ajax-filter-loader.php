@@ -42,14 +42,24 @@ class Wb_Ajax_Filter_Loader {
 	protected $filters;
 
 	/**
+	 * The array of shortcodes registered with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      array    $filters    The filters registered with WordPress to fire when the plugin loads.
+	 */
+	protected $shortcode;
+
+	/**
 	 * Initialize the collections used to maintain the actions and filters.
 	 *
 	 * @since    1.0.0
 	 */
 	public function __construct() {
 
-		$this->actions = array();
-		$this->filters = array();
+		$this->actions   = array();
+		$this->filters   = array();
+		$this->shortcode = array();
 
 	}
 
@@ -82,12 +92,24 @@ class Wb_Ajax_Filter_Loader {
 	}
 
 	/**
+	 * Add a new shortcode to the collection to be registered with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @param    string               $name             The name of the WordPress shortcode that is being registered.
+	 * @param    object               $component        A reference to the instance of the object on which the filter is defined.
+	 * @param    string               $callback         The name of the function definition on the $component.
+	 */
+	public function add_shortcode( $name, $component, $callback ) {
+		$this->shortcode = $this->add( $this->shortcode, $name, $component, $callback, '', '' );
+	}
+
+	/**
 	 * A utility function that is used to register the actions and hooks into a single
 	 * collection.
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @param    array                $hooks            The collection of hooks that is being registered (that is, actions or filters).
+	 * @param    array                $hooks            The collection of hooks that is being registered (that is, actions or filters or shortcodes).
 	 * @param    string               $hook             The name of the WordPress filter that is being registered.
 	 * @param    object               $component        A reference to the instance of the object on which the filter is defined.
 	 * @param    string               $callback         The name of the function definition on the $component.
@@ -102,7 +124,7 @@ class Wb_Ajax_Filter_Loader {
 			'component'     => $component,
 			'callback'      => $callback,
 			'priority'      => $priority,
-			'accepted_args' => $accepted_args
+			'accepted_args' => $accepted_args,
 		);
 
 		return $hooks;
@@ -122,6 +144,10 @@ class Wb_Ajax_Filter_Loader {
 
 		foreach ( $this->actions as $hook ) {
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+		}
+
+		foreach ( $this->shortcode as $hook ) {
+			add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ) );
 		}
 
 	}

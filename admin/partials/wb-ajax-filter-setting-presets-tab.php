@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$method = isset( $_REQUEST['action'] ) ? wp_unslash( $_REQUEST['action'] ) : '';
+$method = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : ''; // phpcs:ignore
 
 $args = array(
 	'post_type'   => 'wb_filter_preset',
@@ -32,7 +32,7 @@ $all_presets = get_posts( $args );
 		<?php } elseif ( 'create' === $method ) { ?>
 			<?php include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-filter-create.php'; ?>
 		<?php } elseif ( 'edit' === $method ) { ?>
-			<?php include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-filter-edit.php'; ?>
+			<?php include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-filter-create-form.php'; ?>
 		<?php } ?>
 	</div>
 </div>

@@ -14,4 +14,4 @@
 
 </div>
 <?php
-wp_enqueue_script( 'wb_ajax_filter_shortcode' );
+

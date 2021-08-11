@@ -89,3 +89,30 @@ span.view-all-presets {
 .wb-ajax-filter-onoff-container {
     display: inline;
 }
+
+.wb-ajax-filter-list-table-section-content {
+    margin-bottom: 5%;
+}
+
+.wb-ajax-filter-list-table-section-content h2 {
+    display: inline-block;
+    /* vertical-align: middle; */
+}
+
+.wb-ajax-filter-list-table-section-content .wb-ajax-filter-add-preset-button a {
+    text-decoration: none;
+    background-color: #2271b1;
+    color: #fff;
+}
+
+.wb-ajax-filter-list-table-section-content .wb-ajax-filter-add-preset-button {
+    display: inline-block;
+}
+
+.wb-ajax-filter-table tr {
+    box-shadow: 0 0 10px 0 rgb(167 217 236 / 40%);
+}
+
+.wb-ajax-filter-table th:not(:first-child), .wb-ajax-filter-table td:not(:first-child) {
+    text-align: center;
+}
