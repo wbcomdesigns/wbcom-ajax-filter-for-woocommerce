@@ -61,6 +61,22 @@
 				minimumInputLength: 1
 			});
 		}
+
+		function afterFormSubmit(method) {
+			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
+			var queryString = jQuery('#filter-preset-create').serializeArray();
+			jQuery.ajax({
+				url: wbcom_plugin_installer_params.ajax_url,
+				type: 'post',
+				data: { action: 'create_filter_preset_wb', 'nonce': nonce, 'form_data': queryString, 'method': method },
+				success: function (response) {
+					if ('filter_created' === response) {
+						location.reload();
+					}
+				}
+			});
+		}
+		
 		// Check if the Filter preset title already exists
 		jQuery('input[name="wb_ajax_filter_preset_title"]').keyup(function () {
 			let postTitle = jQuery(this).val();
@@ -105,7 +121,6 @@
 				});
 			}
 		});
-
 		// Enable/Disable filter preset
 		jQuery('.preset-active-status').on( 'change', function(){
 			let preset = jQuery(this).parent().data('preset');
@@ -130,7 +145,6 @@
 				});
 			}
 		});
-
 		// Delete a filter preset
 		jQuery('a.wb-delete-filter-preset').on('click', function () {
 			var copy = confirm("Are you sure you want to delete this preset?");
@@ -149,7 +163,6 @@
 				});
 			}
 		});
-
 		// Load create filter modal template
 		jQuery('.wb-ajax-filter-add-button').on('click', function(e){
 			e.preventDefault();
@@ -184,22 +197,21 @@
 			jQuery('#filter-preset-create').trigger('submit');
 		});
 
+		jQuery('.wbcom-tab-content').on('click', '#wb-ajax-filer-create-filter-save', function (e) {
+			e.preventDefault();
+			jQuery('#filter-preset-create').trigger('submit');
+		});
+
 		// Create new filter preset aftre
 		jQuery('.wb-ajax-filter-modal-content').on('submit', '#filter-preset-create', function (e) {
 			e.preventDefault();
-			var formData = {};
-			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
-			var queryString = jQuery('#filter-preset-create').serializeArray();
-			jQuery.ajax({
-				url: wbcom_plugin_installer_params.ajax_url,
-				type: 'post',
-				data: { action: 'create_filter_preset_wb', 'nonce': nonce, 'form_data': queryString },
-				success: function (response) {
-					if ( 'filter_created' === response ) {
-						location.reload();
-					}
-				}
-			});
+			afterFormSubmit('add');
+		});
+
+		// Create new filter preset aftre
+		jQuery('.wbcom-tab-content').on('submit', '#filter-preset-create', function (e) {
+			e.preventDefault();
+			afterFormSubmit('edit');
 		});
 	});
 
