@@ -1,0 +1,28 @@
+<?php
+/**
+ * The template for adoptive filtering field.
+ *
+ * @link       https://wbcomdesigns.com/
+ * @since      1.0.0
+ *
+ * @package    Wb_Ajax_Filter
+ * @subpackage Wb_Ajax_Filter/template/admin
+ */
+
+?>
+<div class="wb-ajax-filter-toggle-content-row">
+	<label><?php esc_html_e( 'Adoptive filtering', 'wb-ajax-filter' ); ?></label>
+	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-radio-field-wrapper">
+		<div class="wb-ajax-filter-radio " data-value="hide" data-type="radio">
+			<div class="wb-ajax-filter-radio__row">
+			<input type="radio" name="filters[adoptive]" value="hide" <?php echo ( isset( $filters['adoptive'] ) && 'hide' === $filters['adoptive'] ) ? 'checked' : ''; ?>>
+			<label><?php esc_html_e( 'Terms will be hidden', 'wb-ajax-filter' ); ?></label>
+			</div>
+			<div class="wb-ajax-filter-radio__row">
+			<input type="radio" name="filters[adoptive]" value="show" <?php echo ( isset( $filters['adoptive'] ) && 'show' === $filters['adoptive'] ) ? 'checked' : ''; ?>>
+			<label><?php esc_html_e( 'Terms will be visible, but not clickable', 'wb-ajax-filter' ); ?></label>
+			</div>
+		</div>
+	</div>
+	<span class="description"><?php esc_html_e( 'Decide how to manage filter options that show no results when applying filters. Choose to hide them or make them visible (this will show them in lighter grey and not clickable)', 'wb-ajax-filter' ); ?></span>
+</div>
