@@ -273,10 +273,20 @@ class Wb_Ajax_Filter {
 		);
 		$preset    = get_posts( $args );
 		if ( $preset ) {
-			$preset_id = $preset[0]->ID;
-			$filters   = get_post_meta( $preset_id, '_wb_filter', true );
+			$preset_id       = $preset[0]->ID;
+			$filters         = get_post_meta( $preset_id, '_wb_filter', true );
+			$enabled         = get_post_meta( $preset_id, 'preset_enabled', true );
+			if ( 'yes' === $enabled ) {
+				$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/preset-filter.php';
+				if ( file_exists( $custom_template ) ) {
+					include_once $custom_template;
+				} else {
+					include_once WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
+				}
+			} else {
+				echo esc_html__( 'This filter is disabled.', 'wb-ajax-filter' );
+			}
 		}
-		include_once WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
 	}
 
 }
