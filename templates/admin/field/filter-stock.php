@@ -11,7 +11,7 @@
 
 if ( empty( $filters ) || ( ! empty( $filters ) && 'stock_sale' === $filters['type'] ) ) {
 	?>
-<div class="wb-ajax-filter-toggle-content-row">
+<div class="wb-ajax-filter-toggle-content-row wb-stock-sale-toggle">
 	<label><?php esc_html_e( 'Show stock filter', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
 		<div class="wb-ajax-filter-onoff-container ">
@@ -21,7 +21,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && 'stock_sale' === $filters['ty
 	</div>
 	<span class="description"><?php esc_html_e( 'Enable if you want to show "In Stock" filter', 'wb-ajax-filter' ); ?></span>
 </div>
-<div class="wb-ajax-filter-toggle-content-row">
+<div class="wb-ajax-filter-toggle-content-row wb-stock-sale-toggle">
 	<label><?php esc_html_e( 'Show sale filter', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
 		<div class="wb-ajax-filter-onoff-container ">

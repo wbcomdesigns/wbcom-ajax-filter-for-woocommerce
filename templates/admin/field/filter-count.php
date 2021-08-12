@@ -10,7 +10,7 @@
  */
 
 ?>
-<div class="wb-ajax-filter-toggle-content-row">
+<div class="wb-ajax-filter-toggle-content-row wb-price-range-toggle wb-tax-toggle wb-review-toggle wb-stock-sale-toggle">
 	<label><?php esc_html_e( 'Show count of items', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
 		<div class="wb-ajax-filter-onoff-container ">

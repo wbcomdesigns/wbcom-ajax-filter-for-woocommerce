@@ -11,7 +11,7 @@
 
 if ( empty( $filters ) || ( ! empty( $filters ) && 'orderby' === $filters['type'] ) ) {
 	?>
-<div class="wb-ajax-filter-toggle-content-row">
+<div class="wb-ajax-filter-toggle-content-row wb-orderby-toggle">
 	<label><?php esc_html_e( 'Order options', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-buttons-field-wrapper">
 		<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">

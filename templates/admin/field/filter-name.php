@@ -18,7 +18,7 @@ if ( ! isset( $_REQUEST['preset'] ) ) {
 
 ?>
 <input type="hidden" name="filters[preset_id]" value="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_html( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>">
-<div class="wb-ajax-filter-toggle-content-row">
+<div class="wb-ajax-filter-toggle-content-row wb-all-toggle">
 	<label><?php esc_html_e( 'Filter name', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper">
 		<input type="text" name="filters[title]" value="<?php echo esc_html( $name ); ?>">

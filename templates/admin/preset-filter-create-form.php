@@ -11,12 +11,11 @@
 
 $filters = array();
 if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
-	$preset_id = ( isset( $_REQUEST['preset'] ) && '' !== $_REQUEST['preset']  ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : false;
+	$preset_id = ( isset( $_REQUEST['preset'] ) && '' !== $_REQUEST['preset'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : false;
 	if ( $preset_id ) {
 		$filters = get_post_meta( $preset_id, '_wb_filter', true );
 	}
 }
-
 ?>
 <div class="wb-ajax-filter-form-wraper">
 	<form id="filter-preset-create" method="post">
@@ -26,7 +25,6 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 			 */
 			do_action( 'wb_ajax_filter_before_create_filter_fields', $filters );
 		?>
-		<div class="wb-ajax-filter-toggle-title"></div>
 		<div class="wb-ajax-filter-toggle-content">
 			<?php
 				/**
@@ -44,7 +42,6 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 				 * @hooked wb_ajax_filter_create_filter_adoptivr_filtering_field - 100
 				 */
 				do_action( 'wb_ajax_filter_create_filter_fields', $filters );
-				
 			?>
 		</div>
 		<?php
@@ -55,7 +52,6 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 			 */
 			do_action( 'wb_ajax_filter_after_create_filter_fields', $filters );
 		?>
-		<!-- template/admin/field/filter-save.php -->
 	</form>
 <div>
 <?php

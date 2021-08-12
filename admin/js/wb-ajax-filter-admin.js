@@ -30,6 +30,20 @@
 	 */
 
 	jQuery(document).ready(function ($){
+		// Show/hide fields according to filter for values
+		function hideToggleElements(showClass){
+			jQuery('.wb-ajax-filter-toggle-content-row').each(function () {
+				if (!jQuery(this).hasClass('wb-show-style-toggle')) {
+					jQuery(this).show();
+				}
+			});
+			jQuery('.wb-ajax-filter-toggle-content-row').each(function(){
+				if (!jQuery(this).hasClass('wb-all-toggle') && !jQuery(this).hasClass('wb-' + showClass + '-toggle') && !jQuery(this).hasClass('wb-show-style-toggle')) {
+					jQuery(this).hide();
+				}
+			});
+		}
+
 		function afterAjaxResponse(){
 			// multiple select with AJAX search
 			$('#wb_ajax_filter_select2_terms').select2({
@@ -60,7 +74,75 @@
 				},
 				minimumInputLength: 1
 			});
-		}
+
+			// Enable taxonomy fields on form load.
+			hideToggleElements('tax'); 
+
+			// Show/hide toggle style on form load.
+			if (jQuery('input[name="filters[show_toggle]"]').is(':checked')) {
+				jQuery('.wb-show-style-toggle').show();
+			} else {
+				jQuery('.wb-show-style-toggle').hide();
+			}
+
+			// Show/hide toggle style on change.
+			jQuery('.wb-ajax-filter-modal-content').on('change', 'input[name="filters[show_toggle]"]', function(){
+				if( jQuery(this).is(':checked') ){
+					jQuery('.wb-show-style-toggle').show();
+				} else {
+					jQuery('.wb-show-style-toggle').hide();
+				}
+			});
+			
+			// Remove add price range field
+			jQuery('.wb-ajax-filter-modal-content').on('click', '.wb-ajax-filter-range-remove', function(){
+				jQuery(this).parent().remove();
+				jQuery('.wb-ajax-filter-range-box').each(function() {
+					jQuery(this).find('.unlimited').hide();
+				});
+				let newCount = jQuery('.wb-ajax-filter-ranges-wrapper').children().length;
+				$('.wb-ajax-filter-ranges-wrapper').attr('data-index', newCount);
+				jQuery('.wb-ajax-filter-range-box').each(function(index, element) {
+					if (newCount === index + 1) {
+						jQuery(this).find('.unlimited').show();
+					}
+				});
+			});
+
+			// Change form fields according to the selected filter for value.
+			jQuery('.wb-ajax-filter-modal-content').on('change', 'select[name="filters[type]"]', function(){
+				let filterFor = jQuery(this).val();
+				if (filterFor.indexOf('_') > -1) {
+					filterFor = filterFor.replace("_", "-");
+				}
+				hideToggleElements(filterFor);
+			});
+
+			// Add price range field
+			jQuery('.wb-ajax-filter-add-price-range').on('click', function(e){
+				e.preventDefault();
+				let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
+				var count = $(".wb-ajax-filter-ranges-wrapper").children().length;
+				jQuery.ajax({
+					url: wbcom_plugin_installer_params.ajax_url,
+					type: 'post',
+					data: { action: 'add_price_range_field_wb', 'nonce': nonce, 'count': count },
+					success: function (response) {
+						jQuery('.wb-ajax-filter-ranges-wrapper').append( JSON.parse(response) );
+						let newCount = jQuery('.wb-ajax-filter-ranges-wrapper').children().length;
+						$('.wb-ajax-filter-ranges-wrapper').attr('data-index', newCount);
+						jQuery('.wb-ajax-filter-range-box').each(function () {
+							jQuery(this).find('.unlimited').hide();
+						});
+						jQuery('.wb-ajax-filter-range-box').each(function(index, element){
+							if (newCount === index + 1){
+								jQuery(this).find('.unlimited').show();
+							}
+						});
+					}
+				});
+			});
+		} // End after AJAX response
 
 		function afterFormSubmit(method) {
 			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
@@ -75,7 +157,7 @@
 					}
 				}
 			});
-		}
+		} // End after Form submit
 		
 		// Check if the Filter preset title already exists
 		jQuery('input[name="wb_ajax_filter_preset_title"]').keyup(function () {
@@ -121,6 +203,7 @@
 				});
 			}
 		});
+
 		// Enable/Disable filter preset
 		jQuery('.preset-active-status').on( 'change', function(){
 			let preset = jQuery(this).parent().data('preset');
@@ -145,6 +228,7 @@
 				});
 			}
 		});
+
 		// Delete a filter preset
 		jQuery('a.wb-delete-filter-preset').on('click', function () {
 			var copy = confirm("Are you sure you want to delete this preset?");
@@ -163,6 +247,7 @@
 				});
 			}
 		});
+
 		// Load create filter modal template
 		jQuery('.wb-ajax-filter-add-button').on('click', function(e){
 			e.preventDefault();
@@ -191,12 +276,13 @@
 			});
 		});
 
-		// Save new filter preset
+		// Save new filter preset on create page
 		jQuery('.wb-ajax-filter-modal-content').on('click', '#wb-ajax-filer-create-filter-save', function (e) {
 			e.preventDefault();
 			jQuery('#filter-preset-create').trigger('submit');
 		});
 
+		// Save new filter preset on edit page
 		jQuery('.wbcom-tab-content').on('click', '#wb-ajax-filer-create-filter-save', function (e) {
 			e.preventDefault();
 			jQuery('#filter-preset-create').trigger('submit');
