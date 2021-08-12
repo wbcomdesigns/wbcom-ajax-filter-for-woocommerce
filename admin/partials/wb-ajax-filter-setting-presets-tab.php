@@ -32,7 +32,9 @@ $all_presets = get_posts( $args );
 		<?php } elseif ( 'create' === $method ) { ?>
 			<?php include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-filter-create.php'; ?>
 		<?php } elseif ( 'edit' === $method ) { ?>
+		<div class="wb-ajax-filter-modal-content">
 			<?php include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-filter-create-form.php'; ?>
+		</div>
 		<?php } ?>
 	</div>
 </div>

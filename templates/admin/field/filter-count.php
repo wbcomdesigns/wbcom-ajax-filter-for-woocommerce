@@ -9,8 +9,13 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
+$show_in = array( 'tax', 'price_range', 'review', 'stock_sale' );
+$style   = 'display:none;';
+if ( empty( $filters ) || ( ! empty( $filters ) && in_array( $filters['type'], $show_in, true ) ) ) {
+	$style = '';
+}
 ?>
-<div class="wb-ajax-filter-toggle-content-row wb-price-range-toggle wb-tax-toggle wb-review-toggle wb-stock-sale-toggle">
+<div class="wb-ajax-filter-toggle-content-row wb-price-range-toggle wb-tax-toggle wb-review-toggle wb-stock-sale-toggle" style="<?php echo esc_attr( $style ); ?>">
 	<label><?php esc_html_e( 'Show count of items', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
 		<div class="wb-ajax-filter-onoff-container ">

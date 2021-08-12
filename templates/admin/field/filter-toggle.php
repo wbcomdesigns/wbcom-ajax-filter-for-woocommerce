@@ -20,7 +20,7 @@
 	</div>
 	<span class="description"><?php esc_html_e( 'Enable if you want to show this filter as a toggle', 'wb-ajax-filter' ); ?></span>
 </div>
-<div class="wb-ajax-filter-toggle-content-row wb-show-style-toggle">
+<div class="wb-ajax-filter-toggle-content-row wb-show-style-toggle" <?php echo ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? '' : 'style="display:none;"'; ?>>
 	<label><?php esc_html_e( 'Toggle style', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-radio-field-wrapper">
 		<div class="wb-ajax-filter-radio " data-value="opened" data-type="radio">

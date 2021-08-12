@@ -210,18 +210,28 @@ class Wb_Ajax_Filter_Admin {
 				$filters   = array();
 				$form_data = wp_unslash( $_POST['form_data'] );
 				foreach ( $form_data as $field ) {
-					$str_after_brack  = explode( '[', $field['name'] );
-					$str_before_brack = explode( ']', $str_after_brack[1] );
-					if ( 'order_options' === $str_before_brack[0] ) {
-						$filters[ $str_before_brack[0] ][] = $field['value'];
-					} else {
-						$filters[ $str_before_brack[0] ] = $field['value'];
+					if ( '' !== $field['value'] ) {
+						$str_after_brack  = explode( '[', $field['name'] );
+						$str_before_brack = explode( ']', $str_after_brack[1] );
+						if ( 'order_options' === $str_before_brack[0] ) {
+							$filters[ $str_before_brack[0] ][] = $field['value'];
+						} elseif ( 'price_ranges' === $str_before_brack[0] ) {
+							$price_ranges_key      = explode( ']', $str_after_brack[2] );
+							$price_ranges_meta_key = explode( ']', $str_after_brack[3] );
+							$filters[ $str_before_brack[0] ][ $price_ranges_key[0] ][ $price_ranges_meta_key[0] ] = $field['value'];
+						} else {
+							$filters[ $str_before_brack[0] ] = $field['value'];
+						}
 					}
 				}
 				$post_title = $filters['title'];
-				$post_id    = $filters['preset_id'];
+				if ( isset( $filters['preset_id'] ) && '' !== $filters['preset_id'] ){
+					$post_id = $filters['preset_id'];
+					unset( $filters['preset_id'] );
+				} else {
+					$post_id = '';
+				}
 				unset( $filters['title'] );
-				unset( $filters['preset_id'] );
 				if ( '' === $post_id ) {
 					$post_id = wp_insert_post(
 						array(
@@ -395,6 +405,21 @@ class Wb_Ajax_Filter_Admin {
 				}
 			}
 			echo wp_json_encode( $results );
+		}
+		die();
+	}
+
+	/**
+	 * Add price range field.
+	 */
+	public function add_price_range_field_wb_callback() {
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		} else {
+			ob_start();
+			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-add-price-range.php';
+			$response = ob_get_clean();
+			echo wp_json_encode( $response );
 		}
 		die();
 	}
