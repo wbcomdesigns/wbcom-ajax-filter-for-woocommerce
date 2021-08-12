@@ -36,6 +36,7 @@
 						<td data-colname="Preset name"><?php echo esc_html( $preset->post_title ); ?></td>
 						<td data-colname="Shortcode">
 							<input class="text-to-copy" type="text" readonly="" value="[wb_ajax_filters slug='<?php echo esc_html( $preset->post_name ); ?>']">
+							<br><span class="wb-shortcode-copy"><?php esc_html_e( 'Shortcode copied to clipboard.', 'wb-ajax-filter' ); ?></span>
 						</td>
 						<td data-colname="Action">
 							<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=edit&<?php echo ( isset( $_SERVER['QUERY_STRING'] ) ) ? wp_unslash( $_SERVER['QUERY_STRING'] ) : ''; ?>&preset=<?php echo esc_html( $preset->ID ); ?>" class="wb-edit-filter-preset">

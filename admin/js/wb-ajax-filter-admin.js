@@ -174,7 +174,14 @@
 		jQuery('.text-to-copy').click(function () {
 			jQuery(this).select();
 			document.execCommand("copy");
-			alert('Short copied to clipboard');
+			jQuery(this).siblings('.wb-shortcode-copy').css({
+				'opacity': 1
+			});
+			setTimeout(function () {
+				jQuery('.wb-shortcode-copy').css({
+					'opacity': 0
+				});
+			}, 1000);
 		});
 
 		// Create a duplicate of the preset

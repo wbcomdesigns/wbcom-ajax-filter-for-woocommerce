@@ -116,3 +116,10 @@ span.view-all-presets {
 .wb-ajax-filter-table th:not(:first-child), .wb-ajax-filter-table td:not(:first-child) {
     text-align: center;
 }
+.wb-shortcode-copy{
+    opacity: 0;
+    transition: visibility 0s linear 0.33s, opacity 0.33s linear;
+    font-weight: 500;
+    font-style: italic;
+    color: #ff8d00fa;
+}
