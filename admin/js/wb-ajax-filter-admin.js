@@ -131,7 +131,8 @@
 		});
 
 		// Remove add price range field
-		jQuery('.wb-ajax-filter-modal-content').on('click', '.wb-ajax-filter-range-remove', function () {
+		jQuery('.wb-ajax-filter-modal-content').on('click', '.wb-ajax-filter-range-remove', function (e) {
+			e.preventDefault();
 			jQuery(this).parent().remove();
 			jQuery('.wb-ajax-filter-range-box').each(function () {
 				jQuery(this).find('.unlimited').hide();
@@ -146,7 +147,7 @@
 		});
 
 		// Add price range field
-		jQuery('.wb-ajax-filter-add-price-range').on('click', function (e) {
+		jQuery('.wb-ajax-filter-modal-content').on('click', '.wb-ajax-filter-add-price-range', function (e) {
 			e.preventDefault();
 			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
 			var count = $(".wb-ajax-filter-ranges-wrapper").children().length;
