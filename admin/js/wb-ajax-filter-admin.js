@@ -42,6 +42,21 @@
 					jQuery(this).hide();
 				}
 			});
+			jQuery('.wb-input').each(function () {
+				if (!jQuery(this).hasClass('wb-filter-type-' + showClass)) {
+					let tag = jQuery(this).prop("tagName").toLowerCase();
+					let type = jQuery(this).attr("type");
+					if('select' === tag ){
+						jQuery(this).val('');
+					} else {
+						if ('checkbox' === type || 'radio' === type){
+							jQuery(this).attr('checked', false);
+						} else{
+							jQuery(this).val('');
+						}
+					}
+				}
+			});
 		}
 
 		function afterAjaxResponse(){
@@ -76,7 +91,7 @@
 			});
 
 			// Enable taxonomy fields on form load.
-			hideToggleElements('tax'); 
+			hideToggleElements('tax');
 
 			// Show/hide toggle style on form load.
 			if (jQuery('input[name="filters[show_toggle]"]').is(':checked')) {
@@ -87,16 +102,20 @@
 			
 		} // End after AJAX response
 
-		function afterFormSubmit(method) {
+		function afterFormSubmit() {
 			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
 			var queryString = jQuery('#filter-preset-create').serializeArray();
+			console.log('Form Data');
+			console.log(queryString);
 			jQuery.ajax({
 				url: wbcom_plugin_installer_params.ajax_url,
 				type: 'post',
-				data: { action: 'create_filter_preset_wb', 'nonce': nonce, 'form_data': queryString, 'method': method },
+				data: { action: 'create_filter_preset_wb', 'nonce': nonce, 'form_data': queryString },
 				success: function (response) {
 					if ('filter_created' === response) {
-						location.reload();
+						let query = window.location.search;
+						let url = query.replace("update", "list");
+						window.location.href = url;
 					}
 				}
 			});
@@ -294,9 +313,8 @@
 		// Create new filter preset aftre
 		jQuery('.wb-ajax-filter-modal-content').on('submit', '#filter-preset-create', function (e) {
 			e.preventDefault();
-			afterFormSubmit('add');
+			afterFormSubmit();
 		});
-
 	});
 
 })( jQuery );

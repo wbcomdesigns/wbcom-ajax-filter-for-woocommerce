@@ -207,31 +207,31 @@ class Wb_Ajax_Filter_Admin {
 			exit();
 		} else {
 			if ( isset( $_POST['form_data'] ) ) {
-				$filters   = array();
+				$filter    = array();
 				$form_data = wp_unslash( $_POST['form_data'] );
 				foreach ( $form_data as $field ) {
 					if ( '' !== $field['value'] ) {
 						$str_after_brack  = explode( '[', $field['name'] );
 						$str_before_brack = explode( ']', $str_after_brack[1] );
 						if ( 'order_options' === $str_before_brack[0] ) {
-							$filters[ $str_before_brack[0] ][] = $field['value'];
+							$filter[ $str_before_brack[0] ][] = $field['value'];
 						} elseif ( 'price_ranges' === $str_before_brack[0] ) {
 							$price_ranges_key      = explode( ']', $str_after_brack[2] );
 							$price_ranges_meta_key = explode( ']', $str_after_brack[3] );
-							$filters[ $str_before_brack[0] ][ $price_ranges_key[0] ][ $price_ranges_meta_key[0] ] = $field['value'];
+							$filter[ $str_before_brack[0] ][ $price_ranges_key[0] ][ $price_ranges_meta_key[0] ] = $field['value'];
 						} else {
-							$filters[ $str_before_brack[0] ] = $field['value'];
+							$filter[ $str_before_brack[0] ] = $field['value'];
 						}
 					}
 				}
-				$post_title = $filters['title'];
-				if ( isset( $filters['preset_id'] ) && '' !== $filters['preset_id'] ){
-					$post_id = $filters['preset_id'];
-					unset( $filters['preset_id'] );
+				$post_title = $filter['preset_title'];
+				if ( isset( $filter['preset_id'] ) && '' !== $filter['preset_id'] ) {
+					$post_id = $filter['preset_id'];
+					unset( $filter['preset_id'] );
 				} else {
 					$post_id = '';
 				}
-				unset( $filters['title'] );
+				unset( $filter['preset_title'] );
 				if ( '' === $post_id ) {
 					$post_id = wp_insert_post(
 						array(
@@ -244,10 +244,19 @@ class Wb_Ajax_Filter_Admin {
 						)
 					);
 					if ( $post_id ) {
+						$filters[] = $filter;
 						update_post_meta( $post_id, '_wb_filter', $filters );
 						echo 'filter_created';
 					}
 				} else {
+					$filters = get_post_meta( $post_id, '_wb_filter', true );
+					foreach ( $filters as $key => $val ) {
+						if ( $val['filter_id'] === $filter['filter_id'] ) {
+							$filters[ $key ] = $filter;
+						} else {
+							$filters[] = $filter;
+						}
+					}
 					update_post_meta( $post_id, '_wb_filter', $filters );
 					echo 'filter_created';
 				}
@@ -410,6 +419,37 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
+	 * Filter preset shortcode callback.
+	 *
+	 * @param attr $attr The params for shortcode.
+	 */
+	public function filter_preset_shortcode_callback( $attr ) {
+		$post_name = $attr['slug'];
+		$args      = array(
+			'name'        => $post_name,
+			'post_type'   => 'wb_filter_preset',
+			'post_status' => 'publish',
+			'numberposts' => 1,
+		);
+		$preset    = get_posts( $args );
+		if ( $preset ) {
+			$preset_id   = $preset[0]->ID;
+			$all_filters = get_post_meta( $preset_id, '_wb_filter', true );
+			$enabled     = get_post_meta( $preset_id, 'preset_enabled', true );
+			if ( 'yes' === $enabled ) {
+				$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/preset-filter.php';
+				if ( file_exists( $custom_template ) ) {
+					include_once $custom_template;
+				} else {
+					include_once WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
+				}
+			} else {
+				echo esc_html__( 'This filter is disabled.', 'wb-ajax-filter' );
+			}
+		}
+	}
+
+	/**
 	 * Add price range field.
 	 */
 	public function add_price_range_field_wb_callback() {
@@ -451,7 +491,7 @@ class Wb_Ajax_Filter_Admin {
 		$this->plugin_settings_tabs['wb-ajax-filter-seo'] = esc_html__( 'SEO', 'wb-ajax-filter' );
 		register_setting( 'wb_ajax_filter_admin_seo_options', 'wb_ajax_filter_admin_seo_options' );
 		add_settings_section( 'wb-ajax-filter-seo', ' ', array( $this, 'wb_ajax_filter_admin_seo_content' ), 'wb-ajax-filter-seo' );
-		//
+
 		$this->plugin_settings_tabs['wb-ajax-filter-ajax-search-settings'] = esc_html__( 'Search Settings', 'wb-ajax-filter' );
 		register_setting( 'wb_ajax_filter_admin_ajax_search_settings_options', 'wb_ajax_filter_admin_ajax_search_settings_options' );
 		add_settings_section( 'wb-ajax-filter-ajax-search-settings', ' ', array( $this, 'wb_ajax_filter_admin_ajax_search_settings_content' ), 'wb-ajax-filter-ajax-search-settings' );
@@ -618,37 +658,6 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function wb_ajax_filter_create_filter_save_button( $filters ) {
 		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-save.php';
-	}
-
-	/**
-	 * Filter preset shortcode callback.
-	 *
-	 * @param attr $attr The params for shortcode.
-	 */
-	public function filter_preset_shortcode_callback( $attr ) {
-		$post_name = $attr['slug'];
-		$args      = array(
-			'name'        => $post_name,
-			'post_type'   => 'wb_filter_preset',
-			'post_status' => 'publish',
-			'numberposts' => 1,
-		);
-		$preset    = get_posts( $args );
-		if ( $preset ) {
-			$preset_id       = $preset[0]->ID;
-			$filters         = get_post_meta( $preset_id, '_wb_filter', true );
-			$enabled         = get_post_meta( $preset_id, 'preset_enabled', true );
-			if ( 'yes' === $enabled ) {
-				$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/preset-filter.php';
-				if ( file_exists( $custom_template ) ) {
-					include_once $custom_template;
-				} else {
-					include_once WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
-				}
-			} else {
-				echo esc_html__( 'This filter is disabled.', 'wb-ajax-filter' );
-			}
-		}
 	}
 
 }

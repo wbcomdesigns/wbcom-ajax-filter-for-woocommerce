@@ -39,7 +39,7 @@
 							<br><span class="wb-shortcode-copy"><?php esc_html_e( 'Shortcode copied to clipboard.', 'wb-ajax-filter' ); ?></span>
 						</td>
 						<td data-colname="Action">
-							<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=edit&<?php echo ( isset( $_SERVER['QUERY_STRING'] ) ) ? wp_unslash( $_SERVER['QUERY_STRING'] ) : ''; ?>&preset=<?php echo esc_html( $preset->ID ); ?>" class="wb-edit-filter-preset">
+							<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=edit&wb=list&<?php echo ( isset( $_SERVER['QUERY_STRING'] ) ) ? wp_unslash( $_SERVER['QUERY_STRING'] ) : ''; ?>&preset=<?php echo esc_html( $preset->ID ); ?>" class="wb-edit-filter-preset">
 								<span class="dashicons dashicons-edit"></span>
 							</a>
 							<a class="wb-copy-filter-preset" data-preset="<?php echo esc_html( $preset->ID ); ?>"><span class="dashicons dashicons-admin-page"></span></a>

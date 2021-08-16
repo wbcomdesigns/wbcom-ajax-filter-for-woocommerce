@@ -197,6 +197,7 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_count_field', 90 );
 		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_adoptive_filtering_field', 100 );
 		$this->loader->add_action( 'wb_ajax_filter_after_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_save_button', 10 );
+		// Shortcode callback.
 		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_admin, 'filter_preset_shortcode_callback' );
 	}
 

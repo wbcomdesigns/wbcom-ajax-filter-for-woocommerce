@@ -19,8 +19,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && in_array( $filters['type'], $
 	<label><?php esc_html_e( 'Show count of items', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
 		<div class="wb-ajax-filter-onoff-container ">
-			<input type="checkbox" class="on_off" name="filters[show_count]" value="yes" <?php echo ( isset( $filters['show_count'] ) && 'yes' === $filters['show_count'] ) ? 'checked' : ''; ?>>
-			<span class="wb-ajax-filter-onoff" data-text-on="YES" data-text-off="NO"></span>
+			<input type="checkbox" class="on_off wb-input wb-filter-type-tax wb-filter-type-price-range wb-filter-type-review wb-filter-type-stock-sale" name="filters[show_count]" value="yes" <?php echo ( isset( $filters['show_count'] ) && 'yes' === $filters['show_count'] ) ? 'checked' : ''; ?>>
 		</div>
 	</div>
 	<span class="description"><?php esc_html_e( 'Enable if you want to show how many items are available for each term', 'wb-ajax-filter' ); ?></span>
