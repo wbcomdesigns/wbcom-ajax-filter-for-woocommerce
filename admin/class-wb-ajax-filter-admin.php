@@ -209,6 +209,7 @@ class Wb_Ajax_Filter_Admin {
 			if ( isset( $_POST['form_data'] ) ) {
 				$filter    = array();
 				$form_data = wp_unslash( $_POST['form_data'] );
+				// Converting form data into associative array.
 				foreach ( $form_data as $field ) {
 					if ( '' !== $field['value'] ) {
 						$str_after_brack  = explode( '[', $field['name'] );
@@ -231,6 +232,7 @@ class Wb_Ajax_Filter_Admin {
 				} else {
 					$post_id = '';
 				}
+				$filter['filter_enabled'] = 'yes';
 				unset( $filter['preset_title'] );
 				if ( '' === $post_id ) {
 					$post_id = wp_insert_post(
@@ -249,13 +251,17 @@ class Wb_Ajax_Filter_Admin {
 						echo 'filter_created';
 					}
 				} else {
-					$filters = get_post_meta( $post_id, '_wb_filter', true );
+					$filters    = get_post_meta( $post_id, '_wb_filter', true );
+					$new_filter = 0;
 					foreach ( $filters as $key => $val ) {
 						if ( $val['filter_id'] === $filter['filter_id'] ) {
 							$filters[ $key ] = $filter;
-						} else {
-							$filters[] = $filter;
+							$new_filter++;
+							break;
 						}
+					}
+					if ( $new_filter === 0 ) {
+						$filters[] = $filter;
 					}
 					update_post_meta( $post_id, '_wb_filter', $filters );
 					echo 'filter_created';
@@ -282,7 +288,7 @@ class Wb_Ajax_Filter_Admin {
 			);
 			$filters = get_posts( $args );
 			foreach ( $filters as $filter ) {
-				if ( $_POST['title'] === $filter->post_title ) {
+				if ( strtolower( $filter->post_title ) === $_POST['title'] || $_POST['title'] === $filter->post_title ) {
 					echo 'exists';
 					die();
 				} else {
@@ -357,6 +363,62 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
+	 * Create a duplicate of signle filter.
+	 */
+	public function duplicate_single_filter_wb_callback() {
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		} else {
+			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['filter_id'] ) ) {
+				exit;
+			}
+			$preset_id = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
+			$filter_id = sanitize_text_field( wp_unslash( $_POST['filter_id'] ) );
+			$filters   = get_post_meta( $preset_id, '_wb_filter', true );
+			foreach ( $filters as $key => $filter ) {
+				if ( $filter_id === $filter['filter_id'] ) {
+					$copy_filter = array();
+					$copy_filter = $filter;
+					unset( $copy_filter['filter_id'] );
+					unset( $copy_filter['filter_title'] );
+					$copy_filter['filter_id']    = esc_html( uniqid( 'wb_filter_' ) );
+					$title                        = $filter['filter_title'] . ' Copy';
+					$copy_filter['filter_title'] = $title;
+					$filters[]                    = $copy_filter;
+					update_post_meta( $preset_id, '_wb_filter', $filters );
+				}
+			}
+			echo 'copy_created';
+		}
+		exit();
+	}
+
+	/**
+	 * Delete single filter.
+	 */
+	public function delete_single_filter_wb_callback() {
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		} else {
+			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['filter_id'] ) ) {
+				exit;
+			}
+			$new_filters = array();
+			$preset_id   = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
+			$filter_id   = sanitize_text_field( wp_unslash( $_POST['filter_id'] ) );
+			$filters     = get_post_meta( $preset_id, '_wb_filter', true );
+			foreach ( $filters as $key => $filter ) {
+				if ( $filter_id !== $filter['filter_id'] ) {
+					$new_filters[] = $filter;
+				}
+			}
+			update_post_meta( $preset_id, '_wb_filter', $new_filters );
+			echo 'preset_deleted';
+		}
+		exit();
+	}
+
+	/**
 	 * Enable/Disable filter preset.
 	 */
 	public function enable_disable_filter_preset_wb_callback() {
@@ -367,6 +429,31 @@ class Wb_Ajax_Filter_Admin {
 				exit;
 			}
 			update_post_meta( sanitize_text_field( wp_unslash( $_POST['preset'] ) ), 'preset_enabled', sanitize_text_field( wp_unslash( $_POST['enabled'] ) ) );
+		}
+		exit();
+	}
+
+	/**
+	 * Enable/Disable filter preset.
+	 */
+	public function enable_disable_single_filter_wb_callback() {
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		} else {
+			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['enabled'] ) && ! isset( $_POST['filter_id'] ) ) {
+				exit;
+			}
+			$preset_id = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
+			$filter_id = sanitize_text_field( wp_unslash( $_POST['filter_id'] ) );
+			$filters   = get_post_meta( $preset_id, '_wb_filter', true );
+			foreach ( $filters as $key => $filter ) {
+				if ( $filter_id === $filter['filter_id'] ) {
+					unset( $filter['filter_enabled'] );
+					$filter['filter_enabled'] = sanitize_text_field( wp_unslash( $_POST['enabled'] ) );
+					$filters[ $key ]          = $filter;
+				}
+			}
+			update_post_meta( $preset_id, '_wb_filter', $filters );
 		}
 		exit();
 	}

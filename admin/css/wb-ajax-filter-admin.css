@@ -123,3 +123,19 @@ span.view-all-presets {
     font-style: italic;
     color: #ff8d00fa;
 }
+
+.wb-ajax-filter-toggle-title h3.title {
+    display: inline;
+}
+
+.wb-ajax-filter-toggle-title .wb-ajax-filter-field-wrapper {
+    display: inline;
+}
+
+.preset-filters div .wb-ajax-filter-toggle-row {
+    margin: 1rem 0rem 1rem 0rem;
+}
+
+.wb-ajax-filter-toggle-row .wb-ajax-filter-toggle-title a {
+    text-decoration: none;
+}

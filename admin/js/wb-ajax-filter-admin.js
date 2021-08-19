@@ -2,26 +2,8 @@
 	'use strict';
 
 	/**
-	 * All of the code for your admin-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
+	 * All of the code for admin-facing JavaScript source
+	 * resides in this file.
 	 *
 	 * Ideally, it is not considered best practise to attach more than a
 	 * single DOM-ready or window-load handler for a particular page.
@@ -204,25 +186,6 @@
 			}, 1000);
 		});
 
-		// Create a duplicate of the preset
-		jQuery('a.wb-copy-filter-preset').on('click', function(){
-			var copy = confirm("Do you want to create a copy of this preset?");
-			if ( copy == true ) {
-				let preset = jQuery(this).data('preset');
-				let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
-				jQuery.ajax({
-					url: wbcom_plugin_installer_params.ajax_url,
-					type: 'post',
-					data: { action: 'duplicate_filter_preset_wb', 'nonce': nonce, 'preset': preset },
-					success: function (response) {
-						if ( 'copy_created' == response ) {
-							location.reload();
-						}
-					}
-				});
-			}
-		});
-
 		// Show/hide toggle style on change.
 		jQuery('.wb-ajax-filter-modal-content').on('change', 'input[name="filters[show_toggle]"]', function () {
 			if (jQuery(this).is(':checked')) {
@@ -236,22 +199,34 @@
 		jQuery('.preset-active-status').on( 'change', function(){
 			let preset = jQuery(this).parent().data('preset');
 			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
+			let enabled = 'no';
 			if( jQuery(this).is(':checked') ){
+				enabled = 'yes';
+			}
+			jQuery.ajax({
+				url: wbcom_plugin_installer_params.ajax_url,
+				type: 'post',
+				data: { action: 'enable_disable_filter_preset_wb', 'nonce': nonce, 'preset': preset, 'enabled': enabled },
+				success: function (response) {
+					
+				}
+			});
+		});
+
+		// Create a duplicate of the preset
+		jQuery('a.wb-copy-filter-preset').on('click', function () {
+			var copy = confirm("Do you want to create a copy of this preset?");
+			if (copy == true) {
+				let preset = jQuery(this).data('preset');
+				let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
 				jQuery.ajax({
 					url: wbcom_plugin_installer_params.ajax_url,
 					type: 'post',
-					data: { action: 'enable_disable_filter_preset_wb', 'nonce': nonce, 'preset': preset, 'enabled': 'yes' },
+					data: { action: 'duplicate_filter_preset_wb', 'nonce': nonce, 'preset': preset },
 					success: function (response) {
-						
-					}
-				});
-			} else {
-				jQuery.ajax({
-					url: wbcom_plugin_installer_params.ajax_url,
-					type: 'post',
-					data: { action: 'enable_disable_filter_preset_wb', 'nonce': nonce, 'preset': preset, 'enabled': 'no' },
-					success: function (response) {
-						
+						if ('copy_created' == response) {
+							location.reload();
+						}
 					}
 				});
 			}
@@ -259,8 +234,8 @@
 
 		// Delete a filter preset
 		jQuery('a.wb-delete-filter-preset').on('click', function () {
-			var copy = confirm("Are you sure you want to delete this preset?");
-			if (copy == true) {
+			var del = confirm("Are you sure you want to delete this preset?");
+			if (del == true) {
 				let preset = jQuery(this).data('preset');
 				let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
 				jQuery.ajax({
@@ -281,10 +256,11 @@
 			e.preventDefault();
 			var title = jQuery('input[name="wb_ajax_filter_preset_title"]').val();
 			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
+			let preset = (jQuery(this).data('preset') !== '') ? jQuery(this).data('preset') : '';
 			jQuery.ajax({
 				url: wbcom_plugin_installer_params.ajax_url,
 				type : 'post',
-				data: { action: 'load_create_filter_template_wb', 'nonce': nonce, 'title': title },
+				data: { action: 'load_create_filter_template_wb', 'nonce': nonce, 'title': title, 'preset': preset },
 				success: function (response) {
 					jQuery('.wb-ajax-filter-modal-content').html( JSON.parse( response ) );
 					jQuery('.wb-ajax-filter-modal-container').css({
@@ -310,7 +286,7 @@
 			jQuery('#filter-preset-create').trigger('submit');
 		});
 
-		// Create new filter preset aftre
+		// Create new filter preset after
 		jQuery('.wb-ajax-filter-modal-content').on('submit', '#filter-preset-create', function (e) {
 			e.preventDefault();
 			afterFormSubmit();

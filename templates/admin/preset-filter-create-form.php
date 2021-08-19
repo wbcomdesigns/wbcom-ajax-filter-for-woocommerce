@@ -10,7 +10,7 @@
  */
 
 $filters = array();
-if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
+if ( isset( $_REQUEST['action'] ) && ( 'edit' === $_REQUEST['action'] || 'load_create_filter_template_wb' === $_REQUEST['action'] ) ) {
 	$preset_id = ( isset( $_REQUEST['preset'] ) && '' !== $_REQUEST['preset'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : false;
 	if ( $preset_id ) {
 		$filters = get_post_meta( $preset_id, '_wb_filter', true );
