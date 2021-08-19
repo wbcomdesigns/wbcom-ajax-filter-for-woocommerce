@@ -35,11 +35,14 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 			<tbody>
 				<tr>
 					<th><?php esc_html_e( 'Preset name', 'wb-ajax-filter' ); ?></th>
-					<td><div class="yith-plugin-fw-field-wrapper yith-plugin-fw-text-field-wrapper">
+					<td><div class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper">
 							<input type="text" name="wb_ajax_filter_preset_title" value="<?php echo esc_attr( $preset_title ); ?>">
+							<a class="wb-ajax-filter-save-title-button button-primary wb-add-new-filter" href="#" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>">
+								<?php esc_html_e( 'Save', 'wb-ajax-filter' ); ?>
+							</a>
 						</div>
 						<span class="description" style="<?php echo esc_attr( $hide ); ?>">
-							<?php esc_html_e( 'Enter a name to identify this filter preset', 'wb-ajax-filter' ); ?>
+							<?php esc_html_e( 'Enter a name to identify this filter preset.', 'wb-ajax-filter' ); ?>
 						</span>
 					</td>
 				</tr>
@@ -65,7 +68,7 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 							}
 						}
 						?>
-						<a class="wb-ajax-filter-add-button button-primary wb-add-new-filter" href="#">
+						<a class="wb-ajax-filter-add-button button-primary wb-add-new-filter" href="#" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>">
 							<?php esc_html_e( 'Add a new filter', 'wb-ajax-filter' ); ?>
 						</a>
 					</p>

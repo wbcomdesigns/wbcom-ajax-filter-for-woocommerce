@@ -459,6 +459,28 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
+	 * Change preset title.
+	 */
+	public function edit_preset_post_title_wb_callback() {
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		} else {
+			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['title'] ) ) {
+				exit;
+			}
+			$preset_id     = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
+			$title         = sanitize_text_field( wp_unslash( $_POST['title'] ) );
+			$preset_update = array(
+				'ID'         => $preset_id,
+				'post_title' => $title,
+			);
+
+			wp_update_post( $preset_update );
+		}
+		exit();
+	}
+
+	/**
 	 * Actions performed to create tabs on the sub menu page.
 	 */
 	public function wb_ajax_filter_plugin_settings_tabs() {

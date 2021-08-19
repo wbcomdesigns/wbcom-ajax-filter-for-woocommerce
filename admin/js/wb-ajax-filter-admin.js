@@ -310,6 +310,25 @@
 			});
 		});
 
+		//
+
+		jQuery('.wb-ajax-filter-save-title-button').on('click', function (e) {
+			e.preventDefault();
+			var title = jQuery(this).prev('input').val();
+			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
+			let preset = (jQuery(this).data('preset') !== '') ? jQuery(this).data('preset') : '';
+			if (title !== '' || title !== undefined ){
+				jQuery.ajax({
+					url: wbcom_plugin_installer_params.ajax_url,
+					type: 'post',
+					data: { action: 'edit_preset_post_title_wb', 'nonce': nonce, 'title': title, 'preset': preset },
+					success: function (response) {
+						location.reload();
+					}
+				});
+			}
+		});
+
 		// Load create filter modal template
 		jQuery('.wb-ajax-filter-add-button').on('click', function (e) {
 			e.preventDefault();
