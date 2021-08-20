@@ -15,9 +15,12 @@
 		if ('edit' === urlAction && 'update' === urlSubAction){
 			initializeSelect2();
 			let terms = jQuery('#wb_ajax_filter_select2_terms').data('selected_terms');
-			$('#wb_ajax_filter_select2_terms').select2('data', terms[0]);
-			console.log('terms : ');
-			console.log(terms);
+			terms.forEach(function(elem){
+				var option = new Option(elem.text, elem.id, true, true);
+				jQuery('#wb_ajax_filter_select2_terms').append(option);
+			});
+			jQuery('#wb_ajax_filter_select2_terms').trigger('change');
+
 		}
 
 		// Show/hide fields according to filter for values
