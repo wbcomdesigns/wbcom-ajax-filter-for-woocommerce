@@ -4,14 +4,22 @@
 	/**
 	 * All of the code for admin-facing JavaScript source
 	 * resides in this file.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
 	 */
 
 	jQuery(document).ready(function ($) {
+
+		var url_string = window.location.href
+		var url = new URL(url_string);
+		var urlAction = url.searchParams.get("action");
+		var urlSubAction = url.searchParams.get("wb");
+		if ('edit' === urlAction && 'update' === urlSubAction){
+			initializeSelect2();
+			let terms = jQuery('#wb_ajax_filter_select2_terms').data('selected_terms');
+			$('#wb_ajax_filter_select2_terms').select2('data', terms[0]);
+			console.log('terms : ');
+			console.log(terms);
+		}
+
 		// Show/hide fields according to filter for values
 		function hideToggleElements(showClass) {
 			jQuery('.wb-ajax-filter-toggle-content-row').each(function () {
@@ -41,8 +49,8 @@
 			});
 		}
 
-		function afterAjaxResponse() {
-			// multiple select with AJAX search
+		// Initializes select2 on selected element.
+		function initializeSelect2(){
 			$('#wb_ajax_filter_select2_terms').select2({
 				ajax: {
 					url: wbcom_plugin_installer_params.ajax_url,
@@ -71,6 +79,11 @@
 				},
 				minimumInputLength: 1
 			});
+		}
+
+		function afterAjaxResponse() {
+			// Multiple select for terms with AJAX search
+			initializeSelect2();
 
 			// Enable taxonomy fields on form load.
 			hideToggleElements('tax');
@@ -81,14 +94,11 @@
 			} else {
 				jQuery('.wb-show-style-toggle').hide();
 			}
-
-		} // End after AJAX response
+		}
 
 		function afterFormSubmit() {
 			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
 			var queryString = jQuery('#filter-preset-create').serializeArray();
-			console.log('Form Data');
-			console.log(queryString);
 			jQuery.ajax({
 				url: wbcom_plugin_installer_params.ajax_url,
 				type: 'post',
@@ -101,7 +111,7 @@
 					}
 				}
 			});
-		} // End after Form submit
+		}
 
 		// Change form fields according to the selected filter for value.
 		jQuery('.wb-ajax-filter-modal-content').on('change', 'select[name="filters[type]"]', function () {
@@ -123,7 +133,7 @@
 					data: { action: 'check_filter_preset_title_wb', 'nonce': nonce, 'title': postTitle },
 					success: function (response) {
 						if ('exists' === response) {
-							alert('Filter title already exists.');
+							alert('Name already exists.');
 							jQuery('input[name="wb_ajax_filter_preset_title"]').val('');
 						}
 					}
@@ -343,7 +353,7 @@
 					jQuery('.wb-ajax-filter-modal-content').html(JSON.parse(response));
 					jQuery('.wb-ajax-filter-modal-container').css({
 						'opacity': 1,
-						'z-index': 999999
+						'z-index': 999
 					});
 					afterAjaxResponse();
 				}

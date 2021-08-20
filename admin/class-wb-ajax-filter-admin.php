@@ -219,6 +219,12 @@ class Wb_Ajax_Filter_Admin {
 							$price_ranges_key      = explode( ']', $str_after_brack[2] );
 							$price_ranges_meta_key = explode( ']', $str_after_brack[3] );
 							$filter[ $str_before_brack[0] ][ $price_ranges_key[0] ][ $price_ranges_meta_key[0] ] = $field['value'];
+						} elseif ( 'terms' === $str_before_brack[0] ) {
+							$term_data                        = get_term( $field['value'], $filter['taxonomy'] );
+							$tm                               = new stdClass();
+							$tm->id                           = $field['value'];
+							$tm->text                         = $term_data->name;
+							$filter[ $str_before_brack[0] ][] = $tm;
 						} else {
 							$filter[ $str_before_brack[0] ] = $field['value'];
 						}
@@ -515,17 +521,11 @@ class Wb_Ajax_Filter_Admin {
 					continue;
 				}
 				if ( 0 === $term->parent ) {
-					$tmp       = array(
-						'id' => $term->term_id,
-						'label' => $term->name,
-					);
+					$tmp       = array( $term->term_id, $term->name );
 					$results[] = $tmp;
 				} else {
 					$parent    = get_term_by( 'id', $term->parent, wp_unslash( $_GET['cat'] ) );
-					$tmp       = array(
-						'id' => $term->term_id,
-						'label' => $parent->name . ' > ' . $term->name,
-					);
+					$tmp       = array( $term->term_id, $parent->name . ' > ' . $term->name );
 					$results[] = $tmp;
 				}
 			}
