@@ -76,7 +76,7 @@ class Wb_Ajax_Filter_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wb-ajax-filter-admin.css', array(), $this->version, 'all' );
 		if ( 'wb-plugins_page_wb-ajax-filter-integration-settings' === $screen ) {
-			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2/dist/css/select2.min.css', array(), $this->version, 'all');	
+			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all');	
 		}
 	}
 
@@ -101,8 +101,7 @@ class Wb_Ajax_Filter_Admin {
 		 * class.
 		 */
 		if ( 'wb-plugins_page_wb-ajax-filter-integration-settings' === $screen ) {
-			wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2/dist/js/select2.full.min.js', array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( 'wb-select2-full', WB_AJAX_FILTER_URL . 'assets/js/select2/dist/js/select2.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
 		}
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-admin.js', array( 'jquery' ), $this->version, true );
 	}
@@ -516,10 +515,18 @@ class Wb_Ajax_Filter_Admin {
 					continue;
 				}
 				if ( 0 === $term->parent ) {
-					$results[] = array( $term->term_id, $term->name );
+					$tmp       = array(
+						'id' => $term->term_id,
+						'label' => $term->name,
+					);
+					$results[] = $tmp;
 				} else {
-						$parent    = get_term_by( 'id', $term->parent, wp_unslash( $_GET['cat'] ) );
-						$results[] = array( $term->term_id, $parent->name . ' > ' . $term->name );
+					$parent    = get_term_by( 'id', $term->parent, wp_unslash( $_GET['cat'] ) );
+					$tmp       = array(
+						'id' => $term->term_id,
+						'label' => $parent->name . ' > ' . $term->name,
+					);
+					$results[] = $tmp;
 				}
 			}
 			echo wp_json_encode( $results );
