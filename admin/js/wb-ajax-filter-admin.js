@@ -21,12 +21,19 @@
 
 			// Get all pre selected values
 			let terms = jQuery('#wb_ajax_filter_select2_terms').data('selected_terms');
-			terms.forEach(function(elem){
-				var option = new Option(elem.text, elem.id, true, true);
-				// Add all preselected values and mark as selected.
-				jQuery('#wb_ajax_filter_select2_terms').append(option);
-			});
-			jQuery('#wb_ajax_filter_select2_terms').trigger('change');
+			let orderBy = jQuery('.wb-filter-type-orderby').data('selected_orders');
+			if( terms !== '' ){
+				terms.forEach(function (elem) {
+					var option = new Option(elem.text, elem.id, true, true);
+					// Add all preselected values and mark as selected.
+					jQuery('#wb_ajax_filter_select2_terms').append(option);
+				});
+				jQuery('#wb_ajax_filter_select2_terms').trigger('change');
+			}
+			if (orderBy !== '') {
+				$('.wb-filter-type-orderby').val(orderBy);
+				$('.wb-filter-type-orderby').trigger('change');
+			}
 		}
 
 		// Show/hide fields according to filter for values
@@ -60,6 +67,7 @@
 
 		// Initializes select2 on selected element.
 		function initializeSelect2(){
+			$('.wb-filter-type-orderby').select2();
 			$('#wb_ajax_filter_select2_terms').select2({
 				ajax: {
 					url: wbcom_plugin_installer_params.ajax_url,
