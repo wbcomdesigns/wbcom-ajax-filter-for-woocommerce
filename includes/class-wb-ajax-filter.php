@@ -189,6 +189,7 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wp_ajax_add_price_range_field_wb', $plugin_admin, 'add_price_range_field_wb_callback' );
 		$this->loader->add_action( 'wp_ajax_enable_disable_single_filter_wb', $plugin_admin, 'enable_disable_single_filter_wb_callback' );
 		$this->loader->add_action( 'wp_ajax_edit_preset_post_title_wb', $plugin_admin, 'edit_preset_post_title_wb_callback' );
+		$this->loader->add_action( 'wp_ajax_customize_term_text_wb', $plugin_admin, 'customize_term_text_wb_callback' );
 		// Hook callback.
 		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_name_field', 10 );
 		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_for_field', 20 );

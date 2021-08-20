@@ -225,6 +225,10 @@ class Wb_Ajax_Filter_Admin {
 							$tm->id                           = $field['value'];
 							$tm->text                         = $term_data->name;
 							$filter[ $str_before_brack[0] ][] = $tm;
+						} elseif ( 'terms_text' === $str_before_brack[0] ) {
+							$price_ranges_key      = explode( ']', $str_after_brack[2] );
+							$price_ranges_meta_key = explode( ']', $str_after_brack[3] );
+							$filter[ $str_before_brack[0] ][ $price_ranges_key[0] ][ $price_ranges_meta_key[0] ] = $field['value'];
 						} else {
 							$filter[ $str_before_brack[0] ] = $field['value'];
 						}
@@ -486,6 +490,26 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
+	 * Customise terms text.
+	 */
+	public function customize_term_text_wb_callback() {
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		} else {
+			if ( ! isset( $_POST['id'] ) && ! isset( $_POST['text'] ) ) {
+				exit;
+			}
+			$term_id = sanitize_text_field( wp_unslash( $_POST['id'] ) );
+			$text    = sanitize_text_field( wp_unslash( $_POST['text'] ) );
+			ob_start();
+			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-customize-term.php';
+			$response = ob_get_clean();
+			echo wp_json_encode( $response );
+		}
+		exit();
+	}
+
+	/**
 	 * Actions performed to create tabs on the sub menu page.
 	 */
 	public function wb_ajax_filter_plugin_settings_tabs() {
@@ -520,14 +544,8 @@ class Wb_Ajax_Filter_Admin {
 				if ( strpos( $term->name, strtoupper( wp_unslash( $_GET['q'] ) ) ) === false && strpos( $term->name, strtolower( wp_unslash( $_GET['q'] ) ) ) === false ) {
 					continue;
 				}
-				if ( 0 === $term->parent ) {
-					$tmp       = array( $term->term_id, $term->name );
-					$results[] = $tmp;
-				} else {
-					$parent    = get_term_by( 'id', $term->parent, wp_unslash( $_GET['cat'] ) );
-					$tmp       = array( $term->term_id, $parent->name . ' > ' . $term->name );
-					$results[] = $tmp;
-				}
+				$tmp       = array( $term->term_id, $term->name );
+				$results[] = $tmp;
 			}
 			echo wp_json_encode( $results );
 		}

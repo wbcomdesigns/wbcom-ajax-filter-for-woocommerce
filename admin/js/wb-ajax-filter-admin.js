@@ -12,15 +12,21 @@
 		var url = new URL(url_string);
 		var urlAction = url.searchParams.get("action");
 		var urlSubAction = url.searchParams.get("wb");
+
+		// Check if user is on edit filter page
 		if ('edit' === urlAction && 'update' === urlSubAction){
+
+			// Initialize select2
 			initializeSelect2();
+
+			// Get all pre selected values
 			let terms = jQuery('#wb_ajax_filter_select2_terms').data('selected_terms');
 			terms.forEach(function(elem){
 				var option = new Option(elem.text, elem.id, true, true);
+				// Add all preselected values and mark as selected.
 				jQuery('#wb_ajax_filter_select2_terms').append(option);
 			});
 			jQuery('#wb_ajax_filter_select2_terms').trigger('change');
-
 		}
 
 		// Show/hide fields according to filter for values
@@ -81,6 +87,24 @@
 					cache: true
 				},
 				minimumInputLength: 1
+			});
+
+			$('#wb_ajax_filter_select2_terms').on('select2:select', function (e) {
+				var data = e.params.data;
+				let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
+				jQuery.ajax({
+					url: wbcom_plugin_installer_params.ajax_url,
+					type: 'post',
+					data: { action: 'customize_term_text_wb', 'nonce': nonce, 'id': data.id, 'text': data.text },
+					success: function (response) {
+						jQuery('.wb-tax-toggle').find('.terms-wrapper').append(JSON.parse(response));
+					}
+				});
+			});
+
+			$('#wb_ajax_filter_select2_terms').on('select2:unselect', function (e) {
+				var data = e.params.data;
+				jQuery('.terms-wrapper #wb_term_' + data.id).remove();
 			});
 		}
 

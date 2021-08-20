@@ -67,7 +67,18 @@ if ( empty( $filters ) || ( ! empty( $filters ) && 'tax' === $filters['type'] ) 
 <div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
 	<label><?php esc_html_e( 'Customize terms', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-		<div class="terms-wrapper ui-sortable"></div>
+		<div class="terms-wrapper ui-sortable">
+			<?php
+			if ( isset( $filters['terms_text'] ) ) {
+				foreach ( $filters['terms_text'] as $key => $val ) {
+					$term_id = $key;
+					$text    = $val['label'];
+					$tooltip = $val['tooltip'];
+					include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-customize-term.php';
+				}
+			}
+			?>
+		</div>
 	</div>
 </div>
 <div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
