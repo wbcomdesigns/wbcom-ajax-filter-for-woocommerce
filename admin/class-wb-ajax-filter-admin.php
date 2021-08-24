@@ -631,7 +631,7 @@ class Wb_Ajax_Filter_Admin {
 		add_settings_section( 'wb-ajax-filter-ajax-search-settings', ' ', array( $this, 'wb_ajax_filter_admin_ajax_search_settings_content' ), 'wb-ajax-filter-ajax-search-settings' );
 
 		$this->plugin_settings_tabs['wb-ajax-filter-search'] = esc_html__( 'Search Options', 'wb-ajax-filter' );
-		register_setting( 'wb_ajax_filter_admin_search_options', 'wb_ajax_filter_admin_search_options' );
+		register_setting( 'wb_ajax_filter_search_content_settings', 'wb_ajax_filter_search_content_settings' );
 		add_settings_section( 'wb-ajax-filter-search', ' ', array( $this, 'wb_ajax_filter_admin_search_content' ), 'wb-ajax-filter-search' );
 
 		$this->plugin_settings_tabs['wb-ajax-filter-output'] = esc_html__( 'Search Output', 'wb-ajax-filter' );

@@ -99,7 +99,7 @@ $wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' )
 						</label><br>
 					</td>
 				</tr>
-                <tr>
+				<tr>
 					<th scope="row">
 						<label>
 							<?php esc_html_e( 'Show the category list', 'wb-ajax-filter' ); ?>
