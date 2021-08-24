@@ -73,7 +73,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && 'tax' === $filters['type'] ) 
 				foreach ( $filters['terms_text'] as $key => $val ) {
 					$term_id = $key;
 					$text    = $val['label'];
-					$tooltip = $val['tooltip'];
+					$tooltip = ( isset( $val['tooltip'] ) ) ? $val['tooltip'] : '';
 					include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-customize-term.php';
 				}
 			}
