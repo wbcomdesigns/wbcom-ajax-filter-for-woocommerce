@@ -1,6 +1,6 @@
 <?php
 /**
- * The admin setting tab template.
+ * The admin SEO setting tab template.
  *
  * @link       support@wbcom.com
  * @since      1.0.0
