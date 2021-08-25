@@ -63,7 +63,6 @@ $wb_ajax_filter_admin_seo_options = get_option( 'wb_ajax_filter_admin_seo_option
 						</label><br>
 					</td>
 				</tr>
-				
 			</tbody>
 		</table>
 		<?php do_action( 'wb_ajax_filter_after_admin_seo_settings', $wb_ajax_filter_admin_seo_options ); ?>

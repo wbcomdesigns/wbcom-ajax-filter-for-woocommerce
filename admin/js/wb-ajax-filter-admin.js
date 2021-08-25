@@ -7,12 +7,16 @@
 	 */
 
 	jQuery(document).ready(function ($) {
-
+		jQuery(".wb-ajax-color-picker").wpColorPicker();
 		var url_string = window.location.href
 		var url = new URL(url_string);
 		var urlAction = url.searchParams.get("action");
 		var urlSubAction = url.searchParams.get("wb");
-
+		var urlTab = url.searchParams.get("tab") ? url.searchParams.get("tab") : false;
+		if ( urlTab && urlTab === 'wb-ajax-filter-output' ){
+			searchOutputTab();
+		}
+		//wb-ajax-filter-output
 		// Check if user is on edit filter page
 		if ('edit' === urlAction && 'update' === urlSubAction){
 
@@ -34,6 +38,47 @@
 				$('.wb-filter-type-orderby').val(orderBy);
 				$('.wb-filter-type-orderby').trigger('change');
 			}
+		}
+
+		function searchOutputTab(){
+			jQuery('#wb_upload_gif').on('click', function(e){
+				e.preventDefault();
+				var frame;
+				if (frame) {
+					frame.open();
+					return;
+				}
+				// Create new Media upload window
+				frame = wp.media({
+					title: 'Select or Upload Media',
+					button: {
+						text: 'Use this media'
+					},
+					library: {
+						type: 'image/gif' // Display only gif file in library.
+					},
+					uploader: {
+						type: 'image/gif' // Allow only gif file in upload.
+					},
+					multiple: false
+				});
+
+				frame.on('select', function () {
+					var attachment = frame.state().get('selection').first().toJSON();
+					if (attachment.type === 'image' && attachment.subtype === 'gif'){
+						jQuery('.gif-container').html('<img src="' + attachment.url + '" alt="" style="max-width:100%;"/>');
+						jQuery('input[name="wb_ajax_filter_search_output_settings[loader_attchment_id]"]').val(attachment.id);
+						jQuery('input[name="wb_ajax_filter_search_output_settings[loader_url]"]').val(attachment.url);
+					}
+				});
+				frame.open();
+			});
+			jQuery('#wb_reset_upload_gif').on('click', function(e){
+				e.preventDefault();
+				jQuery(this).parent().siblings('.gif-container').html('');
+				jQuery('input[name="wb_ajax_filter_search_output_settings[loader_attchment_id]"]').val('');
+				jQuery('input[name="wb_ajax_filter_search_output_settings[loader_url]"]').val('');
+			});
 		}
 
 		// Show/hide fields according to filter for values

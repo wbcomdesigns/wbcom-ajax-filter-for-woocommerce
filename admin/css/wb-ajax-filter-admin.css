@@ -139,3 +139,26 @@ span.view-all-presets {
 .wb-ajax-filter-toggle-row .wb-ajax-filter-toggle-title a {
     text-decoration: none;
 }
+
+.wb-ajax-filter-option-desc {
+    display: block;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.wb-ajax-filter-colorpicker {
+    display: flex;
+}
+
+.wb-ajax-filter-single-colorpicker {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin-left: 5%;
+}
+
+.wb-ajax-filter-single-colorpicker label {
+    font-size: 12px;
+    margin-bottom: 5%;
+    font-weight: 600;
+}

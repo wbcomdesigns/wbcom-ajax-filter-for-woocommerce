@@ -24,7 +24,7 @@ $wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' )
 		settings_fields( 'wb_ajax_filter_search_settings' );
 		do_settings_sections( 'wb_ajax_filter_search_settings' );
 		?>
-		<?php do_action( 'wb_ajax_filter_before_admin_settings', $wb_ajax_filter_search_settings ); ?>
+		<?php do_action( 'wb_ajax_filter_before_admin_search_settings', $wb_ajax_filter_search_settings ); ?>
 		<table class="form-table">
 			<tbody>
 				<tr>
@@ -114,7 +114,7 @@ $wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' )
 				</tr>
 			</tbody>
 		</table>
-		<?php do_action( 'wb_ajax_filter_after_admin_settings', $wb_ajax_filter_search_settings ); ?>
+		<?php do_action( 'wb_ajax_filter_after_admin_search_settings', $wb_ajax_filter_search_settings ); ?>
 		<?php submit_button(); ?>
 	</form>
 </div>

@@ -25,7 +25,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 		settings_fields( 'wb_ajax_filter_admin_general_options' );
 		do_settings_sections( 'wb_ajax_filter_admin_general_options' );
 		?>
-		<?php do_action( 'wb_ajax_filter_before_admin_settings', $wb_ajax_filter_general_options ); ?>
+		<?php do_action( 'wb_ajax_filter_before_admin_general_settings', $wb_ajax_filter_general_options ); ?>
 		<table class="form-table">
 			<tbody>
 				<tr>
@@ -99,7 +99,8 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enable to show the "Reset filter" button to allow the user to cancel the filter selection in one click', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					</td>
-				</tr><tr>
+				</tr>
+				<tr>
 					<th scope="row">
 						<label>
 							<?php esc_html_e( 'Show "Clear" above each filter', 'wb-ajax-filter' ); ?>
@@ -111,7 +112,8 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enable to show the "Clear" link above each filter of the preset', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					</td>
-				</tr><tr>
+				</tr>
+				<tr>
 					<th scope="row">
 						<label>
 							<?php esc_html_e( 'Show active filters as labels', 'wb-ajax-filter' ); ?>
@@ -150,7 +152,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 				</tr>
 			</tbody>
 		</table>
-		<?php do_action( 'wb_ajax_filter_after_admin_settings', $wb_ajax_filter_general_options ); ?>
+		<?php do_action( 'wb_ajax_filter_after_admin_general_settings', $wb_ajax_filter_general_options ); ?>
 		<?php submit_button(); ?>
 	</form>
 </div>

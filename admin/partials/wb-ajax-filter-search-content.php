@@ -18,13 +18,13 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 ?>
 <div class="wbcom-tab-content">
 <div class="wb-ajax-filter-tab-content">
-	<h2 class="wp-heading-inline"><?php esc_html_e( 'Search Settings', 'wb-ajax-filter' ); ?></h2>
+	<h2 class="wp-heading-inline"><?php esc_html_e( 'Search Options', 'wb-ajax-filter' ); ?></h2>
 	<form method="post" action="options.php">
 		<?php
 		settings_fields( 'wb_ajax_filter_search_content_settings' );
 		do_settings_sections( 'wb_ajax_filter_search_content_settings' );
 		?>
-		<?php do_action( 'wb_ajax_filter_before_admin_settings', $wb_ajax_filter_search_content_settings ); ?>
+		<?php do_action( 'wb_ajax_filter_before_admin_search_option_settings', $wb_ajax_filter_search_content_settings ); ?>
 		<table class="form-table">
 			<tbody>
 				<tr>
@@ -226,7 +226,7 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 				</tr>
 			</tbody>
 		</table>
-		<?php do_action( 'wb_ajax_filter_after_admin_settings', $wb_ajax_filter_search_content_settings ); ?>
+		<?php do_action( 'wb_ajax_filter_after_admin_search_option_settings', $wb_ajax_filter_search_content_settings ); ?>
 		<?php submit_button(); ?>
 	</form>
 </div>

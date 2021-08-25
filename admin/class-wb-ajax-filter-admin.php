@@ -75,9 +75,11 @@ class Wb_Ajax_Filter_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wb-ajax-filter-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'wp-color-picker' );
 		if ( 'wb-plugins_page_wb-ajax-filter-integration-settings' === $screen ) {
-			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all');	
+			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all');
 		}
+		wp_enqueue_style( 'wp-color-picker' );
 	}
 
 	/**
@@ -104,6 +106,8 @@ class Wb_Ajax_Filter_Admin {
 			wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
 		}
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-admin.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'wp-color-picker' );
+		wp_enqueue_media();
 	}
 
 	/** Register post type for presets */
@@ -635,7 +639,7 @@ class Wb_Ajax_Filter_Admin {
 		add_settings_section( 'wb-ajax-filter-search', ' ', array( $this, 'wb_ajax_filter_admin_search_content' ), 'wb-ajax-filter-search' );
 
 		$this->plugin_settings_tabs['wb-ajax-filter-output'] = esc_html__( 'Search Output', 'wb-ajax-filter' );
-		register_setting( 'wb_ajax_filter_admin_output_options', 'wb_ajax_filter_admin_output_options' );
+		register_setting( 'wb_ajax_filter_search_output_settings', 'wb_ajax_filter_search_output_settings' );
 		add_settings_section( 'wb-ajax-filter-output', ' ', array( $this, 'wb_ajax_filter_admin_output_content' ), 'wb-ajax-filter-output' );
 	}
 
