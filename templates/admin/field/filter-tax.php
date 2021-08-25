@@ -50,9 +50,6 @@ if ( empty( $filters ) || ( ! empty( $filters ) && 'tax' === $filters['type'] ) 
 			<option value="checkbox" <?php echo ( isset( $filters['filter_design'] ) && 'checkbox' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Checkbox', 'wb-ajax-filter' ); ?></option>
 			<option value="radio" <?php echo ( isset( $filters['filter_design'] ) && 'radio' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Radio', 'wb-ajax-filter' ); ?></option>
 			<option value="select" <?php echo ( isset( $filters['filter_design'] ) && 'select' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Select', 'wb-ajax-filter' ); ?></option>
-			<option value="text" <?php echo ( isset( $filters['filter_design'] ) && 'text' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Text', 'wb-ajax-filter' ); ?></option>
-			<option value="color" <?php echo ( isset( $filters['filter_design'] ) && 'color' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Color Swatches', 'wb-ajax-filter' ); ?></option>
-			<option value="label" <?php echo ( isset( $filters['filter_design'] ) && 'label' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Label/Image', 'wb-ajax-filter' ); ?></option>
 		</select>
 	</div>
 	<span class="description"><?php esc_html_e( 'Select the filter type for this filter', 'wb-ajax-filter' ); ?></span>
