@@ -1,17 +1,31 @@
-<div class="wb-ajax-filter filter-tax" id="filter_59_0" data-filter-type="tax" data-filter-id="0" data-taxonomy="product_cat" data-multiple="no" data-relation="and">
-    <h4 class="filter-title"><?php esc_html( $filters['filter_title'] ); ?></h4>
-    <div class="filter-content">	
-        <ul class="filter-items filter-radio  level-0">
-            <?php foreach ( $filter['terms'] as $tm ) {
-                $term = get_term( $tm->id, $filters['taxonomy'] );
-                ?>
-            <li class="filter-item radio  level-0">
-                <label>
-                    <input type="checkbox" name="filter[<?php echo esc_html( $_REQUEST['preset'] ); ?>][<?php echo esc_html( $term_count ); ?>]" value="yes">
-                    <a href="<?php echo site_url(); ?>?wb_ajax=1&product_cat    =<?php echo esc_html( $term->slug ); ?>" class="term-label tooltip-added" data-title="<?php echo esc_html( $term->name ); ?>"><?php echo esc_html( $term->name ); ?></a>
-                </label>
-            </li>
-            <?php } ?>
-        </ul>
-    </div>
+<?php
+/**
+ * The template for filter design checkbox.
+ *
+ * @link       https://wbcomdesigns.com/
+ * @since      1.0.0
+ *
+ * @package    Wb_Ajax_Filter
+ * @subpackage Wb_Ajax_Filter/template/admin
+ */
+
+?>
+<div class="wb-ajax-filter filter-tax">
+	<h4 class="filter-title"><?php esc_html( $filters['filter_title'] ); ?></h4>
+	<div class="filter-content">
+		<ul class="filter-items filter-radio  level-0">
+			<?php
+			foreach ( $filters['terms'] as $tm ) {
+				$term_data = get_term( $tm->id, $filters['taxonomy'] );
+				?>
+				<li class="filter-item radio level-0">
+					<label>
+						<input type="checkbox" name="filter[<?php echo esc_attr( $preset_id ); ?>][<?php echo esc_attr( $tm->id ); ?>]" value="<?php echo esc_attr( $term_data->slug ); ?>">
+						<a href="<?php echo esc_attr( site_url() ); ?>?wb_ajax=1&product_cat=<?php echo esc_attr( $term_data->slug ); ?>" class="term-label tooltip-added" data-title="<?php echo esc_attr( $term_data->name ); ?>"><?php echo esc_html( $term_data->name ); ?></a>
+					</label>
+				</li>
+			<?php } ?>
+		</ul>
+	</div>
 </div>
+

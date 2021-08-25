@@ -2,3 +2,10 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+.filter-content ul.filter-items li.filter-item {
+     list-style-type: none;
+ }
+
+.filter-content ul.filter-items {
+    padding-left: 0px;
+}

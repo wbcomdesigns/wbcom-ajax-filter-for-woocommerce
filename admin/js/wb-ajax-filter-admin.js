@@ -128,6 +128,9 @@
 					},
 					processResults: function (data) {
 						var options = [];
+						if ($('select[name="filters[taxonomy]"]').val() === ''){
+							alert('Please select taxonomy');
+						}
 						if (data) {
 							$.each(data, function (index, text) {
 								options.push({ id: text[0], text: text[1] });
