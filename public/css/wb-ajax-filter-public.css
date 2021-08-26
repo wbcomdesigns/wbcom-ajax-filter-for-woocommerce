@@ -9,3 +9,8 @@
 .filter-content ul.filter-items {
     padding-left: 0px;
 }
+
+ul.wb-price-ranges {
+    list-style-type: none;
+    padding-left: 0px;
+}

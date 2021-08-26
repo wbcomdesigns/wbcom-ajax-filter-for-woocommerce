@@ -29,4 +29,13 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+	jQuery(document).ready(function ($) {
+		jQuery(".js-range-slider").ionRangeSlider({
+			onFinish: function (data) {
+				let fromPrice = data.from;
+				let toPrice = data.to;
+			},
+		});
+	});
+	
 })( jQuery );

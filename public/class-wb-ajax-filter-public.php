@@ -73,6 +73,7 @@ class Wb_Ajax_Filter_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wb-ajax-filter-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/css/ion.rangeSlider.min.css', array(), $this->version, 'all');
 
 	}
 
@@ -98,6 +99,7 @@ class Wb_Ajax_Filter_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-public.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'wb_ajax_filter_shortcode', plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-shortcode.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'jquery-ui-slider' );
+		wp_enqueue_script( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/js/ion.rangeSlider.min.js', array( 'jquery' ), $this->version, true );
 
 	}
 
