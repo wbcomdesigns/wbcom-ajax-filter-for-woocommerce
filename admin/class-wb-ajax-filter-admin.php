@@ -275,7 +275,7 @@ class Wb_Ajax_Filter_Admin {
 							break;
 						}
 					}
-					if ( $new_filter === 0 ) {
+					if ( 0 === $new_filter ) {
 						$filters[] = $filter;
 					}
 					update_post_meta( $post_id, '_wb_filter', $filters );
@@ -397,9 +397,9 @@ class Wb_Ajax_Filter_Admin {
 					unset( $copy_filter['filter_id'] );
 					unset( $copy_filter['filter_title'] );
 					$copy_filter['filter_id']    = esc_html( uniqid( 'wb_filter_' ) );
-					$title                        = $filter['filter_title'] . ' Copy';
+					$title                       = $filter['filter_title'] . ' Copy';
 					$copy_filter['filter_title'] = $title;
-					$filters[]                    = $copy_filter;
+					$filters[]                   = $copy_filter;
 					update_post_meta( $preset_id, '_wb_filter', $filters );
 				}
 			}
@@ -650,10 +650,6 @@ class Wb_Ajax_Filter_Admin {
 		register_setting( 'wb_ajax_filter_admin_customization_options', 'wb_ajax_filter_admin_customization_options' );
 		add_settings_section( 'wb-ajax-filter-customization', ' ', array( $this, 'wb_ajax_filter_admin_customization_content' ), 'wb-ajax-filter-customization' );
 
-		$this->plugin_settings_tabs['wb-ajax-filter-seo'] = esc_html__( 'SEO', 'wb-ajax-filter' );
-		register_setting( 'wb_ajax_filter_admin_seo_options', 'wb_ajax_filter_admin_seo_options' );
-		add_settings_section( 'wb-ajax-filter-seo', ' ', array( $this, 'wb_ajax_filter_admin_seo_content' ), 'wb-ajax-filter-seo' );
-
 		$this->plugin_settings_tabs['wb-ajax-filter-ajax-search-settings'] = esc_html__( 'Search Settings', 'wb-ajax-filter' );
 		register_setting( 'wb_ajax_filter_search_settings', 'wb_ajax_filter_search_settings' );
 		add_settings_section( 'wb-ajax-filter-ajax-search-settings', ' ', array( $this, 'wb_ajax_filter_admin_ajax_search_settings_content' ), 'wb-ajax-filter-ajax-search-settings' );
@@ -693,13 +689,6 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function wb_ajax_filter_admin_customization_content() {
 		include 'partials/wb-ajax-filter-setting-customization-tab.php';
-	}
-
-	/**
-	 * Include Wbcom ajax filter for woocommerce admin seo setting tab content file.
-	 */
-	public function wb_ajax_filter_admin_seo_content() {
-		include 'partials/wb-ajax-filter-setting-seo-tab.php';
 	}
 
 	/**
