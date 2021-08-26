@@ -104,6 +104,8 @@ class Wb_Ajax_Filter_Admin {
 		 */
 		if ( 'wb-plugins_page_wb-ajax-filter-integration-settings' === $screen ) {
 			wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( 'jquery-ui-core' );
+			wp_enqueue_script( 'jquery-ui-sortable' );
 		}
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-admin.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'wp-color-picker' );
@@ -509,6 +511,28 @@ class Wb_Ajax_Filter_Admin {
 			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-customize-term.php';
 			$response = ob_get_clean();
 			echo wp_json_encode( $response );
+		}
+		exit();
+	}
+
+	/**
+	 * Sort single filters.
+	 */
+	public function sortable_single_filters_wb_callback() {
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		} else {
+			if ( ! isset( $_POST['old_index'] ) && ! isset( $_POST['new_index'] ) && ! isset( $_POST['preset'] ) ) {
+				exit;
+			}
+			$old_index = sanitize_text_field( wp_unslash( $_POST['old_index'] ) );
+			$new_index = sanitize_text_field( wp_unslash( $_POST['new_index'] ) );
+			$preset    = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
+			$filters   = get_post_meta( $preset, '_wb_filter', true );
+			$filter    = $filters[ $old_index ];
+			unset( $filters[ $old_index ] );
+			array_splice( $filters, $new_index, 0, array( $filter ) );
+			update_post_meta( $preset, '_wb_filter', $filters );
 		}
 		exit();
 	}

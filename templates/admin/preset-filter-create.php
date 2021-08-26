@@ -53,7 +53,7 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 		<div class="preset-filters-wrapper">
 			<h4><?php esc_html_e( 'Filters of this preset', 'wb-ajax-filter' ); ?></h4>
 			<div class="preset-filters ui-sortable">
-				<div>
+				<div class="wb-ajax-filters-single-container">
 					<p>
 						<?php
 						if ( empty( $filters ) ) {

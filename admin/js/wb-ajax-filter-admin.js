@@ -7,6 +7,31 @@
 	 */
 
 	jQuery(document).ready(function ($) {
+		// Preset single filters sort
+		$(".wb-ajax-filters-single-container").sortable({
+			update: function (event, ui) {
+				let elem = ui.item[0];
+				let elemMovedIndex = elem.getAttribute("data-item_key");
+				jQuery('.wb-ajax-filters-single-container').find('.wb-ajax-filter-toggle-row').each(function(index, elm){
+					let oldIndex = jQuery(this).data('item_key');
+					let preset = jQuery(this).data('preset');
+					if (elemMovedIndex == oldIndex && preset != ""){
+						let newIndex = index;
+						let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
+						jQuery.ajax({
+							url: wbcom_plugin_installer_params.ajax_url,
+							type: 'post',
+							data: { action: 'sortable_single_filters_wb', 'nonce': nonce,'preset': preset, 'old_index': oldIndex, 'new_index': newIndex },
+							success: function (response) {
+								location.reload();
+							}
+						});
+					}
+					
+				});
+			}
+		});
+		
 		jQuery(".wb-ajax-color-picker").wpColorPicker();
 		var url_string = window.location.href
 		var url = new URL(url_string);
@@ -16,7 +41,7 @@
 		if ( urlTab && urlTab === 'wb-ajax-filter-output' ){
 			searchOutputTab();
 		}
-		//wb-ajax-filter-output
+
 		// Check if user is on edit filter page
 		if ('edit' === urlAction && 'update' === urlSubAction){
 
