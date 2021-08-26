@@ -33,6 +33,8 @@ $highest_price = $prod->get_price();
 					data-from="0"
 					data-to="<?php echo esc_attr( $highest_price ); ?>"
 					data-grid="true"
+					data-skin="square"
+					data-prefix="$"
 					/>
 			</div>
 		</div>
