@@ -205,6 +205,15 @@
 			hideToggleElements(filterFor);
 		});
 
+		jQuery('.wb-ajax-filter-modal-content').on('change', '.wb-filter-type-price-range-unlimited', function () {
+			if (jQuery(this).is(':checked') ) {
+				jQuery(this).closest('.unlimited').next('p').hide();
+				jQuery(this).closest('.unlimited').next('p').find('.wb-input').val('');
+			} else {
+				jQuery(this).closest('.unlimited').next('p').show();
+			}
+		});
+
 		// Check if the Filter preset title already exists
 		jQuery('input[name="wb_ajax_filter_preset_title"]').keyup(function () {
 			let postTitle = jQuery(this).val();
