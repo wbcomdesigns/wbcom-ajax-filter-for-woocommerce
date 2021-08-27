@@ -22,12 +22,12 @@ $sort = array(
 	<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
 	<div class="filter-content">
 		<div class="wb-ajax-filter filter-orderby">
-			<select>
-				<option><?php esc_html_e( 'Default Sorting', 'wb-ajax-filter' ); ?></option>
+			<select name="filters[orderby]" class="wb-ajax-filter-selectible" data-filter="orderby">
+				<option value=""><?php esc_html_e( 'Default Sorting', 'wb-ajax-filter' ); ?></option>
 				<?php
 				foreach ( $filters['order_options'] as $opt ) {
 					?>
-					<option value="<?php echo esc_attr( $opt ); ?>"><?php echo esc_html( $sort[ $opt ] ); ?></option>
+					<option value="<?php echo esc_attr( $opt ); ?>" <?php echo ( isset( $params['orderby'] ) && $opt === $params['orderby'] ) ? 'selected' : ''; ?>><?php echo esc_html( $sort[ $opt ] ); ?></option>
 				<?php } ?>
 			</select>
 		</div>

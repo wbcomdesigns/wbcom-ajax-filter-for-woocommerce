@@ -25,17 +25,17 @@ $highest_price = $prod->get_price();
 	<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
 	<div class="filter-content">
 		<div class="wb-ajax-filter filter-price-slider">
-			<div class="wb-ajax-filter-slidecontainer" style="width: 30%;">
+			<div class="wb-ajax-filter-slidecontainer">
 				<input type="text" class="js-range-slider" name="my_range" value=""
 					data-type="double"
 					data-min="0"
 					data-max="<?php echo esc_attr( $highest_price ); ?>"
-					data-from="0"
-					data-to="<?php echo esc_attr( $highest_price ); ?>"
+					data-from="<?php echo ( isset( $params['min_price'] ) ) ? esc_attr( $params['min_price'] ) : '0'; ?>"
+					data-to="<?php echo ( isset( $params['max_price'] ) ) ? esc_attr( $params['max_price'] ) : esc_attr( $highest_price ); ?>"
 					data-grid="true"
 					data-skin="square"
 					data-prefix="$"
-					/>
+				/>
 			</div>
 		</div>
 	</div>

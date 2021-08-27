@@ -507,6 +507,7 @@ class Wb_Ajax_Filter_Admin {
 			}
 			$term_id = sanitize_text_field( wp_unslash( $_POST['id'] ) );
 			$text    = sanitize_text_field( wp_unslash( $_POST['text'] ) );
+			$tooltip = sanitize_text_field( wp_unslash( $_POST['text'] ) );
 			ob_start();
 			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-customize-term.php';
 			$response = ob_get_clean();

@@ -29,12 +29,12 @@ sort( $ratings );
 	<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
 	<div class="filter-content">
 		<div class="wb-ajax-filter filter-review">
-			<select>
+			<select class="wb-ajax-filter-selectible" data-filter="rating_filter">
 				<option value=""><?php esc_html_e( 'Any rating', 'wb-ajax-filter' ); ?></option>
 			<?php
 			foreach ( $ratings as $val ) {
 				?>
-				<option value="<?php echo esc_attr( $val ); ?>">
+				<option value="<?php echo esc_attr( $val ); ?>" <?php echo ( isset( $params['rating_filter'] ) && $val === $params['rating_filter'] ) ? 'selected' : ''; ?>>
 				<?php printf( 'Rated %1$s out of 5', esc_html( $val ) ); ?>
 			</option>
 			<?php } ?>

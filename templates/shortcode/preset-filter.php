@@ -16,8 +16,25 @@
  * @var $filters   array
  */
 
+if ( isset( $_GET ) ) {
+	$params     = array();
+	$get_params = $_GET;
+	foreach ( $get_params as $key => $param ) {
+		$values = explode( ',', $param );
+		if ( count( $values ) > 1 ) {
+			$tmp = array();
+			foreach ( $values as $val ) {
+				$tmp[] = $val;
+			}
+			$params[ $key ] = $tmp;
+		} else {
+			$params[ $key ] = $param;
+		}
+	}
+}
+
 ?>
-<div class="wb-ajax-filters no-title enhanced" id="preset_<?php echo esc_attr( $preset_id ); ?>" data-preset-id="<?php echo esc_attr( $preset_id ); ?>" data-target="">
+<div class="wb-ajax-filters no-title" id="preset_<?php echo esc_attr( $preset_id ); ?>" data-preset-id="<?php echo esc_attr( $preset_id ); ?>">
 	<div class="wb-ajax-filters-container">
 		<form method="POST">
 			<?php
@@ -26,7 +43,7 @@
 				if ( strpos( $filters['type'], '_' ) !== false ) {
 					$filters['type'] = str_replace( '_', '-', $filters['type'] );
 				}
-				include WB_AJAX_FILTER_TEMPLATE_PATH . 'filters/filter-' . $filters['type'] . '.php';
+				require WB_AJAX_FILTER_TEMPLATE_PATH . 'filters/filter-' . $filters['type'] . '.php';
 				$filter_count++;
 			}
 			?>
