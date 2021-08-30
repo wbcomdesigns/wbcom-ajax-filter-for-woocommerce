@@ -30,6 +30,19 @@ $wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' )
 				<tr>
 					<th scope="row">
 						<label>
+							<?php esc_html_e( 'Enable Search', 'wb-ajax-filter' ); ?>
+						</label>
+					</th>
+					<td>
+						<label>
+							<input name="wb_ajax_filter_search_settings[enable_search]" type="checkbox" value="yes" <?php ( isset( $wb_ajax_filter_search_settings['enable_search'] ) ) ? checked( $wb_ajax_filter_search_settings['enable_search'], 'yes' ) : ''; ?>>
+							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enable/Disable search field.', 'wb-ajax-filter' ); ?></span>
+						</label><br>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label>
 							<?php esc_html_e( 'Search input label', 'wb-ajax-filter' ); ?>
 						</label>
 					</th>
@@ -94,7 +107,7 @@ $wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' )
 					</th>
 					<td>
 						<label>
-							<input name="wb_ajax_filter_search_settings[show_search_list]" type="checkbox" value="yes"<?php ( isset( $wb_ajax_filter_search_settings['show_search_list'] ) ) ? checked( $wb_ajax_filter_search_settings['show_search_list'], 'yes' ) : ''; ?>>
+							<input name="wb_ajax_filter_search_settings[show_search_list]" type="checkbox" value="yes" <?php ( isset( $wb_ajax_filter_search_settings['show_search_list'] ) ) ? checked( $wb_ajax_filter_search_settings['show_search_list'], 'yes' ) : ''; ?>>
 							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Show filter for search fields (it allows searching the Whole site or only among products)', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					</td>

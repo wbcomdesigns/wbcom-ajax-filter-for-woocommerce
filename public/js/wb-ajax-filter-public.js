@@ -7,22 +7,13 @@
 	 */
 
 	jQuery( document ).ready( function ($) {
+		jQuery('.wb-ajax-search_categories').select2();
+		jQuery('.wb-ajax-filter-post-type').select2();
 		var url_string = window.location.href
 		var urlHost = location.protocol + '//' + location.host + location.pathname;
 		let url = new URL( url_string );
 		let params = new URLSearchParams( url.search );
 		
-		// Get all parameters from url
-		function getAllFields () {
-			var vars   = [], hash;
-			var hashes = window.location.href.slice( window.location.href.indexOf( '?' ) + 1 ).split( '&' );
-			for ( var i = 0; i < hashes.length; i++ ) {
-				hash            = hashes[ i ].split( '=' );
-				vars[ hash[0] ] = hash[1];
-			}
-			return vars;
-		}
-
 		// Remove field from url
 		function removeField ( param ) {
 			return params.delete( param )

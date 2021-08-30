@@ -32,8 +32,16 @@ if ( isset( $_GET ) ) {
 		}
 	}
 }
-
 ?>
+<div class="wb-ajax-filters no-title">
+	<div class="wb-ajax-filters-container">
+		<form method="GET" style="display: flex;">
+			<?php
+			require_once WB_AJAX_FILTER_TEMPLATE_PATH . 'public/search-form.php';
+			?>
+		</form>
+	</div>
+</div>
 <div class="wb-ajax-filters no-title" id="preset_<?php echo esc_attr( $preset_id ); ?>" data-preset-id="<?php echo esc_attr( $preset_id ); ?>">
 	<div class="wb-ajax-filters-container">
 		<form method="POST">
