@@ -77,7 +77,7 @@ class Wb_Ajax_Filter_Admin {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wb-ajax-filter-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'wp-color-picker' );
 		if ( 'wb-plugins_page_wb-ajax-filter-integration-settings' === $screen ) {
-			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all');
+			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
 		}
 		wp_enqueue_style( 'wp-color-picker' );
 	}
@@ -583,31 +583,27 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Filter preset shortcode callback.
-	 *
-	 * @param attr $attr The params for shortcode.
 	 */
-	public function filter_preset_shortcode_callback( $attr ) {
-		$post_name = $attr['slug'];
-		$args      = array(
-			'name'        => $post_name,
+	public function filter_preset_shortcode_callback() {
+		$args    = array(
 			'post_type'   => 'wb_filter_preset',
 			'post_status' => 'publish',
-			'numberposts' => 1,
+			'numberposts' => -1,
 		);
-		$preset    = get_posts( $args );
-		if ( $preset ) {
-			$preset_id   = $preset[0]->ID;
-			$all_filters = get_post_meta( $preset_id, '_wb_filter', true );
-			$enabled     = get_post_meta( $preset_id, 'preset_enabled', true );
-			if ( 'yes' === $enabled ) {
-				$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/preset-filter.php';
-				if ( file_exists( $custom_template ) ) {
-					include_once $custom_template;
-				} else {
-					include_once WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
+		$presets = get_posts( $args );
+		if ( ! empty( $presets ) ) {
+			foreach ( $presets as $preset ) {
+				$preset_id   = $preset->ID;
+				$all_filters = get_post_meta( $preset_id, '_wb_filter', true );
+				$enabled     = get_post_meta( $preset_id, 'preset_enabled', true );
+				if ( 'yes' === $enabled ) {
+					$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/preset-filter.php';
+					if ( file_exists( $custom_template ) ) {
+						include $custom_template;
+					} else {
+						include WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
+					}
 				}
-			} else {
-				echo esc_html__( 'This filter is disabled.', 'wb-ajax-filter' );
 			}
 		}
 	}
