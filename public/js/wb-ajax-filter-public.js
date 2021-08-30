@@ -72,11 +72,8 @@
 				for(let i=0; i <= filters.length; i++ ){
 					removeField(filters[i]);
 				}
-				console.log(filters);
 			} else {
-				
 				removeField(filter);
-				console.log(params);
 			}
 			
 			location.search = params.toString();

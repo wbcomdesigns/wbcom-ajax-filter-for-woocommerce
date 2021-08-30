@@ -9,19 +9,21 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
-$sort        = array(
+$sort                           = array(
 	'popularity' => 'Sort by popularity',
 	'rating'     => 'Sort by average rating',
 	'date'       => 'Sort by latest',
 	'price'      => 'Sort by price: low to high',
 	'price-desc' => 'Sort by price: high to low',
 );
-$clear_style = 'display:none';
-
+$clear_style                    = 'display:none';
+$wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
 ?>
 <div class="wb-ajax-filter-container-single filter-orderby">
 	<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
+	<?php if ( isset( $wb_ajax_filter_general_options['show_clear_filter'] ) && 'yes' === $wb_ajax_filter_general_options['show_clear_filter'] ) { ?>
 	<a class="wb-ajax-clear-single-filter" data-filter="<?php echo esc_attr( $filter_taxonomy ); ?>" style="<?php echo ( ! isset( $_GET['orderby'] ) ) ? esc_attr( $clear_style ) : ''; ?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
+	<?php } ?>
 	<div class="filter-content">
 		<div class="wb-ajax-filter filter-orderby">
 			<select name="filters[orderby]" class="wb-ajax-filter-selectible" data-filter="orderby">
