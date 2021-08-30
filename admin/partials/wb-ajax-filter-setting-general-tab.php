@@ -87,7 +87,8 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enable to hide "out of stock" products from the results.', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					</td>
-				</tr><tr>
+				</tr>
+				<tr>
 					<th scope="row">
 						<label>
 							<?php esc_html_e( 'Show reset button', 'wb-ajax-filter' ); ?>
@@ -97,6 +98,28 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 						<label>
 							<input name="wb_ajax_filter_admin_general_options[show_reset]" type="checkbox" value="yes"<?php ( isset( $wb_ajax_filter_general_options['show_reset'] ) ) ? checked( $wb_ajax_filter_general_options['show_reset'], 'yes' ) : ''; ?>>
 							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enable to show the "Reset filter" button to allow the user to cancel the filter selection in one click', 'wb-ajax-filter' ); ?></span>
+						</label><br>
+					</td>
+				</tr>
+				<tr style="<?php echo ( isset( $wb_ajax_filter_general_options['show_reset'] ) && 'yes' === $wb_ajax_filter_general_options['show_reset'] ) ? '' : 'display:none;';?>">
+					<th scope="row">
+						<label>
+							<?php esc_html_e( 'Reset button position', 'wb-ajax-filter' ); ?>
+						</label>
+					</th>
+					<td>
+						<label>
+							<input name="wb_ajax_filter_admin_general_options[reset_button_position]" type="radio" value="before_filters" <?php ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) ) ? checked( $wb_ajax_filter_general_options['reset_button_position'], 'before_filters' ) : ''; ?>>
+							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Before filters', 'wb-ajax-filter' ); ?></span>
+						</label><br>
+						<label>
+							<input name="wb_ajax_filter_admin_general_options[reset_button_position]" type="radio" value="after_filters" <?php ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) ) ? checked( $wb_ajax_filter_general_options['reset_button_position'], 'after_filters' ) : ''; ?>>
+							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'After filters', 'wb-ajax-filter' ); ?></span>
+						</label><br>
+						<label>
+							<input name="wb_ajax_filter_admin_general_options[reset_button_position]" type="radio" value="before_products" <?php ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) ) ? checked( $wb_ajax_filter_general_options['reset_button_position'], 'before_products' ) : ''; ?>>
+							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Above products list', 'wb-ajax-filter' ); ?></span>
+							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Choose the default position for reset button', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					</td>
 				</tr>

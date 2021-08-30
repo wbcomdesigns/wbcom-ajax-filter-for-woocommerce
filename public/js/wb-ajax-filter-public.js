@@ -56,7 +56,7 @@
 		jQuery('.wb-tooltip-added').on('mouseover', function(){
 			jQuery(this).find('span').css({
 				'opacity': 1
-			});			
+			});
 		});
 
 		jQuery('.wb-tooltip-added').on('mouseleave', function () {
@@ -65,6 +65,7 @@
 			})
 		});
 
+		// Clear single filter
 		jQuery('.wb-ajax-clear-single-filter').on('click', function(){
 			let filter = jQuery(this).data('filter');
 			if ( filter.indexOf(',') != -1 ) {
@@ -75,7 +76,17 @@
 			} else {
 				removeField(filter);
 			}
-			
+			location.search = params.toString();
+		});
+
+		// Reset filters
+		jQuery('.wb-ajax-reset-all-filters').on('click', function () {
+			var hash;
+			var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+			for (var i = 0; i < hashes.length; i++) {
+				hash = hashes[i].split('=');
+				removeField(hash[0]);
+			}
 			location.search = params.toString();
 		});
 
