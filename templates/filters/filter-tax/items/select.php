@@ -20,7 +20,7 @@
 				foreach ( $filters['terms'] as $tm ) {
 					$term_data = get_term( $tm->id, $filters['taxonomy'] );
 					?>
-					<option value="<?php echo esc_attr( $term_data->slug ); ?>" <?php echo ( isset( $params[ $filter_taxonomy ] ) && $term_data->slug === $params[ $filter_taxonomy ] ) ? 'selected' : ''; ?>><?php echo esc_attr( $term_data->name ); ?></option>
+					<option value="<?php echo esc_attr( $term_data->slug ); ?>" <?php echo ( isset( $params[ $filter_taxonomy ] ) && $term_data->slug === $params[ $filter_taxonomy ] ) ? 'selected' : ''; ?> <?php echo ( 0 === $term_data->count ) ? 'disabled' : ''; ?>><?php echo esc_attr( $term_data->name ); ?></option>
 				<?php } ?>
 			</select>
 		</div>
