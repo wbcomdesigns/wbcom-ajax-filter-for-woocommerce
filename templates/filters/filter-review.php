@@ -24,9 +24,11 @@ foreach ( $commnts as $commnt ) {
 	}
 }
 sort( $ratings );
+$clear_style = 'display:none;';
 ?>
-<div class="wb-ajax-filter wb-ajax-filter-review" id="filter_<?php echo esc_attr( $preset_id . '_' . $filter_count ); ?>" data-filter-type="<?php echo esc_attr( $filters['type'] ); ?>" data-filter-id="<?php echo esc_attr( $filter_count ); ?>" >
+<div class="wb-ajax-filter-container-single wb-ajax-filter-review" id="filter_<?php echo esc_attr( $preset_id . '_' . $filter_count ); ?>" data-filter-type="<?php echo esc_attr( $filters['type'] ); ?>" data-filter-id="<?php echo esc_attr( $filter_count ); ?>" >
 	<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
+	<a class="wb-ajax-clear-single-filter" data-filter="rating_filter" style="<?php echo ( ! isset( $_GET['rating_filter'] ) ) ? esc_attr( $clear_style ) : ''; ?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
 	<div class="filter-content">
 		<div class="wb-ajax-filter filter-review">
 			<select class="wb-ajax-filter-selectible" data-filter="rating_filter">

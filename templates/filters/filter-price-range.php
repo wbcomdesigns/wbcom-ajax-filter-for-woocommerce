@@ -9,6 +9,7 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
+global  $woocommerce;
 $args = array(
 	'posts_per_page' => 1,
 	'post_type'      => 'product',
@@ -21,8 +22,9 @@ $prices        = get_posts( $args );
 $prod          = wc_get_product( $prices[0]->ID );
 $highest_price = $prod->get_price();
 ?>
-<div class="wb-ajax-filter filter-price-range">
+<div class="wb-ajax-filter-container-single filter-price-range">
 	<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
+	<a class="wb-ajax-clear-single-filter" data-filter="min_price,max_price" style="<?php echo ( isset( $_GET['min_price'] ) ) ? '' : esc_attr( $clear_style ); ?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
 	<div class="filter-content">
 		<div class="wb-ajax-filter filter-price-range">
 			<ul class="wb-price-ranges">
@@ -33,12 +35,12 @@ $highest_price = $prod->get_price();
 							?>
 						<li><a href="#" role="button" data-range-min="<?php echo esc_attr( $range['min'] ); ?>" data-range-max="<?php echo esc_attr( $range['max'] ); ?>" class="price-range">
 								<span class="woocommerce-Price-amount amount">
-									<span class="woocommerce-Price-currencySymbol"></span><?php echo esc_html( $range['min'] ); ?></span> - <span class="woocommerce-Price-amount amount">
-									<span class="woocommerce-Price-currencySymbol"></span><?php echo esc_html( $range['max'] ); ?></span>
+									<?php echo esc_html( get_woocommerce_currency_symbol() ); ?><?php echo esc_html( $range['min'] ); ?></span> - <span class="woocommerce-Price-amount amount">
+									<?php echo esc_html( get_woocommerce_currency_symbol() ); ?><?php echo esc_html( $range['max'] ); ?></span>
 						</a></li>
 						<?php } else { ?>
 							<li><a href="#" role="button" data-range-min="<?php echo esc_attr( $range['min'] ); ?>" class="price-range">
-								<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"></span>
+								<span class="woocommerce-Price-amount amount"><?php echo esc_html( get_woocommerce_currency_symbol() ); ?>
 								<?php echo esc_html( $range['min'] ); ?></span> <?php esc_html_e( '& above', 'wb-ajax-filter' ); ?>
 							</a></li>
 						<?php } ?>

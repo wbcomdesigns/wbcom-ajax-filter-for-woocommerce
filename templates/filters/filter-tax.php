@@ -9,6 +9,7 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
+$clear_style = 'display:none;';
 $terms           = get_terms(
 	array(
 		'taxonomy'   => wp_unslash( $filters['taxonomy'] ),
@@ -21,8 +22,9 @@ if ( in_array( $filters['taxonomy'], $attributes, true ) ) {
 	$filter_taxonomy = str_replace( 'pa_', 'filter_', $filters['taxonomy'] );
 }
 ?>
-<div class="wb-ajax-filter wb-ajax-filter-tax" id="filter_<?php echo esc_attr( $preset_id . '_' . $filter_count ); ?>" data-filter-type="<?php echo esc_attr( $filters['type'] ); ?>" data-filter-id="<?php echo esc_attr( $filter_count ); ?>" data-taxonomy="<?php echo esc_attr( $filter_taxonomy ); ?>" data-multiple="<?php echo ( isset( $filters['multiple'] ) && 'yes' === $filters['multiple'] ) ? esc_attr( $filters['multiple'] ) : ''; ?>" data-relation="<?php echo isset( $filters['relation'] ) ? esc_attr( $filters['relation'] ) : ''; ?>">
+<div class="wb-ajax-filter-container-single wb-ajax-filter-tax" id="filter_<?php echo esc_attr( $preset_id . '_' . $filter_count ); ?>" data-filter-type="<?php echo esc_attr( $filters['type'] ); ?>" data-filter-id="<?php echo esc_attr( $filter_count ); ?>" data-taxonomy="<?php echo esc_attr( $filter_taxonomy ); ?>" data-multiple="<?php echo ( isset( $filters['multiple'] ) && 'yes' === $filters['multiple'] ) ? esc_attr( $filters['multiple'] ) : ''; ?>" data-relation="<?php echo isset( $filters['relation'] ) ? esc_attr( $filters['relation'] ) : ''; ?>">
 	<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
+	<a class="wb-ajax-clear-single-filter" data-filter="<?php echo esc_attr( $filter_taxonomy ); ?>" style="<?php echo ( ! isset( $_GET[ $filter_taxonomy ] ) ) ? esc_attr( $clear_style ) : ''; ?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
 	<div class="filter-content">
 		<?php
 			require 'filter-tax/items/' . $filters['filter_design'] . '.php';

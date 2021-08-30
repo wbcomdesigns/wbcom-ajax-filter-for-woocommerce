@@ -53,6 +53,35 @@
 			return values;
 		}
 
+		jQuery('.wb-tooltip-added').on('mouseover', function(){
+			jQuery(this).find('span').css({
+				'opacity': 1
+			});			
+		});
+
+		jQuery('.wb-tooltip-added').on('mouseleave', function () {
+			jQuery(this).find('span').css({
+				'opacity': 0
+			})
+		});
+
+		jQuery('.wb-ajax-clear-single-filter').on('click', function(){
+			let filter = jQuery(this).data('filter');
+			if ( filter.indexOf(',') != -1 ) {
+				let filters = filter.split(',');
+				for(let i=0; i <= filters.length; i++ ){
+					removeField(filters[i]);
+				}
+				console.log(filters);
+			} else {
+				
+				removeField(filter);
+				console.log(params);
+			}
+			
+			location.search = params.toString();
+		});
+
 		// Get values from all select and input boxes
 		jQuery("select.wb-ajax-filter-selectible, input.wb-ajax-filter-selectible").on( 'change', function () {
 			let filter    = jQuery( this ).data( 'filter' );
@@ -68,15 +97,13 @@
 				if ( jQuery( this ).is( ':checked' ) ) {
 					if ( checkFieldValues( filter ) ){
 						let oldValues = params.getAll( filter );
-						
 						let index = oldValues[0].indexOf( filterVal );
 						if (index > -1) {
 							
 						} else {
 							let newValue = concatValue(filter, filterVal);
 							setFieldValue(filter, newValue);
-						}
-						
+						}	
 					} else {
 						setFieldValue( filter, filterVal );
 					}
@@ -100,6 +127,7 @@
 		// Price range filter
 		jQuery( "ul.wb-price-ranges a.price-range" ).on( 'click' , function (e) {
 			e.preventDefault();
+			jQuery(this).closest('.wb-ajax-filter-container-single').find('.wb-ajax-clear-single-filter').show();
 			let minPrice = jQuery( this ).data( 'range-min' );
 			let maxPrice = jQuery( this ).data( 'range-max' );
 			let oldMin = params.get('min_price');

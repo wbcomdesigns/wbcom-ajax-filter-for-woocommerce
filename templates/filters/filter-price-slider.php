@@ -20,9 +20,11 @@ $args = array(
 $prices        = get_posts( $args );
 $prod          = wc_get_product( $prices[0]->ID );
 $highest_price = $prod->get_price();
+$clear_style   = 'display:none;';
 ?>
-<div class="wb-ajax-filter filter-price-slider">
+<div class="wb-ajax-filter-container-single filter-price-slider">
 	<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
+	<a class="wb-ajax-clear-single-filter" data-filter="min_price,max_price" style="<?php echo ( ! isset( $_GET['min_price'] ) ) ? esc_attr( $clear_style ) : ''; ?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
 	<div class="filter-content">
 		<div class="wb-ajax-filter filter-price-slider">
 			<div class="wb-ajax-filter-slidecontainer">
