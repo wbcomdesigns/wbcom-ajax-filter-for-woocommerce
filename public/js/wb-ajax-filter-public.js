@@ -9,6 +9,7 @@
 	jQuery( document ).ready( function ($) {
 		jQuery('.wb-ajax-search_categories').select2();
 		jQuery('.wb-ajax-filter-post-type').select2();
+		jQuery('select.wb-ajax-filter-selectible').select2();
 		var url_string = window.location.href
 		var urlHost = location.protocol + '//' + location.host + location.pathname;
 		let url = new URL( url_string );

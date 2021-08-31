@@ -35,17 +35,25 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 				foreach ( $filters['price_ranges'] as $range ) {
 					if ( isset( $range['max'] ) && $highest_price >= $range['min'] ) {
 						if ( isset( $range['max'] ) ) {
+							$active = ( isset( $_REQUEST['min_price'] ) && isset( $_REQUEST['max_price'] ) && $range['min'] === $_REQUEST['min_price'] && $range['max'] === $_REQUEST['max_price'] ) ? 'filter-active' : '';
 							?>
-						<li><a href="#" role="button" data-range-min="<?php echo esc_attr( $range['min'] ); ?>" data-range-max="<?php echo esc_attr( $range['max'] ); ?>" class="price-range">
+						<li>
+							<a href="#" role="button" data-range-min="<?php echo esc_attr( $range['min'] ); ?>" data-range-max="<?php echo esc_attr( $range['max'] ); ?>" class="price-range <?php echo esc_attr( $active ); ?>">
 								<span class="woocommerce-Price-amount amount">
-									<?php echo esc_html( get_woocommerce_currency_symbol() ); ?><?php echo esc_html( $range['min'] ); ?></span> - <span class="woocommerce-Price-amount amount">
-									<?php echo esc_html( get_woocommerce_currency_symbol() ); ?><?php echo esc_html( $range['max'] ); ?></span>
-						</a></li>
-						<?php } else { ?>
-							<li><a href="#" role="button" data-range-min="<?php echo esc_attr( $range['min'] ); ?>" class="price-range">
-								<span class="woocommerce-Price-amount amount"><?php echo esc_html( get_woocommerce_currency_symbol() ); ?>
-								<?php echo esc_html( $range['min'] ); ?></span> <?php esc_html_e( '& above', 'wb-ajax-filter' ); ?>
-							</a></li>
+								<?php echo esc_html( get_woocommerce_currency_symbol() ); ?><?php echo esc_html( $range['min'] ); ?></span> - <span class="woocommerce-Price-amount amount">
+								<?php echo esc_html( get_woocommerce_currency_symbol() ); ?><?php echo esc_html( $range['max'] ); ?></span>
+							</a>
+						</li>
+							<?php
+						} else {
+								$active = ( isset( $_REQUEST['min_price'] ) && $range['min'] === $_REQUEST['min_price'] ) ? 'filter-active' : '';
+							?>
+							<li>
+								<a href="#" role="button" data-range-min="<?php echo esc_attr( $range['min'] ); ?>" class="price-range <?php echo esc_attr( $active ); ?>">
+									<span class="woocommerce-Price-amount amount"><?php echo esc_html( get_woocommerce_currency_symbol() ); ?>
+									<?php echo esc_html( $range['min'] ); ?></span> <?php esc_html_e( '& above', 'wb-ajax-filter' ); ?>
+								</a>
+							</li>
 						<?php } ?>
 							<?php
 					}

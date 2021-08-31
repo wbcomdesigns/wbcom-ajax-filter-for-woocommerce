@@ -75,6 +75,7 @@ class Wb_Ajax_Filter_Public {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wb-ajax-filter-public.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/css/ion.rangeSlider.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
+		wp_add_inline_style( $this->plugin_name, $this->wb_ajax_add_custom_css_to_frontend() );
 
 	}
 
@@ -111,6 +112,102 @@ class Wb_Ajax_Filter_Public {
 	 */
 	public function add_wb_ajax_filters() {
 		echo do_shortcode( '[wb_ajax_filters]' );
+	}
+
+	/**
+	 * Add custom css from customization settings
+	 *
+	 * @since    1.0.0
+	 */
+	public function wb_ajax_add_custom_css_to_frontend() {
+		$css_settings = get_option( 'wb_ajax_filter_admin_customization_options' );
+		/**
+		 * [filters_area_titles_color] => #000000
+			[filters_area_background_color] => #dd3333
+			[filters_area_accent_color] => #dd9933
+			[filters_style] => yes
+			[textual_terms_text_color] => #000000
+			[textual_terms_hover_text_color] => #dd3333
+			[textual_terms_active_text_color] => #dd9933
+		 */
+		$custom_css   = '
+				.wb-ajax-filters-container{
+					background: ' . $css_settings['filters_area_background_color'] . ';
+				}
+				span.select2-selection.select2-selection--single {
+					background: ' . $css_settings['filters_area_background_color'] . ';
+				}
+				.wb-ajax-filter-container-single h4{
+					color: ' . $css_settings['filters_area_titles_color'] . ';
+				}
+				.select2-container--default .select2-search--dropdown input.select2-search__field{
+					border: 1px solid ' . $css_settings['filters_area_accent_color'] . ';
+				}
+				span.select2-dropdown.select2-dropdown--above {
+					border: 1px solid ' . $css_settings['filters_area_accent_color'] . ';
+				}
+				span.select2-dropdown.select2-dropdown--below {
+					border: 1px solid ' . $css_settings['filters_area_accent_color'] . ';
+				}
+				span.wb-ajax-filter-tooltip-text{
+					background: ' . $css_settings['filters_area_accent_color'] . ';
+				}
+				.irs span.irs-bar {
+					background: ' . $css_settings['filters_area_accent_color'] . ';
+				}
+				.irs span.irs-handle{
+					border: 3px solid ' . $css_settings['filters_area_accent_color'] . ';
+				}
+				.irs span.irs-from{
+					background: ' . $css_settings['filters_area_accent_color'] . ';
+				}
+				.irs span.irs-to{
+					background: ' . $css_settings['filters_area_accent_color'] . ';
+				}
+				a.wb-term-label {
+					color: ' . $css_settings['textual_terms_text_color'] . ';
+				}
+				a.wb-term-label:hover {
+					color: ' . $css_settings['textual_terms_hover_text_color'] . ';
+				}
+				li.select2-results__option{
+					color: ' . $css_settings['textual_terms_text_color'] . ';
+				}
+				li.select2-results__option:hover{
+					color: ' . $css_settings['textual_terms_hover_text_color'] . ';
+				}
+				li a.price-range{
+					color: ' . $css_settings['textual_terms_text_color'] . ';
+				}
+				li a.price-range.filter-active{
+					color: ' . $css_settings['textual_terms_active_text_color'] . ';
+				}
+				li a.price-range:hover{
+					color: ' . $css_settings['textual_terms_hover_text_color'] . ';
+				}
+				.select2-container--default .select2-selection--single span.select2-selection__rendered{
+					color: ' . $css_settings['textual_terms_text_color'] . ';
+				}
+				span.wb-ajax-filter-option-text{
+					color: ' . $css_settings['textual_terms_text_color'] . ';
+				}
+				span.wb-ajax-filter-option-text.filter-active{
+					color: ' . $css_settings['textual_terms_active_text_color'] . ';
+				}
+				a.wb-term-label.wb-tooltip-added.filter-active{
+				}
+				color: ' . $css_settings['textual_terms_active_text_color'] . ';
+				a.wb-term-label.wb-tooltip-added.filter-active:hover{
+					color: ' . $css_settings['textual_terms_hover_text_color'] . ';
+				}
+				span.wb-ajax-filter-option-text:hover{
+					color: ' . $css_settings['textual_terms_hover_text_color'] . ';
+				}
+				li.select2-results__option[data-selected="true"]{
+					color: ' . $css_settings['textual_terms_active_text_color'] . ';
+				}
+				';
+		return $custom_css;
 	}
 
 }

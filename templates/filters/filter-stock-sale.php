@@ -21,11 +21,11 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 		<div class="wb-ajax-filter filter-stock-sale">
 			<?php if ( isset( $filters['show_stock_filter'] ) && 'yes' === $filters['show_stock_filter'] ) { ?>
 				<input type="checkbox" value="1" class="wb-ajax-filter-selectible" data-filter="instock_filter" <?php echo ( isset( $params['instock_filter'] ) && '1' === $params['instock_filter'] ) ? 'checked' : ''; ?>>
-				<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'In Stock', 'wb-ajax-filter' ); ?></span><br>
+				<span class="wb-ajax-filter-option-text <?php echo ( isset( $params['instock_filter'] ) && '1' === $params['instock_filter'] ) ? 'filter-active' : ''; ?>"><?php esc_html_e( 'In Stock', 'wb-ajax-filter' ); ?></span><br>
 			<?php } ?>
 			<?php if ( isset( $filters['show_sale_filter'] ) && 'yes' === $filters['show_sale_filter'] ) { ?>
 				<input type="checkbox" value="1" class="wb-ajax-filter-selectible" data-filter="onsale_filter" <?php echo ( isset( $params['onsale_filter'] ) && '1' === $params['onsale_filter'] ) ? 'checked' : ''; ?>>
-				<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'On Sale', 'wb-ajax-filter' ); ?></span>
+				<span class="wb-ajax-filter-option-text <?php echo ( isset( $params['onsale_filter'] ) && '1' === $params['onsale_filter'] ) ? 'filter-active' : ''; ?>"><?php esc_html_e( 'On Sale', 'wb-ajax-filter' ); ?></span>
 			<?php } ?>
 		</div>
 	</div>
