@@ -15,6 +15,18 @@
 		let url = new URL( url_string );
 		let params = new URLSearchParams( url.search );
 		
+		function refreshShopPageTemplate (urlTo) {
+			$.ajax({
+				url: urlTo,
+				success: function (result) {
+					const responseDom = document.createElement('html'),
+					$response = $(responseDom);
+					responseDom.innerHTML = result;
+					$('body').replaceWith($response.find('body'));
+				}
+			});
+		}
+
 		// Remove field from url
 		function removeField ( param ) {
 			return params.delete( param )
@@ -31,7 +43,6 @@
 				removeField( param );
 			}
 			params.set( param, value );
-			//params.toString();
 		}
 
 		// Add values to param
@@ -77,7 +88,8 @@
 			} else {
 				removeField(filter);
 			}
-			location.search = params.toString();
+			history.pushState({}, null, urlHost + '?' + params.toString());
+			refreshShopPageTemplate(urlHost + '?' + params.toString());
 		});
 
 		// Reset filters
@@ -88,7 +100,8 @@
 				hash = hashes[i].split('=');
 				removeField(hash[0]);
 			}
-			location.search = params.toString();
+			history.pushState({}, null, urlHost);
+			refreshShopPageTemplate(urlHost);
 		});
 
 		// Get values from all select and input boxes
@@ -96,6 +109,7 @@
 			let filter    = jQuery( this ).data( 'filter' );
 			let filterVal = jQuery( this ).val();
 			let tag       = jQuery(this).prop('tagName');
+			
 			if ( tag === 'SELECT' ) {
 				if ( filterVal !== '' && filterVal !== undefined ) {
 					setFieldValue(filter, filterVal);
@@ -130,7 +144,8 @@
 					}
 				}
 			}
-			location.search = params.toString();
+			history.pushState({}, null, urlHost + '?' + params.toString());
+			refreshShopPageTemplate(urlHost + '?' + params.toString());
 		});
 
 		// Price range filter
@@ -148,7 +163,8 @@
 				setFieldValue('min_price', minPrice);
 				setFieldValue('max_price', maxPrice);
 			}
-			location.search = params.toString();
+			history.pushState({}, null, urlHost + '?' + params.toString());
+			refreshShopPageTemplate(urlHost + '?' + params.toString());
 		});
 		
 		// Price range slider
@@ -166,7 +182,8 @@
 					setFieldValue('min_price', fromPrice);
 					setFieldValue('max_price', toPrice);
 				}
-				location.search = params.toString();
+				history.pushState({}, null, urlHost + '?' + params.toString());
+				refreshShopPageTemplate(urlHost + '?' + params.toString());
 			},
 		});
 	});

@@ -195,8 +195,8 @@ class Wb_Ajax_Filter_Public {
 					color: ' . $css_settings['textual_terms_active_text_color'] . ';
 				}
 				a.wb-term-label.wb-tooltip-added.filter-active{
+					color: ' . $css_settings['textual_terms_active_text_color'] . ';
 				}
-				color: ' . $css_settings['textual_terms_active_text_color'] . ';
 				a.wb-term-label.wb-tooltip-added.filter-active:hover{
 					color: ' . $css_settings['textual_terms_hover_text_color'] . ';
 				}
