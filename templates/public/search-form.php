@@ -19,8 +19,8 @@ if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_
 	<div class="wb-ajax-filter-ajaxsearch-filters" style="display: flex;">
 		<div class="wb-ajax-filter-ajaxsearchform-select wb-ajax-filter-ajaxsearchform-select-list">
 			<select class="wb-ajax-filter-post-type" name="post_type" tabindex="-1" aria-hidden="true">
-				<option value="product"><?php esc_html_e( 'Products', 'wb-ajax-filter' ); ?></option>
-				<option value="any"><?php esc_html_e( 'All', 'wb-ajax-filter' ); ?></option>
+				<option value="product" <?php echo ( isset( $_REQUEST['post_type'] ) && 'product' === $_REQUEST['post_type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Products', 'wb-ajax-filter' ); ?></option>
+				<option value="any" <?php echo ( isset( $_REQUEST['post_type'] ) && 'any' === $_REQUEST['post_type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'All', 'wb-ajax-filter' ); ?></option>
 			</select>
 		</div>
 		<div class="wb-ajax-filter-ajaxsearchform-select wb-ajax-filter-ajaxsearchform-select-category">
@@ -38,7 +38,7 @@ if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_
 						);
 						foreach ( $terms as $tm ) {
 							?>
-				<option value="<?php echo esc_attr( $tm->slug ); ?>"><?php echo esc_html( $tm->name ); ?></option>
+				<option value="<?php echo esc_attr( $tm->slug ); ?>" <?php echo ( isset( $_REQUEST['product_cat'] ) && $tm->slug === $_REQUEST['product_cat'] ) ? 'selected' : ''; ?>><?php echo esc_html( $tm->name ); ?></option>
 							<?php
 						}
 					}
@@ -48,10 +48,9 @@ if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_
 		</div>
 	</div>
 	<div class="wb-search-input-container">
-		<input type="search" value="" name="s" placeholder="<?php echo esc_attr( $wb_ajax_filter_search_settings['search_input_label'] ); ?>" data-append-to=".wb-search-input-container" data-min-chars="3" autocomplete="off">
-		<div class="wb-autocomplete-suggestions" style="position: absolute; display:none; z-index: 9999;"></div>
+		<input type="search" value="<?php echo ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) : ''; ?>" name="s" placeholder="<?php echo esc_attr( $wb_ajax_filter_search_settings['search_input_label'] ); ?>" data-append-to=".wb-search-input-container" data-min-chars="<?php echo ( isset( $wb_ajax_filter_search_settings['min_chars'] ) && '' !== $wb_ajax_filter_search_settings['min_chars'] ) ? esc_attr( $wb_ajax_filter_search_settings['min_chars'] ) : '1'; ?>" autocomplete="off">
 	</div>
-	<div class="wb-search-submit-container"> <input type="submit" value="Search"> </div>
+	<div class="wb-search-submit-container"> <input type="submit" value="<?php echo ( isset( $wb_ajax_filter_search_settings['search_submit_label'] ) && '' !== $wb_ajax_filter_search_settings['search_submit_label'] ) ? esc_attr( $wb_ajax_filter_search_settings['search_submit_label'] ) : 'Search'; ?>"> </div>
 </div>
 				<?php
 }
