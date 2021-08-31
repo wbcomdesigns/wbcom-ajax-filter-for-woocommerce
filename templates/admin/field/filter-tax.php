@@ -57,7 +57,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && 'tax' === $filters['type'] ) 
 <div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
 	<label><?php esc_html_e( 'Columns number', 'wb-ajax-filter' ); ?>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-		<input type="number" name="filters[column_number]" class="wb-input wb-filter-type-tax" value="<?php echo ( isset( $filters['column_number'] ) && '' !== $filters['column_number'] ) ? $filters['column_number'] : '0'; ?>" min="1" max="8" step="1">
+		<input type="number" name="filters[column_number]" class="wb-input wb-filter-type-tax" value="<?php echo ( isset( $filters['column_number'] ) && '' !== $filters['column_number'] ) ? esc_attr( $filters['column_number'] ) : '0'; ?>" min="1" max="8" step="1">
 	</div>
 	<span class="description"><?php esc_html_e( 'Set the number of items per row you want to show for this design', 'wb-ajax-filter' ); ?></span></label>
 </div>

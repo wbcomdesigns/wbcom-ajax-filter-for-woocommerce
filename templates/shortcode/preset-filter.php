@@ -50,8 +50,10 @@ $reset_button                   = ( isset( $wb_ajax_filter_general_options['show
 		<form method="POST">
 			<?php
 			$filter_count = 0;
-			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ){
-				echo $reset_button;
+			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
+				?>
+				<a class="wb-ajax-reset-all-filters"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
+				<?php
 			}
 			foreach ( $all_filters as $filters ) {
 				if ( strpos( $filters['type'], '_' ) !== false ) {
@@ -60,8 +62,10 @@ $reset_button                   = ( isset( $wb_ajax_filter_general_options['show
 				require WB_AJAX_FILTER_TEMPLATE_PATH . 'filters/filter-' . $filters['type'] . '.php';
 				$filter_count++;
 			}
-			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] ){
-				echo $reset_button;
+			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
+				?>
+				<a class="wb-ajax-reset-all-filters"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
+				<?php
 			}
 			?>
 		</form>

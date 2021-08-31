@@ -9,7 +9,7 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
-$clear_style = 'display:none;';
+$clear_style     = 'display:none;';
 $terms           = get_terms(
 	array(
 		'taxonomy'   => wp_unslash( $filters['taxonomy'] ),

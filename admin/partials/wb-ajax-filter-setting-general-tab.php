@@ -101,7 +101,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 						</label><br>
 					</td>
 				</tr>
-				<tr style="<?php echo ( isset( $wb_ajax_filter_general_options['show_reset'] ) && 'yes' === $wb_ajax_filter_general_options['show_reset'] ) ? '' : 'display:none;';?>">
+				<tr style="<?php echo ( isset( $wb_ajax_filter_general_options['show_reset'] ) && 'yes' === $wb_ajax_filter_general_options['show_reset'] ) ? '' : 'display:none;'; ?>">
 					<th scope="row">
 						<label>
 							<?php esc_html_e( 'Reset button position', 'wb-ajax-filter' ); ?>
