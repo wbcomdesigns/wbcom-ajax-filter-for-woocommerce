@@ -210,6 +210,21 @@ class Wb_Ajax_Filter_Public {
 	}
 
 	/**
+	 * Check string inside string
+	 *
+	 * @param content $content The content.
+	 * @param find    $find    The string to be searched inside content.
+	 * @since    1.0.0
+	 */
+	public function wb_check_string_contains_content( $content, $find ) {
+		if ( strpos( $content, ucfirst( $find ) ) !== false && strpos( $content, strtolower( $find ) ) !== false ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Ajax search autocomplete callback.
 	 *
 	 * @since    1.0.0
@@ -221,19 +236,71 @@ class Wb_Ajax_Filter_Public {
 			if ( ! isset( $_GET['q'] ) ) {
 				die();
 			}
-			$args             = array(
+			$args                   = array(
 				'post_type'      => 'product',
 				'posts_per_page' => -1,
 			);
-			$products         = get_posts( $args );
-			$matched_products = array();
-			$q                = sanitize_text_field( wp_unslash( $_GET['q'] ) );
+			$products               = get_posts( $args );
+			$search_settings        = get_option( 'wb_ajax_filter_search_settings' );
+			$search_filter_settings = get_option( 'wb_ajax_filter_search_content_settings' );
+			$matched_products       = array();
+			$q                      = sanitize_text_field( wp_unslash( $_GET['q'] ) );
+			$match                  = false;
 			foreach ( $products as $product ) {
-				if ( strpos( $product->post_title, ucfirst( $q ) ) === false && strpos( $product->post_title, strtolower( $q ) ) === false ) {
-					continue;
+				$prod = wc_get_product( $product->ID );
+				if ( count( $matched_products ) >= $search_settings['posts_per_page'] ) {
+					break;
 				}
-				$tmp                = array( $product->post_title, $product->post_title );
-				$matched_products[] = $tmp;
+				if ( isset( $search_filter_settings['search_in_title'] ) && 'yes' === $search_filter_settings['search_in_title'] ) {
+					if ( $this->wb_check_string_contains_content( $product->post_title, $q ) ) {
+						$match = true;
+					}
+				}
+				if ( isset( $search_filter_settings['search_in_content'] ) && 'yes' === $search_filter_settings['search_in_content'] ) {
+					if ( $this->wb_check_string_contains_content( $product->post_content, $q ) ) {
+						$match = true;
+					}
+				}
+				if ( isset( $search_filter_settings['search_in_excerpt'] ) && 'yes' === $search_filter_settings['search_in_excerpt'] ) {
+					$excerpt = get_the_excerpt( $product->ID );
+					if ( $this->wb_check_string_contains_content( $excerpt, $q ) ) {
+						$match = true;
+					}
+				}
+				if ( isset( $search_filter_settings['search_in_product_categories'] ) && 'yes' === $search_filter_settings['search_in_product_categories'] ) {
+					$categories = $prod->get_category_ids();
+					if ( count( $categories ) > 0 ) {
+						foreach ( $categories as $cat ) {
+							$cat_data = get_term_by( 'id', $cat, 'product_cat' );
+							if ( $this->wb_check_string_contains_content( $cat_data->name, $q ) ) {
+								$match = true;
+							}
+						}
+					}
+				}
+				if ( isset( $search_filter_settings['search_in_product_tags'] ) && 'yes' === $search_filter_settings['search_in_product_tags'] ) {
+					$tags = $prod->get_tag_ids();
+					if ( count( $tags ) > 0 ) {
+						foreach ( $tags as $tag ) {
+							$tag_data = get_term_by( 'id', $tag, 'product_tag' );
+							if ( $this->wb_check_string_contains_content( $tag_data->name, $q ) ) {
+								$match = true;
+							}
+						}
+					}
+				}
+				if ( isset( $search_filter_settings['search_in_author'] ) && 'yes' === $search_filter_settings['search_in_author'] ) {
+					$author   = get_userdata( $product->post_author );
+					$username = $author->user_login;
+					$name     = $author->first_name . ' ' . $author->last_name;
+					if ( $this->wb_check_string_contains_content( $username, $q ) || $this->wb_check_string_contains_content( $name, $q ) ) {
+						$match = true;
+					}
+				}
+				if ( $match ) {
+					$tmp                = array( $product->post_title, $product->post_title );
+					$matched_products[] = $tmp;
+				}
 			}
 			echo wp_json_encode( $matched_products );
 		}

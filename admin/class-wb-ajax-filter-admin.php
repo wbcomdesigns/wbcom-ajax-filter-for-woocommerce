@@ -655,9 +655,6 @@ class Wb_Ajax_Filter_Admin {
 		register_setting( 'wb_ajax_filter_search_content_settings', 'wb_ajax_filter_search_content_settings' );
 		add_settings_section( 'wb-ajax-filter-search', ' ', array( $this, 'wb_ajax_filter_admin_search_content' ), 'wb-ajax-filter-search' );
 
-		$this->plugin_settings_tabs['wb-ajax-filter-output'] = esc_html__( 'Search Output', 'wb-ajax-filter' );
-		register_setting( 'wb_ajax_filter_search_output_settings', 'wb_ajax_filter_search_output_settings' );
-		add_settings_section( 'wb-ajax-filter-output', ' ', array( $this, 'wb_ajax_filter_admin_output_content' ), 'wb-ajax-filter-output' );
 	}
 
 	/**
@@ -700,13 +697,6 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function wb_ajax_filter_admin_search_content() {
 		include 'partials/wb-ajax-filter-search-content.php';
-	}
-
-	/**
-	 * Include Wbcom ajax filter for woocommerce admin outpur setting tab content file.
-	 */
-	public function wb_ajax_filter_admin_output_content() {
-		include 'partials/wb-ajax-filter-search-output.php';
 	}
 
 	/**

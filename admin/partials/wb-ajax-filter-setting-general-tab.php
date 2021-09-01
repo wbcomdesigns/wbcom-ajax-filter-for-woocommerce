@@ -160,18 +160,6 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enable this option if you want to scroll to top after filtering.', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					</td>
-				</tr><tr>
-					<th scope="row">
-						<label>
-							<?php esc_html_e( 'Show as modal on mobile', 'wb-ajax-filter' ); ?>
-						</label>
-					</th>
-					<td>
-					<label>
-							<input name="wb_ajax_filter_admin_general_options[modal_on_mobile]" type="checkbox" value="yes" <?php ( isset( $wb_ajax_filter_general_options['modal_on_mobile'] ) ) ? checked( $wb_ajax_filter_general_options['modal_on_mobile'], 'yes' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enable this option if you want to show filter section as a modal on mobile devices.', 'wb-ajax-filter' ); ?></span>
-						</label><br>
-					</td>
 				</tr>
 			</tbody>
 		</table>

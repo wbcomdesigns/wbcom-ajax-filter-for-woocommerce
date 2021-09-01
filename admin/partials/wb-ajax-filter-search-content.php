@@ -155,19 +155,6 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 				</tr>
 				<tr>
 					<th scope="row">
-						<label>
-							<?php esc_html_e( 'Enable transients to cache autocomplete results', 'wb-ajax-filter' ); ?>
-						</label>
-					</th>
-					<td>
-						<label>
-							<input name="wb_ajax_filter_search_content_settings[enable_transient]" type="checkbox" value="yes"<?php ( isset( $wb_ajax_filter_search_content_settings['enable_transient'] ) ) ? checked( $wb_ajax_filter_search_content_settings['enable_transient'], 'yes' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Save the results of a query in a transient', 'wb-ajax-filter' ); ?></span>
-						</label><br>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">
 						<h2>
 							<?php esc_html_e( 'Order Options', 'wb-ajax-filter' ); ?>
 						</h2>

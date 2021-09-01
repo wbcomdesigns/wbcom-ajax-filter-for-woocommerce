@@ -17,12 +17,15 @@ if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_
 	?>
 <div class="wb-ajax-filter-ajaxsearch-filters-container" style="display: flex;">
 	<div class="wb-ajax-filter-ajaxsearch-filters" style="display: flex;">
+		<?php if ( isset( $wb_ajax_filter_search_settings['show_search_list'] ) && 'yes' === $wb_ajax_filter_search_settings['show_search_list'] ) { ?>
 		<div class="wb-ajax-filter-ajaxsearchform-select wb-ajax-filter-ajaxsearchform-select-list">
 			<select class="wb-ajax-filter-post-type" name="post_type" tabindex="-1" aria-hidden="true">
 				<option value="product" <?php echo ( isset( $_REQUEST['post_type'] ) && 'product' === $_REQUEST['post_type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Products', 'wb-ajax-filter' ); ?></option>
 				<option value="any" <?php echo ( isset( $_REQUEST['post_type'] ) && 'any' === $_REQUEST['post_type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'All', 'wb-ajax-filter' ); ?></option>
 			</select>
 		</div>
+		<?php } ?>
+		<?php if ( isset( $wb_ajax_filter_search_settings['show_category_list'] ) && 'yes' === $wb_ajax_filter_search_settings['show_category_list'] ) { ?>
 		<div class="wb-ajax-filter-ajaxsearchform-select wb-ajax-filter-ajaxsearchform-select-category">
 			<select class="wb-ajax-search_categories" name="product_cat" tabindex="-1" aria-hidden="true">
 				<option value=""><?php esc_html_e( 'All', 'wb-ajax-filter' ); ?></option>
@@ -46,6 +49,7 @@ if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_
 				?>
 			</select>
 		</div>
+		<?php } ?>
 	</div>
 	<div class="wb-ajax-filter-ajaxsearchform-select">
 		<select id="wb_ajax_search_input" type="search" value="<?php echo ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) : ''; ?>" name="s" placeholder="<?php echo esc_attr( $wb_ajax_filter_search_settings['search_input_label'] ); ?>" data-append-to=".wb-search-input-container" data-min-chars="<?php echo ( isset( $wb_ajax_filter_search_settings['min_chars'] ) && '' !== $wb_ajax_filter_search_settings['min_chars'] ) ? esc_attr( $wb_ajax_filter_search_settings['min_chars'] ) : '1'; ?>" autocomplete="off">

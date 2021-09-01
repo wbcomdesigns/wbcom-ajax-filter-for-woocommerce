@@ -21,6 +21,7 @@
 
 		// Enable select2 autocomplete js
 		jQuery('#wb_ajax_search_input').select2({
+			tags: true,
 			ajax: {
 				url: wbcom_plugin_installer_params.ajax_url,
 				dataType: 'json',
@@ -45,7 +46,7 @@
 				},
 				cache: true
 			},
-			minimumInputLength: 1
+			minimumInputLength: jQuery('#wb_ajax_search_input').data('min-chars'),
 		});
 
 		// get url fields
@@ -119,21 +120,27 @@
 		});
 
 		// Submit Ajax search
-		jQuery('.wb-search-submit-container').on('click', function(e) {
+		jQuery('.wb-search-submit-container').on('click', function( e ) {
 			e.preventDefault();
-			history.pushState({}, null, urlHost + '?' + params.toString());
-			refreshShopPageTemplate(urlHost + '?' + params.toString());
-			
+			let filter = jQuery('#wb_ajax_search_input').attr('name');
+			let filterValue = jQuery('#wb_ajax_search_input').val();
+			addRemoveAjaxSearchfieldsOnChange( filter, filterValue )
+			history.pushState( {}, null, urlHost + '?' + params.toString() );
+			refreshShopPageTemplate( urlHost + '?' + params.toString() );
 		});
 
-		jQuery('.wb-ajax-filter-ajaxsearchform-select select').on('change', function(){
+		function addRemoveAjaxSearchfieldsOnChange( filter, filterValue ){
+			if ( filterValue == '' ) {
+				removeField( filter );
+			} else {
+				setFieldValue( filter, filterValue );
+			}
+		}
+
+		jQuery('.wb-ajax-filter-ajaxsearchform-select select').on('select2:select', function(){
 			let filter = jQuery(this).attr('name');
 			let filterValue = jQuery(this).val();
-			if ( filterValue == '' ){
-				removeField(filter);
-			} else {
-				setFieldValue(filter, filterValue);
-			}
+			addRemoveAjaxSearchfieldsOnChange( filter, filterValue );
 		});
 
 		// Apply filters
