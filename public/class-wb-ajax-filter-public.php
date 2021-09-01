@@ -103,6 +103,14 @@ class Wb_Ajax_Filter_Public {
 		wp_enqueue_script( 'jquery-ui-slider' );
 		wp_enqueue_script( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/js/ion.rangeSlider.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
+		wp_localize_script(
+			$this->plugin_name,
+			'wbcom_plugin_installer_params',
+			array(
+				'ajax_url'         => admin_url( 'admin-ajax.php' ),
+				'wbcom_ajax_nonce' => wp_create_nonce( 'ajax-nonce' ),
+			)
+		);
 	}
 
 	/**
@@ -121,15 +129,6 @@ class Wb_Ajax_Filter_Public {
 	 */
 	public function wb_ajax_add_custom_css_to_frontend() {
 		$css_settings = get_option( 'wb_ajax_filter_admin_customization_options' );
-		/**
-		 * [filters_area_titles_color] => #000000
-			[filters_area_background_color] => #dd3333
-			[filters_area_accent_color] => #dd9933
-			[filters_style] => yes
-			[textual_terms_text_color] => #000000
-			[textual_terms_hover_text_color] => #dd3333
-			[textual_terms_active_text_color] => #dd9933
-		 */
 		$custom_css   = '
 				.wb-ajax-filters-container{
 					background: ' . $css_settings['filters_area_background_color'] . ';
@@ -210,4 +209,34 @@ class Wb_Ajax_Filter_Public {
 		return $custom_css;
 	}
 
+	/**
+	 * Ajax search autocomplete callback.
+	 *
+	 * @since    1.0.0
+	 */
+	public function get_ajax_search_autocomplete_title_wb_callback() {
+		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		} else {
+			if ( ! isset( $_GET['q'] ) ) {
+				die();
+			}
+			$args             = array(
+				'post_type'      => 'product',
+				'posts_per_page' => -1,
+			);
+			$products         = get_posts( $args );
+			$matched_products = array();
+			$q                = sanitize_text_field( wp_unslash( $_GET['q'] ) );
+			foreach ( $products as $product ) {
+				if ( strpos( $product->post_title, ucfirst( $q ) ) === false && strpos( $product->post_title, strtolower( $q ) ) === false ) {
+					continue;
+				}
+				$tmp                = array( $product->post_title, $product->post_title );
+				$matched_products[] = $tmp;
+			}
+			echo wp_json_encode( $matched_products );
+		}
+		die();
+	}
 }

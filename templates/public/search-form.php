@@ -47,8 +47,9 @@ if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_
 			</select>
 		</div>
 	</div>
-	<div class="wb-search-input-container">
-		<input type="search" value="<?php echo ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) : ''; ?>" name="s" placeholder="<?php echo esc_attr( $wb_ajax_filter_search_settings['search_input_label'] ); ?>" data-append-to=".wb-search-input-container" data-min-chars="<?php echo ( isset( $wb_ajax_filter_search_settings['min_chars'] ) && '' !== $wb_ajax_filter_search_settings['min_chars'] ) ? esc_attr( $wb_ajax_filter_search_settings['min_chars'] ) : '1'; ?>" autocomplete="off">
+	<div class="wb-ajax-filter-ajaxsearchform-select">
+		<select id="wb_ajax_search_input" type="search" value="<?php echo ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) : ''; ?>" name="s" placeholder="<?php echo esc_attr( $wb_ajax_filter_search_settings['search_input_label'] ); ?>" data-append-to=".wb-search-input-container" data-min-chars="<?php echo ( isset( $wb_ajax_filter_search_settings['min_chars'] ) && '' !== $wb_ajax_filter_search_settings['min_chars'] ) ? esc_attr( $wb_ajax_filter_search_settings['min_chars'] ) : '1'; ?>" autocomplete="off">
+			</select>
 	</div>
 	<div class="wb-search-submit-container"> <input type="submit" value="<?php echo ( isset( $wb_ajax_filter_search_settings['search_submit_label'] ) && '' !== $wb_ajax_filter_search_settings['search_submit_label'] ) ? esc_attr( $wb_ajax_filter_search_settings['search_submit_label'] ) : 'Search'; ?>"> </div>
 </div>

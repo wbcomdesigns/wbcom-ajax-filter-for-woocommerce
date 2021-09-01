@@ -19,6 +19,35 @@
 		jQuery('.wb-ajax-filter-post-type').select2();
 		jQuery('select.wb-ajax-filter-selectible').select2();
 
+		// Enable select2 autocomplete js
+		jQuery('#wb_ajax_search_input').select2({
+			ajax: {
+				url: wbcom_plugin_installer_params.ajax_url,
+				dataType: 'json',
+				delay: 250,
+				data: function (params) {
+					return {
+						q: params.term,
+						action: 'get_ajax_search_autocomplete_title_wb',
+						nonce: wbcom_plugin_installer_params.wbcom_ajax_nonce,
+					};
+				},
+				processResults: function (data) {
+					var options = [];
+					if (data) {
+						$.each(data, function (index, text) {
+							options.push({ id: text[0], text: text[1] });
+						});
+					}
+					return {
+						results: options
+					};
+				},
+				cache: true
+			},
+			minimumInputLength: 1
+		});
+
 		// get url fields
 		var url_string = window.location.href
 		var urlHost = location.protocol + '//' + location.host + location.pathname;
@@ -34,6 +63,7 @@
 					$response = $(responseDom);
 					responseDom.innerHTML = result;
 					$('body').replaceWith($response.find('body'));
+					$('html,body').animate({ scrollTop: $('.site-header-wrapper').offset().top }, 'slow');
 				}
 			});
 		}
@@ -93,22 +123,13 @@
 			e.preventDefault();
 			history.pushState({}, null, urlHost + '?' + params.toString());
 			refreshShopPageTemplate(urlHost + '?' + params.toString());
+			
 		});
 
 		jQuery('.wb-ajax-filter-ajaxsearchform-select select').on('change', function(){
 			let filter = jQuery(this).attr('name');
 			let filterValue = jQuery(this).val();
 			if ( filterValue == '' ){
-				removeField(filter);
-			} else {
-				setFieldValue(filter, filterValue);
-			}
-		});
-
-		jQuery('.wb-search-input-container input').on('keyup', function(){
-			let filter = jQuery(this).attr('name');
-			let filterValue = jQuery(this).val();
-			if (filterValue == '') {
 				removeField(filter);
 			} else {
 				setFieldValue(filter, filterValue);

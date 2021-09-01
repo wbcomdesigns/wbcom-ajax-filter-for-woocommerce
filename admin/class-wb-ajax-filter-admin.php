@@ -564,13 +564,13 @@ class Wb_Ajax_Filter_Admin {
 			}
 			$terms   = get_terms(
 				array(
-					'taxonomy'   => wp_unslash( $_GET['cat'] ),
+					'taxonomy'   => sanitize_text_field( wp_unslash( $_GET['cat'] ) ),
 					'hide_empty' => false,
 				),
 			);
 			$results = array();
 			foreach ( $terms as $term ) {
-				if ( strpos( $term->name, strtoupper( wp_unslash( $_GET['q'] ) ) ) === false && strpos( $term->name, strtolower( wp_unslash( $_GET['q'] ) ) ) === false ) {
+				if ( strpos( $term->name, ucfirst( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false && strpos( $term->name, strtolower( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false ) {
 					continue;
 				}
 				$tmp       = array( $term->term_id, $term->name );
