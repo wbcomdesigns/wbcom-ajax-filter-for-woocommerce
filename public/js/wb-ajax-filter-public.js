@@ -88,6 +88,33 @@
 			})
 		});
 
+		// Submit Ajax search
+		jQuery('.wb-search-submit-container').on('click', function(e) {
+			e.preventDefault();
+			history.pushState({}, null, urlHost + '?' + params.toString());
+			refreshShopPageTemplate(urlHost + '?' + params.toString());
+		});
+
+		jQuery('.wb-ajax-filter-ajaxsearchform-select select').on('change', function(){
+			let filter = jQuery(this).attr('name');
+			let filterValue = jQuery(this).val();
+			if ( filterValue == '' ){
+				removeField(filter);
+			} else {
+				setFieldValue(filter, filterValue);
+			}
+		});
+
+		jQuery('.wb-search-input-container input').on('keyup', function(){
+			let filter = jQuery(this).attr('name');
+			let filterValue = jQuery(this).val();
+			if (filterValue == '') {
+				removeField(filter);
+			} else {
+				setFieldValue(filter, filterValue);
+			}
+		});
+
 		// Apply filters
 		jQuery('.wb-ajax-apply-all-filters').on('click', function( e ){
 			e.preventDefault();
@@ -96,7 +123,6 @@
 
 		jQuery('a.wb-term-label').on('click', function(e){
 			e.preventDefault();
-			let filter = jQuery(this).prev('input').data('filter');
 			let type = jQuery(this).prev('input').attr('type');
 			if (jQuery(this).prev('input').is(':checked') ){
 				if (type === 'checkbox') {
@@ -107,8 +133,6 @@
 				jQuery(this).prev('input').prop('checked', true);
 				jQuery(this).prev('input').trigger("change");
 			}
-			
-			// alert(type)
 		});
 
 		// Clear single filter
