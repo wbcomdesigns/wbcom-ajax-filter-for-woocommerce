@@ -36,6 +36,9 @@ $wb_ajax_filter_admin_custom    = get_option( 'wb_ajax_filter_admin_customizatio
 $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
 $reset_html                     = '<a class="wb-ajax-reset-all-filters">Reset filters</a>';
 $reset_button                   = ( isset( $wb_ajax_filter_general_options['show_reset'] ) && 'yes' === $wb_ajax_filter_general_options['show_reset'] ) ? $reset_html : '';
+$base_url                       = ( isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http' ) . '://';
+$base_url                      .= isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
+$base_url                      .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REDIRECT_URL'] ) ) : '';
 ?>
 <div class="wb-ajax-search-container">
 	<form method="GET">
@@ -68,6 +71,11 @@ $reset_button                   = ( isset( $wb_ajax_filter_general_options['show
 		if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
 			?>
 			<a class="wb-ajax-reset-all-filters"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
+			<?php
+		}
+		if ( isset( $wb_ajax_filter_general_options['instant_filters'] ) && 'no' === $wb_ajax_filter_general_options['instant_filters'] ) {
+			?>
+			<a class="wb-ajax-apply-all-filters"><?php esc_html_e( 'Apply filters', 'wb-ajax-filter' ); ?></a>
 			<?php
 		}
 		?>
