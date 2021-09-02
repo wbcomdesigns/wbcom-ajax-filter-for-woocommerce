@@ -7,17 +7,26 @@
 	 */
 
 	jQuery( document ).ready( function ($) {
-		var loadResultWithAjax;
+		var loadResultWithAjax, scrollToTopAfterLoadResults;
 		// Check if 'Apply Filters' button exists
 		var applyFiltersButton = false;
 		if (jQuery('.wb-ajax-apply-all-filters').length ){
 			var applyFiltersButton = true;
 		}
-		if (jQuery('#wb_load_result_with_ajax').length) {
+
+		if ( jQuery('#wb_load_result_with_ajax').length ) {
 			if ( jQuery('#wb_load_result_with_ajax').val() === 'yes' ) {
 				loadResultWithAjax = true;
 			} else {
 				loadResultWithAjax = false;
+			}
+		}
+
+		if ( jQuery('#wb_scroll_top_after_load_result').length ) {
+			if ( jQuery('#wb_scroll_top_after_load_result').val() === 'yes' ) {
+				scrollToTopAfterLoadResults = true;
+			} else {
+				scrollToTopAfterLoadResults = false;
 			}
 		}
 
@@ -71,7 +80,10 @@
 					$response = $(responseDom);
 					responseDom.innerHTML = result;
 					$('body').replaceWith($response.find('body'));
-					$('html,body').animate({ scrollTop: $('.site-header-wrapper').offset().top }, 'slow');
+					if ( scrollToTopAfterLoadResults ) {
+						$('html,body').animate({ scrollTop: $('.site-header-wrapper').offset().top }, 'slow');
+					}
+					
 				}
 			});
 		}

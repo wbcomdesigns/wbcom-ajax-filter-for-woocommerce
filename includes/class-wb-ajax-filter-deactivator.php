@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin deactivation
  *
@@ -31,6 +30,15 @@ class Wb_Ajax_Filter_Deactivator {
 	 */
 	public static function deactivate() {
 		unregister_post_type( 'wb_filter_preset' );
+		$remove_options = array(
+			'wb_ajax_filter_search_settings',
+			'wb_ajax_filter_admin_general_options',
+			'wb_ajax_filter_admin_customization_options',
+			'wb_ajax_filter_search_content_settings',
+		);
+		foreach ( $remove_options as $option ) {
+			delete_option( $option );
+		}
 	}
 
 }
