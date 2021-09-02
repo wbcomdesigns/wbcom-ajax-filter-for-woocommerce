@@ -54,6 +54,25 @@ $base_url                      .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_t
 </div>
 <div class="wb-ajax-filters-container no-title" id="preset_<?php echo esc_attr( $preset_id ); ?>" data-preset-id="<?php echo esc_attr( $preset_id ); ?>">
 	<form method="POST">
+		<input type="hidden" id="wb_load_result_with_ajax" name="load_results_with_ajax" value="<?php echo ( isset( $wb_ajax_filter_general_options['ajax_filters'] ) ) ? esc_attr( $wb_ajax_filter_general_options['ajax_filters'] ) : ''; ?>">
+		<div class="wb-ajax-active-filters-container">
+			<?php
+			if ( count( $params ) > 0 ) {
+				$exclude_filters = array( 'orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter' );
+				foreach ( $params as $key => $param ) {
+					if ( in_array( $key, $exclude_filters, true ) ) {
+						continue;
+					}
+					?>
+					<div class="wb-ajax-active-filters-container-single">
+						<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $param ); ?></span>
+						<span class="wb-ajax-filter-clear-single" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $param ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
+					</div>
+					<?php
+				}
+			}
+			?>
+		</div>
 		<?php
 		$filter_count = 0;
 		if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {

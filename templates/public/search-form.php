@@ -9,7 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
-$wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' );
+$wb_ajax_filter_search_settings         = get_option( 'wb_ajax_filter_search_settings' );
+$wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_content_settings' );
 if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_ajax_filter_search_settings['enable_search'] ) {
 	$exclude_tax = array( 'product_type', 'product_visibility', 'product_shipping_class' );
 	$taxonomies  = get_object_taxonomies( 'product', 'name' );
@@ -20,8 +21,10 @@ if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_
 		<?php if ( isset( $wb_ajax_filter_search_settings['show_search_list'] ) && 'yes' === $wb_ajax_filter_search_settings['show_search_list'] ) { ?>
 		<div class="wb-ajax-filter-ajaxsearchform-select wb-ajax-filter-ajaxsearchform-select-list">
 			<select class="wb-ajax-filter-post-type" name="post_type" tabindex="-1" aria-hidden="true">
-				<option value="product" <?php echo ( isset( $_REQUEST['post_type'] ) && 'product' === $_REQUEST['post_type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Products', 'wb-ajax-filter' ); ?></option>
+				<?php if ( isset( $wb_ajax_filter_search_content_settings['default_research'] ) && 'any' === $wb_ajax_filter_search_content_settings['default_research'] ) { ?>
 				<option value="any" <?php echo ( isset( $_REQUEST['post_type'] ) && 'any' === $_REQUEST['post_type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'All', 'wb-ajax-filter' ); ?></option>
+				<?php } ?>
+				<option value="product" <?php echo ( isset( $_REQUEST['post_type'] ) && 'product' === $_REQUEST['post_type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Products', 'wb-ajax-filter' ); ?></option>
 			</select>
 		</div>
 		<?php } ?>

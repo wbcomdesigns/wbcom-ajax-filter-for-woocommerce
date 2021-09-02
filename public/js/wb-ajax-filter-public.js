@@ -7,11 +7,18 @@
 	 */
 
 	jQuery( document ).ready( function ($) {
-
+		var loadResultWithAjax;
 		// Check if 'Apply Filters' button exists
 		var applyFiltersButton = false;
 		if (jQuery('.wb-ajax-apply-all-filters').length ){
 			var applyFiltersButton = true;
+		}
+		if (jQuery('#wb_load_result_with_ajax').length) {
+			if ( jQuery('#wb_load_result_with_ajax').val() === 'yes' ) {
+				loadResultWithAjax = true;
+			} else {
+				loadResultWithAjax = false;
+			}
 		}
 
 		// Enable select2 js
@@ -107,6 +114,14 @@
 			return values;
 		}
 
+		function addFilterToFiltersListing(filter, value){
+			let exclude_arr = ['orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter'];
+			if (jQuery.inArray( filter, exclude_arr ) === -1){
+				let html = '<div class="wb-ajax-active-filters-container-single">< span class="wb-ajax-filter-single-keyword">' + value + '</span ><span class="wb-ajax-filter-clear-single" data-filter="' + filter + '" data-filter-value="' + value + '"><span class="dashicons dashicons-no-alt"></span></span></div >';
+				jQuery('.wb-ajax-active-filters-container').append( html );
+			}
+		}
+
 		jQuery('.wb-tooltip-added').on('mouseover', function(){
 			jQuery(this).find('span').css({
 				'opacity': 1
@@ -124,9 +139,14 @@
 			e.preventDefault();
 			let filter = jQuery('#wb_ajax_search_input').attr('name');
 			let filterValue = jQuery('#wb_ajax_search_input').val();
-			addRemoveAjaxSearchfieldsOnChange( filter, filterValue )
-			history.pushState( {}, null, urlHost + '?' + params.toString() );
-			refreshShopPageTemplate( urlHost + '?' + params.toString() );
+			addRemoveAjaxSearchfieldsOnChange( filter, filterValue );
+			if (loadResultWithAjax) {
+				history.pushState({}, null, urlHost + '?' + params.toString());
+				refreshShopPageTemplate(urlHost + '?' + params.toString());
+			} else {
+				location.search = params.toString()
+			}
+			
 		});
 
 		function addRemoveAjaxSearchfieldsOnChange( filter, filterValue ){
@@ -146,7 +166,12 @@
 		// Apply filters
 		jQuery('.wb-ajax-apply-all-filters').on('click', function( e ){
 			e.preventDefault();
-			refreshShopPageTemplate( urlHost + '?' + params.toString() );
+			if (loadResultWithAjax) {
+				history.pushState({}, null, urlHost + '?' + params.toString());
+				refreshShopPageTemplate(urlHost + '?' + params.toString());
+			} else {
+				location.search = params.toString()
+			}
 		});
 
 		jQuery('a.wb-term-label').on('click', function(e){
@@ -174,8 +199,31 @@
 			} else {
 				removeField(filter);
 			}
-			history.pushState( {}, null, urlHost + '?' + params.toString() );
-			refreshShopPageTemplate( urlHost + '?' + params.toString() );
+			if (loadResultWithAjax) {
+				history.pushState({}, null, urlHost + '?' + params.toString());
+				refreshShopPageTemplate(urlHost + '?' + params.toString());
+			} else {
+				location.search = params.toString()
+			}
+		});
+
+		// Clear single filter from filter listing
+		jQuery('.wb-ajax-active-filters-container').on('click', '.wb-ajax-filter-clear-single', function(){
+			let filter = jQuery(this).data('filter');
+			let filterValue = jQuery(this).data('filter-value');
+			let newValue = removeValues(filter, filterValue);
+			if(newValue != ''){
+				setFieldValue(filter, newValue);
+			} else {
+				removeField(filter);
+			}
+			jQuery(this).parent().remove();
+			if (loadResultWithAjax) {
+				history.pushState({}, null, urlHost + '?' + params.toString());
+				refreshShopPageTemplate(urlHost + '?' + params.toString());
+			} else {
+				location.search = params.toString()
+			}
 		});
 
 		// Reset filters
@@ -186,14 +234,19 @@
 				hash = hashes[i].split('=');
 				removeField( hash[0] );
 			}
-			history.pushState( {}, null, urlHost );
-			refreshShopPageTemplate( urlHost );
+			if (loadResultWithAjax) {
+				history.pushState( {}, null, urlHost );
+				refreshShopPageTemplate( urlHost );
+			} else {
+				location.search = params.toString()
+			}
 		});
 
 		// Get values from all select and input boxes
 		jQuery("select.wb-ajax-filter-selectible, input.wb-ajax-filter-selectible").on( 'change', function () {
 			let filter    = jQuery( this ).data( 'filter' );
 			let filterVal = jQuery( this ).val();
+			addFilterToFiltersListing(filter, filterVal);
 			let tag       = jQuery( this ).prop( 'tagName' );
 			let type       = jQuery(this).attr('type');
 			if ( tag === 'SELECT' ) {
@@ -230,9 +283,13 @@
 					}
 				}
 			}
-			history.pushState( {}, null, urlHost + '?' + params.toString() );
-			if ( !applyFiltersButton ) {
-				refreshShopPageTemplate( urlHost + '?' + params.toString() );
+			if (!applyFiltersButton) {
+				if (loadResultWithAjax) {
+					history.pushState({}, null, urlHost + '?' + params.toString());
+					refreshShopPageTemplate(urlHost + '?' + params.toString());
+				} else {
+					location.search = params.toString()
+				}
 			}
 		});
 
@@ -251,9 +308,13 @@
 				setFieldValue( 'min_price', minPrice );
 				setFieldValue( 'max_price', maxPrice );
 			}
-			history.pushState( {}, null, urlHost + '?' + params.toString() );
 			if (!applyFiltersButton) {
-				refreshShopPageTemplate( urlHost + '?' + params.toString() );
+				if (loadResultWithAjax) {
+					history.pushState({}, null, urlHost + '?' + params.toString());
+					refreshShopPageTemplate(urlHost + '?' + params.toString());
+				} else {
+					location.search = params.toString()
+				}
 			}
 		});
 		
@@ -272,9 +333,13 @@
 					setFieldValue( 'min_price', fromPrice );
 					setFieldValue( 'max_price', toPrice );
 				}
-				history.pushState( {}, null, urlHost + '?' + params.toString() );
-				if ( !applyFiltersButton ) {
-					refreshShopPageTemplate( urlHost + '?' + params.toString() );
+				if (!applyFiltersButton) {
+					if (loadResultWithAjax) {
+						history.pushState({}, null, urlHost + '?' + params.toString());
+						refreshShopPageTemplate(urlHost + '?' + params.toString());	
+					} else {
+						location.search = params.toString()
+					}
 				}
 			},
 		});
