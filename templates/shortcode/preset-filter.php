@@ -32,22 +32,14 @@ if ( isset( $_GET ) ) {
 		}
 	}
 }
-$wb_ajax_filter_admin_custom    = get_option( 'wb_ajax_filter_admin_customization_options' );
-$wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
-$reset_html                     = '<a class="wb-ajax-reset-all-filters">Reset filters</a>';
-$reset_button                   = ( isset( $wb_ajax_filter_general_options['show_reset'] ) && 'yes' === $wb_ajax_filter_general_options['show_reset'] ) ? $reset_html : '';
-$base_url                       = ( isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http' ) . '://';
-$base_url                      .= isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
-$base_url                      .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REDIRECT_URL'] ) ) : '';
+
+$base_url  = ( isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http' ) . '://';
+$base_url .= isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
+$base_url .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REDIRECT_URL'] ) ) : '';
 ?>
 <div class="wb-ajax-search-container">
 	<form method="GET">
 		<?php
-		if ( isset( $wb_ajax_filter_admin_custom['filters_title'] ) && '' !== $wb_ajax_filter_admin_custom['filters_title'] ) {
-			?>
-			<h3 class="wb-ajax-preset-filter-title" style="display:block;"><?php echo esc_html( $wb_ajax_filter_admin_custom['filters_title'] ); ?></h3>
-			<?php
-		}
 		$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/search-form.php';
 		if ( file_exists( $custom_template ) ) {
 			include $custom_template;
@@ -83,11 +75,6 @@ $base_url                      .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_t
 		<?php } ?>
 		<?php
 		$filter_count = 0;
-		if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
-			?>
-			<a class="wb-ajax-reset-all-filters"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
-			<?php
-		}
 		foreach ( $all_filters as $filters ) {
 			if ( strpos( $filters['type'], '_' ) !== false ) {
 				$filters['type'] = str_replace( '_', '-', $filters['type'] );
@@ -99,16 +86,6 @@ $base_url                      .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_t
 				require WB_AJAX_FILTER_TEMPLATE_PATH . 'filters/filter-' . $filters['type'] . '.php';
 			}
 			$filter_count++;
-		}
-		if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] || 'before_products' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
-			?>
-			<a class="wb-ajax-reset-all-filters"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
-			<?php
-		}
-		if ( isset( $wb_ajax_filter_general_options['instant_filters'] ) && 'no' === $wb_ajax_filter_general_options['instant_filters'] ) {
-			?>
-			<a class="wb-ajax-apply-all-filters"><?php esc_html_e( 'Apply filters', 'wb-ajax-filter' ); ?></a>
-			<?php
 		}
 		?>
 	</form>
