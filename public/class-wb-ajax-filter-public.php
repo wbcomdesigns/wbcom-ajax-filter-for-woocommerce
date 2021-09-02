@@ -216,8 +216,8 @@ class Wb_Ajax_Filter_Public {
 	 * @param find    $find    The string to be searched inside content.
 	 * @since    1.0.0
 	 */
-	public function wb_check_string_contains_content( $content, $find ) {
-		if ( strpos( $content, ucfirst( $find ) ) !== false && strpos( $content, strtolower( $find ) ) !== false ) {
+	public function wb_check_content_contains_string( $content, $find ) {
+		if ( strpos( $content, ucfirst( $find ) ) !== false || strpos( $content, strtolower( $find ) ) !== false ) {
 			return true;
 		} else {
 			return false;
@@ -246,25 +246,56 @@ class Wb_Ajax_Filter_Public {
 			$matched_products       = array();
 			$q                      = sanitize_text_field( wp_unslash( $_GET['q'] ) );
 			$match                  = false;
+			$multiple_word_search   = ( isset( $search_filter_settings['search_type_more_words'] ) && 'and' === $search_filter_settings['search_type_more_words'] ) ? true : false;
 			foreach ( $products as $product ) {
 				$prod = wc_get_product( $product->ID );
 				if ( count( $matched_products ) >= $search_settings['posts_per_page'] ) {
 					break;
 				}
 				if ( isset( $search_filter_settings['search_in_title'] ) && 'yes' === $search_filter_settings['search_in_title'] ) {
-					if ( $this->wb_check_string_contains_content( $product->post_title, $q ) ) {
-						$match = true;
+					if ( $multiple_word_search ) {
+						if ( $this->wb_check_content_contains_string( $product->post_title, $q ) ) {
+							$match = true;
+						}
+					}
+					if ( ! $multiple_word_search ) {
+						$query = str_split( $q );
+						foreach ( $query as $val ) {
+							if ( $this->wb_check_content_contains_string( $product->post_title, $val ) ) {
+								$match = true;
+							}
+						}
 					}
 				}
 				if ( isset( $search_filter_settings['search_in_content'] ) && 'yes' === $search_filter_settings['search_in_content'] ) {
-					if ( $this->wb_check_string_contains_content( $product->post_content, $q ) ) {
-						$match = true;
+					if ( $multiple_word_search ) {
+						if ( $this->wb_check_content_contains_string( $product->post_content, $q ) ) {
+							$match = true;
+						}
+					}
+					if ( ! $multiple_word_search ) {
+						$query = str_split( $q );
+						foreach ( $query as $val ) {
+							if ( $this->wb_check_content_contains_string( $product->post_content, $val ) ) {
+								$match = true;
+							}
+						}
 					}
 				}
 				if ( isset( $search_filter_settings['search_in_excerpt'] ) && 'yes' === $search_filter_settings['search_in_excerpt'] ) {
 					$excerpt = get_the_excerpt( $product->ID );
-					if ( $this->wb_check_string_contains_content( $excerpt, $q ) ) {
-						$match = true;
+					if ( $multiple_word_search ) {
+						if ( $this->wb_check_content_contains_string( $excerpt, $q ) ) {
+							$match = true;
+						}
+					}
+					if ( ! $multiple_word_search ) {
+						$query = str_split( $q );
+						foreach ( $query as $val ) {
+							if ( $this->wb_check_content_contains_string( $excerpt, $val ) ) {
+								$match = true;
+							}
+						}
 					}
 				}
 				if ( isset( $search_filter_settings['search_in_product_categories'] ) && 'yes' === $search_filter_settings['search_in_product_categories'] ) {
@@ -272,19 +303,41 @@ class Wb_Ajax_Filter_Public {
 					if ( count( $categories ) > 0 ) {
 						foreach ( $categories as $cat ) {
 							$cat_data = get_term_by( 'id', $cat, 'product_cat' );
-							if ( $this->wb_check_string_contains_content( $cat_data->name, $q ) ) {
-								$match = true;
+							if ( $multiple_word_search ) {
+								if ( $this->wb_check_content_contains_string( $cat_data->name, $q ) ) {
+									$match = true;
+								}
+							}
+							if ( ! $multiple_word_search ) {
+								$query = str_split( $q );
+								foreach ( $query as $val ) {
+									if ( $this->wb_check_content_contains_string( $cat_data->name, $val ) ) {
+										$match = true;
+									}
+								}
 							}
 						}
 					}
 				}
 				if ( isset( $search_filter_settings['search_in_product_tags'] ) && 'yes' === $search_filter_settings['search_in_product_tags'] ) {
 					$tags = $prod->get_tag_ids();
-					if ( count( $tags ) > 0 ) {
-						foreach ( $tags as $tag ) {
-							$tag_data = get_term_by( 'id', $tag, 'product_tag' );
-							if ( $this->wb_check_string_contains_content( $tag_data->name, $q ) ) {
-								$match = true;
+					if ( $multiple_word_search ) {
+						if ( count( $tags ) > 0 ) {
+							foreach ( $tags as $tag ) {
+								$tag_data = get_term_by( 'id', $tag, 'product_tag' );
+								if ( $multiple_word_search ) {
+									if ( $this->wb_check_content_contains_string( $tag_data->name, $q ) ) {
+										$match = true;
+									}
+								}
+								if ( ! $multiple_word_search ) {
+									$query = str_split( $q );
+									foreach ( $query as $val ) {
+										if ( $this->wb_check_content_contains_string( $tag_data->name, $val ) ) {
+											$match = true;
+										}
+									}
+								}
 							}
 						}
 					}
@@ -293,8 +346,18 @@ class Wb_Ajax_Filter_Public {
 					$author   = get_userdata( $product->post_author );
 					$username = $author->user_login;
 					$name     = $author->first_name . ' ' . $author->last_name;
-					if ( $this->wb_check_string_contains_content( $username, $q ) || $this->wb_check_string_contains_content( $name, $q ) ) {
-						$match = true;
+					if ( $multiple_word_search ) {
+						if ( $this->wb_check_content_contains_string( $username, $q ) || $this->wb_check_content_contains_string( $name, $q ) ) {
+							$match = true;
+						}
+					}
+					if ( ! $multiple_word_search ) {
+						$query = str_split( $q );
+						foreach ( $query as $val ) {
+							if ( $this->wb_check_content_contains_string( $username, $val ) || $this->wb_check_content_contains_string( $name, $val ) ) {
+								$match = true;
+							}
+						}
 					}
 				}
 				if ( $match ) {
