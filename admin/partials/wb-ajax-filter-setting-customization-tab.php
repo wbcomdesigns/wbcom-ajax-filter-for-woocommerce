@@ -18,7 +18,7 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 ?>
 <div class="wbcom-tab-content">
 	<div class="wb-ajax-filter-tab-content">
-		<h2 class="wp-heading-inline"><?php esc_html_e( 'General Settings', 'wb-ajax-filter' ); ?></h2>
+		<h2 class="wp-heading-inline"><?php esc_html_e( 'Customization Settings', 'wb-ajax-filter' ); ?></h2>
 	</div>
 	<form method="post" action="options.php">
 		<?php

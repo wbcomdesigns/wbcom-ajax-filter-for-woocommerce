@@ -136,7 +136,7 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 						</label><br>
 						<label>
 							<input name="wb_ajax_filter_search_content_settings[search_type_more_words]" type="radio" value="or"<?php ( isset( $wb_ajax_filter_search_content_settings['search_type_more_words'] ) ) ? checked( $wb_ajax_filter_search_content_settings['search_type_more_words'], 'or' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Show items containing al least one of the words typed', 'wb-ajax-filter' ); ?></span>
+							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Show items containing at least one of the words typed', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					</td>
 				</tr>

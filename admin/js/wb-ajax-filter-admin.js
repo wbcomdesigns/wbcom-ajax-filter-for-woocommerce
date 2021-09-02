@@ -8,28 +8,31 @@
 
 	jQuery(document).ready(function ($) {
 		// Preset single filters sort
-		jQuery(".wb-ajax-filters-single-container").sortable({
-			update: function (event, ui) {
-				let elem = ui.item[0];
-				let elemMovedIndex = elem.getAttribute("data-item_key");
-				jQuery('.wb-ajax-filters-single-container').find('.wb-ajax-filter-toggle-row').each(function(index, elm){
-					let oldIndex = jQuery(this).data('item_key');
-					let preset = jQuery(this).data('preset');
-					if (elemMovedIndex == oldIndex && preset != ""){
-						let newIndex = index;
-						let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
-						jQuery.ajax({
-							url: wbcom_plugin_installer_params.ajax_url,
-							type: 'post',
-							data: { action: 'sortable_single_filters_wb', 'nonce': nonce,'preset': preset, 'old_index': oldIndex, 'new_index': newIndex },
-							success: function (response) {
-								location.reload();
-							}
-						});
-					}
-				});
-			}
-		});
+		if (jQuery(".wb-ajax-filters-single-container .wb-ajax-filter-toggle-row").length > 1) {
+			jQuery(".wb-ajax-filters-single-container").sortable({
+				update: function (event, ui) {
+					let elem = ui.item[0];
+					let elemMovedIndex = elem.getAttribute("data-item_key");
+					jQuery('.wb-ajax-filters-single-container').find('.wb-ajax-filter-toggle-row').each(function (index, elm) {
+						let oldIndex = jQuery(this).data('item_key');
+						let preset = jQuery(this).data('preset');
+						if (elemMovedIndex == oldIndex && preset != "") {
+							let newIndex = index;
+							let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
+							jQuery.ajax({
+								url: wbcom_plugin_installer_params.ajax_url,
+								type: 'post',
+								data: { action: 'sortable_single_filters_wb', 'nonce': nonce, 'preset': preset, 'old_index': oldIndex, 'new_index': newIndex },
+								success: function (response) {
+									location.reload();
+								}
+							});
+						}
+					});
+				}
+			});
+		}
+		
 		
 		jQuery(".wb-ajax-color-picker").wpColorPicker();
 		var url_string = window.location.href
@@ -212,9 +215,7 @@
 				data: { action: 'create_filter_preset_wb', 'nonce': nonce, 'form_data': queryString },
 				success: function ( response ) {
 					if ( 'filter_created' === response ) {
-						let query = window.location.search;
-						let url = query.replace( "update", "list" );
-						window.location.href = url;
+						window.location.search ='page=wb-ajax-filter-integration-settings&tab=wb-ajax-filter-presets';
 					}
 				}
 			});
@@ -350,7 +351,7 @@
 
 		// Create a duplicate of the preset
 		jQuery( 'a.wb-copy-filter-preset' ).on( 'click', function () {
-			var copy = confirm( "Do you want to create a copy of this preset?" );
+			var copy = confirm( "Do you want to create duplicate of this preset?" );
 			if ( copy == true ) {
 				let preset = jQuery( this ).data( 'preset' );
 				let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
@@ -388,7 +389,7 @@
 
 		// Create a duplicate of the preset
 		jQuery( 'span.wb-clone-single-filter' ).on( 'click', function () {
-			var copy = confirm( "Do you want to create a copy of this filter?" );
+			var copy = confirm( "Do you want to create duplicate of this filter?" );
 			if ( copy == true ) {
 				let preset = jQuery( this ).data( 'preset' );
 				let filter_id = jQuery( this ).data( 'filter_id' );
@@ -468,6 +469,10 @@
 		jQuery( '.wb-ajax-filter-add-button' ).on( 'click', function (e) {
 			e.preventDefault();
 			var title = jQuery( 'input[name="wb_ajax_filter_preset_title"]' ).val();
+			if ( title == '' || title == undefined ) {
+				alert('Please enter name for preset');
+				return false;
+			}
 			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
 			let preset = ( jQuery( this ).data( 'preset' ) !== '' ) ? jQuery( this ).data( 'preset' ) : '';
 			jQuery.ajax({
