@@ -204,8 +204,6 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_count_field', 90 );
 		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_adoptive_filtering_field', 100 );
 		$this->loader->add_action( 'wb_ajax_filter_after_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_save_button', 10 );
-		// Shortcode callback.
-		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_admin, 'filter_preset_shortcode_callback' );
 	}
 
 	/**
@@ -223,7 +221,8 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'woocommerce_after_shop_loop', $plugin_public, 'add_wb_ajax_filters' );
 		$this->loader->add_action( 'wp_ajax_get_ajax_search_autocomplete_title_wb', $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' );
-
+		// Shortcode callback.
+		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_public, 'filter_preset_shortcode_callback' );
 	}
 
 	/**

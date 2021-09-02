@@ -115,10 +115,12 @@
 		}
 
 		function addFilterToFiltersListing(filter, value){
-			let exclude_arr = ['orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter'];
-			if (jQuery.inArray( filter, exclude_arr ) === -1){
-				let html = '<div class="wb-ajax-active-filters-container-single">< span class="wb-ajax-filter-single-keyword">' + value + '</span ><span class="wb-ajax-filter-clear-single" data-filter="' + filter + '" data-filter-value="' + value + '"><span class="dashicons dashicons-no-alt"></span></span></div >';
-				jQuery('.wb-ajax-active-filters-container').append( html );
+			if (jQuery('.wb-ajax-active-filters-container').length ){
+				let exclude_arr = ['orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter'];
+				if (jQuery.inArray( filter, exclude_arr ) === -1){
+					let html = '<div class="wb-ajax-active-filters-container-single">< span class="wb-ajax-filter-single-keyword">' + value + '</span ><span class="wb-ajax-filter-clear-single" data-filter="' + filter + '" data-filter-value="' + value + '"><span class="dashicons dashicons-no-alt"></span></span></div >';
+					jQuery('.wb-ajax-active-filters-container').append( html );
+				}
 			}
 		}
 
@@ -176,6 +178,9 @@
 
 		jQuery('a.wb-term-label').on('click', function(e){
 			e.preventDefault();
+			if ( jQuery(this).hasClass('disabled') ){
+				return false;
+			}
 			let type = jQuery(this).prev('input').attr('type');
 			if (jQuery(this).prev('input').is(':checked') ){
 				if (type === 'checkbox') {

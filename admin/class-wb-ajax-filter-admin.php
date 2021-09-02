@@ -582,33 +582,6 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Filter preset shortcode callback.
-	 */
-	public function filter_preset_shortcode_callback() {
-		$args    = array(
-			'post_type'   => 'wb_filter_preset',
-			'post_status' => 'publish',
-			'numberposts' => -1,
-		);
-		$presets = get_posts( $args );
-		if ( ! empty( $presets ) ) {
-			foreach ( $presets as $preset ) {
-				$preset_id   = $preset->ID;
-				$all_filters = get_post_meta( $preset_id, '_wb_filter', true );
-				$enabled     = get_post_meta( $preset_id, 'preset_enabled', true );
-				if ( 'yes' === $enabled ) {
-					$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/preset-filter.php';
-					if ( file_exists( $custom_template ) ) {
-						include $custom_template;
-					} else {
-						include WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
-					}
-				}
-			}
-		}
-	}
-
-	/**
 	 * Add price range field.
 	 */
 	public function add_price_range_field_wb_callback() {

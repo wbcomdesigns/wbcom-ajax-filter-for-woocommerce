@@ -48,13 +48,19 @@ $base_url                      .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_t
 			<h3 class="wb-ajax-preset-filter-title" style="display:block;"><?php echo esc_html( $wb_ajax_filter_admin_custom['filters_title'] ); ?></h3>
 			<?php
 		}
-		require_once WB_AJAX_FILTER_TEMPLATE_PATH . 'public/search-form.php';
+		$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/search-form.php';
+		if ( file_exists( $custom_template ) ) {
+			include $custom_template;
+		} else {
+			require_once WB_AJAX_FILTER_TEMPLATE_PATH . 'public/search-form.php';
+		}
 		?>
 	</form>
 </div>
 <div class="wb-ajax-filters-container no-title" id="preset_<?php echo esc_attr( $preset_id ); ?>" data-preset-id="<?php echo esc_attr( $preset_id ); ?>">
 	<form method="POST">
 		<input type="hidden" id="wb_load_result_with_ajax" name="load_results_with_ajax" value="<?php echo ( isset( $wb_ajax_filter_general_options['ajax_filters'] ) ) ? esc_attr( $wb_ajax_filter_general_options['ajax_filters'] ) : ''; ?>">
+		<?php if ( isset( $wb_ajax_filter_general_options['show_active_labels'] ) && 'yes' === $wb_ajax_filter_general_options['show_active_labels'] ) { ?>
 		<div class="wb-ajax-active-filters-container">
 			<?php
 			if ( count( $params ) > 0 ) {
@@ -73,6 +79,7 @@ $base_url                      .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_t
 			}
 			?>
 		</div>
+		<?php } ?>
 		<?php
 		$filter_count = 0;
 		if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
@@ -84,10 +91,15 @@ $base_url                      .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_t
 			if ( strpos( $filters['type'], '_' ) !== false ) {
 				$filters['type'] = str_replace( '_', '-', $filters['type'] );
 			}
-			require WB_AJAX_FILTER_TEMPLATE_PATH . 'filters/filter-' . $filters['type'] . '.php';
+			$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/filter-' . $filters['type'] . '.php';
+			if ( file_exists( $custom_template ) ) {
+				include $custom_template;
+			} else {
+				require WB_AJAX_FILTER_TEMPLATE_PATH . 'filters/filter-' . $filters['type'] . '.php';
+			}
 			$filter_count++;
 		}
-		if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
+		if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] || 'before_products' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
 			?>
 			<a class="wb-ajax-reset-all-filters"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
 			<?php
