@@ -119,7 +119,9 @@ class Wb_Ajax_Filter_Public {
 	 * @since    1.0.0
 	 */
 	public function add_wb_ajax_filters() {
-		echo '<div class="wb-ajax-filter-content-container">';
+		$customization_options = get_option( 'wb_ajax_filter_admin_customization_options' );
+		$columns               = isset( $customization_options['filters_per_column'] ) ? $customization_options['filters_per_column'] : 5;
+		echo '<div class="wb-ajax-filter-content-container filter-columns-' . esc_attr( $columns ) . '">';
 		echo do_shortcode( '[wb_ajax_filters]' );
 		echo '</div>';
 	}
@@ -150,11 +152,18 @@ class Wb_Ajax_Filter_Public {
 				span.select2-dropdown.select2-dropdown--below {
 					border: 1px solid ' . $css_settings['filters_area_accent_color'] . ';
 				}
-				span.wb-ajax-filter-tooltip-text{
+				span.wb-ajax-filter-tooltip-text, 
+				.wb-ajax-active-filters-container span.wb-ajax-filter-clear-single.button
+				{
+					color: ' . $css_settings['textual_terms_tooltip_text_color'] . ';
 					background: ' . $css_settings['filters_area_accent_color'] . ';
 				}
+				.wb-ajax-active-filters-container .wb-ajax-active-filters-container-single{
+					border: 1px solid ' . $css_settings['filters_area_accent_color'] . ';
+					color: ' . $css_settings['filters_area_titles_color'] . ';
+				}
 				span.wb-ajax-filter-tooltip-text:before{
-					border-color:' . $css_settings['filters_area_accent_color'] . ' transparent;
+					border-color:' . $css_settings['filters_area_accent_color'] . ' transparent !important;
 				}
 				.irs span.irs-bar {
 					background: ' . $css_settings['filters_area_accent_color'] . ';
@@ -432,50 +441,18 @@ class Wb_Ajax_Filter_Public {
 				}
 			}
 		}
-		do_action( 'wb_ajax_filter_before_content' );
 		if ( ! empty( $presets ) ) {
+			do_action( 'wb_ajax_filter_before_content' );
 			if ( isset( $wb_ajax_filter_admin_custom['filters_title'] ) && '' !== $wb_ajax_filter_admin_custom['filters_title'] ) {
 				?>
 				<h3 class="wb-ajax-preset-filter-title" style="display:block;"><?php echo esc_html( $wb_ajax_filter_admin_custom['filters_title'] ); ?></h3>
 				<?php
 			}
 			if ( isset( $wb_ajax_filter_general_options['show_active_labels'] ) && 'yes' === $wb_ajax_filter_general_options['show_active_labels'] ) {
-				?>
-				<div class="wb-ajax-active-filters-container">
-					<?php
-					if ( count( $params ) > 0 ) {
-						$exclude_filters = array( 'orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter' );
-						foreach ( $params as $key => $param ) {
-							if ( in_array( $key, $exclude_filters, true ) ) {
-								continue;
-							}
-							if ( is_array( $param ) ) {
-								foreach ( $param as $pm ) {
-									?>
-									<div class="wb-ajax-active-filters-container-single">
-										<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $pm ); ?></span>
-										<span class="wb-ajax-filter-clear-single button" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $pm ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
-									</div>
-									<?php
-								}
-							} else {
-								?>
-								<div class="wb-ajax-active-filters-container-single">
-									<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $param ); ?></span>
-									<span class="wb-ajax-filter-clear-single button" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $param ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
-								</div>
-								<?php
-							}
-						}
-					}
-					?>
-				</div>
-				<?php
+				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/active-filters.php';
 			}
 			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
-				?>
-				<a href="javascript:void(0)" class="wb-ajax-reset-all-filters button"><span class="dashicons dashicons-undo"></span><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
-				<?php
+				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filter/global/reset-filters.php';
 			}
 			foreach ( $presets as $preset ) {
 				$preset_id   = $preset->ID;
@@ -486,15 +463,12 @@ class Wb_Ajax_Filter_Public {
 				}
 			}
 			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] || 'before_products' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
-				?>
-				<a href="javascript:void(0)" class="wb-ajax-reset-all-filters button"><span class="dashicons dashicons-undo"></span><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
-				<?php
+				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
 			}
 			if ( isset( $wb_ajax_filter_general_options['instant_filters'] ) && 'no' === $wb_ajax_filter_general_options['instant_filters'] ) {
-				?>
-				<a href="javascript:void(0)" class="wb-ajax-apply-all-filters  button"><?php esc_html_e( 'Apply filters', 'wb-ajax-filter' ); ?></a>
-				<?php
+				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/apply-filters.php';
 			}
+			do_action( 'wb_ajax_filter_after_content' );
 		}
 	}
 }

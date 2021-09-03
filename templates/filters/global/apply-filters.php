@@ -1,0 +1,15 @@
+<?php
+/**
+ * The template for apply filters button.
+ *
+ * @link       https://wbcomdesigns.com/
+ * @since      1.0.0
+ *
+ * @package    Wb_Ajax_Filter
+ * @subpackage Wb_Ajax_Filter/template/admin
+ */
+
+?>
+<div class="wb-ajax-reset-all-filters-container">
+	<a href="javascript:void(0)" class="wb-ajax-apply-all-filters  button"><?php esc_html_e( 'Apply filters', 'wb-ajax-filter' ); ?></a>
+</div>

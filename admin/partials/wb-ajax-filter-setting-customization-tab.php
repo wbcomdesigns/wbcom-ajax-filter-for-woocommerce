@@ -73,6 +73,19 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 				<tr>
 					<th scope="row">
 						<label>
+							<?php esc_html_e( 'Filter Columns', 'wb-ajax-filter' ); ?>
+						</label>
+					</th>
+					<td>
+						<label>
+							<input name="wb_ajax_filter_admin_customization_options[filters_per_column]" type="number" min="2" max="5" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['filters_per_column'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['filters_per_column'] ) : ''; ?>">
+							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Choose number of filters in a row', 'wb-ajax-filter' ); ?></span>
+						</label><br>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label>
 							<?php esc_html_e( 'Options style', 'wb-ajax-filter' ); ?>
 						</label>
 					</th>
@@ -113,6 +126,12 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 								<?php esc_html_e( 'Text Active', 'wb-ajax-filter' ); ?>
 							</label>
 								<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[textual_terms_active_text_color]" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['textual_terms_active_text_color'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['textual_terms_active_text_color'] ) : '#fff'; ?>">
+							</div>
+							<div class="wb-ajax-filter-single-colorpicker colorpicker">
+								<label>
+								<?php esc_html_e( 'Tooltip Text', 'wb-ajax-filter' ); ?>
+							</label>
+								<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[textual_terms_tooltip_text_color]" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['textual_terms_tooltip_text_color'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['textual_terms_tooltip_text_color'] ) : '#fff'; ?>">
 							</div>
 						</div>
 					</td>
