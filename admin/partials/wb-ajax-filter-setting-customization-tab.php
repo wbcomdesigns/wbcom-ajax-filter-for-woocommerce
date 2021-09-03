@@ -78,7 +78,7 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 					</th>
 					<td>
 						<label>
-							<input name="wb_ajax_filter_admin_customization_options[filters_per_column]" type="number" min="2" max="5" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['filters_per_column'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['filters_per_column'] ) : ''; ?>">
+							<input name="wb_ajax_filter_admin_customization_options[filters_per_column]" type="number" min="2" max="5" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['filters_per_column'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['filters_per_column'] ) : '5'; ?>">
 							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Choose number of filters in a row', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					</td>
