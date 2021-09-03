@@ -65,7 +65,7 @@ $base_url .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_text_field( wp_unslash
 					?>
 					<div class="wb-ajax-active-filters-container-single">
 						<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $param ); ?></span>
-						<span class="wb-ajax-filter-clear-single" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $param ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
+						<span class="wb-ajax-filter-clear-single button" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $param ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
 					</div>
 					<?php
 				}

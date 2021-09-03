@@ -15,7 +15,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 <div class="wb-ajax-filter-container-single filter-stock-sale">
 	<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
 	<?php if ( isset( $wb_ajax_filter_general_options['show_clear_filter'] ) && 'yes' === $wb_ajax_filter_general_options['show_clear_filter'] ) { ?>
-	<a class="wb-ajax-clear-single-filter" data-filter="onsale_filter,instock_filter" style="<?php echo ( isset( $_GET['instock_filter'] ) || isset( $_GET['onsale_filter'] ) ) ? '' : esc_attr( $clear_style ); ?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
+	<a class="wb-ajax-clear-single-filter button" data-filter="onsale_filter,instock_filter" style="<?php echo ( isset( $_GET['instock_filter'] ) || isset( $_GET['onsale_filter'] ) ) ? '' : esc_attr( $clear_style ); ?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
 	<?php } ?>
 	<div class="filter-content">
 		<div class="wb-ajax-filter filter-stock-sale">

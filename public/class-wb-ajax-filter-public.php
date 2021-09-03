@@ -222,7 +222,9 @@ class Wb_Ajax_Filter_Public {
 		if ( isset( $customization_options['ajax_loader_style'] ) && 'custom' === $customization_options['ajax_loader_style'] ) {
 			?>
 			<div class="gif-container">
-				<img src="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['loader_url'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['loader_url'] ) : ''; ?>" alt="">
+				<?php if ( isset( $wb_ajax_filter_admin_customization_options['loader_url'] ) && '' !== $wb_ajax_filter_admin_customization_options['loader_url'] ) { ?>
+					<img src="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['loader_url'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['loader_url'] ) : ''; ?>" alt="">
+				<?php } ?>
 			</div>
 			<?php
 		} else {
@@ -409,7 +411,7 @@ class Wb_Ajax_Filter_Public {
 		$presets                        = get_posts( $args );
 		$wb_ajax_filter_admin_custom    = get_option( 'wb_ajax_filter_admin_customization_options' );
 		$wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
-		$reset_html                     = '<a class="wb-ajax-reset-all-filters">Reset filters</a>';
+		$reset_html                     = '<a class="wb-ajax-reset-all-filters button">Reset filters</a>';
 		$reset_button                   = ( isset( $wb_ajax_filter_general_options['show_reset'] ) && 'yes' === $wb_ajax_filter_general_options['show_reset'] ) ? $reset_html : '';
 		if ( ! empty( $presets ) ) {
 			if ( isset( $wb_ajax_filter_admin_custom['filters_title'] ) && '' !== $wb_ajax_filter_admin_custom['filters_title'] ) {
@@ -419,7 +421,7 @@ class Wb_Ajax_Filter_Public {
 			}
 			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
 				?>
-				<a class="wb-ajax-reset-all-filters"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
+				<a class="wb-ajax-reset-all-filters  button"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
 				<?php
 			}
 			foreach ( $presets as $preset ) {
@@ -437,12 +439,12 @@ class Wb_Ajax_Filter_Public {
 			}
 			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] || 'before_products' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
 				?>
-				<a class="wb-ajax-reset-all-filters"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
+				<a class="wb-ajax-reset-all-filters  button"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
 				<?php
 			}
 			if ( isset( $wb_ajax_filter_general_options['instant_filters'] ) && 'no' === $wb_ajax_filter_general_options['instant_filters'] ) {
 				?>
-				<a class="wb-ajax-apply-all-filters"><?php esc_html_e( 'Apply filters', 'wb-ajax-filter' ); ?></a>
+				<a class="wb-ajax-apply-all-filters  button"><?php esc_html_e( 'Apply filters', 'wb-ajax-filter' ); ?></a>
 				<?php
 			}
 		}
