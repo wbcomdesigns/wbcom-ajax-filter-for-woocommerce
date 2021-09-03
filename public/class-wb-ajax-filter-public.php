@@ -160,7 +160,6 @@ class Wb_Ajax_Filter_Public {
 				}
 				.wb-ajax-active-filters-container .wb-ajax-active-filters-container-single{
 					border: 1px solid ' . $css_settings['filters_area_accent_color'] . ';
-					color: ' . $css_settings['filters_area_titles_color'] . ';
 				}
 				span.wb-ajax-filter-tooltip-text:before{
 					border-color:' . $css_settings['filters_area_accent_color'] . ' transparent !important;

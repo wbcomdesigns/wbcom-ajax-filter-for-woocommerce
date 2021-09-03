@@ -83,7 +83,7 @@
 					$('body').replaceWith($response.find('body'));
 					jQuery('.wb-ajax-filter-loader-container').hide();
 					if ( scrollToTopAfterLoadResults ) {
-						// $('html,body').animate({ scrollTop: $('.site-header-wrapper').offset().top }, 'slow');
+						$('html,body').animate({ scrollTop: $('.site-header-wrapper').offset().top }, 'slow');
 					}
 					
 				}
@@ -128,16 +128,6 @@
 			return values;
 		}
 
-		function addFilterToFiltersListing(filter, value){
-			if (jQuery('.wb-ajax-active-filters-container').length ){
-				// let exclude_arr = ['orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter'];
-				// if (jQuery.inArray( filter, exclude_arr ) === -1){
-				// 	let filterHtml = '<div class="wb-ajax-active-filters-container-single">< span class="wb-ajax-filter-single-keyword">' + value + '</span ><span class="wb-ajax-filter-clear-single" data-filter="' + filter + '" data-filter-value="' + value + '"><span class="dashicons dashicons-no-alt"></span></span></div >';
-				// 	jQuery('.wb-ajax-active-filters-container').append(filterHtml);
-				// }
-			}
-		}
-
 		jQuery('.wb-tooltip-added').on('mouseover', function(){
 			jQuery(this).find('span').css({
 				'opacity': 1
@@ -160,7 +150,7 @@
 				history.pushState({}, null, urlHost + '?' + params.toString());
 				refreshShopPageTemplate(urlHost + '?' + params.toString());
 			} else {
-				location.search = params.toString()
+				location.search = params.toString();
 			}
 			
 		});
