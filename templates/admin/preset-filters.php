@@ -15,7 +15,7 @@
 		<h2 class="wp-heading-inline"><?php esc_html_e( 'Filter Presets', 'wb-ajax-filter' ); ?></h2>
 		<div class="wb-ajax-filter-add-preset-button">
 			<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=create&<?php echo ( isset( $_SERVER['QUERY_STRING'] ) ) ? wp_unslash( $_SERVER['QUERY_STRING'] ) : ''; ?>" class="page-title-action">
-				<?php esc_html_e( 'Add preset', 'wb-ajax-filter' ); ?>
+				<span class="dashicons dashicons-plus-alt2"></span><?php esc_html_e( 'Add preset', 'wb-ajax-filter' ); ?>
 			</a>
 		</div>
 	</div>

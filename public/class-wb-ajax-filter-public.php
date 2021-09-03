@@ -411,8 +411,6 @@ class Wb_Ajax_Filter_Public {
 		$presets                        = get_posts( $args );
 		$wb_ajax_filter_admin_custom    = get_option( 'wb_ajax_filter_admin_customization_options' );
 		$wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
-		$reset_html                     = '<a class="wb-ajax-reset-all-filters button">Reset filters</a>';
-		$reset_button                   = ( isset( $wb_ajax_filter_general_options['show_reset'] ) && 'yes' === $wb_ajax_filter_general_options['show_reset'] ) ? $reset_html : '';
 		if ( isset( $_GET ) ) {
 			$params     = array();
 			$get_params = $_GET;
@@ -470,7 +468,7 @@ class Wb_Ajax_Filter_Public {
 			}
 			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
 				?>
-				<a class="wb-ajax-reset-all-filters  button"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
+				<a href="javascript:void(0)" class="wb-ajax-reset-all-filters button"><span class="dashicons dashicons-undo"></span><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
 				<?php
 			}
 			foreach ( $presets as $preset ) {
@@ -488,12 +486,12 @@ class Wb_Ajax_Filter_Public {
 			}
 			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] || 'before_products' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
 				?>
-				<a class="wb-ajax-reset-all-filters  button"><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
+				<a href="javascript:void(0)" class="wb-ajax-reset-all-filters button"><span class="dashicons dashicons-undo"></span><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>
 				<?php
 			}
 			if ( isset( $wb_ajax_filter_general_options['instant_filters'] ) && 'no' === $wb_ajax_filter_general_options['instant_filters'] ) {
 				?>
-				<a class="wb-ajax-apply-all-filters  button"><?php esc_html_e( 'Apply filters', 'wb-ajax-filter' ); ?></a>
+				<a href="javascript:void(0)" class="wb-ajax-apply-all-filters  button"><?php esc_html_e( 'Apply filters', 'wb-ajax-filter' ); ?></a>
 				<?php
 			}
 		}

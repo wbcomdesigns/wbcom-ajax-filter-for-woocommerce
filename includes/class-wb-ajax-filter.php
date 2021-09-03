@@ -219,7 +219,7 @@ class Wb_Ajax_Filter {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 'woocommerce_after_shop_loop', $plugin_public, 'add_wb_ajax_filters' );
+		$this->loader->add_action( 'woocommerce_before_shop_loop', $plugin_public, 'add_wb_ajax_filters' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'add_wb_ajax_filters_loader_in_footer' );
 		// Ajax callback.
 		$this->loader->add_action( 'wp_ajax_get_ajax_search_autocomplete_title_wb', $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' );
