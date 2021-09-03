@@ -30,7 +30,9 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 	<?php } ?>
 	<div class="filter-content">
 		<?php
+		if ( count( $filters['terms'] ) > 0 ) {
 			require 'filter-tax/items/' . $filters['filter_design'] . '.php';
+		}
 		?>
 	</div>
 </div>

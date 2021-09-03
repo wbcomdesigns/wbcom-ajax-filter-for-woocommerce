@@ -562,13 +562,14 @@ class Wb_Ajax_Filter_Admin {
 			if ( ! isset( $_GET['q'] ) && ! isset( $_GET['cat'] ) ) {
 				exit;
 			}
-			$terms   = get_terms(
+			$taxonomy = sanitize_text_field( wp_unslash( $_GET['cat'] ) );
+			$terms    = get_terms(
 				array(
-					'taxonomy'   => sanitize_text_field( wp_unslash( $_GET['cat'] ) ),
+					'taxonomy'   => $taxonomy,
 					'hide_empty' => false,
 				),
 			);
-			$results = array();
+			$results  = array();
 			foreach ( $terms as $term ) {
 				if ( strpos( $term->name, ucfirst( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false && strpos( $term->name, strtolower( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false ) {
 					continue;
@@ -576,6 +577,7 @@ class Wb_Ajax_Filter_Admin {
 				$tmp       = array( $term->term_id, $term->name );
 				$results[] = $tmp;
 			}
+			$results = apply_filters( 'wb_ajax_filter_restrict_terms', $results, $taxonomy );
 			echo wp_json_encode( $results );
 		}
 		die();

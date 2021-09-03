@@ -24,14 +24,14 @@ if ( isset( $_REQUEST['action'] ) && ( 'edit' === $_REQUEST['action'] || 'load_c
 	<form id="filter-preset-create" method="post">
 		<?php
 			/**
-			 * Hook - wb_ajax_filter_before_create_filter_fields
+			 * Hook - wb_ajax_filter_before_filter_fields
 			 */
-			do_action( 'wb_ajax_filter_before_create_filter_fields', $filters );
+			do_action( 'wb_ajax_filter_before_filter_fields', $filters );
 		?>
 		<div class="wb-ajax-filter-toggle-content">
 			<?php
 				/**
-				 * Hook - wb_ajax_filter_create_filter_fields
+				 * Hook - wb_ajax_filter_fields
 				 *
 				 * @hooked wb_ajax_filter_create_filter_name_field - 10
 				 * @hooked wb_ajax_filter_create_filter_for_field - 20
@@ -44,16 +44,16 @@ if ( isset( $_REQUEST['action'] ) && ( 'edit' === $_REQUEST['action'] || 'load_c
 				 * @hooked wb_ajax_filter_create_filter_count_field - 90
 				 * @hooked wb_ajax_filter_create_filter_adoptivr_filtering_field - 100
 				 */
-				do_action( 'wb_ajax_filter_create_filter_fields', $filters );
+				do_action( 'wb_ajax_filter_fields', $filters );
 			?>
 		</div>
 		<?php
 			/**
-			 * Hook - wb_ajax_filter_after_create_filter_fields
+			 * Hook - wb_ajax_filter_after_filter_fields
 			 *
 			 * @hooked wb_ajax_filter_create_filter_save_button - 10
 			 */
-			do_action( 'wb_ajax_filter_after_create_filter_fields', $filters );
+			do_action( 'wb_ajax_filter_after_filter_fields', $filters );
 		?>
 	</form>
 <div>

@@ -210,6 +210,32 @@ class Wb_Ajax_Filter_Public {
 	}
 
 	/**
+	 * Add ajax loader gif to frontend.
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_wb_ajax_filters_loader_in_footer() {
+		?>
+		<div class="wb-ajax-filter-loader-container" style="display:none">
+		<?php
+		$customization_options = get_option( 'wb_ajax_filter_admin_customization_options' );
+		if ( isset( $customization_options['ajax_loader_style'] ) && 'custom' === $customization_options['ajax_loader_style'] ) {
+			?>
+			<div class="gif-container">
+				<img src="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['loader_url'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['loader_url'] ) : ''; ?>" alt="">
+			</div>
+			<?php
+		} else {
+			?>
+			<div class="gif-container-default"></div>
+			<?php
+		}
+		?>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Check string inside string
 	 *
 	 * @param content $content The content.
@@ -217,7 +243,7 @@ class Wb_Ajax_Filter_Public {
 	 * @since    1.0.0
 	 */
 	public function wb_check_content_contains_string( $content, $find ) {
-		if ( strpos( $content, ucfirst( $find ) ) !== false || strpos( $content, strtolower( $find ) ) !== false ) {
+		if ( strpos( $content, $find ) !== false || strpos( $content, ucfirst( $find ) ) !== false || strpos( $content, strtolower( $find ) ) !== false ) {
 			return true;
 		} else {
 			return false;
@@ -365,6 +391,7 @@ class Wb_Ajax_Filter_Public {
 					$matched_products[] = $tmp;
 				}
 			}
+			$matched_products = apply_filters( 'wb_ajax_filter_restrict_products', $matched_products );
 			echo wp_json_encode( $matched_products );
 		}
 		die();
@@ -397,7 +424,7 @@ class Wb_Ajax_Filter_Public {
 			}
 			foreach ( $presets as $preset ) {
 				$preset_id   = $preset->ID;
-				$all_filters = get_post_meta( $preset_id, '_wb_filter', true );
+				$all_filters = apply_filters( 'wb_ajax_filter_get_preset_filters', get_post_meta( $preset_id, '_wb_filter', true ), $preset_id );
 				$enabled     = get_post_meta( $preset_id, 'preset_enabled', true );
 				if ( 'yes' === $enabled ) {
 					$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/preset-filter.php';

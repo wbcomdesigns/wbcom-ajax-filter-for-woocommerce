@@ -193,17 +193,17 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wp_ajax_sortable_single_filters_wb', $plugin_admin, 'sortable_single_filters_wb_callback' );
 
 		// Hook callback.
-		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_name_field', 10 );
-		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_for_field', 20 );
-		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_tax_field', 30 );
-		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_price_slider_field', 40 );
-		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_order_by_field', 50 );
-		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_price_range_field', 60 );
-		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_stock_field', 70 );
-		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_toggle_field', 80 );
-		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_count_field', 90 );
-		$this->loader->add_action( 'wb_ajax_filter_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_adoptive_filtering_field', 100 );
-		$this->loader->add_action( 'wb_ajax_filter_after_create_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_save_button', 10 );
+		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_name_field', 10 );
+		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_for_field', 20 );
+		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_tax_field', 30 );
+		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_price_slider_field', 40 );
+		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_order_by_field', 50 );
+		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_price_range_field', 60 );
+		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_stock_field', 70 );
+		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_toggle_field', 80 );
+		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_count_field', 90 );
+		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_adoptive_filtering_field', 100 );
+		$this->loader->add_action( 'wb_ajax_filter_after_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_save_button', 10 );
 	}
 
 	/**
@@ -220,6 +220,8 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'woocommerce_after_shop_loop', $plugin_public, 'add_wb_ajax_filters' );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'add_wb_ajax_filters_loader_in_footer' );
+		// Ajax callback.
 		$this->loader->add_action( 'wp_ajax_get_ajax_search_autocomplete_title_wb', $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' );
 		// Shortcode callback.
 		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_public, 'filter_preset_shortcode_callback' );
