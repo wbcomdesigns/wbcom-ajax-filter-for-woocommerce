@@ -73,6 +73,7 @@
 		
 		// Refresh products with filters
 		function refreshShopPageTemplate (urlTo) {
+			jQuery('.wb-ajax-filter-loader-container').show();
 			$.ajax({
 				url: urlTo,
 				success: function (result) {
@@ -80,8 +81,9 @@
 					$response = $(responseDom);
 					responseDom.innerHTML = result;
 					$('body').replaceWith($response.find('body'));
+					jQuery('.wb-ajax-filter-loader-container').hide();
 					if ( scrollToTopAfterLoadResults ) {
-						$('html,body').animate({ scrollTop: $('.site-header-wrapper').offset().top }, 'slow');
+						// $('html,body').animate({ scrollTop: $('.site-header-wrapper').offset().top }, 'slow');
 					}
 					
 				}
@@ -128,11 +130,11 @@
 
 		function addFilterToFiltersListing(filter, value){
 			if (jQuery('.wb-ajax-active-filters-container').length ){
-				let exclude_arr = ['orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter'];
-				if (jQuery.inArray( filter, exclude_arr ) === -1){
-					let html = '<div class="wb-ajax-active-filters-container-single">< span class="wb-ajax-filter-single-keyword">' + value + '</span ><span class="wb-ajax-filter-clear-single" data-filter="' + filter + '" data-filter-value="' + value + '"><span class="dashicons dashicons-no-alt"></span></span></div >';
-					jQuery('.wb-ajax-active-filters-container').append( html );
-				}
+				// let exclude_arr = ['orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter'];
+				// if (jQuery.inArray( filter, exclude_arr ) === -1){
+				// 	let filterHtml = '<div class="wb-ajax-active-filters-container-single">< span class="wb-ajax-filter-single-keyword">' + value + '</span ><span class="wb-ajax-filter-clear-single" data-filter="' + filter + '" data-filter-value="' + value + '"><span class="dashicons dashicons-no-alt"></span></span></div >';
+				// 	jQuery('.wb-ajax-active-filters-container').append(filterHtml);
+				// }
 			}
 		}
 

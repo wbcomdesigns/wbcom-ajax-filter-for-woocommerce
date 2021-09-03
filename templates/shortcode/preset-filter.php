@@ -16,23 +16,6 @@
  * @var $filters   array
  */
 
-if ( isset( $_GET ) ) {
-	$params     = array();
-	$get_params = $_GET;
-	foreach ( $get_params as $key => $param ) {
-		$values = explode( ',', $param );
-		if ( count( $values ) > 1 ) {
-			$tmp = array();
-			foreach ( $values as $val ) {
-				$tmp[] = $val;
-			}
-			$params[ $key ] = $tmp;
-		} else {
-			$params[ $key ] = $param;
-		}
-	}
-}
-
 $base_url  = ( isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http' ) . '://';
 $base_url .= isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
 $base_url .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REDIRECT_URL'] ) ) : '';
@@ -53,26 +36,6 @@ $base_url .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_text_field( wp_unslash
 	<form method="POST">
 		<input type="hidden" id="wb_load_result_with_ajax" name="load_results_with_ajax" value="<?php echo ( isset( $wb_ajax_filter_general_options['ajax_filters'] ) ) ? esc_attr( $wb_ajax_filter_general_options['ajax_filters'] ) : ''; ?>">
 		<input type="hidden" id="wb_scroll_top_after_load_result" name="scroll_top_after_load_results" value="<?php echo ( isset( $wb_ajax_filter_general_options['scroll_top'] ) ) ? esc_attr( $wb_ajax_filter_general_options['scroll_top'] ) : ''; ?>">
-		<?php if ( isset( $wb_ajax_filter_general_options['show_active_labels'] ) && 'yes' === $wb_ajax_filter_general_options['show_active_labels'] ) { ?>
-		<div class="wb-ajax-active-filters-container">
-			<?php
-			if ( count( $params ) > 0 ) {
-				$exclude_filters = array( 'orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter' );
-				foreach ( $params as $key => $param ) {
-					if ( in_array( $key, $exclude_filters, true ) ) {
-						continue;
-					}
-					?>
-					<div class="wb-ajax-active-filters-container-single">
-						<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $param ); ?></span>
-						<span class="wb-ajax-filter-clear-single button" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $param ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
-					</div>
-					<?php
-				}
-			}
-			?>
-		</div>
-		<?php } ?>
 		<?php
 		$filter_count = 0;
 		foreach ( $all_filters as $filters ) {
