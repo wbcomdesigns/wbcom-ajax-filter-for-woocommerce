@@ -451,7 +451,7 @@ class Wb_Ajax_Filter_Public {
 				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/active-filters.php';
 			}
 			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
-				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filter/global/reset-filters.php';
+				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
 			}
 			foreach ( $presets as $preset ) {
 				$preset_id   = $preset->ID;
