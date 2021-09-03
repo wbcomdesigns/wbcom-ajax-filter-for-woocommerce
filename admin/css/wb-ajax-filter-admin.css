@@ -152,13 +152,24 @@ span.view-all-presets {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    margin-left: 5%;
+    margin-right: 2%;
+    width: 23%;
 }
 
 .wb-ajax-filter-single-colorpicker label {
-    font-size: 12px;
-    margin-bottom: 5%;
+    font-size: 13px;
+    margin-bottom:10px;
     font-weight: 600;
+}
+.wb-ajax-filter-colorpicker .wp-picker-holder {
+    position: absolute;
+}
+.wb-ajax-filter-colorpicker .wp-color-picker {
+    width: 100px;
+    direction: ltr;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
 /*Add Filter Presets*/

@@ -46,6 +46,7 @@ span.select2-dropdown.select2-dropdown--above {
 .wb-search-submit-container input[type="submit"] {
     height: 40px;
     width: 100%;
+    padding: 0 !important;
 }
 a.wb-ajax-reset-all-filters.button {
     margin:10px 0 !important;
@@ -74,7 +75,6 @@ a.wb-ajax-clear-single-filter {
 }
 .wb-ajax-filter-content-container .wb-ajax-filters-container .wb-ajax-filter-container-single {
     margin-bottom: 20px;
-    width: 25%;
     padding: 0 10px;
 }
 .wb-ajax-filter-content-container ul.wb-price-ranges {
@@ -84,7 +84,25 @@ a.wb-ajax-clear-single-filter {
 .wb-ajax-filter-content-container .wb-price-ranges li {
     width: 50%;
 }
-
+.wb-ajax-filter-content-container .wb-ajax-filters-container{
+    margin-bottom: 25px;
+}
+/*Width Filter Columns*/
+.wb-ajax-filter-content-container.filter-columns-1 .wb-ajax-filter-container-single {
+    width: 100%;
+}
+.wb-ajax-filter-content-container.filter-columns-2 .wb-ajax-filter-container-single {
+    width: 50%;
+}
+.wb-ajax-filter-content-container.filter-columns-3 .wb-ajax-filter-container-single {
+    width: 33.33%;
+}
+.wb-ajax-filter-content-container.filter-columns-4 .wb-ajax-filter-container-single {
+    width: 25%;
+}
+.wb-ajax-filter-content-container.filter-columns-5 .wb-ajax-filter-container-single {
+    width: 20%;
+}
 
 /*Filter Section UI Wigdth*/
 .widget .wb-ajax-filter-ajaxsearch-filters-container {
@@ -113,7 +131,6 @@ a.wb-ajax-clear-single-filter {
 /* Position tooltip above the element */
 .filter-item span.wb-ajax-filter-tooltip-text {
     padding:4px 10px;
-    color: #fff;
     font-size: 13px;
     opacity: 0;
     line-height: 1;
@@ -172,4 +189,95 @@ span.select2-dropdown.select2-dropdown--above {
 }
 span.select2-dropdown.select2-dropdown--below {
     border-radius: 10px;
+}
+.wb-ajax-active-filters-container {
+    display: inline-block;
+}
+.wb-ajax-active-filters-container .wb-ajax-active-filters-container-single {
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-right: 5px;
+    margin-bottom: 0;
+    padding: 4px 15px 3px;
+    position: relative;
+}
+.wb-ajax-active-filters-container span.wb-ajax-filter-clear-single.button {
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 100%;
+    content: "";
+    height: 15px;
+    line-height: 15px;
+    position: absolute;
+    right: -5px;
+    text-align: center;
+    text-decoration: none;
+    top: -8px;
+    width: 15px;
+}
+.wb-ajax-active-filters-container span.dashicons.dashicons-no-alt {
+    width: 15px;
+    height: 15px;
+    font-size: 15px;
+}
+
+
+/*Media Mobile View Style*/
+
+@media only screen and (max-width: 790px) {
+
+.wb-ajax-filter-content-container.filter-columns-5 .wb-ajax-filter-container-single,
+.wb-ajax-filter-content-container.filter-columns-4 .wb-ajax-filter-container-single,
+.wb-ajax-filter-content-container.filter-columns-3 .wb-ajax-filter-container-single {
+    width:33.33%;
+}
+
+}
+
+@media only screen and (max-width: 640px) {
+
+.wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearch-filters-container {
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    gap: 0;
+}
+.wb-ajax-filter-ajaxsearch-filters {
+    width: 100%;
+}
+.wb-ajax-filter-ajaxsearch-filters-container {
+    display: block !important;
+    margin-bottom: 20px;
+}
+.wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearch-filters,
+.wb-ajax-filter-ajaxsearchform-select,
+.wb-search-submit-container {
+    width: 100%;
+}
+.wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearchform-select,
+.wb-ajax-filter-content-container .wb-search-submit-container {
+    width: 49%;
+}
+.wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearch-filters-container .select2-container {
+    margin-bottom:12px;
+}
+.wb-ajax-filter-content-container.filter-columns-5 .wb-ajax-filter-container-single,
+.wb-ajax-filter-content-container.filter-columns-4 .wb-ajax-filter-container-single,
+.wb-ajax-filter-content-container.filter-columns-3 .wb-ajax-filter-container-single {
+    width:100%;
+}
+
+}
+
+@media only screen and (max-width: 440px) {
+
+.wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearchform-select,
+.wb-ajax-filter-content-container .wb-search-submit-container {
+    width:100%;
+}
+
+
 }
