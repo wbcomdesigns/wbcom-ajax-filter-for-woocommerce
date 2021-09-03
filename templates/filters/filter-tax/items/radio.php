@@ -12,7 +12,7 @@
 $hide_term = ( isset( $wb_ajax_filter_general_options['hide_empty_terms'] ) && 'yes' === $wb_ajax_filter_general_options['hide_empty_terms'] ) ? true : false;
 ?>
 <div class="wb-ajax-filter filter-tax">
-	<ul class="filter-items filter-radio  level-0">
+	<ul class="filter-items filter-radio ">
 		<?php
 		foreach ( $filters['terms'] as $tm ) {
 			$term_data = get_term( $tm->id, $filters['taxonomy'] );
@@ -20,10 +20,12 @@ $hide_term = ( isset( $wb_ajax_filter_general_options['hide_empty_terms'] ) && '
 			$disabled  = ( 0 === $term_data->count ) ? 'disabled' : '';
 			if ( ( $hide_term && '' === $disabled ) || ( ! $hide_term && '' === $disabled ) || ( ! $hide_term && 'disabled' === $disabled ) ) {
 				?>
-			<li class="filter-item radio level-0">
+			<li class="filter-item radio">
 				<label>
 					<input type="radio" name="<?php echo esc_attr( $filter_taxonomy ); ?>" class="wb-ajax-filter-selectible" value="<?php echo esc_attr( $term_data->slug ); ?>" data-filter="<?php echo esc_attr( $filter_taxonomy ); ?>" <?php echo esc_attr( $checked ); ?> <?php echo esc_attr( $disabled ); ?>>
-					<a href="<?php echo esc_attr( $base_url ); ?>?wb_ajax=1&<?php echo esc_attr( $filter_taxonomy . '=' . $term_data->slug ); ?>" class="wb-term-label wb-tooltip-added <?php echo ( 'checked' === $checked ) ? 'filter-active' : ''; ?> <?php echo esc_attr( $disabled ); ?>" data-title="<?php echo esc_attr( $term_data->name ); ?>"><?php echo esc_html( $term_data->name ); ?><span class="wb-ajax-filter-tooltip-text"><?php echo esc_html( $term_data->name ); ?></span></a>
+					<a href="<?php echo esc_attr( $base_url ); ?>?wb_ajax=1&<?php echo esc_attr( $filter_taxonomy . '=' . $term_data->slug ); ?>" class="wb-term-label wb-tooltip-added <?php echo ( 'checked' === $checked ) ? 'filter-active' : ''; ?> <?php echo esc_attr( $disabled ); ?>" data-title="<?php echo esc_attr( $term_data->name ); ?>"><?php echo ( isset( $filters['terms_text'] ) && array_key_exists( 'label', $filters['terms_text'][ $tm->id ] ) ) ? esc_html( $filters['terms_text'][ $tm->id ]['label'] ) : esc_html( $term_data->name ); ?>
+					<span class="wb-ajax-filter-tooltip-text"><?php echo ( isset( $filters['terms_text'] ) && array_key_exists( 'tooltip', $filters['terms_text'][ $tm->id ] ) ) ? esc_html( $filters['terms_text'][ $tm->id ]['tooltip'] ) : esc_html( $term_data->name ); ?></span>
+				</a>
 				</label>
 			</li>
 				<?php

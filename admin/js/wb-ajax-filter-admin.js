@@ -10,6 +10,8 @@
 		// Preset single filters sort
 		if (jQuery(".wb-ajax-filters-single-container .wb-ajax-filter-toggle-row").length > 1) {
 			jQuery(".wb-ajax-filters-single-container").sortable({
+				scrollSpeed: 1,
+				scrollSensitivity: 1,
 				update: function (event, ui) {
 					let elem = ui.item[0];
 					let elemMovedIndex = elem.getAttribute("data-item_key");
