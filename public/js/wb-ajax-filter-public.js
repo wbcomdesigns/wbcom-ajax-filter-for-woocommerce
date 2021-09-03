@@ -255,7 +255,6 @@
 		jQuery("select.wb-ajax-filter-selectible, input.wb-ajax-filter-selectible").on( 'change', function () {
 			let filter    = jQuery( this ).data( 'filter' );
 			let filterVal = jQuery( this ).val();
-			addFilterToFiltersListing(filter, filterVal);
 			let tag       = jQuery( this ).prop( 'tagName' );
 			let type       = jQuery(this).attr('type');
 			if ( tag === 'SELECT' ) {
