@@ -233,15 +233,45 @@ td.Preset-title {
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table input.text-to-copy {
     width: 100%;
 }
-.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td[data-colname="Action"] a{
+.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td[data-colname="Action"] a {
     cursor: pointer;
-    margin: 0 5px;
+    margin: 0 2px;
+    background: #fff;
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s;
+    border-radius: 100px;
+    box-shadow: 0 0 12px #dedede;
 }
-.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table span.dashicons{
-    font-size: 23px;
-    height: 23px;
-    width: 23px;
+.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td[data-colname="Action"] a:hover {
+    box-shadow: 0 0 25px #9c9c9c;
 }
+.wb-ajax-filter-list-table-content .wb-ajax-filter-onoff-container input[type=checkbox] {
+    width: 35px;
+    height: 35px;
+    top: 8px;
+    position: relative;
+    margin-left: 5px;
+    border-radius: 100px;
+    background: #fff;
+    border: none;
+    box-shadow: 0 0 12px #dedede;
+}
+.wb-ajax-filter-list-table-content .wb-ajax-filter-onoff-container input[type=checkbox]:checked::before {
+    margin: -.1875rem 0 0 -.0rem;
+    height: 2rem;
+    width: 2rem;
+    margin-top: 2px;
+}
+.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table span.dashicons {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    margin: 8px 0;
+}
+
 table.wb-ajax-filter-table.wp-list-table.widefat.fixed.striped.table-view-list.affiliates {
     border-bottom: 0;
     box-shadow: none !important;
@@ -263,4 +293,28 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
 }
 .wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content-row.wb-all-toggle {
     margin-bottom: 0;
+}
+.wb-ajax-filter-toggle-title {
+    cursor: pointer;
+    padding: 25px 15px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 0 10px 0 rgb(206 206 206 / 40%);
+    transition: all 0.5s;
+}
+.wb-ajax-filter-toggle-title:hover {
+    background: #f5f5f5;
+}
+.wb-ajax-filter-toggle-title span.dashicons {
+    margin: 0;
+}
+.wb-ajax-filter-toggle-content-row.wb-all-toggle {
+    margin: 0;
+    background: transparent;
+    position: relative;
+}
+.wb-ajax-filter-toggle-content-row.wb-all-toggle .spinner {
+    right: 140px;
+    position: absolute;
+    top: 28px;
 }

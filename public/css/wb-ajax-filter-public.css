@@ -2,12 +2,150 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ /*==========================
+ Search Filter Form
+ ==========================*/
+ a.wb-ajax-reset-all-filters {
+    cursor: pointer;
+    text-decoration: underline;
+    margin-bottom: 10px;
+    display: block;
+}
+ .wb-ajax-filter-ajaxsearch-filters-container {
+    justify-content: space-between;
+    gap: 12px;
+}
+.wb-ajax-filter-ajaxsearch-filters {
+    width: 60%;
+    gap: 12px;
+}
+.wb-ajax-filter-ajaxsearchform-select {
+    width:25%;
+}
+.wb-search-submit-container {
+    width: 15%;
+}
+.wb-ajax-filter-ajaxsearch-filters-container .select2-container{
+    width: 100% !important;
+    margin-bottom: 15px;
+}
+span.select2-dropdown.select2-dropdown--below {
+    border-radius: 4px !important;
+    top: -8px;
+    border-color: #ccc !important;
+}
+span.select2-dropdown.select2-dropdown--above {
+    border-radius: 4px !important;
+    border-color: #ccc !important;
+}
+.wb-ajax-filter-ajaxsearchform-select.wb-ajax-filter-ajaxsearchform-select-list,
+.wb-ajax-filter-ajaxsearchform-select.wb-ajax-filter-ajaxsearchform-select-category{
+    width: 50%;
+}
+.wb-search-submit-container input[type="submit"] {
+    height: 40px;
+    width: 100%;
+}
+a.wb-ajax-reset-all-filters.button {
+    margin:10px 0 !important;
+}
+
+/*Filter Section UI*/
+.wb-ajax-filter-container-single h4.filter-title {
+    margin-bottom: 10px;
+}
+.wb-ajax-filters-container .wb-ajax-filter-container-single {
+    margin-bottom: 20px;
+}
+a.wb-ajax-clear-single-filter {
+    margin-bottom: 10px;
+    display: block;
+}
+.wb-ajax-filters-container .select2-container {
+    width: 100% !important;
+}
+.wb-ajax-filters-container {
+    padding:20px 10px;
+}
+.wb-ajax-filter-content-container .wb-ajax-filters-container form{
+    display: flex;
+    flex-wrap: wrap;
+}
+.wb-ajax-filter-content-container .wb-ajax-filters-container .wb-ajax-filter-container-single {
+    margin-bottom: 20px;
+    width: 25%;
+    padding: 0 10px;
+}
+.wb-ajax-filter-content-container ul.wb-price-ranges {
+    display: flex;
+    flex-wrap: wrap;
+}
+.wb-ajax-filter-content-container .wb-price-ranges li {
+    width: 50%;
+}
+
+
+/*Filter Section UI Wigdth*/
+.widget .wb-ajax-filter-ajaxsearch-filters-container {
+    display: block !important;
+}
+.widget .wb-ajax-filter-ajaxsearch-filters,
+.widget .wb-ajax-filter-ajaxsearchform-select.wb-ajax-filter-ajaxsearchform-select-list,
+.widget .wb-ajax-filter-ajaxsearchform-select.wb-ajax-filter-ajaxsearchform-select-category,
+.widget .wb-ajax-filter-ajaxsearchform-select,
+.widget .wb-search-submit-container{
+    width: 100%;
+    display: block !important;
+}
+.widget .wb-ajax-search-container{
+    margin-bottom: 20px;
+}
+.widget .wb-ajax-filter-ajaxsearch-filters-container .select2-container {
+    margin-bottom: 10px;
+}
+.widget .wb-ajax-filters-container {
+    padding: 0;
+}
+
+
+
+/* Position tooltip above the element */
+.filter-item span.wb-ajax-filter-tooltip-text {
+    padding:4px 10px;
+    color: #fff;
+    font-size: 13px;
+    opacity: 0;
+    line-height: 1;
+    right: 0;
+    margin-left: 15px;
+    transition: all 0.4s;
+    position: absolute;
+}
+.filter-item span.wb-ajax-filter-tooltip-text:before {
+    border: solid;    
+    border-width: 6px 6px 0 6px;
+    content: "";
+    left: -8px;
+    bottom: 8px;
+    position: absolute;
+    transform: rotate(90deg);
+}
+
+
 .filter-content ul.filter-items li.filter-item {
      list-style-type: none;
+     position: relative;
  }
+.wb-ajax-filter-container-single ul.filter-items,
+.wb-ajax-filter-container-single ul.wb-price-ranges {
+    margin: 0;
+    padding: 0;
+}
 
 .filter-content ul.filter-items {
     padding-left: 0px;
+    padding: 0;
 }
 
 ul.wb-price-ranges {
@@ -25,14 +163,6 @@ ul.wb-price-ranges {
     height: 28px;
     text-align: center;
     padding: 0px 30px 0px 30px !important;
-}
-.wb-ajax-filter-tooltip-text {
-    position: relative;
-    bottom: 0.1rem;
-    left: 1rem;
-    transition: opacity 0.5s ease-out;
-    opacity: 0;
-    border-radius: 5px;
 }
 .wb-ajax-clear-single-filter {
     font-size: 13px;
