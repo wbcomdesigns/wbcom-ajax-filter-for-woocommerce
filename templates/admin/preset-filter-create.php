@@ -24,8 +24,8 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 <div class="wb-ajax-filter-create-preset-section">
 	<div class="wb-ajax-filter-create-preset-section-content">
 		<span class="view-all-presets">
-			<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?page=wb-ajax-filter-integration-settings&tab=wb-ajax-filter-presets">
-				<?php esc_html_e( '< Back to presets list', 'wb-ajax-filter' ); ?>
+			<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?page=wb-ajax-filter-integration-settings&tab=wb-ajax-filter-presets"  class="button-primary" >
+				<span class="dashicons dashicons-arrow-left-alt"></span> <?php esc_html_e( ' Back to presets list', 'wb-ajax-filter' ); ?>
 			</a>
 		</span>
 		<?php if ( '' === $preset_title ) : ?>
@@ -34,7 +34,7 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 		<table>
 			<tbody>
 				<tr>
-					<th><?php esc_html_e( 'Preset name', 'wb-ajax-filter' ); ?></th>
+					<td class="Preset-title"><?php esc_html_e( 'Preset name', 'wb-ajax-filter' ); ?></td>
 					<td><div class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper">
 							<input type="text" name="wb_ajax_filter_preset_title" value="<?php echo esc_attr( $preset_title ); ?>">
 							<?php if ( isset( $_REQUEST['preset'] ) ) { ?>
@@ -54,14 +54,13 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 			<h4><?php esc_html_e( 'Filters of this preset', 'wb-ajax-filter' ); ?></h4>
 			<div class="preset-filters ui-sortable">
 				<div class="wb-ajax-filters-single-container">
-					<p>
 						<?php
 						if ( empty( $filters ) ) {
 							?>
-							<span class="strong">
-								<?php esc_html_e( 'You don\'t have any filter yet.', 'wb-ajax-filter' ); ?>
+							<span>
+								<strong><?php esc_html_e( 'You don\'t have any filter yet.', 'wb-ajax-filter' ); ?></strong>
+								<?php esc_html_e( 'But don\'t worry, here you can create your first one!', 'wb-ajax-filter' ); ?>
 							</span>
-							<span><?php esc_html_e( 'But don\'t worry, here you can create your first one!', 'wb-ajax-filter' ); ?></span>
 							<?php
 						} else {
 							$filter_count = 0;
@@ -73,7 +72,6 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 						<a class="wb-ajax-filter-add-button button-primary wb-add-new-filter" href="#" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>">
 							<?php esc_html_e( 'Add a new filter', 'wb-ajax-filter' ); ?>
 						</a>
-					</p>
 				</div>
 			</div>
 		</div>

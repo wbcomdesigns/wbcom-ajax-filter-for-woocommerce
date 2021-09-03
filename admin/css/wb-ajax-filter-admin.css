@@ -9,7 +9,6 @@
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
     background-color: rgb(183 178 178 / 85%); /* Black w/ opacity */
     opacity: 0;
     transition: all 0.3s;
@@ -46,16 +45,14 @@
   color: #000;
   text-decoration: none;  
 }
-
-.wb-ajax-filter-form-wraper {
-    margin: 1%;
-    padding: 1%;
+.wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
+    padding: 25px;
+    height: 700px;
+    overflow-y: scroll;
 }
-
 .wb-ajax-filter-toggle-content-row {
-    margin: 1%;
-    margin-top: 4%;
-    padding-left: 2%;
+    margin: 1% 0;
+    padding: 20px;
     background: #f0f0f1;
     overflow: hidden;
 }
@@ -91,7 +88,7 @@ span.view-all-presets {
 }
 
 .wb-ajax-filter-list-table-section-content {
-    margin-bottom: 5%;
+    margin-bottom:2%;
 }
 
 .wb-ajax-filter-list-table-section-content h2 {
@@ -116,12 +113,13 @@ span.view-all-presets {
 .wb-ajax-filter-table th:not(:first-child), .wb-ajax-filter-table td:not(:first-child) {
     text-align: center;
 }
-.wb-shortcode-copy{
+.wb-shortcode-copy {
     opacity: 0;
     transition: visibility 0s linear 0.33s, opacity 0.33s linear;
-    font-weight: 500;
     font-style: italic;
-    color: #ff8d00fa;
+    color: #2271b1;
+    text-align: left;
+    display: block;
 }
 
 .wb-ajax-filter-toggle-title h3.title {
@@ -161,4 +159,108 @@ span.view-all-presets {
     font-size: 12px;
     margin-bottom: 5%;
     font-weight: 600;
+}
+
+/*Add Filter Presets*/
+.wb-ajax-filter-create-preset-section h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 18px;
+}
+.wb-ajax-filter-create-preset-section table {
+    width: 100%;
+}
+.view-all-presets a.button-primary {
+    display: flex;
+    align-items: center;
+    width: 180px;
+    text-transform: capitalize;
+    justify-content: center;
+    padding: 5px 0;
+}
+a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter{
+    padding: 5px 20px;
+    text-transform: capitalize;
+}
+.view-all-presets a.button-primary span.dashicons.dashicons-arrow-left-alt {
+    margin-right: 3px;
+    font-size: 16px;
+    height: auto;
+}
+.wb-ajax-filter-text-field-wrapper input[type="text"] {
+    height: 38px;
+    width: 100%;
+}
+td.Preset-title {
+    font-weight: 500;
+    text-transform: capitalize;
+    font-size: 14px;
+}
+.preset-filters-wrapper h4 {
+    font-size: 15px;
+    margin-bottom:5px;
+    text-transform: capitalize;
+}
+.preset-filters-wrapper span {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+.preset-filters-wrapper {
+    border-top: 1px solid #ddd;
+    margin-top: 15px;
+}
+.wb-ajax-filter-add-preset-button a.page-title-action {
+    padding:10px 20px !important;
+    text-transform: capitalize;
+    top: 0 !important;
+    border-radius: 3px;
+    transition: all 0.3s;
+    height: auto;
+}
+.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td {
+    vertical-align: middle;
+    border-bottom: 1px solid #ddd;
+}
+.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table th {
+    font-weight: 500;
+    background: #f0f0f1;
+}
+.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table tbody tr{
+    box-shadow: none;
+}
+.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table input.text-to-copy {
+    width: 100%;
+}
+.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td[data-colname="Action"] a{
+    cursor: pointer;
+    margin: 0 5px;
+}
+.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table span.dashicons{
+    font-size: 23px;
+    height: 23px;
+    width: 23px;
+}
+table.wb-ajax-filter-table.wp-list-table.widefat.fixed.striped.table-view-list.affiliates {
+    border-bottom: 0;
+    box-shadow: none !important;
+    border-color: #ddd !important;
+}
+a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
+    padding: 8px 30px;
+    text-align: center;
+    margin-top: 5px;
+    font-size: 15px;
+    line-height: normal;
+}
+.wb-ajax-filter-toggle-content-row.wb-all-toggle button#wb-ajax-filer-create-filter-save {
+    padding: 10px 20px;
+    line-height: normal;
+}
+.wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
+    padding: 25px;
+}
+.wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content-row.wb-all-toggle {
+    margin-bottom: 0;
 }
