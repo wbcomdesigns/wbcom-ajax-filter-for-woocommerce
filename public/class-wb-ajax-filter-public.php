@@ -143,6 +143,9 @@ class Wb_Ajax_Filter_Public {
 				.wb-ajax-filter-container-single h4{
 					color: ' . $css_settings['filters_area_titles_color'] . ';
 				}
+				.wb-ajax-filter-container-single .wb-ajax-accordian span.dashicons{
+					color: ' . $css_settings['filters_area_titles_color'] . ';
+				}
 				.select2-container--default .select2-search--dropdown input.select2-search__field{
 					border: 1px solid ' . $css_settings['filters_area_accent_color'] . ';
 				}
@@ -248,6 +251,23 @@ class Wb_Ajax_Filter_Public {
 		?>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Check if parent exists in terms array.
+	 *
+	 * @param term_id $term_id The term id to find.
+	 * @param terms   $terms    Theterms array.
+	 * @since    1.0.0
+	 */
+	public function wb_ajax_check_parent_is_included( $term_id, $terms11 ) {
+		$exists = false;
+		foreach ( $terms11 as $tvm ) {
+			if ( (int) $term_id === (int) $tvm->id ) {
+				$exists = true;
+			}
+		}
+		return $exists;
 	}
 
 	/**

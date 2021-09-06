@@ -22,6 +22,35 @@
 			}
 		}
 
+		jQuery('.filter-item span.dashicons').on('click', function(){
+			if (jQuery(this).hasClass('dashicons-arrow-down-alt2')) {
+				jQuery(this).removeClass('dashicons-arrow-down-alt2');
+				jQuery(this).addClass('dashicons-arrow-right-alt2');
+			} else if (jQuery(this).hasClass('dashicons-arrow-right-alt2')) {
+				jQuery(this).removeClass('dashicons-arrow-right-alt2');
+				jQuery(this).addClass('dashicons-arrow-down-alt2');
+			}
+			let parentTerm = jQuery(this).closest('li').data('parent');
+			jQuery(this).closest('ul').find('li').each(function(){
+				let childOf = jQuery(this).data('child-of');
+				if ( childOf == parentTerm ) {
+					jQuery(this).toggle(250);
+				}
+			});
+			
+		});
+
+		jQuery('.wb-ajax-accordian').on( 'click', function(){
+			if ( jQuery(this).find('span.dashicons').hasClass('dashicons-arrow-down-alt2') ){
+				jQuery(this).find('span.dashicons').removeClass('dashicons-arrow-down-alt2');
+				jQuery(this).find('span.dashicons').addClass('dashicons-arrow-up-alt2');
+			} else if (jQuery(this).find('span.dashicons').hasClass('dashicons-arrow-up-alt2') ) {
+				jQuery(this).find('span.dashicons').removeClass('dashicons-arrow-up-alt2');
+				jQuery(this).find('span.dashicons').addClass('dashicons-arrow-down-alt2');
+			}
+			jQuery(this).next('.wb-ajax-panel').toggle(250);
+		});
+
 		if ( jQuery('#wb_scroll_top_after_load_result').length ) {
 			if ( jQuery('#wb_scroll_top_after_load_result').val() === 'yes' ) {
 				scrollToTopAfterLoadResults = true;

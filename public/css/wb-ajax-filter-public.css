@@ -281,3 +281,20 @@ span.select2-dropdown.select2-dropdown--below {
 
 
 }
+
+a.wb-ajax-filter-toggle.wb-ajax-accordian{
+  cursor: pointer;
+  display: flex;
+  font-size: 15px;
+  transition: 0.4s;
+}
+.wb-ajax-accordion {
+  transition: 0.4s;
+}
+
+li.filter-item.wb-ajax-level-1 {
+    margin-left: 5%;
+}
+a.wb-term-label.wb-tooltip-added small.item-count {
+    color: grey;
+}

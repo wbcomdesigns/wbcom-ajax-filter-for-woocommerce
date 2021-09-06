@@ -55,13 +55,6 @@ if ( empty( $filters ) || ( ! empty( $filters ) && 'tax' === $filters['type'] ) 
 	<span class="description"><?php esc_html_e( 'Select the filter type for this filter', 'wb-ajax-filter' ); ?></span>
 </div>
 <div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label><?php esc_html_e( 'Columns number', 'wb-ajax-filter' ); ?>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-		<input type="number" name="filters[column_number]" class="wb-input wb-filter-type-tax" value="<?php echo ( isset( $filters['column_number'] ) && '' !== $filters['column_number'] ) ? esc_attr( $filters['column_number'] ) : '0'; ?>" min="1" max="8" step="1">
-	</div>
-	<span class="description"><?php esc_html_e( 'Set the number of items per row you want to show for this design', 'wb-ajax-filter' ); ?></span></label>
-</div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
 	<label><?php esc_html_e( 'Customize terms', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
 		<div class="terms-wrapper ui-sortable">
@@ -96,8 +89,8 @@ if ( empty( $filters ) || ( ! empty( $filters ) && 'tax' === $filters['type'] ) 
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
 		<select name="filters[order]" class="wb-ajax-filter-select wb-input wb-filter-type-tax" data-value="">
 			<option value=""><?php esc_html_e( 'Select Order type', 'wb-ajax-filter' ); ?></option>
-			<option value="asc" <?php echo ( isset( $filters['order'] ) && 'asc' === $filters['order'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'ASC', 'wb-ajax-filter' ); ?></option>
-			<option value="desc" <?php echo ( isset( $filters['order'] ) && 'desc' === $filters['order'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'DESC', 'wb-ajax-filter' ); ?></option>
+			<option value="ASC" <?php echo ( isset( $filters['order'] ) && 'ASC' === $filters['order'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'ASC', 'wb-ajax-filter' ); ?></option>
+			<option value="DESC" <?php echo ( isset( $filters['order'] ) && 'DESC' === $filters['order'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'DESC', 'wb-ajax-filter' ); ?></option>
 		</select>
 	</div>
 	<span class="description"><?php esc_html_e( 'Select the default order for terms of this filter', 'wb-ajax-filter' ); ?></span>
