@@ -51,17 +51,18 @@
     overflow-y: scroll;
 }
 .wb-ajax-filter-toggle-content-row {
-    margin: 1% 0;
-    padding: 20px;
-    background: #f0f0f1;
+    margin: 0;
+    padding: 25px;
     overflow: hidden;
+    border: 1px solid #ddd;
+    margin-bottom:-1px !important;
 }
 
 .wb-ajax-filter-toggle-content-row label {
     display: block;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 2%;
+    font-size: 15px;
+    font-weight: normal;
+    margin-bottom:1%;
 }
 
 span.view-all-presets {
@@ -72,6 +73,10 @@ span.view-all-presets {
 
 .wb-ajax-filter-radio__row label {
     display: inline;
+    font-weight: 500;
+}
+.wb-ajax-filter-radio__row {
+    margin-bottom: 8px;
 }
 .wb-ajax-filter-toggle-content-row span.description {
     font-style: italic;
@@ -172,6 +177,20 @@ span.view-all-presets {
     border-radius: 3px;
 }
 
+.terms-wrapper.ui-sortable {
+    display: flex;
+    gap: 25px;
+    justify-content: space-between;
+}
+.terms-wrapper.ui-sortable .term-box {
+    width: 33.33%;
+    background: #f0f0f1;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+
+
 /*Add Filter Presets*/
 .wb-ajax-filter-create-preset-section h2 {
     font-size: 20px;
@@ -194,6 +213,10 @@ span.view-all-presets {
 a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter{
     padding: 5px 20px;
     text-transform: capitalize;
+    display: block;
+    width: 100%;
+    max-width: 150px;
+    text-align: center;
 }
 .view-all-presets a.button-primary span.dashicons.dashicons-arrow-left-alt {
     margin-right: 3px;
@@ -305,6 +328,15 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
 .wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content-row.wb-all-toggle {
     margin-bottom: 0;
 }
+.wb-ajax-filter-toggle-content-row.wb-all-toggle:last-child {
+    border: none;
+    padding: 20px 40px;
+}
+.terms-wrapper.ui-sortable .term-box h4 {
+    margin-top: 0;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
 .wb-ajax-filter-toggle-title {
     cursor: pointer;
     padding: 25px 15px;
@@ -328,4 +360,12 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
     right: 140px;
     position: absolute;
     top: 28px;
+}
+.wb-ajax-filter-modal-body .wb-ajax-filter-toggle-content select {
+    width: 100%;
+    max-width: 100%;
+    height: 35px;
+}
+.wb-ajax-filter-modal-body .select2-container {
+    width: 100% !important;
 }
