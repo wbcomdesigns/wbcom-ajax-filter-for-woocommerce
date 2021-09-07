@@ -12,7 +12,7 @@
 $hide_term = ( isset( $wb_ajax_filter_general_options['hide_empty_terms'] ) && 'yes' === $wb_ajax_filter_general_options['hide_empty_terms'] ) ? true : false;
 ?>
 <div class="wb-ajax-filter filter-tax">
-	<select class="wb-ajax-filter-selectible" data-filter="<?php echo esc_attr( $filter_taxonomy ); ?>">
+	<select class="wb-ajax-filter-selectible" data-filter="<?php echo esc_attr( $filter_taxonomy ); ?>" <?php echo ( isset( $filters['multiple'] ) && 'yes' === $filters['multiple'] ) ? 'multiple="multiple"' : ''; ?>>
 		<option value=""><?php esc_html_e( 'Choose term', 'wb-ajax-filter' ); ?></option>
 		<?php
 		foreach ( $filters['terms'] as $tm ) {

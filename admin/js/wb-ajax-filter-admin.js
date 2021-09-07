@@ -240,12 +240,19 @@
 			hideToggleElements( filterFor );
 		});
 
-		//
 		jQuery('input[name="wb_ajax_filter_admin_general_options[show_reset]"]').on('change', function () {
 			if (jQuery(this).is(':checked')) {
 				jQuery(this).closest('tr').next('tr').show();
 			} else {
 				jQuery(this).closest('tr').next('tr').hide();
+			}
+		});
+
+		jQuery('input[name="filters[multiple]"]').on('change', function () {
+			if ( jQuery( this ).is( ':checked' ) ) {
+				jQuery( this ).closest( '.wb-ajax-filter-toggle-content-row' ).next( '.wb-ajax-filter-toggle-content-row' ).show();
+			} else {
+				jQuery( this ).closest( '.wb-ajax-filter-toggle-content-row' ).next( '.wb-ajax-filter-toggle-content-row' ).hide();
 			}
 		});
 
@@ -338,6 +345,15 @@
 				jQuery( '.wb-show-style-toggle' ).show();
 			} else {
 				jQuery( '.wb-show-style-toggle' ).hide();
+			}
+		});
+
+		jQuery('.wb-ajax-filter-modal-content').on('change', 'select[name="filters[filter_design]"]', function () {
+			if (jQuery(this).val() == 'radio') {
+				jQuery('.wb-ajax-filter-multiselect').hide();
+				jQuery('input[name="filters[multiple]"]').prop( 'checked', false );
+			} else {
+				jQuery('.wb-ajax-filter-multiselect').show();
 			}
 		});
 

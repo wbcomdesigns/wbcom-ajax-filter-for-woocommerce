@@ -123,7 +123,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && 'tax' === $filters['type'] ) 
 	</div>
 	<span class="description"><?php esc_html_e( 'Choose how to show terms hierarchy', 'wb-ajax-filter' ); ?></span>
 </div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
+<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle wb-ajax-filter-multiselect" style="<?php echo esc_attr( $style ); ?><?php echo ( isset( $filters['filter_design'] ) && 'radio' === $filters['filter_design'] ) ? 'display:none' : ''; ?>">
 	<label><?php esc_html_e( 'Allow multiple selection', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
 		<div class="wb-ajax-filter-onoff-container ">
@@ -133,7 +133,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && 'tax' === $filters['type'] ) 
 	</div>
 	<span class="description"><?php esc_html_e( 'Enable if the user can select multiple terms when filtering products', 'wb-ajax-filter' ); ?></span>
 </div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
+<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle wb-ajax-filter-multiselect" style="<?php echo esc_attr( $style ); ?><?php echo ( isset( $filters['multiple'] ) && 'yes' === $filters['multiple'] ) ? '' : 'display:none;'; ?><?php echo ( isset( $filters['filter_design'] ) && 'radio' === $filters['filter_design'] ) ? 'display:none' : ''; ?>">
 	<label><?php esc_html_e( 'Multiselect relation', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-radio-field-wrapper">
 		<div class="wb-ajax-filter-radio " data-value="and" data-type="radio">

@@ -433,6 +433,60 @@ class Wb_Ajax_Filter_Public {
 	}
 
 	/**
+	 * Alter woocommerce products query.
+	 *
+	 * @param q $q Query Object.
+	 */
+	public function wb_ajax_filter_modify_wc_product_query( $q ) {
+		if ( is_shop() ) {
+			$params = $_GET;
+			if ( isset( $params['preset'] ) ) {
+				$preset_id = $params['preset'];
+				$filters   = get_post_meta( $preset_id, '_wb_filter', true );
+				foreach ( $filters as $filter ) {
+					if ( isset( $filter['type'] ) && 'tax' !== $filter['type'] ) {
+						continue;
+					}
+					$taxonomy     = $filter['taxonomy'];
+					$include_tags = array( 'product_tag', 'product_cat' );
+					$attributes   = wc_get_attribute_taxonomy_names();
+					if ( in_array( $filter['taxonomy'], $attributes, true ) ) {
+						if ( strpos( $taxonomy, 'pa_' ) !== false ) {
+							$taxonomy = str_replace( 'pa_', 'filter_', $taxonomy );
+						}
+						if ( array_key_exists( $taxonomy, $params ) ) {
+							$tax_query = $q->query_vars['tax_query'];
+							foreach ( $tax_query as $key => $qr ) {
+								if ( is_array( $qr ) && isset( $qr['taxonomy'] ) && $filter['taxonomy'] === $qr['taxonomy'] ) {
+									if ( isset( $filter['multiple'] ) && isset( $filter['relation'] ) && 'yes' === $filter['multiple'] ) {
+										unset( $tax_query[ $key ]['operator'] );
+										$tax_query[ $key ]['operator'] = strtoupper( $filter['relation'] );
+
+									}
+								}
+							}
+							unset( $q->query_vars['tax_query'] );
+							$q->query_vars['tax_query'] = $tax_query;
+						}
+					} elseif ( in_array( $taxonomy, $include_tags, true ) ) {
+						$tax_query = $q->tax_query->queries;
+						foreach ( $tax_query as $key => $qr ) {
+							if ( is_array( $qr ) && isset( $qr['taxonomy'] ) && $filter['taxonomy'] === $qr['taxonomy'] ) {
+								if ( isset( $filter['multiple'] ) && isset( $filter['relation'] ) && 'yes' === $filter['multiple'] ) {
+									unset( $tax_query[ $key ]['operator'] );
+									$tax_query[ $key ]['operator'] = strtoupper( $filter['relation'] );
+								}
+							}
+						}
+						$q->tax_query->queries = $tax_query;
+					}
+				}
+			}
+		}
+		return $q;
+	}
+
+	/**
 	 * Filter preset shortcode callback.
 	 */
 	public function filter_preset_shortcode_callback() {

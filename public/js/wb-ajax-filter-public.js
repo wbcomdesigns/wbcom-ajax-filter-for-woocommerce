@@ -157,6 +157,19 @@
 			return values;
 		}
 
+		function loadFilteredResults(){
+			if ( !checkFieldValues('preset')) {
+				let presetID = jQuery('div.wb-ajax-filters-container').data('preset-id');
+				params.set( 'preset', presetID );
+			}	
+			if (loadResultWithAjax) {
+				history.pushState({}, null, urlHost + '?' + params.toString());
+				refreshShopPageTemplate(urlHost + '?' + params.toString());
+			} else {
+				location.search = params.toString();
+			}
+		}
+
 		jQuery('.wb-tooltip-added').on('mouseover', function(){
 			jQuery(this).find('span').css({
 				'opacity': 1
@@ -175,12 +188,7 @@
 			let filter = jQuery('#wb_ajax_search_input').attr('name');
 			let filterValue = jQuery('#wb_ajax_search_input').val();
 			addRemoveAjaxSearchfieldsOnChange( filter, filterValue );
-			if (loadResultWithAjax) {
-				history.pushState({}, null, urlHost + '?' + params.toString());
-				refreshShopPageTemplate(urlHost + '?' + params.toString());
-			} else {
-				location.search = params.toString();
-			}
+			loadFilteredResults();
 			
 		});
 
@@ -201,12 +209,7 @@
 		// Apply filters
 		jQuery('.wb-ajax-apply-all-filters').on('click', function( e ){
 			e.preventDefault();
-			if (loadResultWithAjax) {
-				history.pushState({}, null, urlHost + '?' + params.toString());
-				refreshShopPageTemplate(urlHost + '?' + params.toString());
-			} else {
-				location.search = params.toString()
-			}
+			loadFilteredResults();
 		});
 
 		jQuery('a.wb-term-label').on('click', function(e){
@@ -237,12 +240,7 @@
 			} else {
 				removeField(filter);
 			}
-			if (loadResultWithAjax) {
-				history.pushState({}, null, urlHost + '?' + params.toString());
-				refreshShopPageTemplate(urlHost + '?' + params.toString());
-			} else {
-				location.search = params.toString()
-			}
+			loadFilteredResults();
 		});
 
 		// Clear single filter from filter listing
@@ -256,12 +254,7 @@
 				removeField(filter);
 			}
 			jQuery(this).parent().remove();
-			if (loadResultWithAjax) {
-				history.pushState({}, null, urlHost + '?' + params.toString());
-				refreshShopPageTemplate(urlHost + '?' + params.toString());
-			} else {
-				location.search = params.toString()
-			}
+			loadFilteredResults();
 		});
 
 		// Reset filters
@@ -321,12 +314,7 @@
 				}
 			}
 			if (!applyFiltersButton) {
-				if (loadResultWithAjax) {
-					history.pushState({}, null, urlHost + '?' + params.toString());
-					refreshShopPageTemplate(urlHost + '?' + params.toString());
-				} else {
-					location.search = params.toString()
-				}
+				loadFilteredResults();
 			}
 		});
 
@@ -346,12 +334,7 @@
 				setFieldValue( 'max_price', maxPrice );
 			}
 			if (!applyFiltersButton) {
-				if (loadResultWithAjax) {
-					history.pushState({}, null, urlHost + '?' + params.toString());
-					refreshShopPageTemplate(urlHost + '?' + params.toString());
-				} else {
-					location.search = params.toString()
-				}
+				loadFilteredResults();
 			}
 		});
 		
@@ -371,12 +354,7 @@
 					setFieldValue( 'max_price', toPrice );
 				}
 				if (!applyFiltersButton) {
-					if (loadResultWithAjax) {
-						history.pushState({}, null, urlHost + '?' + params.toString());
-						refreshShopPageTemplate(urlHost + '?' + params.toString());	
-					} else {
-						location.search = params.toString()
-					}
+					loadFilteredResults();
 				}
 			},
 		});
