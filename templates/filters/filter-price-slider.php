@@ -34,7 +34,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 		<span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>"></span>
 		<?php endif; ?>
 	</a>
-	<div class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && 'closed' === $filters['toggle_style'] ) ? 'display:none' : ''; ?>">
+	<div class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'display:none' : ''; ?>">
 		<?php if ( isset( $wb_ajax_filter_general_options['show_clear_filter'] ) && 'yes' === $wb_ajax_filter_general_options['show_clear_filter'] ) { ?>
 		<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="min_price,max_price" style="<?php echo ( ! isset( $_GET['min_price'] ) ) ? esc_attr( $clear_style ) : ''; ?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
 		<?php } ?>
