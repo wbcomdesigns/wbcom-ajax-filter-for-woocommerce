@@ -16,6 +16,7 @@ $filter_design = 'radio';
 <div class="wb-ajax-filter filter-tax">
 	<ul class="filter-items filter-radio ">
 		<?php
+		$hide_term   = ( isset( $filters['adoptive'] ) && 'hide' === $filters['adoptive'] ) ? true : false;
 		$terms_added = array();
 		foreach ( $filters['terms'] as $tm ) {
 			if ( in_array( $tm->id, $terms_added, true ) ) {
@@ -26,9 +27,9 @@ $filter_design = 'radio';
 			if ( $parent_exists ) {
 				continue;
 			}
-			$checked           = ( isset( $params[ $filter_taxonomy ] ) && in_array( $term_data->slug, (array) $params[ $filter_taxonomy ], true ) ) ? 'checked' : '';
-			$disabled          = ( 0 === $term_data->count ) ? 'disabled' : '';
-			$filter_item_class = ( 0 === $term_data->parent || 'no' === $heirarchy ) ? 'wb-ajax-level-0' : '';
+			$checked            = ( isset( $params[ $filter_taxonomy ] ) && in_array( $term_data->slug, (array) $params[ $filter_taxonomy ], true ) ) ? 'checked' : '';
+			$disabled           = ( 0 === $term_data->count ) ? 'disabled' : '';
+			$filter_item_class  = ( 0 === $term_data->parent || 'no' === $heirarchy ) ? 'wb-ajax-level-0' : '';
 			$filter_item_class .= ( 'collapsed' === $heirarchy ) ? ' wb-ajax-heirarchy-collapsible closed' : '';
 			$filter_item_class .= ( 'expanded' === $heirarchy ) ? ' wb-ajax-heirarchy-collapsible opened' : '';
 			if ( ( $hide_term && '' === $disabled ) || ( ! $hide_term && '' === $disabled ) || ( ! $hide_term && 'disabled' === $disabled ) ) {
