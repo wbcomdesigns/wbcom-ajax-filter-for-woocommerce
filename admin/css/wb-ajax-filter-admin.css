@@ -47,9 +47,17 @@
 }
 .wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
     padding: 25px;
-    height: 700px;
+    height: 600px;
     overflow-y: scroll;
 }
+
+@media only screen and (min-width: 768px) and (max-width: 1480px) {
+    .wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
+        height:440px;
+    }
+}
+
+
 .wb-ajax-filter-toggle-content-row {
     margin: 0;
     padding: 25px;
