@@ -42,15 +42,16 @@ class Wb_Ajax_Filter_Activator {
 			'scroll_top'            => 'yes',
 		);
 		$wb_ajax_filter_settings['wb_ajax_filter_admin_customization_options'] = array(
-			'filters_title'                   => 'Filters',
-			'filters_area_titles_color'       => '#000000',
-			'filters_area_background_color'   => '#ffffff',
-			'filters_area_accent_color'       => '#1e73be',
-			'filters_style'                   => 'yes',
-			'textual_terms_text_color'        => '#000000',
-			'textual_terms_hover_text_color'  => '#000000',
-			'textual_terms_active_text_color' => '#db4e32',
-			'ajax_loader_style'               => 'default',
+			'filters_title'                    => 'Filters',
+			'filters_area_titles_color'        => '#000000',
+			'filters_area_background_color'    => '#ffffff',
+			'filters_area_accent_color'        => '#1e73be',
+			'filters_style'                    => 'yes',
+			'textual_terms_text_color'         => '#000000',
+			'textual_terms_hover_text_color'   => '#000000',
+			'textual_terms_active_text_color'  => '#db4e32',
+			'textual_terms_tooltip_text_color' => '#000000',
+			'ajax_loader_style'                => 'default',
 		);
 		$wb_ajax_filter_settings['wb_ajax_filter_search_settings']             = array(
 			'enable_search'       => 'yes',
