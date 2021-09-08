@@ -95,19 +95,22 @@ if ( ! function_exists( 'wb_ajax_filter_admin_notice__error' ) ) {
 	}
 }
 
-/**
- * Redirect to plugin settings page after activated.
- *
- * @param string $plugin Get a plugin base url.
- */
-function wb_ajax_filter_activation_redirect_settings( $plugin ) {
-
-	if ( plugin_basename( __FILE__ ) === $plugin ) {
-		wp_safe_redirect( admin_url( 'admin.php?page=wb-ajax-filter-integration-settings' ) );
-		exit;
+if ( ! function_exists( 'wb_ajax_filter_add_settings_link' ) ) {
+	add_filter( 'plugin_action_links', 'wb_ajax_filter_add_settings_link', 10, 2 );
+	/**
+	 * Add setttings column to plugin options.
+	 *
+	 * @param links_array      $links_array      The links array.
+	 * @param plugin_file_name $plugin_file_name The plugin file name.
+	 */
+	function wb_ajax_filter_add_settings_link( $links_array, $plugin_file_name ) {
+		if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
+			$settings                = '<a href="admin.php?page=wc-ajax-filter-settings" id="setting-wbcom-ajax-filter-for-woocommerce">Settings</a>';
+			$links_array['settings'] = $settings;
+		}
+		return $links_array;
 	}
 }
-add_action( 'activated_plugin', 'wb_ajax_filter_activation_redirect_settings' );
 
 /**
  * Begins execution of the plugin.

@@ -9,18 +9,22 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
-$clear_style     = 'display:none;';
-$terms           = get_terms(
-	array(
-		'taxonomy'   => wp_unslash( $filters['taxonomy'] ),
-		'hide_empty' => false,
-	),
-);
-$attributes      = wc_get_attribute_taxonomy_names();
-$filter_taxonomy = $filters['taxonomy'];
-if ( in_array( $filters['taxonomy'], $attributes, true ) ) {
-	$filter_taxonomy = str_replace( 'pa_', 'filter_', $filters['taxonomy'] );
+$clear_style = 'display:none;';
+$attributes  = wc_get_attribute_taxonomy_names();
+if ( isset( $filters['taxonomy'] ) ) {
+	$terms = get_terms(
+		array(
+			'taxonomy'   => wp_unslash( $filters['taxonomy'] ),
+			'hide_empty' => false,
+		),
+	);
+	$filter_taxonomy = $filters['taxonomy'];
+	if ( in_array( $filters['taxonomy'], $attributes, true ) ) {
+		$filter_taxonomy = str_replace( 'pa_', 'filter_', $filters['taxonomy'] );
+	}
 }
+
+
 $toggle_enabled                 = ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? true : false;
 $toggle_class                   = ( $toggle_enabled ) ? 'wb-ajax-accordian' : '';
 $toggle_style                   = ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'display:none' : '';
@@ -40,27 +44,27 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 		<?php } ?>
 		<div class="filter-content">
 			<?php
-			$terms_order_by  = ( isset( $filters['order_by'] ) ) ? $filters['order_by'] : 'name';
-			$terms_order     = ( isset( $filters['order'] ) ) ? $filters['order'] : 'ASC';
-			$term_args       = array(
-				'taxonomy'   => $filters['taxonomy'],
-				'orderby'    => $terms_order_by,
-				'order'      => $terms_order,
-				'hide_empty' => false,
-			);
-			$sorted_terms    = get_terms( $term_args );
-			$old_terms_array = $filters['terms'];
-			unset( $filters['terms'] );
-			$new_terms_array = array();
-			foreach ( $sorted_terms as $stm ) {
-				foreach ( $old_terms_array as $ftm ) {
-					if ( (int) $ftm->id === (int) $stm->term_id ) {
-						$new_terms_array[] = $ftm;
+			if ( isset( $filters['terms'] ) && count( $filters['terms'] ) > 0 ) {
+				$terms_order_by  = ( isset( $filters['order_by'] ) ) ? $filters['order_by'] : 'name';
+				$terms_order     = ( isset( $filters['order'] ) ) ? $filters['order'] : 'ASC';
+				$term_args       = array(
+					'taxonomy'   => $filters['taxonomy'],
+					'orderby'    => $terms_order_by,
+					'order'      => $terms_order,
+					'hide_empty' => false,
+				);
+				$sorted_terms    = get_terms( $term_args );
+				$old_terms_array = $filters['terms'];
+				unset( $filters['terms'] );
+				$new_terms_array = array();
+				foreach ( $sorted_terms as $stm ) {
+					foreach ( $old_terms_array as $ftm ) {
+						if ( (int) $ftm->id === (int) $stm->term_id ) {
+							$new_terms_array[] = $ftm;
+						}
 					}
 				}
-			}
-			$filters['terms'] = $new_terms_array;
-			if ( isset( $filters['terms'] ) && count( $filters['terms'] ) > 0 ) {
+				$filters['terms'] = $new_terms_array;
 				require 'filter-tax/items/' . $filters['filter_design'] . '.php';
 			}
 			?>

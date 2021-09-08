@@ -24,7 +24,7 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 <div class="wb-ajax-filter-create-preset-section">
 	<div class="wb-ajax-filter-create-preset-section-content">
 		<span class="view-all-presets">
-			<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?page=wb-ajax-filter-integration-settings&tab=wb-ajax-filter-presets"  class="button-primary" >
+			<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?page=wc-ajax-filter-settings&tab=wb-ajax-filter-presets"  class="button-primary" >
 				<span class="dashicons dashicons-arrow-left-alt"></span> <?php esc_html_e( ' Back to presets list', 'wb-ajax-filter' ); ?>
 			</a>
 		</span>

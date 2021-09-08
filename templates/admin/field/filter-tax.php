@@ -36,7 +36,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && 'tax' === $filters['type'] ) 
 	</div>
 	<span class="description"><?php esc_html_e( 'Select which taxonomy to use for this filter', 'wb-ajax-filter' ); ?></span>
 </div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
+<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?><?php echo ( ! isset( $filters['taxonomy'] ) || ( isset( $filters['taxonomy'] ) && '' === $filters['taxonomy'] ) ) ? 'display:none' : ''; ?>">
 	<label><?php esc_html_e( 'Choose terms', 'wb-ajax-filter' ); ?></label>
 	<select id="wb_ajax_filter_select2_terms" class="wb-input wb-filter-type-tax" name="filters[terms][]" multiple="multiple" data-selected_terms='<?php echo ( isset( $filters['terms'] ) ) ? wp_json_encode( $filters['terms'] ) : ''; ?>' style="width:99%;max-width:25em;">
 	</select>

@@ -76,7 +76,7 @@ class Wb_Ajax_Filter_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wb-ajax-filter-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'wp-color-picker' );
-		if ( 'wb-plugins_page_wb-ajax-filter-integration-settings' === $screen ) {
+		if ( 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
 			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
 		}
 		wp_enqueue_style( 'wp-color-picker' );
@@ -102,7 +102,7 @@ class Wb_Ajax_Filter_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( 'wb-plugins_page_wb-ajax-filter-integration-settings' === $screen ) {
+		if ( 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
 			wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( 'jquery-ui-core' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
@@ -144,7 +144,7 @@ class Wb_Ajax_Filter_Admin {
 			add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'wb-ajax-filter' ), esc_html__( 'General', 'wb-ajax-filter' ), 'manage_options', 'wbcomplugins' );
 
 		}
-		add_submenu_page( 'wbcomplugins', esc_html__( 'Wbcom Ajax Filter for Woocommerce', 'wb-ajax-filter' ), esc_html__( 'Wbcom Ajax Filter for Woocommerce', 'wb-ajax-filter' ), 'manage_options', 'wb-ajax-filter-integration-settings', array( $this, 'wb_ajax_filter_admin_options_page' ) );
+		add_submenu_page( 'wbcomplugins', esc_html__( 'Wbcom Ajax Filter for Woocommerce', 'wb-ajax-filter' ), esc_html__( 'Wbcom Ajax Filter for Woocommerce', 'wb-ajax-filter' ), 'manage_options', 'wc-ajax-filter-settings', array( $this, 'wb_ajax_filter_admin_options_page' ) );
 	}
 
 	/**
@@ -279,7 +279,7 @@ class Wb_Ajax_Filter_Admin {
 						$filters[] = $filter;
 					}
 					update_post_meta( $post_id, '_wb_filter', $filters );
-					echo 'filter_created';
+					echo 'filter_edited';
 				}
 			}
 		}
@@ -538,6 +538,29 @@ class Wb_Ajax_Filter_Admin {
 		exit();
 	}
 
+	//
+	/**
+	 * Sort single filters.
+	 */
+	public function check_custom_field_exists_wb_callback() {
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		} else {
+			if ( ! isset( $_POST['field_title'] ) ) {
+				exit;
+			}
+			$old_index = sanitize_text_field( wp_unslash( $_POST['old_index'] ) );
+			$new_index = sanitize_text_field( wp_unslash( $_POST['new_index'] ) );
+			$preset    = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
+			$filters   = get_post_meta( $preset, '_wb_filter', true );
+			$filter    = $filters[ $old_index ];
+			unset( $filters[ $old_index ] );
+			array_splice( $filters, $new_index, 0, array( $filter ) );
+			update_post_meta( $preset, '_wb_filter', $filters );
+		}
+		exit();
+	}
+
 	/**
 	 * Actions performed to create tabs on the sub menu page.
 	 */
@@ -547,7 +570,7 @@ class Wb_Ajax_Filter_Admin {
 		echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
 		foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
 			$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
-			echo '<li><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=wb-ajax-filter-integration-settings&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
+			echo '<li><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=wc-ajax-filter-settings&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
 		}
 		echo '</div></ul></div>';
 	}

@@ -18,7 +18,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && 'orderby' === $filters['type'
 	<label><?php esc_html_e( 'Order options', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-buttons-field-wrapper">
 		<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-			<select name="filters[order_options][]" class="wc-enhanced-select enhanced wb-input wb-filter-type-orderby" multiple="" tabindex="-1" aria-hidden="true" data-selected_orders='<?php echo wp_json_encode( $filters['order_options'] ); ?>'>
+			<select name="filters[order_options][]" class="wc-enhanced-select enhanced wb-input wb-filter-type-orderby" multiple="" tabindex="-1" aria-hidden="true" data-selected_orders="<?php echo ( isset( $filters['order_options'] ) ) ? wp_json_encode( $filters['order_options'] ) : ''; ?>">
 				<option value=""><?php esc_html_e( 'Default sorting', 'wb-ajax-filter' ); ?></option>
 				<option value="popularity"><?php esc_html_e( 'Sort by popularity', 'wb-ajax-filter' ); ?></option>
 				<option value="rating"><?php esc_html_e( 'Sort by average rating', 'wb-ajax-filter' ); ?></option>
