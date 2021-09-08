@@ -13,7 +13,7 @@
 <div class="wb-ajax-active-filters-container">
 	<?php
 	if ( count( $params ) > 0 ) {
-		$exclude_filters = array( 'orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter' );
+		$exclude_filters = array( 'preset', 'orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter' );
 		foreach ( $params as $key => $param ) {
 			if ( in_array( $key, $exclude_filters, true ) ) {
 				continue;
