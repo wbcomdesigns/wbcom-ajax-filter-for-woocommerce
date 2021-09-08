@@ -187,14 +187,64 @@ span.view-all-presets {
 
 .terms-wrapper.ui-sortable {
     display: flex;
-    gap: 25px;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 -0.5%;
 }
 .terms-wrapper.ui-sortable .term-box {
-    width: 33.33%;
     background: #f0f0f1;
-    padding: 20px;
     border-radius: 6px;
+    margin: 0.5%;
+    padding: 1.5%;
+    width: 21%;
+}
+
+/*Edit Filter UI*/
+.wb-ajax-filter-toggle-content-row.wb-price-range-toggle button.wb-ajax-filter-add-price-range.button-primary {
+    margin-top: -40px;
+}
+.wb-ajax-filter-ranges-wrapper.ui-sortable {
+    display: flex;
+    flex-wrap: wrap;
+}
+.wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box {
+    width: 17%;
+    margin: 0.5%;
+    background: #eaeaea;
+    border-radius: 5px;
+    padding: 1%;
+    position: relative;
+}
+.wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box p{
+    margin: 5px 0;
+}
+.wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box input[type=number] {
+    width: 100%;
+}
+.wb-ajax-filter-ranges-wrapper a.wb-ajax-filter-range-remove {
+    text-decoration: none;
+}
+.wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box span.dashicons.dashicons-no-alt {
+    width: 20px;
+    height: 20px;
+    background: #d63638;
+    color: #fff;
+    border-radius: 30px;
+    position: absolute;
+    line-height: 20px;
+    font-size: 16px;
+    right: -5px;
+    top: -10px;
+}
+.wb-ajax-filter-field-wrapper.wb-ajax-filter-select-buttons-field-wrapper .select2-container {
+    width: 100% !important;
+}
+.wb-ajax-filter-field-wrapper.wb-ajax-filter-onoff-field-wrapper.unlimited {
+    display: flex;
+    justify-content: space-between;
+}
+.wb-ajax-filter-field-wrapper.wb-ajax-filter-onoff-field-wrapper.unlimited label {
+    font-size: 13px;
+    line-height: 1.1;
 }
 
 
