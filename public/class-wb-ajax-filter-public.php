@@ -460,20 +460,26 @@ class Wb_Ajax_Filter_Public {
 			if ( isset( $params['preset'] ) ) {
 				$preset_id       = $params['preset'];
 				$search_settings = get_option( 'wb_ajax_filter_search_content_settings' );
+				$meta_query      = array();
 				if ( isset( $search_settings['cf_name'] ) && '' !== $search_settings['cf_name'] ) {
 					$custom = $search_settings['cf_name'];
 					if ( array_key_exists( 'meta_' . $custom, $params ) ) {
-						$meta_query = array(
-							array(
-								'key'     => $custom,
-								'value'   => $params[ 'meta_' . $custom ],
-								'compare' => '==',
-							),
+						$meta_query[] = array(
+							'key'     => $custom,
+							'value'   => $params[ 'meta_' . $custom ],
+							'compare' => '==',
 						);
-						$q->query_vars['meta_query'] = $meta_query;
 					}
 				}
-				$filters = get_post_meta( $preset_id, '_wb_filter', true );
+				if ( isset( $search_settings['hide_out_of_stock'] ) && 'yes' === $search_settings['hide_out_of_stock'] ) {
+					$meta_query[] = array(
+						'key'     => '_stock_status',
+						'value'   => 'instock',
+						'compare' => '==',
+					);
+				}
+				$q->query_vars['meta_query'] = $meta_query;
+				$filters                     = get_post_meta( $preset_id, '_wb_filter', true );
 				foreach ( $filters as $filter ) {
 					if ( isset( $filter['type'] ) && 'tax' !== $filter['type'] ) {
 						continue;
