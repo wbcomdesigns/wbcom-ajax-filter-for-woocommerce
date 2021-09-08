@@ -420,6 +420,24 @@ class Wb_Ajax_Filter_Public {
 						}
 					}
 				}
+				if ( isset( $search_filter_settings['search_by_sku'] ) && 'yes' === $search_filter_settings['search_by_sku'] ) {
+					$prod = wc_get_product( $product->ID );
+					$sku  = $prod->get_sku();
+					if ( $multiple_word_search ) {
+						if ( $this->wb_check_content_contains_string( $sku, $q ) ) {
+							$match = true;
+						}
+					}
+					if ( ! $multiple_word_search ) {
+						$query = str_split( $q );
+						foreach ( $query as $val ) {
+							if ( $this->wb_check_content_contains_string( $sku, $val ) ) {
+								$match = true;
+							}
+						}
+					}
+				}
+
 				if ( $match ) {
 					$tmp                = array( $product->post_title, $product->post_title );
 					$matched_products[] = $tmp;
@@ -440,8 +458,22 @@ class Wb_Ajax_Filter_Public {
 		if ( is_shop() ) {
 			$params = $_GET;
 			if ( isset( $params['preset'] ) ) {
-				$preset_id = $params['preset'];
-				$filters   = get_post_meta( $preset_id, '_wb_filter', true );
+				$preset_id       = $params['preset'];
+				$search_settings = get_option( 'wb_ajax_filter_search_content_settings' );
+				if ( isset( $search_settings['cf_name'] ) && '' !== $search_settings['cf_name'] ) {
+					$custom = $search_settings['cf_name'];
+					if ( array_key_exists( 'meta_' . $custom, $params ) ) {
+						$meta_query = array(
+							array(
+								'key'     => $custom,
+								'value'   => $params[ 'meta_' . $custom ],
+								'compare' => '==',
+							),
+						);
+						$q->query_vars['meta_query'] = $meta_query;
+					}
+				}
+				$filters = get_post_meta( $preset_id, '_wb_filter', true );
 				foreach ( $filters as $filter ) {
 					if ( isset( $filter['type'] ) && 'tax' !== $filter['type'] ) {
 						continue;

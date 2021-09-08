@@ -187,7 +187,11 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 					</th>
 					<td>
 						<label>
-							<input name="wb_ajax_filter_search_content_settings[cf_name]" type="text" value="<?php echo ( isset( $wb_ajax_filter_search_content_settings['cf_name'] ) ) ? esc_html( $wb_ajax_filter_search_content_settings['cf_name'] ) : ''; ?>">
+							<select id="wb_ajax_check_custom_field_option" name="wb_ajax_filter_search_content_settings[cf_name]">
+								<?php if ( isset( $wb_ajax_filter_search_content_settings['cf_name'] ) && '' !== $wb_ajax_filter_search_content_settings['cf_name'] ) : ?>
+									<option value="<?php echo esc_attr( $wb_ajax_filter_search_content_settings['cf_name'] ); ?>" selected><?php echo esc_html( $wb_ajax_filter_search_content_settings['cf_name'] ); ?></option>
+								<?php endif; ?>
+							</select>
 						</label><br>
 					</td>
 				</tr>

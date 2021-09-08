@@ -191,6 +191,7 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wp_ajax_edit_preset_post_title_wb', $plugin_admin, 'edit_preset_post_title_wb_callback' );
 		$this->loader->add_action( 'wp_ajax_customize_term_text_wb', $plugin_admin, 'customize_term_text_wb_callback' );
 		$this->loader->add_action( 'wp_ajax_sortable_single_filters_wb', $plugin_admin, 'sortable_single_filters_wb_callback' );
+		$this->loader->add_action( 'wp_ajax_check_custom_field_exists_wb', $plugin_admin, 'check_custom_field_exists_wb_callback' );
 
 		// Hook callback.
 		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_name_field', 10 );

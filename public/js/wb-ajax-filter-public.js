@@ -187,7 +187,16 @@
 			e.preventDefault();
 			let filter = jQuery('#wb_ajax_search_input').attr('name');
 			let filterValue = jQuery('#wb_ajax_search_input').val();
-			addRemoveAjaxSearchfieldsOnChange( filter, filterValue );
+			if (filterValue != '' && filterValue != undefined ){
+				addRemoveAjaxSearchfieldsOnChange( filter, filterValue );
+			}
+			if (jQuery('.wb-ajax-filter-ajaxsearchform-input').length ) {
+				let custom = jQuery('#wb_ajax_search_custom_field').attr('name');
+				let customValue = jQuery('#wb_ajax_search_custom_field').val();
+				if (customValue != '' && customValue != undefined) {
+					addRemoveAjaxSearchfieldsOnChange(custom, customValue);
+				}
+			}
 			loadFilteredResults();
 			
 		});

@@ -538,25 +538,35 @@ class Wb_Ajax_Filter_Admin {
 		exit();
 	}
 
-	//
 	/**
-	 * Sort single filters.
+	 * Check custom fields exists.
 	 */
 	public function check_custom_field_exists_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'ajax-nonce' ) ) {
 			exit();
 		} else {
-			if ( ! isset( $_POST['field_title'] ) ) {
+			if ( ! isset( $_GET['q'] ) ) {
 				exit;
 			}
-			$old_index = sanitize_text_field( wp_unslash( $_POST['old_index'] ) );
-			$new_index = sanitize_text_field( wp_unslash( $_POST['new_index'] ) );
-			$preset    = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
-			$filters   = get_post_meta( $preset, '_wb_filter', true );
-			$filter    = $filters[ $old_index ];
-			unset( $filters[ $old_index ] );
-			array_splice( $filters, $new_index, 0, array( $filter ) );
-			update_post_meta( $preset, '_wb_filter', $filters );
+			$field_slug = sanitize_text_field( wp_unslash( $_GET['q'] ) );
+			$args         = array(
+				'post_type'      => 'product',
+				'posts_per_page' => -1,
+			);
+			$products       = get_posts( $args );
+			$matched_fields = array();
+			$exclude        = array();
+			foreach ( $products as $prod ) {
+				$meta_fields = get_post_meta( $prod->ID, '', false );
+				foreach ( $meta_fields as $key => $value ) {
+					if ( strpos( $key, $field_slug ) !== false && ! in_array( $key, $exclude ) ) {
+						$temp             = array( $key, $key );
+						$exclude[]        = $key;
+						$matched_fields[] = $temp;
+					}
+				}
+			}
+			echo wp_json_encode( $matched_fields );
 		}
 		exit();
 	}

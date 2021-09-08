@@ -7,6 +7,30 @@
 	 */
 
 	jQuery(document).ready(function ($) {
+		// get url fields
+		var url_string = window.location.href
+		var urlHost = location.protocol + '//' + location.host + location.pathname;
+		let urlAdmin = new URL(url_string);
+		let params = new URLSearchParams(urlAdmin.search);
+
+		// Remove field from url
+		function removeField(param) {
+			return params.delete(param)
+		}
+
+		// Check url for filter
+		function checkFieldValues(param) {
+			return params.has(param)
+		}
+
+		// Set parameters in url
+		function setFieldValue(param, value) {
+			if (checkFieldValues(param)) {
+				removeField(param);
+			}
+			params.set(param, value);
+		}
+
 		// Preset single filters sort
 		if (jQuery(".wb-ajax-filters-single-container .wb-ajax-filter-toggle-row").length > 1) {
 			jQuery(".wb-ajax-filters-single-container").sortable({
@@ -44,6 +68,35 @@
 		var urlTab = url.searchParams.get( "tab" ) ? url.searchParams.get( "tab" ) : false;
 		if (urlTab && urlTab === 'wb-ajax-filter-customization' ) {
 			searchOutputTab();
+		}
+		if (urlTab && urlTab === 'wb-ajax-filter-search') {
+			jQuery('#wb_ajax_check_custom_field_option').select2({
+				ajax: {
+					url: wbcom_plugin_installer_params.ajax_url,
+					dataType: 'json',
+					delay: 250,
+					data: function (params) {
+						return {
+							q: params.term,
+							action: 'check_custom_field_exists_wb',
+							nonce: wbcom_plugin_installer_params.wbcom_ajax_nonce,
+						};
+					},
+					processResults: function (data) {
+						var options = [];
+						if (data) {
+							$.each(data, function (index, text) {
+								options.push({ id: text[0], text: text[1] });
+							});
+						}
+						return {
+							results: options
+						};
+					},
+					cache: true
+				},
+				minimumInputLength: 1
+			});
 		}
 
 		// Check if user is on edit filter page
@@ -225,7 +278,11 @@
 				data: { action: 'create_filter_preset_wb', 'nonce': nonce, 'form_data': queryString },
 				success: function ( response ) {
 					if ( 'filter_created' === response ) {
-						window.location.search ='page=wb-ajax-filter-integration-settings&tab=wb-ajax-filter-presets';
+						window.location.search ='page=wc-ajax-filter-settings&tab=wb-ajax-filter-presets';
+					}
+					if ('filter_edited' === response) {
+						setFieldValue('wb', 'list');
+						location.search = params.toString();
 					}
 				}
 			});
@@ -345,6 +402,15 @@
 				jQuery( '.wb-show-style-toggle' ).show();
 			} else {
 				jQuery( '.wb-show-style-toggle' ).hide();
+			}
+		});
+
+		// Show/hide choose terms on change.
+		jQuery('.wb-ajax-filter-modal-content').on('change', 'select[name="filters[taxonomy]"]', function () {
+			if ( jQuery(this).val() != '' ) {
+				jQuery(this).closest('.wb-ajax-filter-toggle-content-row').next('.wb-tax-toggle').show(250);
+			} else {
+				jQuery(this).closest('.wb-ajax-filter-toggle-content-row').next('.wb-tax-toggle').hide(250);
 			}
 		});
 
@@ -527,6 +593,16 @@
 		// Save new filter preset on create page
 		jQuery( '.wb-ajax-filter-modal-content' ).on( 'click', '#wb-ajax-filer-create-filter-save', function ( e ) {
 			e.preventDefault();
+			if (jQuery('select[name="filters[type]"]').val() == 'tax' ){
+				if (jQuery('select[name="filters[taxonomy]"]').val() == '' || jQuery('select[name="filters[taxonomy]"]').val() == undefined ){
+					alert('Please select a valid taxonomy');
+					return false;
+				}
+				if (jQuery('#wb_ajax_filter_select2_terms').val() == '' || jQuery('#wb_ajax_filter_select2_terms').val() == undefined) {
+					alert('Please select terms');
+					return false;
+				}
+			}
 			jQuery( '#filter-preset-create' ).trigger( 'submit' );
 		});
 
