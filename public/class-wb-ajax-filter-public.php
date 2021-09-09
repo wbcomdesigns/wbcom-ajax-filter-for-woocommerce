@@ -461,7 +461,7 @@ class Wb_Ajax_Filter_Public {
 				$preset_id       = $params['preset'];
 				$search_settings = get_option( 'wb_ajax_filter_search_content_settings' );
 				$meta_query      = array();
-				if ( isset( $search_settings['cf_name'] ) && '' !== $search_settings['cf_name'] ) {
+				if ( isset( $search_settings['cf_name'] ) && '' !== $search_settings['cf_name'] && 'product' === $q->query_vars['post_type'] ) {
 					$custom = $search_settings['cf_name'];
 					if ( array_key_exists( 'meta_' . $custom, $params ) ) {
 						$meta_query[] = array(

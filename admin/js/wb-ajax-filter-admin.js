@@ -372,6 +372,8 @@
 					jQuery( '.wb-ajax-filter-ranges-wrapper' ).attr( 'data-index', newCount );
 					jQuery( '.wb-ajax-filter-range-box' ).each( function () {
 						jQuery( this ).find( '.unlimited' ).hide();
+						jQuery(this).find('.unlimited').find('.wb-filter-type-price-range-unlimited').prop('checked', false);
+						jQuery( this ).find( '.max' ).show();
 					});
 					jQuery( '.wb-ajax-filter-range-box' ).each( function ( index, element ) {
 						if ( newCount === index + 1 ) {
