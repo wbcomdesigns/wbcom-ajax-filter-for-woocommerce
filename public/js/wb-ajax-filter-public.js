@@ -340,7 +340,10 @@
 				removeField('max_price');
 			} else {
 				setFieldValue( 'min_price', minPrice );
-				setFieldValue( 'max_price', maxPrice );
+				if ( maxPrice != '' && maxPrice != undefined ) {
+					setFieldValue('max_price', maxPrice);
+				}
+				
 			}
 			if (!applyFiltersButton) {
 				loadFilteredResults();

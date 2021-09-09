@@ -44,7 +44,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 				<ul class="wb-price-ranges">
 					<?php
 					foreach ( $filters['price_ranges'] as $range ) {
-						if ( isset( $range['max'] ) && $highest_price >= $range['min'] ) {
+						if ( isset( $range['min'] ) && $highest_price >= $range['min'] ) {
 							if ( isset( $range['max'] ) ) {
 								$active = ( isset( $_REQUEST['min_price'] ) && isset( $_REQUEST['max_price'] ) && $range['min'] === $_REQUEST['min_price'] && $range['max'] === $_REQUEST['max_price'] ) ? 'filter-active' : '';
 								?>
