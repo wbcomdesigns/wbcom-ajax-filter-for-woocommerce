@@ -1,0 +1,1516 @@
+# Copyright (C) 2021
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-10 07:15:47+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Varun Dubey\n"
+"Language-Team: Wbcom Designs\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: grunt-wp-i18n 1.0.3\n"
+
+#: admin/class-wb-ajax-filter-admin.php:143
+msgid "WB Plugins"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:144
+msgid "General"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:147
+#: admin/partials/wb-ajax-filter-welcome-page.php:16
+msgid "Wbcom Ajax Filter for Woocommerce"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:166
+msgid "Wbcom Ajax Filter for Woocommerce Settings"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:642
+msgid "Welcome"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:646
+#: templates/admin/preset-filters.php:15
+msgid "Filter Presets"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:650
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:21
+msgid "General Settings"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:654
+msgid "Customization"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:658
+#: admin/partials/wb-ajax-filter-search-settings.php:21
+msgid "Search Settings"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:662
+#: admin/partials/wb-ajax-filter-search-content.php:21
+msgid "Search Options"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:33
+msgid "Choose element types to search"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:39
+#: templates/public/search-form.php:25 templates/public/search-form.php:34
+msgid "All"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:43
+#: templates/public/search-form.php:27
+msgid "Products"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:44
+msgid "Choose if you want to extend search also to posts and pages"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:51
+msgid "Search in title"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:57
+msgid "Extend search in the title of the product"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:64
+msgid "Search in excerpt"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:70
+msgid "Extend search in the excerpt of the product"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:77
+msgid "Search in content"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:83
+msgid "Extend search in the content of the product"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:90
+msgid "Search in product categories"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:96
+msgid "Extend search in product categories"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:103
+msgid "Search in product tags"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:109
+msgid "Extend search in product tags"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:116
+msgid "Search in author"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:122
+msgid "Extend search in author"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:129
+msgid "Multiple Word Search"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:135
+msgid "Show items containing all words typed"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:139
+msgid "Show items containing at least one of the words typed"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:146
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:81
+msgid "Hide out of stock products"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:152
+msgid ""
+"Enable this option if you don't want to show out of stock products in the "
+"results"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:159
+msgid "Order Options"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:166
+msgid "Enable order by post type"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:178
+msgid "Search by Custom Field"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:185
+msgid "Custom field name"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:201
+msgid "Search by Sku Settings"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:208
+msgid "Search by sku"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-content.php:214
+msgid "Extend search functionality so that search includes also sku"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:33
+msgid "Enable Search"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:39
+msgid "Enable/Disable search field."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:46
+msgid "Search input label"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:52
+msgid "Label for Search input field."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:59
+msgid "Search submit label"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:65
+msgid "Label for Search submit button."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:71
+msgid "Minimum number of characters"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:77
+msgid "Minimum number of characters required to trigger autosuggest."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:83
+msgid "Maximum number of results"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:89
+msgid "Maximum number of results showed in autosuggest box."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:96
+msgid "Additional Settings"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:105
+msgid "Show filter for search fields"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:111
+msgid ""
+"Show filter for search fields (it allows searching the Whole site or only "
+"among products)"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:118
+msgid "Show the category list"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-search-settings.php:124
+msgid "This option lets you decide to show the categories dropdown"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:21
+msgid "Customization Settings"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:34
+msgid "Filters area title"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:40
+msgid "Enter a title to identify the “AJAX filter Preset” section"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:47
+msgid "Filters area colors"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:54
+msgid "Titles"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:60
+msgid "Background"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:66
+msgid "Accent Color"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:76
+msgid "Filter Columns"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:82
+msgid "Choose number of filters in a row"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:89
+msgid "Options style"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:95
+msgid "Theme style"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:99
+msgid "Custom style"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:100
+msgid "Choose which preset of style options you'd like to apply to your filters"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:107
+msgid "Textual terms color"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:114
+msgid "Text"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:120
+msgid "Text Hover"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:126
+msgid "Text Active"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:132
+msgid "Tooltip Text"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:142
+msgid "AJAX loader"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:148
+msgid "Use default loader"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:152
+msgid "Upload custom loader"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:153
+msgid "Choose the style for AJAX loader icon"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:160
+msgid "Custom Ajax Loader"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:170
+msgid "Upload"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:171
+msgid "Reset"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:172
+msgid "Loader gif"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:34
+msgid "Filter View"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:40
+msgid "Instant result"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:44
+msgid "By clicking \"Apply filters\" button"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:45
+msgid ""
+"Choose to apply filters in real time using AJAX or whether to show a button "
+"to apply all filters."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:52
+msgid "Show Results"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:58
+msgid "In same page using AJAX"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:62
+msgid "Reload on a new page"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:63
+msgid ""
+"Choose whether to load the results on the same page using AJAX or load the "
+"results on a new page"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:69
+msgid "Hide empty terms"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:75
+msgid "Enable to hide empty terms from filters section"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:87
+msgid "Enable to hide \"out of stock\" products from the results."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:94
+msgid "Show reset button"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:100
+msgid ""
+"Enable to show the \"Reset filter\" button to allow the user to cancel the "
+"filter selection in one click"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:107
+msgid "Reset button position"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:113
+msgid "Before filters"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:117
+msgid "After filters"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:121
+msgid "Above products list"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:122
+msgid "Choose the default position for reset button"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:129
+msgid "Show \"Clear\" above each filter"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:135
+msgid "Enable to show the \"Clear\" link above each filter of the preset"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:142
+msgid "Show active filters as labels"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:148
+msgid ""
+"Enable to show the active filters as labels. Labels show the current "
+"filters selection, and can be used to remove any active filter."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:154
+msgid "Scroll top after filtering"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-setting-general-tab.php:160
+msgid "Enable this option if you want to scroll to top after filtering."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:17
+msgid ""
+"Wbcom Ajax Filter for Woocommerce Plugin allows your users to find the "
+"product they are looking for as quickly as possible."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:27
+msgid "Help &amp; Support Resources"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:28
+msgid ""
+"Here are all the resources you may need to get help from us. Documentation "
+"is usually the best place to start. Should you require help anytime, our "
+"customer care team is available to assist you at the support center."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:34
+msgid "Documentation"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:35
+msgid ""
+"We have prepared an extensive guide on Wbcom Ajax Filter for Woocommerce to "
+"learn all aspects of the plugin. You will find most of your answers here."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:36
+msgid "Read Documentation"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:40
+msgid "Support Center"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:41
+msgid ""
+"We strive to offer the best customer care via our support center. Once your "
+"theme is activated, you can ask us for help anytime."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:42
+msgid "Get Support"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:46
+msgid "Got Feedback?"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:47
+msgid ""
+"We want to hear about your experience with the plugin. We would also love "
+"to hear any suggestions you may for future updates."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-welcome-page.php:48
+msgid "Send Feedback"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:3
+msgid "Plugin License Settings"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:8
+#: admin/wbcom/templates/wbcom-license-page.php:21
+msgid "Product"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:9
+#: admin/wbcom/templates/wbcom-license-page.php:22
+msgid "Version"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:10
+#: admin/wbcom/templates/wbcom-license-page.php:23
+msgid "Key"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:11
+#: admin/wbcom/templates/wbcom-license-page.php:24
+msgid "Status"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:12
+#: admin/wbcom/templates/wbcom-license-page.php:25
+msgid "Action"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:8
+msgid "Free Addons"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:14
+msgid "Install"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:18
+#: admin/wbcom/wbcom-admin-settings.php:502
+msgid "Activate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:22
+#: admin/wbcom/wbcom-admin-settings.php:503
+msgid "Deactivate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:50
+msgid "Paid Addons"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:68
+msgid "View"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:3
+#: admin/wbcom/wbcom-admin-settings.php:569
+#: admin/wbcom/wbcom-admin-settings.php:570
+#: admin/wbcom/wbcom-admin-settings.php:663
+msgid "Support"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:5
+msgid "Having any question or issue ?"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:7
+msgid ""
+"Our team is here to help you out at anytime. If you have any idea about how "
+"we could improve. You can share access to your site on our helpdesk if it "
+"can help getting faster. There are two ways to in touch with us :"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:19
+msgid "Tickets Support"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:20
+msgid ""
+"Open a ticket on our helpdesk, we don't guarantee a fast response but "
+"within a week. Except if you've purchased one of our product we'll reply "
+"within 24 hours."
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:24
+msgid "Open a ticket"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:39
+#: admin/wbcom/templates/wbcom-support-page.php:44
+msgid "Contact Us"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:40
+msgid ""
+"Create a new thread on our plugin page, participation is open to anyone "
+"from all around the world. We'll be there to help as well but can't "
+"guarantee any delay."
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:4
+msgid "Reign BuddyPress"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:12
+msgid "REIGN Community"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:14
+msgid "Multiple Member Directory Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:15
+msgid "Multiple Member Header Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:16
+msgid "Multiple Group Directory Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:17
+msgid "Multiple Group Header Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:18
+msgid "BuddyPress Customization Options"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:19
+msgid "BuddyPress Extra Widgets"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:20
+msgid "Inbuilt Social Profile Module"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:23
+#: admin/wbcom/templates/wbcom-themes-page.php:49
+#: admin/wbcom/templates/wbcom-themes-page.php:73
+#: admin/wbcom/templates/wbcom-themes-page.php:96
+msgid "Purchase"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:24
+#: admin/wbcom/templates/wbcom-themes-page.php:50
+#: admin/wbcom/templates/wbcom-themes-page.php:74
+#: admin/wbcom/templates/wbcom-themes-page.php:97
+msgid "Preview"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:30
+msgid "LearnMate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:38
+msgid "Learnmate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:40
+msgid "Add Review to your course"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:41
+msgid "Course Coming Soon"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:42
+#: admin/wbcom/templates/wbcom-themes-page.php:69
+msgid "Grid And List Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:43
+msgid "Learndash/LifterLMS Extra Widgets"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:44
+msgid "Unparalleled Course Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:45
+msgid "Awesome Learndash/LifterLMS Pages"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:46
+msgid "Distraction Free Reading"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:56
+msgid "StoreMate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:64
+msgid "ShopMate Dokan"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:66
+msgid "Dokan Extra Widgets"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:67
+msgid "Unique Single Product Page Customization"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:68
+msgid "Awesome WooCommerce Pages"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:70
+msgid "Automated Mega Menu Support"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:80
+msgid "Jobmate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:88
+msgid "Jobmate Theme"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:90
+msgid "Simple live searching and filtering"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:91
+msgid "Unique Job listing Page"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:92
+msgid "Awesome Resume list Page"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:93
+msgid "Outstanding all job maanger pagesLayout"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:186
+msgid "Custom Font Uploader"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:188
+msgid ""
+"It also allows you to upload your own custom font to your site and use them "
+"using custom css."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:194
+msgid "BuddyPress Activity Filter"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:196
+msgid "Admin can set default and customised activities to be listed on front-end."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:202
+msgid "BuddyPress Activity Social Share"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:204
+msgid ""
+"This plugin allows anyone easily share BuddyPress Activites on major social "
+"media (Facebook, Twitter, Google+, Linkedin )."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:210
+msgid "BuddyPress Create Group Type"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:212
+msgid "It will help to create group type for BuddyPress Groups."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:218
+msgid "BuddyPress Member Reviews"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:220
+msgid ""
+"This plugin allows only site members to add reviews to the buddypress "
+"members on the site and even rate the member’s profile out of 5 points with "
+"multiple review criteria."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:226
+msgid "BuddyPress Group Reviews"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:228
+msgid ""
+"This plugin allows the BuddyPress Members to give reviews to the BuddyPress "
+"groups on the site. The review form allows the users to give text review, "
+"even rate the group on the basis of multiple criterias."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:234
+msgid "BuddyPress Favorite Notification"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:236
+msgid ""
+"BuddyPress Favorite Notification adds a notification for BuddyPress "
+"activity."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:242
+msgid "Custom Email Options"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:244
+msgid "Override default email options of Worpdress."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:250
+msgid "BuddyPress Checkins"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:252
+msgid ""
+"This plugin allows BuddyPress members to share their location when they are "
+"posting activities, you can add places where you visited, nearby locations "
+"based on google places."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:258
+msgid "BuddyPress Job Manager"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:260
+msgid ""
+"Incorporates BuddyPress with the WP Job Manager plugin by creating specific "
+"tabs in employer’s and candidate’s profiles."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:266
+msgid "BuddyPress user ToDo List"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:268
+msgid ""
+"This plugin allows you to create your personal task list with timestamp. "
+"You can mark them complete when you are done with them. It will also send "
+"reminder when you have any overdue task."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:274
+msgid "Shortcodes for BuddyPress"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:276
+msgid ""
+"This plugin will add an extended feature to the big name “BuddyPress” that "
+"will generate Shortcode for Listing Activity Streams , Members and Groups "
+"on any post/page in website."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:282
+msgid "Woo Open Graph"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:284
+msgid ""
+"This plugin will add an extended feature to the big name “WooCommerce” that "
+"will adds well executed and accurate Open Graph Meta Tags to your site with "
+"title,description and WooCommerce featured image."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:290
+msgid "BuddyPress Lock"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:292
+msgid ""
+"This plugin allows the administrator to lock the certain parts of their "
+"site. It help to create private BuddyPress community by locking certain "
+"BuddyPress Components, WordPress Pages, Custom Post Types for public view "
+"without using any membership plugin."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:298
+msgid "Woo Audio Preview"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:300
+msgid ""
+"This plugin Allows playing the audio files in sample mode to prevent "
+"unauthorized downloading of the audio files. It helps to display sample "
+"files at single product page."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:306
+msgid "WordPress System Log"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:308
+msgid ""
+"This plugin helps administrators of the site see their environment on which "
+"the site is currently running that includes WordPress environment, tha "
+"database it requires, Server Environment and the plugins installed and "
+"activated on the site."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:314
+msgid "BP Post From Anywhere"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:316
+msgid ""
+"This plugin will generate shortcode and widgets for post updates section "
+"for activities so you can post update from anywhere, it might be sidebar, "
+"some page or any template file."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:322
+msgid "Woo Document Preview"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:324
+msgid ""
+"This will allow you to add document preview at single product page. Which "
+"helps to offer more better idea when you are selling ebooks, pdf or some "
+"documents."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:330
+msgid "WordPress Media Category"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:332
+#: admin/wbcom/wbcom-admin-settings.php:348
+msgid ""
+"This plugin helps administrators of the site categorize their wordpress "
+"media."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:338
+msgid "Woo Price Quotes"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:340
+msgid ""
+"This plugin helps in quoting the products that admin wishes to hide its "
+"purchasing details."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:346
+msgid "EDD Service Extended"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:354
+msgid "WB Ads Rotator with Split Test"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:356
+msgid ""
+"This plugin is designed for the SPLIT TESTING, you can check performance of "
+"your ads layout and on the basis of them you can select one of them for "
+"your regular use."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:374
+msgid "BuddyPress Moderation Pro"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:375
+msgid ""
+"BuddyPress Community Moderation offers a solution for site owners to keep "
+"their communities straight. With community policing strategy, members of "
+"the community have an option for moderation sitewide by attaching flags to "
+"content created within the various components."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:380
+msgid "BuddyPress Polls"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:381
+msgid ""
+"Use BuddyPress Polls plugin to create polls inside the activity, let your "
+"user response to your polls. Members can create pools like activities, "
+"easily votes on them."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:386
+msgid "BuddyPress Resume Manager"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:387
+msgid ""
+"BuddyPress Resume Manager adds a separate BuddyPress Resume menu at a "
+"user’s BuddyPress Profile Page to display individual member resume. We have "
+"added predefined fields for the resumes and site admin and enable and "
+"disable them."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:392
+msgid "BuddyPress Profanity"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:393
+msgid ""
+"Use BuddyPress Profanity plugin to censor content in your community! Easily "
+"Censor all the unwanted words in activities, private messages contents by "
+"specifying a list of keywords to be filtered."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:398
+msgid "BuddyPress Private Community Pro"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:399
+msgid ""
+"This plugin offers a lockdown for BuddyPress Component and will ask users "
+"to log in go further to check profile or any other protected details."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:404
+msgid "BuddyPress Profile Pro"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:405
+msgid ""
+"This plugin gives you the power to extend BuddyPress Profiles with repeater "
+"fields and groups. You can easily add multiple field groups and display "
+"them at member’s profile."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:553
+#: admin/wbcom/wbcom-admin-settings.php:554
+#: admin/wbcom/wbcom-admin-settings.php:651
+msgid "Components"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:561
+#: admin/wbcom/wbcom-admin-settings.php:562
+#: admin/wbcom/wbcom-admin-settings.php:657
+msgid "Themes"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:645
+msgid "Settings"
+msgstr ""
+
+#: admin/wbcom/wbcom-paid-plugin-settings.php:30
+#: admin/wbcom/wbcom-paid-plugin-settings.php:31
+#: admin/wbcom/wbcom-paid-plugin-settings.php:48
+msgid "License"
+msgstr ""
+
+#: templates/admin/field/filter-add-price-range.php:28
+msgid "Min"
+msgstr ""
+
+#: templates/admin/field/filter-add-price-range.php:32
+msgid "Show \"&amp; Above\" in last range"
+msgstr ""
+
+#: templates/admin/field/filter-add-price-range.php:41
+msgid "Max"
+msgstr ""
+
+#: templates/admin/field/filter-adoptive-filtering.php:19
+msgid "Adoptive filtering"
+msgstr ""
+
+#: templates/admin/field/filter-adoptive-filtering.php:24
+msgid "Terms will be hidden"
+msgstr ""
+
+#: templates/admin/field/filter-adoptive-filtering.php:28
+msgid "Terms will be visible, but not clickable"
+msgstr ""
+
+#: templates/admin/field/filter-adoptive-filtering.php:32
+msgid ""
+"Decide how to manage filter options that show no results when applying "
+"filters. Choose to hide them or make them visible (this will show them in "
+"lighter grey and not clickable)"
+msgstr ""
+
+#: templates/admin/field/filter-count.php:19
+msgid "Show count of items"
+msgstr ""
+
+#: templates/admin/field/filter-count.php:25
+msgid "Enable if you want to show how many items are available for each term"
+msgstr ""
+
+#: templates/admin/field/filter-customize-term.php:23
+msgid "Label"
+msgstr ""
+
+#: templates/admin/field/filter-customize-term.php:27
+msgid "Tooltip"
+msgstr ""
+
+#: templates/admin/field/filter-for.php:14
+msgid "Filter for"
+msgstr ""
+
+#: templates/admin/field/filter-for.php:16
+msgid "Taxonomy"
+msgstr ""
+
+#: templates/admin/field/filter-for.php:17
+#: templates/admin/field/filter-tax.php:75
+msgid "Order by"
+msgstr ""
+
+#: templates/admin/field/filter-for.php:18
+msgid "Price Range"
+msgstr ""
+
+#: templates/admin/field/filter-for.php:19
+msgid "Price Slider"
+msgstr ""
+
+#: templates/admin/field/filter-for.php:20
+msgid "Review"
+msgstr ""
+
+#: templates/admin/field/filter-for.php:21
+msgid "In stock/On sale"
+msgstr ""
+
+#: templates/admin/field/filter-for.php:23
+msgid "Select the parameters you wish to filter for"
+msgstr ""
+
+#: templates/admin/field/filter-name.php:23
+msgid "Filter name"
+msgstr ""
+
+#: templates/admin/field/filter-name.php:27
+msgid "Enter a name to identify this filter"
+msgstr ""
+
+#: templates/admin/field/filter-order-by.php:18
+msgid "Order options"
+msgstr ""
+
+#: templates/admin/field/filter-order-by.php:22
+msgid "Default sorting"
+msgstr ""
+
+#: templates/admin/field/filter-order-by.php:23
+msgid "Sort by popularity"
+msgstr ""
+
+#: templates/admin/field/filter-order-by.php:24
+msgid "Sort by average rating"
+msgstr ""
+
+#: templates/admin/field/filter-order-by.php:25
+msgid "Sort by latest"
+msgstr ""
+
+#: templates/admin/field/filter-order-by.php:26
+msgid "Sort by price: low to high"
+msgstr ""
+
+#: templates/admin/field/filter-order-by.php:27
+msgid "Sort by price: high to low"
+msgstr ""
+
+#: templates/admin/field/filter-order-by.php:31
+msgid "Select sorting options to show"
+msgstr ""
+
+#: templates/admin/field/filter-price-range.php:18
+msgid "Customize price ranges"
+msgstr ""
+
+#: templates/admin/field/filter-price-range.php:20
+msgid "Add range"
+msgstr ""
+
+#: templates/admin/field/filter-price-slider.php:18
+msgid "Slider min value"
+msgstr ""
+
+#: templates/admin/field/filter-price-slider.php:22
+msgid "Set the minimum value for the price slider"
+msgstr ""
+
+#: templates/admin/field/filter-price-slider.php:25
+msgid "Slider max value"
+msgstr ""
+
+#: templates/admin/field/filter-price-slider.php:29
+msgid "Set the maximum value for the price slider."
+msgstr ""
+
+#: templates/admin/field/filter-price-slider.php:32
+msgid "Slider step"
+msgstr ""
+
+#: templates/admin/field/filter-price-slider.php:36
+msgid "Set the value for each increment of the price slider."
+msgstr ""
+
+#: templates/admin/field/filter-save.php:15
+msgid "Save Filter"
+msgstr ""
+
+#: templates/admin/field/filter-stock.php:18
+msgid "Show stock filter"
+msgstr ""
+
+#: templates/admin/field/filter-stock.php:25
+msgid "Enable if you want to show \"In Stock\" filter"
+msgstr ""
+
+#: templates/admin/field/filter-stock.php:28
+msgid "Show sale filter"
+msgstr ""
+
+#: templates/admin/field/filter-stock.php:35
+msgid "Enable if you want to show \"On Sale\" filter"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:20
+msgid "Choose taxonomy"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:24
+msgid "Select taxonomy"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:37
+msgid "Select which taxonomy to use for this filter"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:40
+msgid "Choose terms"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:43
+msgid "Select which terms to use for filtering"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:46
+msgid "Filter type"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:49
+msgid "Select Design"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:50
+msgid "Checkbox"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:51
+msgid "Radio"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:52
+msgid "Select"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:55
+msgid "Select the filter type for this filter"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:58
+msgid "Customize terms"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:78
+msgid "Select Order By"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:79
+msgid "Name"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:80
+msgid "Slug"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:81
+msgid "Term count"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:82
+msgid "Term order"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:85
+msgid "Select the default order for terms of this filter."
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:88
+msgid "Order type"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:91
+msgid "Select Order type"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:92
+msgid "ASC"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:93
+msgid "DESC"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:96
+msgid "Select the default order for terms of this filter"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:99
+msgid "Show hierarchy"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:104
+msgid "No, show all terms in same level"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:108
+msgid "No, show only parent terms"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:112
+msgid "Yes, with terms collapsed"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:116
+msgid "Yes, with terms expanded"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:120
+msgid "Yes, without toggles"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:124
+msgid "Choose how to show terms hierarchy"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:127
+msgid "Allow multiple selection"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:134
+msgid "Enable if the user can select multiple terms when filtering products"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:137
+msgid "Multiselect relation"
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:142
+msgid "AND - Results need to match all selected terms at the same time."
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:146
+msgid "OR - Results need to match at least one of the selected terms."
+msgstr ""
+
+#: templates/admin/field/filter-tax.php:150
+msgid "Choose how multiple terms selection should behave."
+msgstr ""
+
+#: templates/admin/field/filter-toggle.php:14
+msgid "Show as toggle"
+msgstr ""
+
+#: templates/admin/field/filter-toggle.php:21
+msgid "Enable if you want to show this filter as a toggle"
+msgstr ""
+
+#: templates/admin/field/filter-toggle.php:24
+msgid "Toggle style"
+msgstr ""
+
+#: templates/admin/field/filter-toggle.php:29
+msgid "Closed by default"
+msgstr ""
+
+#: templates/admin/field/filter-toggle.php:33
+msgid "Opened by default"
+msgstr ""
+
+#: templates/admin/field/filter-toggle.php:37
+msgid "Choose if toggle has to closed or opened by default"
+msgstr ""
+
+#: templates/admin/preset-filter-create.php:28
+msgid " Back to presets list"
+msgstr ""
+
+#: templates/admin/preset-filter-create.php:32
+msgid "Add new filter preset"
+msgstr ""
+
+#: templates/admin/preset-filter-create.php:37
+msgid "Preset name"
+msgstr ""
+
+#: templates/admin/preset-filter-create.php:42
+msgid "Save"
+msgstr ""
+
+#: templates/admin/preset-filter-create.php:47
+msgid "Enter a name to identify this filter preset."
+msgstr ""
+
+#: templates/admin/preset-filter-create.php:54
+msgid "Filters of this preset"
+msgstr ""
+
+#: templates/admin/preset-filter-create.php:61
+msgid "You don't have any filter yet."
+msgstr ""
+
+#: templates/admin/preset-filter-create.php:62
+msgid "But don't worry, here you can create your first one!"
+msgstr ""
+
+#: templates/admin/preset-filter-create.php:73
+msgid "Add a new filter"
+msgstr ""
+
+#: templates/admin/preset-filters.php:18
+msgid "Add preset"
+msgstr ""
+
+#: templates/admin/preset-filters.php:26
+msgid "Preset Name"
+msgstr ""
+
+#: templates/admin/preset-filters.php:27
+msgid "Shortcode"
+msgstr ""
+
+#: templates/admin/preset-filters.php:39
+msgid "Shortcode copied to clipboard."
+msgstr ""
+
+#: templates/admin/preset-filters.php:55
+msgid "No presets found."
+msgstr ""
+
+#: templates/filters/filter-orderby.php:35
+#: templates/filters/filter-price-range.php:40
+#: templates/filters/filter-price-slider.php:39
+#: templates/filters/filter-review.php:43
+#: templates/filters/filter-stock-sale.php:28
+#: templates/filters/filter-tax.php:43
+msgid "Clear"
+msgstr ""
+
+#: templates/filters/filter-orderby.php:40
+msgid "Default Sorting"
+msgstr ""
+
+#: templates/filters/filter-price-range.php:65
+msgid "& above"
+msgstr ""
+
+#: templates/filters/filter-review.php:48
+msgid "Any rating"
+msgstr ""
+
+#: templates/filters/filter-stock-sale.php:34
+msgid "In Stock"
+msgstr ""
+
+#: templates/filters/filter-stock-sale.php:38
+msgid "On Sale"
+msgstr ""
+
+#: templates/filters/filter-tax/items/select.php:16
+msgid "Choose term"
+msgstr ""
+
+#: templates/filters/global/apply-filters.php:14
+msgid "Apply filters"
+msgstr ""
+
+#: templates/filters/global/reset-filters.php:14
+msgid "Reset filters"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:118
+#: admin/class-wb-ajax-filter-admin.php:123
+msgctxt "[Admin] name of presets custom post type"
+msgid "Filter presets"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:119
+msgctxt "[Admin] singular name of presets custom post type"
+msgid "Filter preset"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:120
+msgctxt "[Admin] add new filter preset label"
+msgid "Add new preset"
+msgstr ""
