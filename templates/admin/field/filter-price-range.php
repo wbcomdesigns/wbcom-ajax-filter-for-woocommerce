@@ -10,7 +10,7 @@
  */
 
 $style = 'display:none;';
-if ( empty( $filters ) || ( ! empty( $filters ) && 'price_range' === $filters['type'] ) ) {
+if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 'price_range' === $filters['type'] ) ) {
 	$style = '';
 }
 ?>

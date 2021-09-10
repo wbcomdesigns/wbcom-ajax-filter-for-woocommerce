@@ -10,7 +10,7 @@
  */
 
 $style = 'display:none;';
-if ( empty( $filters ) || ( ! empty( $filters ) && 'stock_sale' === $filters['type'] ) ) {
+if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 'stock_sale' === $filters['type'] ) ) {
 	$style = '';
 }
 ?>

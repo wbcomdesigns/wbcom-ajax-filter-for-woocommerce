@@ -10,7 +10,7 @@
  */
 
 $style = 'display:none;';
-if ( empty( $filters ) || ( ! empty( $filters ) && 'orderby' === $filters['type'] ) ) {
+if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 'orderby' === $filters['type'] ) ) {
 	$style = '';
 }
 ?>

@@ -65,7 +65,9 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 					}
 				}
 				$filters['terms'] = $new_terms_array;
-				require 'filter-tax/items/' . $filters['filter_design'] . '.php';
+				if ( isset( $filters['filter_design'] ) && '' !== $filters['filter_design'] ) {
+					require 'filter-tax/items/' . $filters['filter_design'] . '.php';
+				}
 			}
 			?>
 		</div>

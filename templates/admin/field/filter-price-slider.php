@@ -10,7 +10,7 @@
  */
 
 $style = 'display:none;';
-if ( empty( $filters ) || ( ! empty( $filters ) && 'price_slider' === $filters['type'] ) ) {
+if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 'price_slider' === $filters['type'] ) ) {
 	$style = '';
 }
 ?>

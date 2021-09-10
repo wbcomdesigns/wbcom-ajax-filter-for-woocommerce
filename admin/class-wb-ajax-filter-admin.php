@@ -225,7 +225,7 @@ class Wb_Ajax_Filter_Admin {
 							$price_ranges_key      = explode( ']', $str_after_brack[2] );
 							$price_ranges_meta_key = explode( ']', $str_after_brack[3] );
 							$filter[ $str_before_brack[0] ][ $price_ranges_key[0] ][ $price_ranges_meta_key[0] ] = $field['value'];
-						} elseif ( 'terms' === $str_before_brack[0] ) {
+						} elseif ( isset( $filter['taxonomy'] ) && 'terms' === $str_before_brack[0] ) {
 							$term_data                        = get_term( $field['value'], $filter['taxonomy'] );
 							$tm                               = new stdClass();
 							$tm->id                           = $field['value'];

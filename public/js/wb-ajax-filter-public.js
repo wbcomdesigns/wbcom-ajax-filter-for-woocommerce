@@ -342,6 +342,8 @@
 				setFieldValue( 'min_price', minPrice );
 				if ( maxPrice != '' && maxPrice != undefined ) {
 					setFieldValue('max_price', maxPrice);
+				} else {
+					removeField('max_price');
 				}
 				
 			}
