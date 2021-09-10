@@ -568,9 +568,7 @@ class Wb_Ajax_Filter_Public {
 				$preset_id   = $preset->ID;
 				$all_filters = apply_filters( 'wb_ajax_filter_get_preset_filters', get_post_meta( $preset_id, '_wb_filter', true ), $preset_id );
 				$enabled     = get_post_meta( $preset_id, 'preset_enabled', true );
-				if ( 'yes' === $enabled ) {
-					include WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
-				}
+				include WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
 			}
 			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] || 'before_products' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
 				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
