@@ -11,6 +11,7 @@
 
 $filters      = array();
 $preset_title = '';
+$hide         = '';
 if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 	$preset_id = ( isset( $_REQUEST['preset'] ) && '' !== $_REQUEST['preset'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : false;
 	if ( $preset_id ) {
