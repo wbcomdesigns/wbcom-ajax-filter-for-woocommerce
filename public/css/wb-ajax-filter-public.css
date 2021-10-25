@@ -29,6 +29,7 @@
 .wb-ajax-filter-ajaxsearch-filters-container .select2-container{
     width: 100% !important;
     margin-bottom: 15px;
+    height: 40px !important;
 }
 span.select2-dropdown.select2-dropdown--below {
     border-radius: 4px !important;
@@ -103,6 +104,16 @@ a.wb-ajax-clear-single-filter {
 .wb-ajax-filter-content-container.filter-columns-5 .wb-ajax-filter-container-single {
     width: 20%;
 }
+li.select2-results__option {
+    color: #000000 !important;
+}
+.plg-peepso .wb-ajax-filter-ajaxsearchform-select .select2-container--default .select2-selection--single {
+    height: 40px;
+}
+.plg-peepso .wb-ajax-filter-ajaxsearchform-select .select2-container--default .select2-selection--singl .select2-selection__rendered{
+    line-height: initial !important;
+}
+
 
 /*Filter Section UI Wigdth*/
 .widget .wb-ajax-filter-ajaxsearch-filters-container {
@@ -134,8 +145,9 @@ a.wb-ajax-clear-single-filter {
     font-size: 13px;
     opacity: 0;
     line-height: 1;
-    right: 0;
-    margin-left: 15px;
+    top:4px;
+    margin-left:10px;
+    color: #fff;
     transition: all 0.4s;
     position: absolute;
 }
@@ -148,11 +160,21 @@ a.wb-ajax-clear-single-filter {
     position: absolute;
     transform: rotate(90deg);
 }
+li.filter-item.wb-ajax-heirarchy-collapsible.opened .filter-item span.wb-ajax-filter-tooltip-text {
+    margin-left: 35px;
+}
+li.filter-item.wb-ajax-heirarchy-collapsible.opened span.dashicons {
+    cursor: pointer;
+}
+
+
+
 
 
 .filter-content ul.filter-items li.filter-item {
      list-style-type: none;
      position: relative;
+     padding:1px 0;
  }
 .wb-ajax-filter-container-single ul.filter-items,
 .wb-ajax-filter-container-single ul.wb-price-ranges {
@@ -211,6 +233,7 @@ span.select2-dropdown.select2-dropdown--below {
     border-radius: 100%;
     content: "";
     height: 15px;
+    padding:0;
     line-height: 15px;
     position: absolute;
     right: -5px;
@@ -222,8 +245,68 @@ span.select2-dropdown.select2-dropdown--below {
 .wb-ajax-active-filters-container span.dashicons.dashicons-no-alt {
     width: 15px;
     height: 15px;
-    font-size: 15px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 16px;
 }
+.theme-twentytwentyone .wb-ajax-active-filters-container span.dashicons.dashicons-no-alt {
+    width: 15px;
+    height: 15px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 15px;
+    position: absolute;
+    left: -3px;
+    top: -2px;
+}
+
+div.wb-ajax-filter-loader-container {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    overflow: hidden;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    display: block;
+    background:rgba(255, 255, 255, 0.7);
+}
+/* Center the loader */
+div.wb-ajax-filter-loader-container .gif-container-default{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 99999999;
+    width: 50px;
+    height: 50px;
+    margin: -25px 0 0 -25px;
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #3498db;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  div.wb-ajax-filter-loader-container .gif-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 99999999;
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+}
+  
 
 /*Media Mobile View Style*/
 
