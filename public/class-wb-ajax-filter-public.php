@@ -57,6 +57,7 @@ class Wb_Ajax_Filter_Public {
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
 	 * @since    1.0.0
+	 * @param hook $hook hook.
 	 */
 	public function enqueue_styles( $hook ) {
 
@@ -236,9 +237,9 @@ class Wb_Ajax_Filter_Public {
 		$customization_options = get_option( 'wb_ajax_filter_admin_customization_options' );
 		if ( isset( $customization_options['ajax_loader_style'] ) && 'custom' === $customization_options['ajax_loader_style'] ) {
 			?>
-			<?php if ( isset( $wb_ajax_filter_admin_customization_options['loader_url'] ) && '' !== $wb_ajax_filter_admin_customization_options['loader_url'] ) { ?>
+			<?php if ( isset( $customization_options['loader_url'] ) && '' !== $customization_options['loader_url'] ) { ?>
 			<div class="gif-container">
-				<img src="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['loader_url'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['loader_url'] ) : ''; ?>" alt="">
+				<img src="<?php echo ( isset( $customization_options['loader_url'] ) ) ? esc_attr( $customization_options['loader_url'] ) : ''; ?>" alt="">
 			</div>
 				<?php
 			}
@@ -259,9 +260,9 @@ class Wb_Ajax_Filter_Public {
 	 * @param terms   $terms    Theterms array.
 	 * @since    1.0.0
 	 */
-	public function wb_ajax_check_parent_is_included( $term_id, $terms11 ) {
+	public function wb_ajax_check_parent_is_included( $term_id, $terms ) {
 		$exists = false;
-		foreach ( $terms11 as $tvm ) {
+		foreach ( $terms as $tvm ) {
 			if ( (int) $term_id === (int) $tvm->id ) {
 				$exists = true;
 			}
