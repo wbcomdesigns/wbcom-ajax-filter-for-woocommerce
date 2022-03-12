@@ -25,4 +25,4 @@ Yes. This plugin requires WooCommerce plugin to be active.
 == Changelog ==
 
 = 1.0.0 =
-* first version.
+* Initial Release
