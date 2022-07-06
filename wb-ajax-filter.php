@@ -36,6 +36,8 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'WB_AJAX_FILTER_VERSION', '1.0.0' );
 
+define( 'WB_AJAX_FILTER_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-wb-ajax-filter-activator.php

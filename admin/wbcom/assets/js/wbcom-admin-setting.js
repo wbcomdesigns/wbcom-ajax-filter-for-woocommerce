@@ -1,7 +1,7 @@
 jQuery( document ).ready( function ( event ) {
     jQuery( "#toplevel_page_wbcomplugins .wp-submenu li" ).each( function () {
         var link = jQuery( this ).find( 'a' ).attr( 'href' );
-        if ( link == 'admin.php?page=wbcom-plugins-page' || link == 'admin.php?page=wbcom-themes-page' || link == 'admin.php?page=wbcom-support-page' ) {
+        if ( link == 'admin.php?page=wbcom-plugins-page' || link == 'admin.php?page=wbcom-themes-page' || link == 'admin.php?page=wbcom-support-page' || link == 'admin.php?page=wbcom-license-page' ) {
             jQuery( this ).addClass( 'hidden' );
         }
     } );
@@ -31,3 +31,39 @@ jQuery( document ).ready( function ( event ) {
     } );
 
 } );
+
+( function( $ ) {
+
+    'use strict';
+
+	$( document ).ready( function () {
+	
+	/**
+        * Responsive Navbar Menu
+        */
+        var wb_panel_tabs = $( '.nav-tab-wrapper > ul' );
+
+        $( '.wb-toggle-btn' ).change( function( e ) {
+                $.initResponsivePanel();
+        });
+
+        $.initResponsivePanel = function () {
+                if ( $( '.wb-toggle-btn' ).is( ':checked' ) ) {
+                        wb_panel_tabs.slideDown();
+                } else {
+                wb_panel_tabs.slideUp();
+                }
+        },
+
+        $( window ).on( 'resize', function ( e ) {
+                e.preventDefault();
+        if ( $( window ).width() > 768 ) {
+                wb_panel_tabs.fadeIn( 1000 );
+        } else {
+                $.initResponsivePanel();
+        }
+        });
+        
+    });
+		
+})( jQuery );

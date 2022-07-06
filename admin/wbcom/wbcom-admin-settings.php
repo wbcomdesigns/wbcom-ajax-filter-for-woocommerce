@@ -3,10 +3,8 @@
  * Class to add top header pages of wbcom plugin and additional features.
  *
  * @author   Wbcom Designs
- * @package    Wb_Ajax_Filter
- * @subpackage Wb_Ajax_Filter/admin
+ * @package  BuddyPress_Member_Reviews
  */
-
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
@@ -16,14 +14,14 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 	 * Class to add wbcom plugin's admin settings.
 	 *
 	 * @author   Wbcom Designs
-	 * @since    1.1.0
+	 * @since    1.0.0
 	 */
 	class Wbcom_Admin_Settings {
 
 		/**
 		 * Wbcom_Admin_Settings Constructor.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
 		 */
 		public function __construct() {
@@ -35,11 +33,11 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for get plugin file name.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
-		 * @param string $slug Plugin's slug.
+		 * @param  string $slug Plugin's slug.
 		 */
-		public function get_plugin_file_path_from_slug( $slug ) {
+		function _get_plugin_file_path_from_slug( $slug ) {
 			if ( ! function_exists( 'get_plugins' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			}
@@ -54,28 +52,11 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		}
 
 		/**
-		 * Function for upgrade plugin.
-		 *
-		 * @since 1.1.0
-		 * @access public
-		 * @param string $plugin_slug Plugin's slug.
-		 */
-		public function upgrade_plugin( $plugin_slug ) {
-			include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-			wp_cache_flush();
-
-			$upgrader = new Plugin_Upgrader();
-			$upgraded = $upgrader->upgrade( $plugin_slug );
-
-			return $upgraded;
-		}
-
-		/**
 		 * Function for return plugin's WordPress repo download url.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
-		 * @param string $slug Plugin's slug.
+		 * @param  string $slug Plugin's slug.
 		 */
 		public function get_download_url( $slug ) {
 			return $this->get_wp_repo_download_url( $slug );
@@ -84,11 +65,11 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for get plugin's WordPress repo download url.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
-		 * @param string $slug Plugin's slug.
+		 * @param  string $slug Plugin's slug.
 		 */
-		public function get_wp_repo_download_url( $slug ) {
+		function get_wp_repo_download_url( $slug ) {
 			include_once ABSPATH . 'wp-admin/includes/plugin-install.php'; // for plugins_api..
 			$api = plugins_api(
 				'plugin_information',
@@ -109,7 +90,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for get all wbcom free plugin's details.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
 		 */
 		public function wbcom_all_free_plugins() {
@@ -297,7 +278,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for get all wbcom paid plugin's details.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
 		 */
 		public function wbcom_all_paid_plugins() {
@@ -329,7 +310,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				'4' => array(
 					'name'         => esc_html__( 'BuddyPress Private Community Pro', 'wb-ajax-filter' ),
 					'description'  => esc_html__( 'This plugin offers a lockdown for BuddyPress Component and will ask users to log in go further to check profile or any other protected details.', 'wb-ajax-filter' ),
-					'download_url' => 'https://wbcomdesigns.com/downloads/woocommerce-price-quote/',
+					'download_url' => 'https://wbcomdesigns.com/downloads/buddypress-private-community-pro/',
 					'icon'         => 'fa fa-user-times',
 				),
 				'5' => array(
@@ -345,11 +326,11 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for check plugin is installed or not.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
-		 * @param string $slug Plugin's slug.
+		 * @param  string $slug Plugin's slug.
 		 */
-		public function wbcom_is_plugin_installed( $slug ) {
+		function wbcom_is_plugin_installed( $slug ) {
 			if ( ! function_exists( 'get_plugins' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			}
@@ -366,9 +347,9 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for check plugin's status.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
-		 * @param string $slug Plugin's slug.
+		 * @param  string $slug Plugin's slug.
 		 */
 		public function wbcom_plugin_status( $slug ) {
 			if ( $this->wbcom_is_plugin_installed( $slug ) ) {
@@ -385,9 +366,9 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for check plugin is activated or not.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
-		 * @param string $slug Plugin's slug.
+		 * @param  string $slug Plugin's slug.
 		 */
 		public function wbcom_is_plugin_active( $slug ) {
 			if ( ! function_exists( 'get_plugins' ) ) {
@@ -409,7 +390,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Enqueue js & css related to wbcom plugin.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
 		 */
 		public function wbcom_enqueue_admin_scripts() {
@@ -420,7 +401,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 
 				wp_register_script(
 					$handle    = 'wbcom_admin_setting_js',
-					$src       = WB_AJAX_FILTER_URL . 'admin/wbcom/assets/js/wbcom-admin-setting.js',
+					$src       = WB_AJAX_FILTER_PLUGIN_URL . 'admin/wbcom/assets/js/wbcom-admin-setting.js',
 					$deps      = array( 'jquery' ),
 					$ver       = time(),
 					$in_footer = true
@@ -429,23 +410,20 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 					'wbcom_admin_setting_js',
 					'wbcom_plugin_installer_params',
 					array(
-						'ajax_url'         => admin_url( 'admin-ajax.php' ),
-						'wbcom_ajax_nonce' => wp_create_nonce( 'ajax-nonce' ),
-						'activate_text'    => esc_html__( 'Activate', 'wb-ajax-filter' ),
-						'deactivate_text'  => esc_html__( 'Deactivate', 'wb-ajax-filter' ),
+						'ajax_url'        => admin_url( 'admin-ajax.php' ),
+						'activate_text'   => esc_html__( 'Activate', 'wb-ajax-filter' ),
+						'deactivate_text' => esc_html__( 'Deactivate', 'wb-ajax-filter' ),
 					)
 				);
 				wp_enqueue_script( 'wbcom_admin_setting_js' );
-
 			}
 
 			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) {
-				wp_enqueue_style( 'wbcom-admin-setting-css', WB_AJAX_FILTER_URL . 'admin/wbcom/assets/css/wbcom-admin-setting.css' );
+				wp_enqueue_style( 'wbcom-admin-setting-css', WB_AJAX_FILTER_PLUGIN_URL . 'admin/wbcom/assets/css/wbcom-admin-setting.css' );
 			}
 
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
-
 				if ( 'toplevel_page_wbcomplugins' === $screen->base ) {
 					if ( ! wp_script_is( 'jquery', 'enqueued' ) ) {
 						wp_enqueue_script( 'jquery' );
@@ -453,21 +431,15 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 					if ( ! wp_script_is( 'jquery-ui-sortable', 'enqueued' ) ) {
 						wp_enqueue_script( 'jquery-ui-sortable' );
 					}
-					if ( ! wp_style_is( 'wbcom-selectize-css', 'enqueued' ) ) {
-						wp_enqueue_style( 'wbcom-selectize-css', WB_AJAX_FILTER_URL . 'admin/css/selectize.css' );
-					}
-					if ( ! wp_script_is( 'wbcom-selectize-js', 'enqueued' ) ) {
-						wp_enqueue_script( 'wbcom-selectize-js', WB_AJAX_FILTER_URL . 'admin/js/selectize.min.js', array( 'jquery' ) );
-					}
 
 					if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
 						wp_enqueue_style( 'wp-color-picker' );
 					}
-					if ( ! wp_script_is( 'woocommerce-price-quote-pro', 'enqueued' ) ) {
-						wp_enqueue_script( 'woocommerce-price-quote-pro', WB_AJAX_FILTER_URL . 'admin/js/woocommerce-price-quote-admin.js', array( 'jquery' ) );
+					if ( ! wp_style_is( 'wb-ajax-filter', 'enqueued' ) ) {
+						wp_enqueue_style( 'wb-ajax-filter', WB_AJAX_FILTER_PLUGIN_URL . 'admin/css/edd-sell-services-admin.css', array(), time(), 'all' );
 					}
-					if ( ! wp_style_is( 'woocommerce-price-quote-pro', 'enqueued' ) ) {
-						wp_enqueue_style( 'woocommerce-price-quote-pro', WB_AJAX_FILTER_URL . 'admin/css/woocommerce-price-quote-admin.css', array(), time(), 'all' );
+					if ( ! wp_script_is( 'wb-ajax-filter', 'enqueued' ) ) {
+						wp_enqueue_script( 'wb-ajax-filter', WB_AJAX_FILTER_PLUGIN_URL . 'admin/js/edd-sell-services-admin.js', array( 'jquery' ), time(), false );
 					}
 				}
 			}
@@ -476,22 +448,22 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for add plugin's admin panel header pages.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
 		 */
 		public function wbcom_admin_additional_pages() {
 			add_submenu_page(
 				'wbcomplugins',
-				esc_html__( 'Components', 'wb-ajax-filter' ),
-				esc_html__( 'Components', 'wb-ajax-filter' ),
+				esc_html__( 'Our Plugins', 'wb-ajax-filter' ),
+				esc_html__( 'Our Plugins', 'wb-ajax-filter' ),
 				'manage_options',
 				'wbcom-plugins-page',
 				array( $this, 'wbcom_plugins_submenu_page_callback' )
 			);
 			add_submenu_page(
 				'wbcomplugins',
-				esc_html__( 'Themes', 'wb-ajax-filter' ),
-				esc_html__( 'Themes', 'wb-ajax-filter' ),
+				esc_html__( 'Our Themes', 'wb-ajax-filter' ),
+				esc_html__( 'Our Themes', 'wb-ajax-filter' ),
 				'manage_options',
 				'wbcom-themes-page',
 				array( $this, 'wbcom_themes_submenu_page_callback' )
@@ -509,7 +481,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for include wbcom plugins list page.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
 		 */
 		public function wbcom_plugins_submenu_page_callback() {
@@ -519,7 +491,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for include themes list page.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
 		 */
 		public function wbcom_themes_submenu_page_callback() {
@@ -537,9 +509,9 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		}
 
 		/**
-		 * Shortcode for display top menu header.
+		 * Shortcode for display the top menu header.
 		 *
-		 * @since 1.1.0
+		 * @since  1.0.0
 		 * @access public
 		 */
 		public function wbcom_admin_setting_header_html() {
@@ -565,32 +537,32 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			<div id="wb_admin_header" class="wp-clearfix">
 
 				<div id="wb_admin_logo">
-					<img src="<?php echo esc_url( WB_AJAX_FILTER_URL ) . 'admin/wbcom/assets/imgs/logowbcom.png'; ?>">
+					<img src="<?php echo esc_url( WB_AJAX_FILTER_PLUGIN_URL ) . 'admin/wbcom/assets/imgs/logowbcom.png'; ?>">
 					<div class="wb_admin_right"></div>
 				</div>
 
 				<nav id="wb_admin_nav">
 					<ul>
 						<li class="wb_admin_nav_item <?php echo esc_attr( $settings_active ); ?>">
-							<a href="<?php echo esc_url( get_admin_url() ) . 'admin.php?page=wbcomplugins'; ?>" id="wb_admin_nav_trigger_settings">
+							<a href="<?php echo get_admin_url() . 'admin.php?page=wbcomplugins'; ?>" id="wb_admin_nav_trigger_settings">
 								<i class="fa fa-sliders" aria-hidden="true"></i>
 								<h4><?php esc_html_e( 'Settings', 'wb-ajax-filter' ); ?></h4>
 							</a>
 						</li>
 						<li class="wb_admin_nav_item <?php echo esc_attr( $plugin_active ); ?>">
-							<a href="<?php echo esc_url( get_admin_url() ) . 'admin.php?page=wbcom-plugins-page'; ?>" id="wb_admin_nav_trigger_extensions">
+							<a href="<?php echo get_admin_url() . 'admin.php?page=wbcom-plugins-page'; ?>" id="wb_admin_nav_trigger_extensions">
 								<i class="fa fa-th" aria-hidden="true"></i>
-								<h4><?php esc_html_e( 'Components', 'wb-ajax-filter' ); ?></h4>
+								<h4><?php esc_html_e( 'Our Plugins', 'wb-ajax-filter' ); ?></h4>
 							</a>
 						</li>
 						<li class="wb_admin_nav_item <?php echo esc_attr( $theme_active ); ?>">
-							<a href="<?php echo esc_url( get_admin_url() ) . 'admin.php?page=wbcom-themes-page'; ?>" id="wb_admin_nav_trigger_themes">
+							<a href="<?php echo get_admin_url() . 'admin.php?page=wbcom-themes-page'; ?>" id="wb_admin_nav_trigger_themes">
 								<i class="fa fa-magic" aria-hidden="true"></i>
-								<h4><?php esc_html_e( 'Themes', 'wb-ajax-filter' ); ?></h4>
+								<h4><?php esc_html_e( 'Our Themes', 'wb-ajax-filter' ); ?></h4>
 							</a>
 						</li>
 						<li class="wb_admin_nav_item <?php echo esc_attr( $support_active ); ?>">
-							<a href="<?php echo esc_url( get_admin_url() ) . 'admin.php?page=wbcom-support-page'; ?>" id="wb_admin_nav_trigger_support">
+							<a href="<?php echo get_admin_url() . 'admin.php?page=wbcom-support-page'; ?>" id="wb_admin_nav_trigger_support">
 								<i class="fa fa-question-circle" aria-hidden="true"></i>
 								<h4><?php esc_html_e( 'Support', 'wb-ajax-filter' ); ?></h4>
 							</a>

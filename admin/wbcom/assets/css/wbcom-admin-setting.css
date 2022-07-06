@@ -91,6 +91,7 @@
 }
 
 .wrap .wbcom-plugin-heading {
+    display: block !important;
     margin: 0;
     font-size: 32px;
     line-height: initial;
@@ -766,6 +767,11 @@
     text-shadow: none;
     font-weight: 600;
     box-shadow: none;
+    background: #0ec18f;
+    color: #fff;
+    border-color: #0ec18f;
+    padding: 6px;
+    border-radius: 5px;
 }
 
 .mobile-license-headings {
