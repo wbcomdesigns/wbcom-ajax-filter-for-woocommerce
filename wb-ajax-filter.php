@@ -72,6 +72,7 @@ if ( ! function_exists( 'wb_ajax_filter_check_woocomerce' ) ) {
 	 */
 	function wb_ajax_filter_check_woocomerce() {
 		if ( ! class_exists( 'WooCommerce' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			deactivate_plugins( plugin_basename( __FILE__ ) );
 			add_action( 'admin_notices', 'wb_ajax_filter_admin_notice__error' );
 			if ( isset( $_GET['activate'] ) ) {
@@ -109,6 +110,23 @@ if ( ! function_exists( 'wb_ajax_filter_add_settings_link' ) ) {
 			$links_array['settings'] = $settings;
 		}
 		return $links_array;
+	}
+}
+
+add_action( 'activated_plugin', 'wb_ajax_filter_activation_redirect_settings' );
+
+/**
+ * Redirect to plugin settings page after activated
+ *
+ * @param plugin $plugin plugin.
+ */
+function wb_ajax_filter_activation_redirect_settings( $plugin ) {
+	if ( ! isset( $_GET['plugin'] ) ) {
+		return;
+	}
+	if ( $plugin == plugin_basename( __FILE__ ) && class_exists( 'WooCommerce' ) ) {
+		wp_redirect( admin_url( 'admin.php?page=wc-ajax-filter-settings' ) );
+		exit;
 	}
 }
 
