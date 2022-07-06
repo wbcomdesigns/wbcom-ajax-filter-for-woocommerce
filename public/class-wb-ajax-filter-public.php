@@ -542,6 +542,7 @@ class Wb_Ajax_Filter_Public {
 	 * Filter preset shortcode callback.
 	 */
 	public function filter_preset_shortcode_callback() {
+		ob_start();
 		$args                           = array(
 			'post_type'   => 'wb_filter_preset',
 			'post_status' => 'publish',
@@ -595,5 +596,6 @@ class Wb_Ajax_Filter_Public {
 			}
 			do_action( 'wb_ajax_filter_after_content' );
 		}
+		return ob_get_clean();
 	}
 }
