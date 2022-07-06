@@ -60,7 +60,7 @@ if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_
 	</div>
 	<?php if ( isset( $wb_ajax_filter_search_content_settings['cf_name'] ) && '' !== $wb_ajax_filter_search_content_settings['cf_name'] ) : ?>
 		<div class="wb-ajax-filter-ajaxsearchform-input">
-			<input type="text" id="wb_ajax_search_custom_field" placeholder="Enter <?php echo esc_attr( $wb_ajax_filter_search_content_settings['cf_name'] ); ?> value" name="meta_<?php echo esc_attr( $wb_ajax_filter_search_content_settings['cf_name'] ); ?>" value="<?php echo ( isset( $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) && '' !== $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) ) ) : ''; ?>">
+			<input type="text" id="wb_ajax_search_custom_field" placeholder="<?php echo esc_attr__( 'Enter value', 'wb-ajax-filter' ); ?>" name="meta_<?php echo esc_attr( $wb_ajax_filter_search_content_settings['cf_name'] ); ?>" value="<?php echo ( isset( $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) && '' !== $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) ) ) : ''; ?>">
 		</div>	
 	<?php endif; ?>
 	<div class="wb-search-submit-container"><input type="submit" value="<?php echo ( isset( $wb_ajax_filter_search_settings['search_submit_label'] ) && '' !== $wb_ajax_filter_search_settings['search_submit_label'] ) ? esc_attr( $wb_ajax_filter_search_settings['search_submit_label'] ) : 'Search'; ?>"> </div>
