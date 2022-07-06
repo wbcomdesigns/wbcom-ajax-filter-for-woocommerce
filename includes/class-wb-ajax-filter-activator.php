@@ -46,7 +46,7 @@ class Wb_Ajax_Filter_Activator {
 			'filters_area_titles_color'        => '#000000',
 			'filters_area_background_color'    => '#ffffff',
 			'filters_area_accent_color'        => '#1e73be',
-			'filters_style'                    => 'yes',
+			'filters_style'                    => 'theme',
 			'textual_terms_text_color'         => '#000000',
 			'textual_terms_hover_text_color'   => '#000000',
 			'textual_terms_active_text_color'  => '#db4e32',

@@ -91,11 +91,11 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 					</th>
 					<td>
 						<label>
-							<input name="wb_ajax_filter_admin_customization_options[filters_style]" type="radio" value="yes"<?php ( isset( $wb_ajax_filter_admin_customization_options['filters_style'] ) ) ? checked( $wb_ajax_filter_admin_customization_options['filters_style'], 'yes' ) : ''; ?>>
+							<input name="wb_ajax_filter_admin_customization_options[filters_style]" type="radio" value="theme"<?php ( isset( $wb_ajax_filter_admin_customization_options['filters_style'] ) ) ? checked( $wb_ajax_filter_admin_customization_options['filters_style'], 'theme' ) : ''; ?>>
 							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Theme style', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 						<label>
-							<input name="wb_ajax_filter_admin_customization_options[filters_style]" type="radio" value="yes"<?php ( isset( $wb_ajax_filter_admin_customization_options['filters_style'] ) ) ? checked( $wb_ajax_filter_admin_customization_options['filters_style'], 'yes' ) : ''; ?>>
+							<input name="wb_ajax_filter_admin_customization_options[filters_style]" type="radio" value="custom"<?php ( isset( $wb_ajax_filter_admin_customization_options['filters_style'] ) ) ? checked( $wb_ajax_filter_admin_customization_options['filters_style'], 'custom' ) : ''; ?>>
 							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Custom style', 'wb-ajax-filter' ); ?></span>
 							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Choose which preset of style options you\'d like to apply to your filters', 'wb-ajax-filter' ); ?></span>
 						</label><br>
