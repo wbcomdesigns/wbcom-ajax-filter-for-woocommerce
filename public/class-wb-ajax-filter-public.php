@@ -526,6 +526,18 @@ class Wb_Ajax_Filter_Public {
 		return $q;
 	}
 
+	public function wb_ajax_filter_presets_are_enabled( $presets ) {
+		$enabled = false;
+		foreach ( $presets as $preset ) {
+			if ( $enabled ) {
+				break;
+			}
+			$preset_enabled = get_post_meta( $preset->ID, 'preset_enabled', true );
+			$enabled        = ( 'yes' === $preset_enabled ) ? true : false;
+		}
+		return $enabled;
+	}
+
 	/**
 	 * Filter preset shortcode callback.
 	 */
@@ -555,8 +567,10 @@ class Wb_Ajax_Filter_Public {
 			}
 		}
 		if ( ! empty( $presets ) ) {
+			$enable_filter_actions = self::wb_ajax_filter_presets_are_enabled( $presets );
+
 			do_action( 'wb_ajax_filter_before_content' );
-			if ( isset( $wb_ajax_filter_admin_custom['filters_title'] ) && '' !== $wb_ajax_filter_admin_custom['filters_title'] ) {
+			if ( $enable_filter_actions && isset( $wb_ajax_filter_admin_custom['filters_title'] ) && '' !== $wb_ajax_filter_admin_custom['filters_title'] ) {
 				?>
 				<h3 class="wb-ajax-preset-filter-title" style="display:block;"><?php echo esc_html( $wb_ajax_filter_admin_custom['filters_title'] ); ?></h3>
 				<?php
@@ -564,7 +578,7 @@ class Wb_Ajax_Filter_Public {
 			if ( isset( $wb_ajax_filter_general_options['show_active_labels'] ) && 'yes' === $wb_ajax_filter_general_options['show_active_labels'] ) {
 				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/active-filters.php';
 			}
-			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
+			if ( $enable_filter_actions && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
 				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
 			}
 			foreach ( $presets as $preset ) {
@@ -573,10 +587,10 @@ class Wb_Ajax_Filter_Public {
 				$enabled     = get_post_meta( $preset_id, 'preset_enabled', true );
 				include WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
 			}
-			if ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] || 'before_products' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
+			if ( $enable_filter_actions && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] || 'before_products' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
 				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
 			}
-			if ( isset( $wb_ajax_filter_general_options['instant_filters'] ) && 'no' === $wb_ajax_filter_general_options['instant_filters'] ) {
+			if ( $enable_filter_actions && isset( $wb_ajax_filter_general_options['instant_filters'] ) && 'no' === $wb_ajax_filter_general_options['instant_filters'] ) {
 				require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/apply-filters.php';
 			}
 			do_action( 'wb_ajax_filter_after_content' );
