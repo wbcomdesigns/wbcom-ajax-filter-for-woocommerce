@@ -17,37 +17,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_customization_options' );
 ?>
 <div class="wbcom-tab-content">
-	<div class="wb-ajax-filter-tab-content">
-		<h2 class="wp-heading-inline"><?php esc_html_e( 'Customization Settings', 'wb-ajax-filter' ); ?></h2>
+<div class="wbcom-admin-title-section">
+		<h3 class="wp-heading-inline"><?php esc_html_e( 'Customization Settings', 'wb-ajax-filter' ); ?></h3>
 	</div>
+	<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
 	<form method="post" action="options.php">
 		<?php
 		settings_fields( 'wb_ajax_filter_admin_customization_options' );
 		do_settings_sections( 'wb_ajax_filter_admin_customization_options' );
 		?>
 		<?php do_action( 'wb_ajax_filter_before_admin_customization_settings', $wb_ajax_filter_admin_customization_options ); ?>
-		<table class="form-table">
-			<tbody>
-				<tr>
-					<th scope="row">
+		<div class="form-table">
+		<div class="wbcom-settings-section-wrap">
+			<div class="wbcom-settings-section-options-heading">
+				
 						<label>
 							<?php esc_html_e( 'Filters area title', 'wb-ajax-filter' ); ?>
-						</label>
-					</th>
-					<td>
+						</label> 
+						<p class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enter a title to identify the “AJAX filter Preset” section', 'wb-ajax-filter' ); ?></p>
+
+					</div>
+					<div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_admin_customization_options[filters_title]" type="text" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['filters_title'] ) ) ? esc_html( $wb_ajax_filter_admin_customization_options['filters_title'] ) : ''; ?>">
-							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enter a title to identify the “AJAX filter Preset” section', 'wb-ajax-filter' ); ?></span>
 						</label><br>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">
+					</div>
+				</div>
+				<div class="wbcom-settings-section-wrap">
+					<div class="wbcom-settings-section-options-heading">
 						<label>
 							<?php esc_html_e( 'Filters area colors', 'wb-ajax-filter' ); ?>
 						</label>
-					</th>
-					<td>
+					</div>
+					<div class="wbcom-settings-section-options">
 						<div class="wb-ajax-filter-colorpicker">
 							<div class="wb-ajax-filter-single-colorpicker colorpicker">
 								<label>
@@ -68,28 +70,31 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 								<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[filters_area_accent_color]" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['filters_area_accent_color'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['filters_area_accent_color'] ) : '#fff'; ?>">
 							</div>
 						</div>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">
+					 </div>
+					 </div>
+					 <div class="wbcom-settings-section-wrap">
+						<div class="wbcom-settings-section-options-heading">
 						<label>
 							<?php esc_html_e( 'Filter Columns', 'wb-ajax-filter' ); ?>
 						</label>
-					</th>
-					<td>
+						<p class="description"><?php esc_html_e( 'Choose number of filters in a row', 'wb-ajax-filter' ); ?></p>
+
+					   </div>
+					   <div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_admin_customization_options[filters_per_column]" type="number" min="2" max="5" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['filters_per_column'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['filters_per_column'] ) : '5'; ?>">
-							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Choose number of filters in a row', 'wb-ajax-filter' ); ?></span>
 						</label><br>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">
+
+					   </div>
+				   </div>
+				   <div class="wbcom-settings-section-wrap">
+						<div class="wbcom-settings-section-options-heading">
 						<label>
 							<?php esc_html_e( 'Options style', 'wb-ajax-filter' ); ?>
 						</label>
-					</th>
-					<td>
+						<p class="description"><?php esc_html_e( 'Choose which preset of style options you\'d like to apply to your filters', 'wb-ajax-filter' ); ?></p>
+					</div>
+					<div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_admin_customization_options[filters_style]" type="radio" value="theme"<?php ( isset( $wb_ajax_filter_admin_customization_options['filters_style'] ) ) ? checked( $wb_ajax_filter_admin_customization_options['filters_style'], 'theme' ) : ''; ?>>
 							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Theme style', 'wb-ajax-filter' ); ?></span>
@@ -97,17 +102,17 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 						<label>
 							<input name="wb_ajax_filter_admin_customization_options[filters_style]" type="radio" value="custom"<?php ( isset( $wb_ajax_filter_admin_customization_options['filters_style'] ) ) ? checked( $wb_ajax_filter_admin_customization_options['filters_style'], 'custom' ) : ''; ?>>
 							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Custom style', 'wb-ajax-filter' ); ?></span>
-							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Choose which preset of style options you\'d like to apply to your filters', 'wb-ajax-filter' ); ?></span>
 						</label><br>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">
+					 </div>
+					 </div>
+
+					 <div class="wbcom-settings-section-wrap">
+						<div class="wbcom-settings-section-options-heading">
 						<label>
 							<?php esc_html_e( 'Textual terms color', 'wb-ajax-filter' ); ?>
 						</label>
-					</th>
-					<td>
+					</div>
+					<div class="wbcom-settings-section-options">
 						<div class="wb-ajax-filter-colorpicker">
 							<div class="wb-ajax-filter-single-colorpicker colorpicker">
 								<label>
@@ -134,15 +139,15 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 								<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[textual_terms_tooltip_text_color]" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['textual_terms_tooltip_text_color'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['textual_terms_tooltip_text_color'] ) : '#fff'; ?>">
 							</div>
 						</div>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">
+					</div>
+				   </div>
+				<div class="wbcom-settings-section-wrap">
+						<div class="wbcom-settings-section-options-heading">
 						<label>
 							<?php esc_html_e( 'AJAX loader', 'wb-ajax-filter' ); ?>
 						</label>
-					</th>
-					<td>
+					  </div>
+					  <div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_admin_customization_options[ajax_loader_style]" type="radio" value="default"<?php ( isset( $wb_ajax_filter_admin_customization_options['ajax_loader_style'] ) ) ? checked( $wb_ajax_filter_admin_customization_options['ajax_loader_style'], 'default' ) : ''; ?>>
 							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Use default loader', 'wb-ajax-filter' ); ?></span>
@@ -152,15 +157,18 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Upload custom loader', 'wb-ajax-filter' ); ?></span>
 							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Choose the style for AJAX loader icon', 'wb-ajax-filter' ); ?></span>
 						</label><br>
-					</td>
-				</tr>
-				<tr style="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['ajax_loader_style'] ) && 'custom' !== $wb_ajax_filter_admin_customization_options['ajax_loader_style'] ) ? 'display:none;' : ''; ?>">
-					<th scope="row">
+					</div>
+				</div>
+
+
+				<div class="wbcom-settings-section-wrap" style="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['ajax_loader_style'] ) && 'custom' !== $wb_ajax_filter_admin_customization_options['ajax_loader_style'] ) ? 'display:none;' : ''; ?>">
+				
+						<div class="wbcom-settings-section-options-heading">
 						<label>
 							<?php esc_html_e( 'Custom Ajax Loader', 'wb-ajax-filter' ); ?>
 						</label>
-					</th>
-					<td>
+					
+					 </div>
 						<div class="gif-container">
 							<img src="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['loader_url'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['loader_url'] ) : ''; ?>" alt="" style="max-width:100%;">
 						</div>
@@ -171,11 +179,12 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 							<button class="btn" id="wb_reset_upload_gif"><?php esc_html_e( 'Reset', 'wb-ajax-filter' ); ?></button>
 							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Loader gif', 'wb-ajax-filter' ); ?></span>
 						</label><br>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+					
+				
+				</div>
+		</div>
 		<?php do_action( 'wb_ajax_filter_after_admin_customization_settings', $wb_ajax_filter_admin_customization_options ); ?>
 		<?php submit_button(); ?>
 	</form>
+</div>
 </div>

@@ -73,7 +73,6 @@ class Wb_Ajax_Filter_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wb-ajax-filter-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'wp-color-picker' );
 		if ( 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
@@ -110,6 +109,21 @@ class Wb_Ajax_Filter_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-admin.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'wp-color-picker' );
 		wp_enqueue_media();
+	}
+
+	/**
+	 * Wbcom_hide_all_admin_notices_from_setting_page
+	 *
+	 * @return void
+	 */
+	public function wbcom_hide_all_admin_notices_from_setting_page() {
+		$wbcom_pages_array  = array( 'wbcomplugins', 'wbcom-plugins-page', 'wbcom-support-page', 'wc-ajax-filter-settings' );
+		$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
+
+		if ( in_array( $wbcom_setting_page, $wbcom_pages_array, true ) ) {
+			remove_all_actions( 'admin_notices' );
+			remove_all_actions( 'all_admin_notices' );
+		}
 	}
 
 	/** Register post type for presets */
@@ -158,14 +172,24 @@ class Wb_Ajax_Filter_Admin {
 		$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-ajax-filter-welcome';
 		?>
 	<div class="wrap">
-		<div class="wbcom-wrap">
-			<div class="bupr-header">
-				<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-				<hr class="wp-header-end">
-				<h1 class="wbcom-plugin-heading">
-					<?php esc_html_e( 'Wbcom Ajax Filter for Woocommerce Settings', 'wb-ajax-filter' ); ?>
-				</h1>
+		<div class="wbcom-bb-plugins-offer-wrapper">
+				<div id="wb_admin_logo">
+					<a href="https://wbcomdesigns.com/downloads/buddypress-community-bundle/" target="_blank">
+						<img src="<?php echo esc_url( WB_AJAX_FILTER_PLUGIN_URL ) . 'admin/wbcom/assets/imgs/wbcom-offer-notice.png'; ?>">
+					</a>
+				</div>
 			</div>
+		<div class="wbcom-wrap">
+
+				<div class="blpro-header">
+					<div class="wbcom_admin_header-wrapper">
+						<div id="wb_admin_plugin_name">
+							<?php esc_html_e( 'Wbcom Ajax Filter For WooCommerce', 'wc-quick-view' ); ?>
+							<span><?php printf( __( 'Version %s', 'wc-quick-view' ), WB_AJAX_FILTER_VERSION ); ?></span>
+						</div>
+						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+					</div>
+				</div>
 			<div class="wbcom-admin-settings-page">
 				<?php
 				settings_errors();
@@ -178,6 +202,7 @@ class Wb_Ajax_Filter_Admin {
 	</div>
 		<?php
 	}
+
 
 	/**
 	 * Add modal wrapper to the footer of admin section.
@@ -580,7 +605,7 @@ class Wb_Ajax_Filter_Admin {
 		echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
 		foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
 			$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
-			echo '<li><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=wc-ajax-filter-settings&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
+			echo '<li classs=' . esc_attr( $tab_key ) . '><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=wc-ajax-filter-settings&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
 		}
 		echo '</div></ul></div>';
 	}

@@ -2,17 +2,19 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
-.wb-ajax-filter-modal-container {
+ .wb-ajax-filter-modal-container {
     position: fixed;
     z-index: -199;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgb(183 178 178 / 85%); /* Black w/ opacity */
+    background-color: rgb(183 178 178 / 85%);
+    /* Black w/ opacity */
     opacity: 0;
     transition: all 0.3s;
 }
+
 .wb-ajax-filter-modal-body {
     background-color: #fbfbfb;
     width: 50%;
@@ -20,6 +22,7 @@
     top: 10%;
     position: absolute;
 }
+
 .wb-ajax-filter-close-modal {
     background: #ffffff;
     width: 30px;
@@ -33,6 +36,7 @@
     cursor: pointer;
     position: absolute;
 }
+
 .wb-ajax-filter-close {
     font-size: 26px;
     font-weight: bold;
@@ -40,11 +44,13 @@
     left: 0;
     line-height: 30px;
 }
+
 .wb-ajax-filter-close:hover,
 .wb-ajax-filter-close:focus {
-  color: #000;
-  text-decoration: none;  
+    color: #000;
+    text-decoration: none;
 }
+
 .wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
     padding: 25px;
     height: 600px;
@@ -53,7 +59,7 @@
 
 @media only screen and (min-width: 768px) and (max-width: 1480px) {
     .wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
-        height:440px;
+        height: 440px;
     }
 }
 
@@ -63,14 +69,14 @@
     padding: 25px;
     overflow: hidden;
     border: 1px solid #ddd;
-    margin-bottom:-1px !important;
+    margin-bottom: -1px !important;
 }
 
 .wb-ajax-filter-toggle-content-row label {
     display: block;
     font-size: 15px;
     font-weight: normal;
-    margin-bottom:1%;
+    margin-bottom: 1%;
 }
 
 span.view-all-presets {
@@ -83,9 +89,11 @@ span.view-all-presets {
     display: inline;
     font-weight: 500;
 }
+
 .wb-ajax-filter-radio__row {
     margin-bottom: 8px;
 }
+
 .wb-ajax-filter-toggle-content-row span.description {
     font-style: italic;
     font-size: 12px;
@@ -101,7 +109,7 @@ span.view-all-presets {
 }
 
 .wb-ajax-filter-list-table-section-content {
-    margin-bottom:2%;
+    margin-bottom: 2%;
 }
 
 .wb-ajax-filter-list-table-section-content h2 {
@@ -123,9 +131,11 @@ span.view-all-presets {
     box-shadow: 0 0 10px 0 rgb(167 217 236 / 40%);
 }
 
-.wb-ajax-filter-table th:not(:first-child), .wb-ajax-filter-table td:not(:first-child) {
+.wb-ajax-filter-table th:not(:first-child),
+.wb-ajax-filter-table td:not(:first-child) {
     text-align: center;
 }
+
 .wb-shortcode-copy {
     opacity: 0;
     transition: visibility 0s linear 0.33s, opacity 0.33s linear;
@@ -171,12 +181,14 @@ span.view-all-presets {
 
 .wb-ajax-filter-single-colorpicker label {
     font-size: 13px;
-    margin-bottom:10px;
+    margin-bottom: 10px;
     font-weight: 600;
 }
+
 .wb-ajax-filter-colorpicker .wp-picker-holder {
     position: absolute;
 }
+
 .wb-ajax-filter-colorpicker .wp-color-picker {
     width: 100px;
     direction: ltr;
@@ -190,6 +202,7 @@ span.view-all-presets {
     flex-wrap: wrap;
     margin: 0 -0.5%;
 }
+
 .terms-wrapper.ui-sortable .term-box {
     background: #f0f0f1;
     border-radius: 6px;
@@ -202,10 +215,12 @@ span.view-all-presets {
 .wb-ajax-filter-toggle-content-row.wb-price-range-toggle button.wb-ajax-filter-add-price-range.button-primary {
     margin-top: -40px;
 }
+
 .wb-ajax-filter-ranges-wrapper.ui-sortable {
     display: flex;
     flex-wrap: wrap;
 }
+
 .wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box {
     width: 17%;
     margin: 0.5%;
@@ -214,15 +229,19 @@ span.view-all-presets {
     padding: 1%;
     position: relative;
 }
-.wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box p{
+
+.wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box p {
     margin: 5px 0;
 }
+
 .wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box input[type=number] {
     width: 100%;
 }
+
 .wb-ajax-filter-ranges-wrapper a.wb-ajax-filter-range-remove {
     text-decoration: none;
 }
+
 .wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box span.dashicons.dashicons-no-alt {
     width: 20px;
     height: 20px;
@@ -235,13 +254,16 @@ span.view-all-presets {
     right: -5px;
     top: -10px;
 }
+
 .wb-ajax-filter-field-wrapper.wb-ajax-filter-select-buttons-field-wrapper .select2-container {
     width: 100% !important;
 }
+
 .wb-ajax-filter-field-wrapper.wb-ajax-filter-onoff-field-wrapper.unlimited {
     display: flex;
     justify-content: space-between;
 }
+
 .wb-ajax-filter-field-wrapper.wb-ajax-filter-onoff-field-wrapper.unlimited label {
     font-size: 13px;
     line-height: 1.1;
@@ -257,9 +279,11 @@ span.view-all-presets {
     border-bottom: 1px solid #ddd;
     padding-bottom: 18px;
 }
+
 .wb-ajax-filter-create-preset-section table {
     width: 100%;
 }
+
 .view-all-presets a.button-primary {
     display: flex;
     align-items: center;
@@ -268,7 +292,8 @@ span.view-all-presets {
     justify-content: center;
     padding: 5px 0;
 }
-a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter{
+
+a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter {
     padding: 5px 20px;
     text-transform: capitalize;
     display: block;
@@ -276,55 +301,67 @@ a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter{
     max-width: 150px;
     text-align: center;
 }
+
 .view-all-presets a.button-primary span.dashicons.dashicons-arrow-left-alt {
     margin-right: 3px;
     font-size: 16px;
     height: auto;
 }
+
 .wb-ajax-filter-text-field-wrapper input[type="text"] {
     height: 38px;
     width: 100%;
 }
+
 td.Preset-title {
     font-weight: 500;
     text-transform: capitalize;
     font-size: 14px;
 }
+
 .preset-filters-wrapper h4 {
     font-size: 15px;
-    margin-bottom:5px;
+    margin-bottom: 5px;
     text-transform: capitalize;
 }
+
 .preset-filters-wrapper span {
     display: inline-block;
     margin-bottom: 15px;
 }
+
 .preset-filters-wrapper {
     border-top: 1px solid #ddd;
     margin-top: 15px;
 }
+
 .wb-ajax-filter-add-preset-button a.page-title-action {
-    padding:10px 20px !important;
+    padding: 10px 20px !important;
     text-transform: capitalize;
     top: 0 !important;
     border-radius: 3px;
     transition: all 0.3s;
     height: auto;
 }
+
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td {
     vertical-align: middle;
     border-bottom: 1px solid #ddd;
 }
+
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table th {
     font-weight: 500;
     background: #f0f0f1;
 }
-.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table tbody tr{
+
+.wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table tbody tr {
     box-shadow: none;
 }
+
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table input.text-to-copy {
     width: 100%;
 }
+
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td[data-colname="Action"] a {
     cursor: pointer;
     margin: 0 2px;
@@ -337,9 +374,11 @@ td.Preset-title {
     border-radius: 100px;
     box-shadow: 0 0 12px #dedede;
 }
+
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td[data-colname="Action"] a:hover {
     box-shadow: 0 0 25px #9c9c9c;
 }
+
 .wb-ajax-filter-list-table-content .wb-ajax-filter-onoff-container input[type=checkbox] {
     width: 35px;
     height: 35px;
@@ -351,12 +390,14 @@ td.Preset-title {
     border: none;
     box-shadow: 0 0 12px #dedede;
 }
+
 .wb-ajax-filter-list-table-content .wb-ajax-filter-onoff-container input[type=checkbox]:checked::before {
     margin: -.1875rem 0 0 -.0rem;
     height: 2rem;
     width: 2rem;
     margin-top: 2px;
 }
+
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table span.dashicons {
     width: 18px;
     height: 18px;
@@ -369,6 +410,7 @@ table.wb-ajax-filter-table.wp-list-table.widefat.fixed.striped.table-view-list.a
     box-shadow: none !important;
     border-color: #ddd !important;
 }
+
 a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
     padding: 8px 30px;
     text-align: center;
@@ -376,25 +418,31 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
     font-size: 15px;
     line-height: normal;
 }
+
 .wb-ajax-filter-toggle-content-row.wb-all-toggle button#wb-ajax-filer-create-filter-save {
     padding: 10px 20px;
     line-height: normal;
 }
+
 .wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
     padding: 25px;
 }
+
 .wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content-row.wb-all-toggle {
     margin-bottom: 0;
 }
+
 .wb-ajax-filter-toggle-content-row.wb-all-toggle:last-child {
     border: none;
     padding: 20px 40px;
 }
+
 .terms-wrapper.ui-sortable .term-box h4 {
     margin-top: 0;
     font-size: 16px;
     margin-bottom: 15px;
 }
+
 .wb-ajax-filter-toggle-title {
     cursor: pointer;
     padding: 25px 15px;
@@ -403,27 +451,64 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
     box-shadow: 0 0 10px 0 rgb(206 206 206 / 40%);
     transition: all 0.5s;
 }
+
 .wb-ajax-filter-toggle-title:hover {
     background: #f5f5f5;
 }
+
 .wb-ajax-filter-toggle-title span.dashicons {
     margin: 0;
 }
+
 .wb-ajax-filter-toggle-content-row.wb-all-toggle {
     margin: 0;
     background: transparent;
     position: relative;
 }
+
 .wb-ajax-filter-toggle-content-row.wb-all-toggle .spinner {
     right: 140px;
     position: absolute;
     top: 28px;
 }
+
 .wb-ajax-filter-modal-body .wb-ajax-filter-toggle-content select {
     width: 100%;
     max-width: 100%;
     height: 35px;
 }
+
 .wb-ajax-filter-modal-body .select2-container {
     width: 100% !important;
+}
+
+
+div#setting-error-settings_updated {
+    position: absolute;
+    bottom: 153px;
+    left: 40%;
+    width: 50%;
+    z-index: 9;
+    border-radius: 8px;
+}
+
+.nav-tab-wrapper ul .wb-ajax-filter-presets a:before {
+    content: "\f536" !important;
+}
+
+.nav-tab-wrapper ul .wb-ajax-filter-general a:before {
+    content: "\f111" !important;
+}
+
+.nav-tab-wrapper ul .wb-ajax-filter-customization a:before {
+    content: "\f348" !important;
+}
+
+
+.nav-tab-wrapper ul .wb-ajax-filter-ajax-search-settings a:before {
+    content: "\f107" !important;
+}
+
+.nav-tab-wrapper ul .wb-ajax-filter-search a:before {
+    content: "\f179" !important;
 }
