@@ -184,8 +184,8 @@ class Wb_Ajax_Filter_Admin {
 				<div class="blpro-header">
 					<div class="wbcom_admin_header-wrapper">
 						<div id="wb_admin_plugin_name">
-							<?php esc_html_e( 'Wbcom Ajax Filter For WooCommerce', 'wc-quick-view' ); ?>
-							<span><?php printf( __( 'Version %s', 'wc-quick-view' ), WB_AJAX_FILTER_VERSION ); ?></span>
+							<?php esc_html_e( 'Wbcom Ajax Filter For WooCommerce', 'wb-ajax-filter' ); ?>
+							<span><?php printf( __( 'Version %s', 'wb-ajax-filter' ), WB_AJAX_FILTER_VERSION ); ?></span>
 						</div>
 						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 					</div>
