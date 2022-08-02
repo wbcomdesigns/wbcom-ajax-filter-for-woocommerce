@@ -12,7 +12,7 @@
  * @package           Wb_Ajax_Filter
  *
  * @wordpress-plugin
- * Plugin Name:       Wbcom Ajax Filter For WooCommerce
+ * Plugin Name:       Wbcom Designs - Ajax Filter For WooCommerce
  * Plugin URI:        wb-ajax-filter
  * Description:       Wbcom Ajax Filter For WooCommerce allows your users to find the product they are looking for as quickly as possible.
  * Version:           1.2.0
