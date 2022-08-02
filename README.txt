@@ -1,4 +1,4 @@
-=== Wbcom Ajax filter for WooCommerce ===
+=== Wbcom Designs - Ajax filter for WooCommerce ===
 Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/contact/
 Tags: Woocommerce plugin Addon
