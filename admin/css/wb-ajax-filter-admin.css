@@ -483,14 +483,14 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
 }
 
 
-div#setting-error-settings_updated {
+/* div#setting-error-settings_updated {
     position: absolute;
     bottom: 153px;
     left: 40%;
     width: 50%;
     z-index: 9;
     border-radius: 8px;
-}
+} */
 
 .nav-tab-wrapper ul .wb-ajax-filter-presets a:before {
     content: "\f536" !important;
@@ -511,4 +511,20 @@ div#setting-error-settings_updated {
 
 .nav-tab-wrapper ul .wb-ajax-filter-search a:before {
     content: "\f179" !important;
+}
+
+div#setting-error-settings_updated {
+    position: absolute;
+    right: 50px;
+    z-index: 99;
+    border-radius: 10px;
+    line-height: normal;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #10AB00;
+}
+
+button.notice-dismiss:before {
+    color: red !important;
 }
