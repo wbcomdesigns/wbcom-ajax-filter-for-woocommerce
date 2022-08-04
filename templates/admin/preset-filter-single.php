@@ -30,7 +30,7 @@ $params = str_replace( 'wb=list', 'wb=update&wb_index=' . $key, $params );
 		<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?<?php echo esc_attr( $params ); ?>">
 			<h3 class="title"><?php echo esc_html( $filter['filter_title'] ); ?></h3>
 		</a>
-		<div style="float:right;">
+		<div class="wb-ajax-filter-icon-button">
 			<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
 				<div class="wb-ajax-filter-onoff-container ">
 					<input type="checkbox" id="filters_<?php echo esc_attr( $filter_count ); ?>_enabled" class="on_off" name="filter_enabled" value="yes" <?php echo ( isset( $filter['filter_enabled'] ) && 'yes' === $filter['filter_enabled'] ) ? 'checked' : ''; ?> data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_attr( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>" data-filter_id="<?php echo esc_attr( $filter['filter_id'] ); ?>">

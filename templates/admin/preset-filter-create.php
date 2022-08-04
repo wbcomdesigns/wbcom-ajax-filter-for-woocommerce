@@ -22,46 +22,49 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 	}
 }
 ?>
-<div class="wb-ajax-filter-create-preset-section">
+<div class="wbcom-admin-option-wrap wb-ajax-filter-create-preset-section">
 	<div class="wb-ajax-filter-create-preset-section-content">
 		<span class="view-all-presets">
 			<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?page=wc-ajax-filter-settings&tab=wb-ajax-filter-presets"  class="button-primary" >
 				<span class="dashicons dashicons-arrow-left-alt"></span> <?php esc_html_e( ' Back to presets list', 'wb-ajax-filter' ); ?>
 			</a>
 		</span>
+		<div class="wbcom-settings-section-wrap">		
 		<?php if ( '' === $preset_title ) : ?>
-			<h2><?php esc_html_e( 'Add new filter preset', 'wb-ajax-filter' ); ?></h2>
+			<div class="wbcom-settings-section-options-heading">
+				<label><?php esc_html_e( 'Add new filter preset', 'wb-ajax-filter' ); ?></label>
+				<p class="description" style="<?php echo esc_attr( $hide ); ?>">
+					<?php esc_html_e( 'Enter a name to identify this filter preset.', 'wb-ajax-filter' ); ?>
+				</p>
+			</div>
 		<?php endif; ?>
-		<table>
-			<tbody>
-				<tr>
-					<td class="Preset-title"><?php esc_html_e( 'Preset name', 'wb-ajax-filter' ); ?></td>
-					<td><div class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper">
-							<input type="text" name="wb_ajax_filter_preset_title" value="<?php echo esc_attr( $preset_title ); ?>">
-							<?php if ( isset( $_REQUEST['preset'] ) ) { ?>
-							<a class="wb-ajax-filter-save-title-button button-primary wb-add-new-filter" href="#" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>">
-								<?php esc_html_e( 'Save', 'wb-ajax-filter' ); ?>
-							</a>
-							<?php } ?>
-						</div>
-						<span class="description" style="<?php echo esc_attr( $hide ); ?>">
-							<?php esc_html_e( 'Enter a name to identify this filter preset.', 'wb-ajax-filter' ); ?>
-						</span>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		
+		<div class="wbcom-settings-section-options">
+			<?php esc_html_e( 'Preset name', 'wb-ajax-filter' ); ?>
+			<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper">
+				<input type="text" name="wb_ajax_filter_preset_title" value="<?php echo esc_attr( $preset_title ); ?>">
+				<?php if ( isset( $_REQUEST['preset'] ) ) { ?>
+				<a class="wb-ajax-filter-save-title-button button-primary wb-add-new-filter" href="#" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>">
+					<?php esc_html_e( 'Save', 'wb-ajax-filter' ); ?>
+				</a>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+
 		<div class="preset-filters-wrapper">
-			<h4><?php esc_html_e( 'Filters of this preset', 'wb-ajax-filter' ); ?></h4>
+			<div class="wbcom-admin-title-section">
+				<h3><?php esc_html_e( 'Filters of this preset', 'wb-ajax-filter' ); ?></h3>
+			</div>
 			<div class="preset-filters ui-sortable">
 				<div class="wb-ajax-filters-single-container">
 						<?php
 						if ( empty( $filters ) ) {
 							?>
-							<span>
+							<div class="wbcom-preset-filters-message">
 								<strong><?php esc_html_e( 'You don\'t have any filter yet.', 'wb-ajax-filter' ); ?></strong>
 								<?php esc_html_e( 'But don\'t worry, here you can create your first one!', 'wb-ajax-filter' ); ?>
-							</span>
+							</div>
 							<?php
 						} else {
 							$filter_count = 0;

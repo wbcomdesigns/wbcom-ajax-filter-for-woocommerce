@@ -43,12 +43,12 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 					   <div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_admin_general_options[instant_filters]" type="radio" value="yes" <?php ( isset( $wb_ajax_filter_general_options['instant_filters'] ) ) ? checked( $wb_ajax_filter_general_options['instant_filters'], 'yes' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Instant result', 'wb-ajax-filter' ); ?></span>
+							<span class="description"><?php esc_html_e( 'Instant result', 'wb-ajax-filter' ); ?></span>
 						</label>  <br>
 						
 						<label>
 							<input name="wb_ajax_filter_admin_general_options[instant_filters]" type="radio" value="no" <?php ( isset( $wb_ajax_filter_general_options['instant_filters'] ) ) ? checked( $wb_ajax_filter_general_options['instant_filters'], 'no' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'By clicking "Apply filters" button', 'wb-ajax-filter' ); ?></span>
+							<span class="description"><?php esc_html_e( 'By clicking "Apply filters" button', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					  </div>
 				</div>
@@ -64,11 +64,11 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 					<div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_admin_general_options[ajax_filters]" type="radio" value="yes" <?php ( isset( $wb_ajax_filter_general_options['ajax_filters'] ) ) ? checked( $wb_ajax_filter_general_options['ajax_filters'], 'yes' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'In same page using AJAX', 'wb-ajax-filter' ); ?></span>
+							<span class="description"><?php esc_html_e( 'In same page using AJAX', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 						<label>
 							<input name="wb_ajax_filter_admin_general_options[ajax_filters]" type="radio" value="no" <?php ( isset( $wb_ajax_filter_general_options['ajax_filters'] ) ) ? checked( $wb_ajax_filter_general_options['ajax_filters'], 'no' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Reload on a new page', 'wb-ajax-filter' ); ?></span>
+							<span class="description"><?php esc_html_e( 'Reload on a new page', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					  </div>
 					</div>
@@ -128,15 +128,15 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 					  <div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_admin_general_options[reset_button_position]" type="radio" value="before_filters" <?php ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) ) ? checked( $wb_ajax_filter_general_options['reset_button_position'], 'before_filters' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Before filters', 'wb-ajax-filter' ); ?></span>
+							<span class="description"><?php esc_html_e( 'Before filters', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 						<label>
 							<input name="wb_ajax_filter_admin_general_options[reset_button_position]" type="radio" value="after_filters" <?php ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) ) ? checked( $wb_ajax_filter_general_options['reset_button_position'], 'after_filters' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'After filters', 'wb-ajax-filter' ); ?></span>
+							<span class="description"><?php esc_html_e( 'After filters', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 						<label>
 							<input name="wb_ajax_filter_admin_general_options[reset_button_position]" type="radio" value="before_products" <?php ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) ) ? checked( $wb_ajax_filter_general_options['reset_button_position'], 'before_products' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Above products list', 'wb-ajax-filter' ); ?></span>
+							<span class="description"><?php esc_html_e( 'Above products list', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					</div>
 				</div>
@@ -146,7 +146,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 						<label>
 							<?php esc_html_e( 'Show "Clear" above each filter', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enable to show the "Clear" link above each filter of the preset', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enable to show the "Clear" link above each filter of the preset', 'wb-ajax-filter' ); ?></p>
 
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -160,7 +160,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 						<label>
 							<?php esc_html_e( 'Show active filters as labels', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enable to show the active filters as labels. Labels show the current filters selection, and can be used to remove any active filter.', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enable to show the active filters as labels. Labels show the current filters selection, and can be used to remove any active filter.', 'wb-ajax-filter' ); ?></p>
 
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -174,14 +174,13 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 						<label>
 							<?php esc_html_e( 'Scroll top after filtering', 'wb-ajax-filter' ); ?>
 						</label>
-						<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enable this option if you want to scroll to top after filtering.', 'wb-ajax-filter' ); ?></span>
+						<p class="description"><?php esc_html_e( 'Enable this option if you want to scroll to top after filtering.', 'wb-ajax-filter' ); ?></p>
 
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_admin_general_options[scroll_top]" type="checkbox" value="yes"<?php ( isset( $wb_ajax_filter_general_options['scroll_top'] ) ) ? checked( $wb_ajax_filter_general_options['scroll_top'], 'yes' ) : ''; ?>>
-						</label><br>
-				
+						</label><br>				
 					   </div>
 					</div>
 	

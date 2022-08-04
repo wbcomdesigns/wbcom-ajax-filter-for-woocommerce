@@ -11,8 +11,11 @@
 
 ?>
 <div class="wb-ajax-filter-list-table-section">
-	<div class="wb-ajax-filter-list-table-section-content">
-		<h2 class="wp-heading-inline"><?php esc_html_e( 'Filter Presets', 'wb-ajax-filter' ); ?></h2>
+	<div class="wbcom-admin-title-section">
+		<h3><?php esc_html_e( 'Filter Presets', 'wb-ajax-filter' ); ?></h3>
+	</div>
+	<div class="wbcom-admin-option-wrap">
+	<div class="wb-ajax-filter-list-table-section-content">		
 		<div class="wb-ajax-filter-add-preset-button">
 			<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=create&<?php echo ( isset( $_SERVER['QUERY_STRING'] ) ) ? esc_attr( sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) ) : ''; ?>" class="page-title-action">
 				<span class="dashicons dashicons-plus-alt2"></span><?php esc_html_e( 'Add preset', 'wb-ajax-filter' ); ?>
@@ -58,4 +61,5 @@
 			</tbody>
 		</table>
 	</div>
+</div>
 </div>

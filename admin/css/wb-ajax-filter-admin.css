@@ -2,6 +2,16 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+form#filter-preset-create{
+    position: relative;
+    box-shadow: none;
+    background: #F6F7FE;
+    font-size: 15px;
+    line-height: 2.1em;
+    overflow: hidden;
+    border-radius: 12px;
+    width: auto;
+}
  .wb-ajax-filter-modal-container {
     position: fixed;
     z-index: -199;
@@ -28,6 +38,7 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    z-index: 99;
     text-align: center;
     line-height: 20px;
     vertical-align: middle;
@@ -65,11 +76,13 @@
 
 
 .wb-ajax-filter-toggle-content-row {
-    margin: 0;
     padding: 25px;
     overflow: hidden;
-    border: 1px solid #ddd;
-    margin-bottom: -1px !important;
+    margin-bottom: 20px !important;
+    background: #fff !important;
+    border: 1px solid rgba(200, 197, 218, 0.30);
+    box-shadow: 5px 5px 20px rgb(32 53 85 / 10%);
+    border-radius: 10px;
 }
 
 .wb-ajax-filter-toggle-content-row label {
@@ -163,7 +176,6 @@ span.view-all-presets {
 
 .wb-ajax-filter-option-desc {
     display: block;
-    font-style: italic;
     font-size: 12px;
 }
 
@@ -214,8 +226,10 @@ span.view-all-presets {
 /*Edit Filter UI*/
 .wb-ajax-filter-toggle-content-row.wb-price-range-toggle button.wb-ajax-filter-add-price-range.button-primary {
     margin-top: -40px;
+    background: #2a32ef;
+    border: none;
+    border-radius: 5px;
 }
-
 .wb-ajax-filter-ranges-wrapper.ui-sortable {
     display: flex;
     flex-wrap: wrap;
@@ -284,24 +298,27 @@ span.view-all-presets {
     width: 100%;
 }
 
-.view-all-presets a.button-primary {
+.view-all-presets a.button-primary,
+a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter,
+a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter {
     display: flex;
+    background: #2a32ef;
     align-items: center;
     width: 180px;
     text-transform: capitalize;
     justify-content: center;
     padding: 5px 0;
+    line-height: 40px;
+    border-radius: 10px;
+    border: none !important;
+    transition: all 0.3s;
 }
 
-a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter {
-    padding: 5px 20px;
-    text-transform: capitalize;
-    display: block;
-    width: 100%;
-    max-width: 150px;
-    text-align: center;
+.view-all-presets a.button-primary:hover,
+a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter:hover,
+a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter:hover{
+    background:#1a1b3d;
 }
-
 .view-all-presets a.button-primary span.dashicons.dashicons-arrow-left-alt {
     margin-right: 3px;
     font-size: 16px;
@@ -311,6 +328,14 @@ a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter {
 .wb-ajax-filter-text-field-wrapper input[type="text"] {
     height: 38px;
     width: 100%;
+    background-color: #F4F5F7;
+    border-radius: 8px;
+    border-color: #e2e2e2;
+}
+#filter-preset-create .select2-container .select2-selection--multiple{
+    background-color: #F4F5F7;
+    border-radius: 8px;
+    border-color: #e2e2e2;
 }
 
 td.Preset-title {
@@ -325,33 +350,51 @@ td.Preset-title {
     text-transform: capitalize;
 }
 
-.preset-filters-wrapper span {
-    display: inline-block;
-    margin-bottom: 15px;
+.wbcom-preset-filters-message {
+    color: red;
+    margin-bottom: 20px;
+    margin-top: -12px;
 }
 
 .preset-filters-wrapper {
-    border-top: 1px solid #ddd;
     margin-top: 15px;
 }
 
-.wb-ajax-filter-add-preset-button a.page-title-action {
-    padding: 10px 20px !important;
+.wb-ajax-filter-add-preset-button a.page-title-action,
+.wb-ajax-filter-toggle-content-row.wb-all-toggle button#wb-ajax-filer-create-filter-save {
+    padding: 12px 25px !important;
     text-transform: capitalize;
     top: 0 !important;
-    border-radius: 3px;
+    margin: 0;
+    border-radius: 8px !important;
+    border: none !important;
     transition: all 0.3s;
-    height: auto;
+    height: auto !important;
+    background: #2a32ef;
+}
+
+.wb-ajax-filter-add-preset-button a.page-title-action:hover,
+.wb-ajax-filter-toggle-content-row.wb-all-toggle button#wb-ajax-filer-create-filter-save:hover{
+    background:#111127;
+    color: #fff;
+}
+
+.wb-ajax-filter-toggle-content-row.wb-all-toggle button#wb-ajax-filer-create-filter-save {
+    line-height: 22px;
+    font-weight: 500;
 }
 
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td {
     vertical-align: middle;
-    border-bottom: 1px solid #ddd;
+    border: none;
+    background: #fff;
+    padding: 10px 20px;
 }
 
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table th {
     font-weight: 500;
-    background: #f0f0f1;
+    background: transparent;
+    padding: 12px 20px;
 }
 
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table tbody tr {
@@ -360,23 +403,25 @@ td.Preset-title {
 
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table input.text-to-copy {
     width: 100%;
+    height: 35px;
+    border-color: #ccc;
+    border-radius: 8px;
 }
 
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td[data-colname="Action"] a {
     cursor: pointer;
     margin: 0 2px;
-    background: #fff;
+    background: #2a32ef;
     width: 35px;
     height: 35px;
     display: inline-block;
     text-align: center;
     transition: all 0.3s;
     border-radius: 100px;
-    box-shadow: 0 0 12px #dedede;
 }
 
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td[data-colname="Action"] a:hover {
-    box-shadow: 0 0 25px #9c9c9c;
+     background:#252441;
 }
 
 .wb-ajax-filter-list-table-content .wb-ajax-filter-onoff-container input[type=checkbox] {
@@ -386,9 +431,9 @@ td.Preset-title {
     position: relative;
     margin-left: 5px;
     border-radius: 100px;
-    background: #fff;
+    background: #e5e6ee;
     border: none;
-    box-shadow: 0 0 12px #dedede;
+    box-shadow: none;
 }
 
 .wb-ajax-filter-list-table-content .wb-ajax-filter-onoff-container input[type=checkbox]:checked::before {
@@ -402,28 +447,26 @@ td.Preset-title {
     width: 18px;
     height: 18px;
     font-size: 18px;
+    color: #fff;
     margin: 8px 0;
+    font-weight: normal;
 }
 
 table.wb-ajax-filter-table.wp-list-table.widefat.fixed.striped.table-view-list.affiliates {
     border-bottom: 0;
-    box-shadow: none !important;
-    border-color: #ddd !important;
+    border: 1px solid rgba(200, 197, 218, 0.30);
+    overflow: hidden;
+    box-shadow: 5px 5px 20px rgba(32, 53, 85, 0.10);
+    border-radius: 10px;
 }
 
 a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
-    padding: 8px 30px;
     text-align: center;
-    margin-top: 5px;
+    margin-top:10px;
     font-size: 15px;
-    line-height: normal;
+    width: 100px;
+    line-height: 35px;
 }
-
-.wb-ajax-filter-toggle-content-row.wb-all-toggle button#wb-ajax-filer-create-filter-save {
-    padding: 10px 20px;
-    line-height: normal;
-}
-
 .wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
     padding: 25px;
 }
@@ -435,6 +478,10 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
 .wb-ajax-filter-toggle-content-row.wb-all-toggle:last-child {
     border: none;
     padding: 20px 40px;
+    box-shadow: none;
+    margin: 0 !important;
+    background: #e1e6f4 !important;
+    border-radius: 0 !important;
 }
 
 .terms-wrapper.ui-sortable .term-box h4 {
@@ -445,17 +492,27 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
 
 .wb-ajax-filter-toggle-title {
     cursor: pointer;
-    padding: 25px 15px;
-    border-radius: 4px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 0 10px 0 rgb(206 206 206 / 40%);
-    transition: all 0.5s;
+    padding: 25px 20px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid rgba(200, 197, 218, 0.30);
+    box-shadow: 5px 5px 20px rgba(32, 53, 85, 0.10);
+    margin-bottom:10px;
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
 .wb-ajax-filter-toggle-title:hover {
-    background: #f5f5f5;
+    background: #fcfdff;
 }
 
+.wb-ajax-filter-icon-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 20px;
+}
 .wb-ajax-filter-toggle-title span.dashicons {
     margin: 0;
 }
@@ -475,7 +532,10 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
 .wb-ajax-filter-modal-body .wb-ajax-filter-toggle-content select {
     width: 100%;
     max-width: 100%;
-    height: 35px;
+    height: 38px;
+    background-color: #F4F5F7;
+    border-radius: 8px;
+    border-color: #e2e2e2;
 }
 
 .wb-ajax-filter-modal-body .select2-container {
@@ -527,4 +587,29 @@ div#setting-error-settings_updated {
 
 button.notice-dismiss:before {
     color: red !important;
+}
+.wbcom-filter-for-search-item p.description {
+    margin: -3px 0 15px;
+    padding: 0;
+}
+.wbcom-filter-for-search-item label {
+    font-weight: 600;
+}
+.wbcom-multiple-wb-ajax-filter .wbcom-settings-section-options label {
+    display: flex;
+    margin-top: 10px;
+}
+.wbcom-multiple-wb-ajax-filter .wbcom-settings-section-options input[type=radio]{
+    margin-right:10px;
+}
+.wbcom-ajax-check-custom-option span.select2-selection {
+    height: 40px;
+    border-radius: 8px;
+    background: #e4e4e499;
+    max-width: 100%;
+    width: 100%;
+    border-color: #d6d5d5;
+}
+.wbcom-ajax-check-custom-option .select2-container{
+    width: 100% !important;
 }

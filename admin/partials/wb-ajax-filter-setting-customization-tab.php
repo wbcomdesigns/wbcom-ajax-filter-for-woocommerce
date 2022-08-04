@@ -34,7 +34,7 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 						<label>
 							<?php esc_html_e( 'Filters area title', 'wb-ajax-filter' ); ?>
 						</label> 
-						<p class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Enter a title to identify the “AJAX filter Preset” section', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enter a title to identify the “AJAX filter Preset” section', 'wb-ajax-filter' ); ?></p>
 
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -146,6 +146,7 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 						<label>
 							<?php esc_html_e( 'AJAX loader', 'wb-ajax-filter' ); ?>
 						</label>
+						<p class="description"><?php esc_html_e( 'Choose the style for AJAX loader icon', 'wb-ajax-filter' ); ?></p>
 					  </div>
 					  <div class="wbcom-settings-section-options">
 						<label>
@@ -154,8 +155,7 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 						</label><br>
 						<label>
 							<input name="wb_ajax_filter_admin_customization_options[ajax_loader_style]" type="radio" value="custom"<?php ( isset( $wb_ajax_filter_admin_customization_options['ajax_loader_style'] ) ) ? checked( $wb_ajax_filter_admin_customization_options['ajax_loader_style'], 'custom' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Upload custom loader', 'wb-ajax-filter' ); ?></span>
-							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Choose the style for AJAX loader icon', 'wb-ajax-filter' ); ?></span>
+							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Upload custom loader', 'wb-ajax-filter' ); ?></span>			
 						</label><br>
 					</div>
 				</div>
