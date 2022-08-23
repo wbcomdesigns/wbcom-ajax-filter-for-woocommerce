@@ -2,7 +2,7 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
-form#filter-preset-create{
+form#filter-preset-create {
     position: relative;
     box-shadow: none;
     background: #F6F7FE;
@@ -12,7 +12,8 @@ form#filter-preset-create{
     border-radius: 12px;
     width: auto;
 }
- .wb-ajax-filter-modal-container {
+
+.wb-ajax-filter-modal-container {
     position: fixed;
     z-index: -199;
     left: 0;
@@ -230,6 +231,7 @@ span.view-all-presets {
     border: none;
     border-radius: 5px;
 }
+
 .wb-ajax-filter-ranges-wrapper.ui-sortable {
     display: flex;
     flex-wrap: wrap;
@@ -316,9 +318,10 @@ a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter {
 
 .view-all-presets a.button-primary:hover,
 a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter:hover,
-a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter:hover{
-    background:#1a1b3d;
+a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter:hover {
+    background: #1a1b3d;
 }
+
 .view-all-presets a.button-primary span.dashicons.dashicons-arrow-left-alt {
     margin-right: 3px;
     font-size: 16px;
@@ -332,7 +335,8 @@ a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter:hover{
     border-radius: 8px;
     border-color: #e2e2e2;
 }
-#filter-preset-create .select2-container .select2-selection--multiple{
+
+#filter-preset-create .select2-container .select2-selection--multiple {
     background-color: #F4F5F7;
     border-radius: 8px;
     border-color: #e2e2e2;
@@ -374,8 +378,8 @@ td.Preset-title {
 }
 
 .wb-ajax-filter-add-preset-button a.page-title-action:hover,
-.wb-ajax-filter-toggle-content-row.wb-all-toggle button#wb-ajax-filer-create-filter-save:hover{
-    background:#111127;
+.wb-ajax-filter-toggle-content-row.wb-all-toggle button#wb-ajax-filer-create-filter-save:hover {
+    background: #111127;
     color: #fff;
 }
 
@@ -421,7 +425,7 @@ td.Preset-title {
 }
 
 .wb-ajax-filter-list-table-content table.wb-ajax-filter-table.wp-list-table td[data-colname="Action"] a:hover {
-     background:#252441;
+    background: #252441;
 }
 
 .wb-ajax-filter-list-table-content .wb-ajax-filter-onoff-container input[type=checkbox] {
@@ -462,11 +466,12 @@ table.wb-ajax-filter-table.wp-list-table.widefat.fixed.striped.table-view-list.a
 
 a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
     text-align: center;
-    margin-top:10px;
+    margin-top: 10px;
     font-size: 15px;
     width: 100px;
     line-height: 35px;
 }
+
 .wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
     padding: 25px;
 }
@@ -497,7 +502,7 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
     border-radius: 12px;
     border: 1px solid rgba(200, 197, 218, 0.30);
     box-shadow: 5px 5px 20px rgba(32, 53, 85, 0.10);
-    margin-bottom:10px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     position: relative;
@@ -513,6 +518,7 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
     align-items: center;
     right: 20px;
 }
+
 .wb-ajax-filter-toggle-title span.dashicons {
     margin: 0;
 }
@@ -588,20 +594,25 @@ div#setting-error-settings_updated {
 button.notice-dismiss:before {
     color: red !important;
 }
+
 .wbcom-filter-for-search-item p.description {
     margin: -3px 0 15px;
     padding: 0;
 }
+
 .wbcom-filter-for-search-item label {
     font-weight: 600;
 }
+
 .wbcom-multiple-wb-ajax-filter .wbcom-settings-section-options label {
     display: flex;
     margin-top: 10px;
 }
-.wbcom-multiple-wb-ajax-filter .wbcom-settings-section-options input[type=radio]{
-    margin-right:10px;
+
+.wbcom-multiple-wb-ajax-filter .wbcom-settings-section-options input[type=radio] {
+    margin-right: 10px;
 }
+
 .wbcom-ajax-check-custom-option span.select2-selection {
     height: 40px;
     border-radius: 8px;
@@ -610,6 +621,12 @@ button.notice-dismiss:before {
     width: 100%;
     border-color: #d6d5d5;
 }
-.wbcom-ajax-check-custom-option .select2-container{
+
+.wbcom-ajax-check-custom-option .select2-container {
     width: 100% !important;
+}
+
+.wbcom-wrap .notice.notice-error.is-dismissible.learndash-license-is-dismissible,
+#wpwrap .notice.notice-error {
+    display: none !important;
 }
