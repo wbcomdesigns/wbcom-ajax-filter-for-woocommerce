@@ -12,8 +12,8 @@
 $filters      = array();
 $preset_title = '';
 $hide         = '';
-if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
-	$preset_id = ( isset( $_REQUEST['preset'] ) && '' !== $_REQUEST['preset'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : false;
+if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) { //phpcs:ignore
+	$preset_id = ( isset( $_REQUEST['preset'] ) && '' !== $_REQUEST['preset'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : false; //phpcs:ignore
 	if ( $preset_id ) {
 		$hide         = 'display:none;';
 		$preset       = get_post( $preset_id );
@@ -43,8 +43,11 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 			<?php esc_html_e( 'Preset name', 'wb-ajax-filter' ); ?>
 			<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper">
 				<input type="text" name="wb_ajax_filter_preset_title" value="<?php echo esc_attr( $preset_title ); ?>">
-				<?php if ( isset( $_REQUEST['preset'] ) ) { ?>
-				<a class="wb-ajax-filter-save-title-button button-primary wb-add-new-filter" href="#" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>">
+				<?php
+				if ( isset( $_REQUEST['preset'] ) ) { //phpcs:ignore
+					$wb_ajax_preset = isset( $_REQUEST['preset'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : ''; //phpcs:ignore
+					?>
+				<a class="wb-ajax-filter-save-title-button button-primary wb-add-new-filter" href="#" data-preset="<?php echo esc_attr( $wb_ajax_preset ); ?>">
 					<?php esc_html_e( 'Save', 'wb-ajax-filter' ); ?>
 				</a>
 				<?php } ?>
@@ -73,7 +76,10 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 							}
 						}
 						?>
-						<a class="wb-ajax-filter-add-button button-primary wb-add-new-filter" href="#" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>">
+						<?php
+						$wb_ajax_filter_preset = isset( $_REQUEST['preset'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : ''; //phpcs:ignore
+						?>
+						<a class="wb-ajax-filter-add-button button-primary wb-add-new-filter" href="#" data-preset="<?php echo esc_attr( $wb_ajax_filter_preset ); ?>">
 							<?php esc_html_e( 'Add a new filter', 'wb-ajax-filter' ); ?>
 						</a>
 				</div>

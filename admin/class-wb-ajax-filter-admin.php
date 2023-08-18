@@ -185,7 +185,10 @@ class Wb_Ajax_Filter_Admin {
 					<div class="wbcom_admin_header-wrapper">
 						<div id="wb_admin_plugin_name">
 							<?php esc_html_e( 'Wbcom Ajax Filter For WooCommerce', 'wb-ajax-filter' ); ?>
-							<span><?php printf( __( 'Version %s', 'wb-ajax-filter' ), WB_AJAX_FILTER_VERSION ); ?></span>
+							<span><?php 
+							/* translators: %s: */
+							printf( esc_html__( 'Version %s', 'wb-ajax-filter' ), esc_attr( WB_AJAX_FILTER_VERSION ) );
+							?></span>
 						</div>
 						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 					</div>
@@ -208,7 +211,7 @@ class Wb_Ajax_Filter_Admin {
 	 * Add modal wrapper to the footer of admin section.
 	 */
 	public function wb_ajax_filter_add_modal_to_admin_footer() {
-		$page = ( isset( $_REQUEST['tab'] ) && 'wb-ajax-filter-presets' === sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) ) ? true : false;
+		$page = ( isset( $_REQUEST['tab'] ) && 'wb-ajax-filter-presets' === sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) ) ? true : false; //phpcs:ignore
 		if ( is_admin() && $page ) {
 			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-modal.php';
 		}

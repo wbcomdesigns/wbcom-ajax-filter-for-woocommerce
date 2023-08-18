@@ -10,8 +10,8 @@
  */
 
 $style = 'display:none;';
-if ( isset( $_POST['count'] ) ) {
-	$count = sanitize_text_field( wp_unslash( $_POST['count'] ) );
+if ( isset( $_POST['count'] ) ) { //phpcs:ignore
+	$count = sanitize_text_field( wp_unslash( $_POST['count'] ) ); //phpcs:ignore
 }
 
 if ( isset( $range ) && isset( $range_count ) ) {

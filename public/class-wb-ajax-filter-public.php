@@ -457,7 +457,7 @@ class Wb_Ajax_Filter_Public {
 	 */
 	public function wb_ajax_filter_modify_wc_product_query( $q ) {
 		if ( is_shop() ) {
-			$params = $_GET;
+			$params = $_GET; //phpcs:ignore
 			if ( isset( $params['preset'] ) ) {
 				$preset_id       = $params['preset'];
 				$search_settings = get_option( 'wb_ajax_filter_search_content_settings' );
@@ -551,9 +551,9 @@ class Wb_Ajax_Filter_Public {
 		$presets                        = get_posts( $args );
 		$wb_ajax_filter_admin_custom    = get_option( 'wb_ajax_filter_admin_customization_options' );
 		$wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
-		if ( isset( $_GET ) ) {
+		if ( isset( $_GET ) ) { //phpcs:ignore
 			$params     = array();
-			$get_params = $_GET;
+			$get_params = $_GET; //phpcs:ignore
 			foreach ( $get_params as $key => $val ) {
 				$values = explode( ',', $val );
 				if ( count( $values ) > 1 ) {

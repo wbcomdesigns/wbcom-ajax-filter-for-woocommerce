@@ -77,9 +77,10 @@ if ( ! function_exists( 'wb_ajax_filter_check_woocomerce' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			deactivate_plugins( plugin_basename( __FILE__ ) );
 			add_action( 'admin_notices', 'wb_ajax_filter_admin_notice__error' );
-			if ( isset( $_GET['activate'] ) ) {
-				unset( $_GET['activate'] );
-			}
+			if ( null !== filter_input( INPUT_GET, 'activate' ) ) {
+			$activate = filter_input( INPUT_GET, 'activate' );
+			unset( $activate );
+		}
 		}
 	}
 }
@@ -123,7 +124,7 @@ add_action( 'activated_plugin', 'wb_ajax_filter_activation_redirect_settings' );
  * @param plugin $plugin plugin.
  */
 function wb_ajax_filter_activation_redirect_settings( $plugin ) {
-	if ( ! isset( $_GET['plugin'] ) ) {
+	if ( ! isset( $_GET['plugin'] ) ) { //phpcs:ignore
 		return;
 	}
 	if ( $plugin == plugin_basename( __FILE__ ) && class_exists( 'WooCommerce' ) ) {

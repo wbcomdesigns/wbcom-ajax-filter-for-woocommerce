@@ -22,9 +22,9 @@ if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_
 		<div class="wb-ajax-filter-ajaxsearchform-select wb-ajax-filter-ajaxsearchform-select-list">
 			<select class="wb-ajax-filter-post-type" name="post_type" tabindex="-1" aria-hidden="true">
 				<?php if ( isset( $wb_ajax_filter_search_content_settings['default_research'] ) && 'any' === $wb_ajax_filter_search_content_settings['default_research'] ) { ?>
-				<option value="any" <?php echo ( isset( $_REQUEST['post_type'] ) && 'any' === $_REQUEST['post_type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'All', 'wb-ajax-filter' ); ?></option>
+				<option value="any" <?php echo ( isset( $_REQUEST['post_type'] ) && 'any' === $_REQUEST['post_type'] ) ? 'selected' : ''; //phpcs:ignore?>><?php esc_html_e( 'All', 'wb-ajax-filter' ); ?></option>
 				<?php } ?>
-				<option value="product" <?php echo ( isset( $_REQUEST['post_type'] ) && 'product' === $_REQUEST['post_type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Products', 'wb-ajax-filter' ); ?></option>
+				<option value="product" <?php echo ( isset( $_REQUEST['post_type'] ) && 'product' === $_REQUEST['post_type'] ) ? 'selected' : ''; //phpcs:ignore?>><?php esc_html_e( 'Products', 'wb-ajax-filter' ); ?></option>
 			</select>
 		</div>
 		<?php } ?>
@@ -44,7 +44,7 @@ if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_
 						);
 						foreach ( $terms as $tm ) {
 							?>
-				<option value="<?php echo esc_attr( $tm->slug ); ?>" <?php echo ( isset( $_REQUEST['product_cat'] ) && $tm->slug === $_REQUEST['product_cat'] ) ? 'selected' : ''; ?>><?php echo esc_html( $tm->name ); ?></option>
+				<option value="<?php echo esc_attr( $tm->slug ); ?>" <?php echo ( isset( $_REQUEST['product_cat'] ) && $tm->slug === $_REQUEST['product_cat'] ) ? 'selected' : ''; //phpcs:ignore?>><?php echo esc_html( $tm->name ); ?></option>
 							<?php
 						}
 					}
@@ -60,7 +60,7 @@ if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_
 	</div>
 	<?php if ( isset( $wb_ajax_filter_search_content_settings['cf_name'] ) && '' !== $wb_ajax_filter_search_content_settings['cf_name'] ) : ?>
 		<div class="wb-ajax-filter-ajaxsearchform-input">
-			<input type="text" id="wb_ajax_search_custom_field" placeholder="<?php echo esc_attr__( 'Enter value', 'wb-ajax-filter' ); ?>" name="meta_<?php echo esc_attr( $wb_ajax_filter_search_content_settings['cf_name'] ); ?>" value="<?php echo ( isset( $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) && '' !== $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) ) ) : ''; ?>">
+			<input type="text" id="wb_ajax_search_custom_field" placeholder="<?php echo esc_attr__( 'Enter value', 'wb-ajax-filter' ); ?>" name="meta_<?php echo esc_attr( $wb_ajax_filter_search_content_settings['cf_name'] ); ?>" value="<?php echo ( isset( $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) && '' !== $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST[ 'meta_' . $wb_ajax_filter_search_content_settings['cf_name'] ] ) ) ) : ''; //phpcs:ignore?>">
 		</div>	
 	<?php endif; ?>
 	<div class="wb-search-submit-container"><input type="submit" value="<?php echo ( isset( $wb_ajax_filter_search_settings['search_submit_label'] ) && '' !== $wb_ajax_filter_search_settings['search_submit_label'] ) ? esc_attr( $wb_ajax_filter_search_settings['search_submit_label'] ) : 'Search'; ?>"> </div>

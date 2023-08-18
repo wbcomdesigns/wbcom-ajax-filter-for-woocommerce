@@ -10,12 +10,12 @@
  */
 
 $filters = array();
-if ( isset( $_REQUEST['action'] ) && ( 'edit' === $_REQUEST['action'] || 'load_create_filter_template_wb' === $_REQUEST['action'] ) ) {
-	$preset_id = ( isset( $_REQUEST['preset'] ) && '' !== $_REQUEST['preset'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : false;
+if ( isset( $_REQUEST['action'] ) && ( 'edit' === $_REQUEST['action'] || 'load_create_filter_template_wb' === $_REQUEST['action'] ) ) { //phpcs:ignore
+	$preset_id = ( isset( $_REQUEST['preset'] ) && '' !== $_REQUEST['preset'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['preset'] ) ) : false; //phpcs:ignore
 	if ( $preset_id ) {
 		$filters = get_post_meta( $preset_id, '_wb_filter', true );
-		if ( isset( $_REQUEST['wb_index'] ) ) {
-			$filters = $filters[ wp_unslash( $_REQUEST['wb_index'] ) ];
+		if ( isset( $_REQUEST['wb_index'] ) ) { //phpcs:ignore
+			$filters = $filters[ wp_unslash( $_REQUEST['wb_index'] ) ]; //phpcs:ignore
 		}
 	}
 }

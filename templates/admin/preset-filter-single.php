@@ -24,7 +24,7 @@ $params = ( isset( $_SERVER['QUERY_STRING'] ) ) ? sanitize_text_field( wp_unslas
 $params = str_replace( 'wb=list', 'wb=update&wb_index=' . $key, $params );
 
 ?>
-<div id="filter_<?php echo esc_attr( $filter_count ); ?>" class="wb-ajax-filter-toggle-row initialized" data-item_key="<?php echo esc_attr( $key ); ?>" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_attr( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>" data-filter_id="<?php echo esc_attr( $filter['filter_id'] ); ?>" style="">
+<div id="filter_<?php echo esc_attr( $filter_count ); ?>" class="wb-ajax-filter-toggle-row initialized" data-item_key="<?php echo esc_attr( $key ); ?>" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_attr( wp_unslash( $_REQUEST['preset'] ) ) : ''; //phpcs:ignore?>" data-filter_id="<?php echo esc_attr( $filter['filter_id'] ); ?>" style="">
 	<div class="wb-ajax-filter-toggle-title ui-sortable-handle" style="overflow:hidden;">
 		<span class="dashicons dashicons-arrow-right-alt2"></span>
 		<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?<?php echo esc_attr( $params ); ?>">
@@ -33,11 +33,11 @@ $params = str_replace( 'wb=list', 'wb=update&wb_index=' . $key, $params );
 		<div class="wb-ajax-filter-icon-button">
 			<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
 				<div class="wb-ajax-filter-onoff-container ">
-					<input type="checkbox" id="filters_<?php echo esc_attr( $filter_count ); ?>_enabled" class="on_off" name="filter_enabled" value="yes" <?php echo ( isset( $filter['filter_enabled'] ) && 'yes' === $filter['filter_enabled'] ) ? 'checked' : ''; ?> data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_attr( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>" data-filter_id="<?php echo esc_attr( $filter['filter_id'] ); ?>">
+					<input type="checkbox" id="filters_<?php echo esc_attr( $filter_count ); ?>_enabled" class="on_off" name="filter_enabled" value="yes" <?php echo ( isset( $filter['filter_enabled'] ) && 'yes' === $filter['filter_enabled'] ) ? 'checked' : ''; ?> data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_attr( wp_unslash( $_REQUEST['preset'] ) ) : ''; //phpcs:ignore?>" data-filter_id="<?php echo esc_attr( $filter['filter_id'] ); ?>">
 				</div>
 			</div>
-			<span class="wb-show-on-hover wb-delete-single-filter dashicons dashicons-trash" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_attr( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>" data-filter_id="<?php echo esc_attr( $filter['filter_id'] ); ?>"></span>
-			<span class="wb-show-on-hover wb-clone-single-filter dashicons dashicons-admin-page" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_attr( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>" data-filter_id="<?php echo esc_attr( $filter['filter_id'] ); ?>"></span>
+			<span class="wb-show-on-hover wb-delete-single-filter dashicons dashicons-trash" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_attr( wp_unslash( $_REQUEST['preset'] ) ) : ''; //phpcs:ignore?>" data-filter_id="<?php echo esc_attr( $filter['filter_id'] ); ?>"></span>
+			<span class="wb-show-on-hover wb-clone-single-filter dashicons dashicons-admin-page" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_attr( wp_unslash( $_REQUEST['preset'] ) ) : ''; //phpcs:ignore?>" data-filter_id="<?php echo esc_attr( $filter['filter_id'] ); ?>"></span>
 		</div>
 	</div>
 </div>

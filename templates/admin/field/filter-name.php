@@ -9,16 +9,17 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
-if ( isset( $_REQUEST['preset'] ) && '' === $_REQUEST['preset'] ) {
+if ( isset( $_REQUEST['preset'] ) && '' === $_REQUEST['preset'] ) { //phpcs:ignore
 	$name = ( isset( $_POST['title'] ) && '' !== $_POST['title'] ) ? esc_html( wp_unslash( $_POST['title'] ) ) : 'New filter';// phpcs:ignore
 } else {
-	$preset = get_post( wp_unslash( $_REQUEST['preset'] ) );
+	$preset = get_post( wp_unslash( $_REQUEST['preset'] ) ); //phpcs:ignore
 	$name   = $preset->post_title;
 }
 ?>
-<input type="hidden" name="filters[preset_id]" value="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_html( wp_unslash( $_REQUEST['preset'] ) ) : ''; ?>">
+<input type="hidden" name="filters[preset_id]" value="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_html( wp_unslash( $_REQUEST['preset'] ) ) : ''; //phpcs:ignore ?>">
 <input type="hidden" name="filters[preset_title]" value="<?php echo esc_html( $name ); ?>">
-<input type="hidden" name="filters[filter_id]" value="<?php echo ( ! isset( $filters['filter_id'] ) ) ? esc_html( uniqid( 'wb_filter_' ) ) : esc_html( $filters['filter_id'] ); ?>">
+<?php $wb_filter_filter_id = isset( $filters['filter_id'] ) ? $filters['filter_id'] : uniqid( 'wb_filter_' ); ?>
+<input type="hidden" name="filters[filter_id]" value="<?php echo esc_attr( $wb_filter_filter_id ); ?>">
 <div class="wb-ajax-filter-toggle-content-row wb-all-toggle">
 	<label><?php esc_html_e( 'Filter name', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper">

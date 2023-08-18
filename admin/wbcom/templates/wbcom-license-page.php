@@ -10,7 +10,12 @@
 		<div class="wbcom_admin_header-wrapper">
 			<div id="wb_admin_plugin_name">
 				<?php esc_html_e( 'Wbcom Ajax Filter For WooCommerce', 'wb-ajax-filter' ); ?>
-				<span><?php printf( __( 'Version %s', 'wb-ajax-filter' ), WB_AJAX_FILTER_VERSION ); ?></span>
+				<span>
+				<?php
+				/* translators: %s: */
+				printf( esc_html__( 'Version %s', 'wb-ajax-filter' ), esc_attr( WB_AJAX_FILTER_VERSION ) );
+				?>
+				</span>
 			</div>
 			<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 		</div>

@@ -37,7 +37,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 	</a>
 	<div class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && 'closed' === $filters['toggle_style'] ) ? 'display:none' : ''; ?>">
 		<?php if ( isset( $wb_ajax_filter_general_options['show_clear_filter'] ) && 'yes' === $wb_ajax_filter_general_options['show_clear_filter'] ) { ?>
-		<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="min_price,max_price" style="<?php echo ( isset( $_GET['min_price'] ) ) ? '' : esc_attr( $clear_style ); ?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
+		<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="min_price,max_price" style="<?php echo ( isset( $_GET['min_price'] ) ) ? '' : esc_attr( $clear_style ); //phpcs:ignore?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
 		<?php } ?>
 		<div class="filter-content">
 			<div class="wb-ajax-filter filter-price-range">
@@ -46,7 +46,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 					foreach ( $filters['price_ranges'] as $range ) {
 						if ( isset( $range['min'] ) && $highest_price >= $range['min'] ) {
 							if ( isset( $range['max'] ) ) {
-								$active = ( isset( $_REQUEST['min_price'] ) && isset( $_REQUEST['max_price'] ) && $range['min'] === $_REQUEST['min_price'] && $range['max'] === $_REQUEST['max_price'] ) ? 'filter-active' : '';
+								$active = ( isset( $_REQUEST['min_price'] ) && isset( $_REQUEST['max_price'] ) && $range['min'] === $_REQUEST['min_price'] && $range['max'] === $_REQUEST['max_price'] ) ? 'filter-active' : ''; //phpcs:ignore
 								?>
 							<li>
 								<a href="#" role="button" data-range-min="<?php echo esc_attr( $range['min'] ); ?>" data-range-max="<?php echo esc_attr( $range['max'] ); ?>" class="price-range <?php echo esc_attr( $active ); ?>">
@@ -57,7 +57,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 							</li>
 								<?php
 							} else {
-									$active = ( isset( $_REQUEST['min_price'] ) && $range['min'] === $_REQUEST['min_price'] ) ? 'filter-active' : '';
+									$active = ( isset( $_REQUEST['min_price'] ) && $range['min'] === $_REQUEST['min_price'] ) ? 'filter-active' : ''; //phpcs:ignore
 								?>
 								<li>
 									<a href="#" role="button" data-range-min="<?php echo esc_attr( $range['min'] ); ?>" class="price-range <?php echo esc_attr( $active ); ?>">

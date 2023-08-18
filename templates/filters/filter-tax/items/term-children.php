@@ -24,11 +24,17 @@ foreach ( $filters['terms'] as $child ) {
 	<li class="filter-item <?php echo esc_attr( $filter_design ); ?> <?php echo esc_attr( $child_item_class ); ?>" data-child-of="<?php echo esc_attr( $term_data->slug ); ?>" style="<?php echo esc_attr( $list_child_style ); ?>">
 		<label>
 			<input type="<?php echo esc_attr( $filter_design ); ?>" name="<?php echo esc_attr( $filter_taxonomy ); ?>" class="wb-ajax-filter-selectible" value="<?php echo esc_attr( $child_term_data->slug ); ?>" data-filter="<?php echo esc_attr( $filter_taxonomy ); ?>" <?php echo esc_attr( $checked ); ?> <?php echo esc_attr( $ch_disabled ); ?>>
-			<a href="<?php echo esc_attr( $base_url ); ?>?wb_ajax=1&<?php echo esc_attr( $filter_taxonomy . '=' . $child_term_data->slug ); ?>" class="wb-term-label wb-tooltip-added <?php echo ( 'checked' === $checked ) ? 'filter-active' : ''; ?> <?php echo esc_attr( $ch_disabled ); ?>" data-title="<?php echo esc_attr( $child_term_data->name ); ?>"><?php echo ( isset( $filters['terms_text'] ) && array_key_exists( 'label', $filters['terms_text'][ $child->id ] ) ) ? esc_html( $filters['terms_text'][ $child->id ]['label'] ) : esc_html( $child_term_data->name ); ?>
+			<?php
+			$wb_filters_term_text = isset( $filters['terms_text'] ) && array_key_exists( 'label', $filters['terms_text'][ $child->id ] ) ? $filters['terms_text'][ $child->id ]['label'] : $child_term_data->name;
+			?>
+			<a href="<?php echo esc_attr( $base_url ); ?>?wb_ajax=1&<?php echo esc_attr( $filter_taxonomy . '=' . $child_term_data->slug ); ?>" class="wb-term-label wb-tooltip-added <?php echo ( 'checked' === $checked ) ? 'filter-active' : ''; ?> <?php echo esc_attr( $ch_disabled ); ?>" data-title="<?php echo esc_attr( $child_term_data->name ); ?>"><?php echo esc_html( $wb_filters_term_text ); ?>
 			<?php if ( isset( $filters['show_count'] ) && 'yes' === $filters['show_count'] ) : ?>
 				<small class="item-count">(<?php echo esc_html( $child_term_data->count ); ?>)</small>
 			<?php endif; ?>
-			<span class="wb-ajax-filter-tooltip-text"><?php echo ( isset( $filters['terms_text'] ) && array_key_exists( 'tooltip', $filters['terms_text'][ $child->id ] ) ) ? esc_html( $filters['terms_text'][ $child->id ]['tooltip'] ) : esc_html( $child_term_data->name ); ?></span>
+			<?php
+			$wb_terms_text_ajax = isset( $filters['terms_text'] ) && array_key_exists( 'tooltip', $filters['terms_text'][ $child->id ] ) ? $filters['terms_text'][ $child->id ]['tooltip'] : $child_term_data->name;
+			?>
+			<span class="wb-ajax-filter-tooltip-text"><?php echo esc_html( $wb_terms_text_ajax ); ?></span>
 		</a>
 		</label>
 	</li>
