@@ -139,6 +139,11 @@ class Wb_Ajax_Filter {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wb-ajax-filter-public.php';
 
+		/** This file adds the plugin license module UI. */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-paid-plugin-settings.php';
+
+		/** This file is responsible for the plugin license functionality. */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'edd-license/edd-plugin-license.php';
 		$this->loader = new Wb_Ajax_Filter_Loader();
 
 	}

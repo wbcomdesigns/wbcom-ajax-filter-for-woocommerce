@@ -34,10 +34,22 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WB_AJAX_FILTER_VERSION', '1.2.0' );
 
-define( 'WB_AJAX_FILTER_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
+if( ! defined( 'WB_AJAX_FILTER_VERSION' ) ) {
+	define( 'WB_AJAX_FILTER_VERSION', '1.2.0' );
+}
 
+if( ! defined( 'WB_AJAX_FILTER_PLUGIN_URL' ) ) {
+	define( 'WB_AJAX_FILTER_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
+}
+
+if ( ! defined( 'WB_AJAX_FILTER_PLUGIN_FILE' ) ) {
+	define( 'WB_AJAX_FILTER_PLUGIN_FILE', __FILE__ );
+}
+
+if ( ! defined( 'WB_AJAX_FILTER_PLUGIN_PATH' ) ) {
+	define( 'WB_AJAX_FILTER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+}
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-wb-ajax-filter-activator.php
