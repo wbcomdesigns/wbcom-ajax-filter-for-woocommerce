@@ -39,6 +39,17 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	private $version;
 
+
+	/**
+	 * Plugin_settings_tabs
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @var mixed     $plugin_settings_tabs    The settings Tabs.
+	 */
+
+	public $plugin_settings_tabs;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
