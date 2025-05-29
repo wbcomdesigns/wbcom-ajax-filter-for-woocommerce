@@ -635,22 +635,28 @@ class Wb_Ajax_Filter_Admin {
 				exit;
 			}
 			$taxonomy = sanitize_text_field( wp_unslash( $_GET['cat'] ) );
-			$terms    = get_terms(
-				array(
-					'taxonomy'   => $taxonomy,
-					'hide_empty' => false,
-				),
-			);
-			$results  = array();
-			foreach ( $terms as $term ) {
-				if ( strpos( $term->name, ucfirst( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false && strpos( $term->name, strtolower( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false ) {
-					continue;
+			if( ! empty( $taxonomy ) ) {
+				
+				$terms    = get_terms(
+					array(
+						'taxonomy'   => $taxonomy,
+						'hide_empty' => false,
+					),
+				);
+				
+				if( !empty( $terms ) && is_array( $terms ) ) {
+					$results  = array();
+					foreach ( $terms as $term ) {
+						if ( strpos( $term->name, ucfirst( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false && strpos( $term->name, strtolower( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false ) {
+							continue;
+						}
+						$tmp       = array( $term->term_id, $term->name );
+						$results[] = $tmp;
+					}
+					$results = apply_filters( 'wb_ajax_filter_restrict_terms', $results, $taxonomy );
+					echo wp_json_encode( $results );
 				}
-				$tmp       = array( $term->term_id, $term->name );
-				$results[] = $tmp;
 			}
-			$results = apply_filters( 'wb_ajax_filter_restrict_terms', $results, $taxonomy );
-			echo wp_json_encode( $results );
 		}
 		die();
 	}
