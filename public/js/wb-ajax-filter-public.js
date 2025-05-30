@@ -67,6 +67,7 @@
 		// Enable select2 autocomplete js
 		jQuery('#wb_ajax_search_input').select2({
 			tags: true,
+			placeholder: 'Search',
 			ajax: {
 				url: wbcom_plugin_installer_params.ajax_url,
 				dataType: 'json',
