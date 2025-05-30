@@ -714,42 +714,42 @@ class Wb_Ajax_Filter_Admin {
 	 * Include Wbcom ajax filter for woocommerce admin welcome setting tab content file.
 	 */
 	public function wb_ajax_filter_admin_welcome_content() {
-		include 'partials/wb-ajax-filter-welcome-page.php';
+		include_once 'partials/wb-ajax-filter-welcome-page.php';
 	}
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin general setting tab content file.
 	 */
 	public function wb_ajax_filter_admin_general_content() {
-		include 'partials/wb-ajax-filter-setting-general-tab.php';
+		include_once 'partials/wb-ajax-filter-setting-general-tab.php';
 	}
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin presets setting tab content file.
 	 */
 	public function wb_ajax_filter_admin_presets_content() {
-		include 'partials/wb-ajax-filter-setting-presets-tab.php';
+		include_once 'partials/wb-ajax-filter-setting-presets-tab.php';
 	}
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin customization setting tab content file.
 	 */
 	public function wb_ajax_filter_admin_customization_content() {
-		include 'partials/wb-ajax-filter-setting-customization-tab.php';
+		include_once 'partials/wb-ajax-filter-setting-customization-tab.php';
 	}
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin ajax search setting tab content file.
 	 */
 	public function wb_ajax_filter_admin_ajax_search_settings_content() {
-		include 'partials/wb-ajax-filter-search-settings.php';
+		include_once 'partials/wb-ajax-filter-search-settings.php';
 	}
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin search setting tab content file.
 	 */
 	public function wb_ajax_filter_admin_search_content() {
-		include 'partials/wb-ajax-filter-search-content.php';
+		include_once 'partials/wb-ajax-filter-search-content.php';
 	}
 
 	/**
@@ -758,7 +758,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @param filters $filters Filter array.
 	 */
 	public function wb_ajax_filter_create_filter_name_field( $filters ) {
-		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-name.php';
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-name.php';
 	}
 
 	/**
@@ -767,7 +767,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @param filters $filters Filter array.
 	 */
 	public function wb_ajax_filter_create_filter_for_field( $filters ) {
-		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-for.php';
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-for.php';
 	}
 
 	/**
@@ -776,7 +776,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @param filters $filters Filter array.
 	 */
 	public function wb_ajax_filter_create_filter_tax_field( $filters ) {
-		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-tax.php';
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-tax.php';
 	}
 
 	/**
@@ -785,7 +785,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @param filters $filters Filter array.
 	 */
 	public function wb_ajax_filter_create_filter_price_slider_field( $filters ) {
-		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-price-slider.php';
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-price-slider.php';
 	}
 
 	/**
@@ -794,7 +794,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @param filters $filters Filter array.
 	 */
 	public function wb_ajax_filter_create_filter_order_by_field( $filters ) {
-		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-order-by.php';
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-order-by.php';
 	}
 
 	/**
@@ -803,7 +803,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @param filters $filters Filter array.
 	 */
 	public function wb_ajax_filter_create_filter_price_range_field( $filters ) {
-		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-price-range.php';
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-price-range.php';
 	}
 
 	/**
@@ -812,7 +812,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @param filters $filters Filter array.
 	 */
 	public function wb_ajax_filter_create_filter_stock_field( $filters ) {
-		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-stock.php';
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-stock.php';
 	}
 
 	/**
@@ -821,7 +821,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @param filters $filters Filter array.
 	 */
 	public function wb_ajax_filter_create_filter_toggle_field( $filters ) {
-		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-toggle.php';
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-toggle.php';
 	}
 
 	/**
@@ -830,7 +830,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @param filters $filters Filter array.
 	 */
 	public function wb_ajax_filter_create_filter_count_field( $filters ) {
-		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-count.php';
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-count.php';
 	}
 
 	/**
@@ -839,7 +839,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @param filters $filters Filter array.
 	 */
 	public function wb_ajax_filter_create_filter_adoptive_filtering_field( $filters ) {
-		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-adoptive-filtering.php';
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-adoptive-filtering.php';
 	}
 
 	/**
@@ -848,7 +848,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @param filters $filters Filter array.
 	 */
 	public function wb_ajax_filter_create_filter_save_button( $filters ) {
-		include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-save.php';
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-save.php';
 	}
 
 }

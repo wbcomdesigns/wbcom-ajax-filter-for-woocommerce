@@ -613,6 +613,31 @@
 			e.preventDefault();
 			afterFormSubmit();
 		});
+
+		jQuery('.wb-ajax-filter-modal-content').on('change', '.wb-filter-type-price-range-min', function(e) {
+			var minPriceEntered     =  $(this).val();
+			var highestProductPrice =  $(this).attr( 'data-highest-price' );
+
+			if( parseInt( minPriceEntered ) > parseInt( highestProductPrice) ) {
+				$('.wb_price_range_min_error').text('Entered min price is greater than the highest price on this store.');
+				$( '.wb_price_range_min_error' ).show();
+				$(this).val(null);
+				$('.wb-filter-type-price-range-max').val(null);
+				
+			} 
+		});
+
+		jQuery('.wb-ajax-filter-modal-content').on('change', '.wb-filter-type-price-range-max', function (e) {
+			var maxPriceEntered = $(this).val();
+			var minPriceEntered = $('.wb-filter-type-price-range-min').val();
+
+			if (parseInt(minPriceEntered) > parseInt(maxPriceEntered)) {
+				$('.wb_price_range_min_error').text('Max price cannot be smaller than Min price.');
+				$('.wb_price_range_min_error').show();
+				$(this).val(null);
+				$('.wb-filter-type-price-range-min').val(null);
+			}
+		});
 	});
 
 })(jQuery);
