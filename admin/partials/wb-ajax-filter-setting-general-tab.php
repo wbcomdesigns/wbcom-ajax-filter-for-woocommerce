@@ -55,20 +55,20 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 				<div class="wbcom-settings-section-wrap">
 					<div class="wbcom-settings-section-options-heading">
 						<label>
-							<?php esc_html_e( 'Show Results', 'wb-ajax-filter' ); ?>
+							<?php esc_html_e( 'Display Results', 'wb-ajax-filter' ); ?>
 						</label>
 
-							<p class="description"><?php esc_html_e( 'Choose whether to load the results on the same page using AJAX or load the results on a new page', 'wb-ajax-filter' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Choose whether to render search results on page reload or without page reload.', 'wb-ajax-filter' ); ?></p>
 
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_admin_general_options[ajax_filters]" type="radio" value="yes" <?php ( isset( $wb_ajax_filter_general_options['ajax_filters'] ) ) ? checked( $wb_ajax_filter_general_options['ajax_filters'], 'yes' ) : ''; ?>>
-							<span class="description"><?php esc_html_e( 'In same page using AJAX', 'wb-ajax-filter' ); ?></span>
+							<span class="description"><?php esc_html_e( 'Without Page Reload', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 						<label>
 							<input name="wb_ajax_filter_admin_general_options[ajax_filters]" type="radio" value="no" <?php ( isset( $wb_ajax_filter_general_options['ajax_filters'] ) ) ? checked( $wb_ajax_filter_general_options['ajax_filters'], 'no' ) : ''; ?>>
-							<span class="description"><?php esc_html_e( 'Reload on a new page', 'wb-ajax-filter' ); ?></span>
+							<span class="description"><?php esc_html_e( 'On Page Reload', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					  </div>
 					</div>
