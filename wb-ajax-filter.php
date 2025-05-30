@@ -87,26 +87,34 @@ if ( ! function_exists( 'wb_ajax_filter_check_woocomerce' ) ) {
 	function wb_ajax_filter_check_woocomerce() {
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			add_action( 'admin_notices', 'wb_ajax_filter_admin_notice_error' );
 			deactivate_plugins( plugin_basename( __FILE__ ) );
-			add_action( 'admin_notices', 'wb_ajax_filter_admin_notice__error' );
-			if ( null !== filter_input( INPUT_GET, 'activate' ) ) {
-			$activate = filter_input( INPUT_GET, 'activate' );
-			unset( $activate );
-		}
+		} else {
+			run_wb_ajax_filter();
 		}
 	}
 }
 
-if ( ! function_exists( 'wb_ajax_filter_admin_notice__error' ) ) {
+if ( ! function_exists( 'wb_ajax_filter_admin_notice_error' ) ) {
 	/**
 	 * Checks if woocommerce plugin is activated, else gives admin notice.
 	 */
-	function wb_ajax_filter_admin_notice__error() {
+	function wb_ajax_filter_admin_notice_error() {
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			$class    = 'notice notice-error is-dismissible';
 			$plugin   = 'Wbcom Ajax Filter for WooCommerce';
-			$requires = 'requires Woocommerce plugin to be activated.';
-			printf( '<div class="%1$s"><p><b>%2$s</b> %3$s</p></div>', esc_attr( $class ), esc_html( $plugin ), esc_html( $requires ) );
+			$requires = 'Woocommerce';
+			
+			printf( '<div class="%1$s"><p><b>%2$s</b> requires %3$s plugin to installed and active.</p></div>', 
+				esc_attr( $class ), 
+				esc_html( $plugin ), 
+				esc_html( $requires ) 
+			);
+
+			if ( null !== filter_input( INPUT_GET, 'activate' ) ) {
+				$activate = filter_input( INPUT_GET, 'activate' );
+				unset( $activate );
+			}
 		}
 	}
 }
@@ -140,8 +148,21 @@ function wb_ajax_filter_activation_redirect_settings( $plugin ) {
 		return;
 	}
 	if ( $plugin == plugin_basename( __FILE__ ) && class_exists( 'WooCommerce' ) ) {
-		wp_redirect( admin_url( 'admin.php?page=wc-ajax-filter-settings' ) );
-		exit;
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) {
+			wp_redirect( admin_url( 'admin.php?page=wc-ajax-filter-settings' ) );
+			exit;
+		}
+	}
+}
+
+
+add_action( 'plugins_loaded', 'wb_ajax_filter_initialize_plugin' );
+
+function wb_ajax_filter_initialize_plugin() {
+	if( class_exists( 'WooCommerce' ) ) {
+		run_wb_ajax_filter();
+	} else {
+		add_action( 'admin_notices', 'wb_ajax_filter_admin_notice_error' );
 	}
 }
 
@@ -160,4 +181,4 @@ function run_wb_ajax_filter() {
 	$plugin->run();
 
 }
-run_wb_ajax_filter();
+
