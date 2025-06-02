@@ -17,10 +17,12 @@ $args = array(
 
 $commnts = get_comments( $args );
 $ratings = array();
-foreach ( $commnts as $commnt ) {
-	$rating = get_comment_meta( $commnt->comment_ID, 'rating', true );
-	if ( ! in_array( $rating, $ratings, true ) ) {
-		$ratings[] = $rating;
+if( !empty( $commnts ) && is_array( $commnts ) ) {
+	foreach ( $commnts as $commnt ) {
+		$rating = get_comment_meta( $commnt->comment_ID, 'rating', true );
+		if ( ! in_array( $rating, $ratings, true ) ) {
+			$ratings[] = $rating;
+		}
 	}
 }
 sort( $ratings );
@@ -45,14 +47,18 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 		<div class="filter-content">
 			<div class="wb-ajax-filter filter-review">
 				<select class="wb-ajax-filter-selectible" data-filter="rating_filter">
-					<option value=""><?php esc_html_e( 'Any rating', 'wb-ajax-filter' ); ?></option>
+					<option value=""><?php esc_html_e( 'Select Ratings', 'wb-ajax-filter' ); ?></option>
 				<?php
-				foreach ( $ratings as $val ) {
-					?>
-					<option value="<?php echo esc_attr( $val ); ?>" <?php echo ( isset( $params['rating_filter'] ) && $val === $params['rating_filter'] ) ? 'selected' : ''; ?>>
-					<?php printf( 'Rated %1$s out of 5', esc_html( $val ) ); ?>
-				</option>
-				<?php } ?>
+				if( !empty($ratings) && is_array($ratings) ) {
+					foreach ( $ratings as $val ) { ?>
+						<option value="<?php echo esc_attr( $val ); ?>" <?php echo ( isset( $params['rating_filter'] ) && $val === $params['rating_filter'] ) ? 'selected' : ''; ?>>
+							<?php printf( 'Rated %1$s out of 5', esc_html( $val ) ); ?>
+						</option>
+					<?php }//end foreach 
+				}else {?>
+					<option value=""><?php esc_html_e( 'No Ratings yet.', 'wb-ajax-filter' ); ?></option>
+				<?php }
+				?>
 				</select>
 			</div>
 		</div>
