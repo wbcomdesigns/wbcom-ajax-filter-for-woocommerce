@@ -483,42 +483,62 @@ class Wb_Ajax_Filter_Public {
 				$filters                     = get_post_meta( $preset_id, '_wb_filter', true );
 				if ( $filters ) {
 					foreach ( $filters as $filter ) {
-						if ( isset( $filter['type'] ) && 'tax' !== $filter['type'] ) {
-							continue;
-						}
-						$taxonomy     = $filter['taxonomy'];
-						$include_tags = array( 'product_tag', 'product_cat' );
-						$attributes   = wc_get_attribute_taxonomy_names();
-						if ( in_array( $filter['taxonomy'], $attributes, true ) ) {
-							if ( strpos( $taxonomy, 'pa_' ) !== false ) {
-								$taxonomy = str_replace( 'pa_', 'filter_', $taxonomy );
+						
+						if( $filter['type'] == 'stock_sale' ) {
+							if( array_key_exists( 'instock_filter', $params ) ) {
+								$meta_query[] = array(
+									'key'     => '_stock_status',
+									'value'   => 'instock',
+									'compare' => '==',
+								);
+							} else if( array_key_exists( 'onsale_filter', $params ) ) {
+								$meta_query[] = array(
+									'key'     => '_sale_price',
+									'value'   => '0',
+									'compare' => '>=',
+								);
+								$q->query_vars['post_type']  = array( 'product', 'product_variation' );
 							}
-							if ( array_key_exists( $taxonomy, $params ) ) {
-								$tax_query = $q->query_vars['tax_query'];
+							$q->query_vars['meta_query'] = $meta_query;
+							
+						}
+						
+						if ( isset( $filter['type'] ) && 'tax' == $filter['type'] ) {
+							$taxonomy     = $filter['taxonomy'];
+							$include_tags = array( 'product_tag', 'product_cat' );
+							$attributes   = wc_get_attribute_taxonomy_names();
+							if ( in_array( $filter['taxonomy'], $attributes, true ) ) {
+								if ( strpos( $taxonomy, 'pa_' ) !== false ) {
+									$taxonomy = str_replace( 'pa_', 'filter_', $taxonomy );
+								}
+								if ( array_key_exists( $taxonomy, $params ) ) {
+									$tax_query = $q->query_vars['tax_query'];
+									foreach ( $tax_query as $key => $qr ) {
+										if ( is_array( $qr ) && isset( $qr['taxonomy'] ) && $filter['taxonomy'] === $qr['taxonomy'] ) {
+											if ( isset( $filter['multiple'] ) && isset( $filter['relation'] ) && 'yes' === $filter['multiple'] ) {
+												unset( $tax_query[ $key ]['operator'] );
+												$tax_query[ $key ]['operator'] = strtoupper( $filter['relation'] );
+
+											}
+										}
+									}
+									unset( $q->query_vars['tax_query'] );
+									$q->query_vars['tax_query'] = $tax_query;
+								}
+							} elseif ( in_array( $taxonomy, $include_tags, true ) ) {
+								$tax_query = $q->tax_query->queries;
 								foreach ( $tax_query as $key => $qr ) {
 									if ( is_array( $qr ) && isset( $qr['taxonomy'] ) && $filter['taxonomy'] === $qr['taxonomy'] ) {
 										if ( isset( $filter['multiple'] ) && isset( $filter['relation'] ) && 'yes' === $filter['multiple'] ) {
 											unset( $tax_query[ $key ]['operator'] );
 											$tax_query[ $key ]['operator'] = strtoupper( $filter['relation'] );
-
 										}
 									}
 								}
-								unset( $q->query_vars['tax_query'] );
-								$q->query_vars['tax_query'] = $tax_query;
+								$q->tax_query->queries = $tax_query;
 							}
-						} elseif ( in_array( $taxonomy, $include_tags, true ) ) {
-							$tax_query = $q->tax_query->queries;
-							foreach ( $tax_query as $key => $qr ) {
-								if ( is_array( $qr ) && isset( $qr['taxonomy'] ) && $filter['taxonomy'] === $qr['taxonomy'] ) {
-									if ( isset( $filter['multiple'] ) && isset( $filter['relation'] ) && 'yes' === $filter['multiple'] ) {
-										unset( $tax_query[ $key ]['operator'] );
-										$tax_query[ $key ]['operator'] = strtoupper( $filter['relation'] );
-									}
-								}
-							}
-							$q->tax_query->queries = $tax_query;
 						}
+						
 					}
 				}
 			}

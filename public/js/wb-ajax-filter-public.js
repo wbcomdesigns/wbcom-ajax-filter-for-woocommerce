@@ -158,9 +158,8 @@
 			return values;
 		}
 
-		function loadFilteredResults(){
+		function loadFilteredResults( presetID ){
 			if ( !checkFieldValues('preset')) {
-				let presetID = jQuery('div.wb-ajax-filters-container').data('preset-id');
 				params.set( 'preset', presetID );
 			}	
 			if (loadResultWithAjax) {
@@ -288,7 +287,9 @@
 			let filter    = jQuery( this ).data( 'filter' );
 			let filterVal = jQuery( this ).val();
 			let tag       = jQuery( this ).prop( 'tagName' );
-			let type       = jQuery(this).attr('type');
+			let type      = jQuery(this).attr('type');
+			let presetID = jQuery(this).closest('.wb-ajax-filters-container').data('preset-id');
+			
 			if ( tag === 'SELECT' ) {
 				if ( filterVal !== '' && filterVal !== undefined ) {
 					setFieldValue( filter, filterVal );
@@ -324,7 +325,7 @@
 				}
 			}
 			if (!applyFiltersButton) {
-				loadFilteredResults();
+				loadFilteredResults( presetID );
 			}
 		});
 
