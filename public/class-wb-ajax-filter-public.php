@@ -498,6 +498,22 @@ class Wb_Ajax_Filter_Public {
 						
 					}
 				}
+			} else if( isset( $params['instock_filter'] ) || isset( $params['onsale_filter'] ) ) {
+				if( array_key_exists( 'instock_filter', $params ) ) {
+					$meta_query[] = array(
+						'key'     => '_stock_status',
+						'value'   => 'instock',
+						'compare' => '==',
+					);
+				} else if( array_key_exists( 'onsale_filter', $params ) ) {
+					$meta_query[] = array(
+						'key'     => '_sale_price',
+						'value'   => '0',
+						'compare' => '>=',
+					);
+					$q->query_vars['post_type']  = array( 'product', 'product_variation' );
+				}
+				$q->query_vars['meta_query'] = $meta_query;
 			}
 		}
 		return $q;
