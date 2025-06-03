@@ -295,21 +295,20 @@ class Wb_Ajax_Filter_Public {
 			exit();
 		} else {
 			if ( ! isset( $_GET['q'] ) ) {
-				die();
+				wp_die();
 			}
 			$args                   = array(
 				'post_type'      => 'product',
-				'posts_per_page' => -1,
+				'posts_per_page' => -1
 			);
 			$products               = get_posts( $args );
 			$search_settings        = get_option( 'wb_ajax_filter_search_settings' );
 			$search_filter_settings = get_option( 'wb_ajax_filter_search_content_settings' );
 			$matched_products       = array();
 			$q                      = sanitize_text_field( wp_unslash( $_GET['q'] ) );
-			$match                  = false;
 			$multiple_word_search   = ( isset( $search_filter_settings['search_type_more_words'] ) && 'and' === $search_filter_settings['search_type_more_words'] ) ? true : false;
 			foreach ( $products as $product ) {
-				$prod = wc_get_product( $product->ID );
+				$match = false;
 				if ( count( $matched_products ) >= $search_settings['posts_per_page'] ) {
 					break;
 				}
@@ -359,50 +358,6 @@ class Wb_Ajax_Filter_Public {
 						}
 					}
 				}
-				if ( isset( $search_filter_settings['search_in_product_categories'] ) && 'yes' === $search_filter_settings['search_in_product_categories'] ) {
-					$categories = $prod->get_category_ids();
-					if ( count( $categories ) > 0 ) {
-						foreach ( $categories as $cat ) {
-							$cat_data = get_term_by( 'id', $cat, 'product_cat' );
-							if ( $multiple_word_search ) {
-								if ( $this->wb_check_content_contains_string( $cat_data->name, $q ) ) {
-									$match = true;
-								}
-							}
-							if ( ! $multiple_word_search ) {
-								$query = str_split( $q );
-								foreach ( $query as $val ) {
-									if ( $this->wb_check_content_contains_string( $cat_data->name, $val ) ) {
-										$match = true;
-									}
-								}
-							}
-						}
-					}
-				}
-				if ( isset( $search_filter_settings['search_in_product_tags'] ) && 'yes' === $search_filter_settings['search_in_product_tags'] ) {
-					$tags = $prod->get_tag_ids();
-					if ( $multiple_word_search ) {
-						if ( count( $tags ) > 0 ) {
-							foreach ( $tags as $tag ) {
-								$tag_data = get_term_by( 'id', $tag, 'product_tag' );
-								if ( $multiple_word_search ) {
-									if ( $this->wb_check_content_contains_string( $tag_data->name, $q ) ) {
-										$match = true;
-									}
-								}
-								if ( ! $multiple_word_search ) {
-									$query = str_split( $q );
-									foreach ( $query as $val ) {
-										if ( $this->wb_check_content_contains_string( $tag_data->name, $val ) ) {
-											$match = true;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
 				if ( isset( $search_filter_settings['search_in_author'] ) && 'yes' === $search_filter_settings['search_in_author'] ) {
 					$author   = get_userdata( $product->post_author );
 					$username = $author->user_login;
@@ -444,10 +399,12 @@ class Wb_Ajax_Filter_Public {
 					$matched_products[] = $tmp;
 				}
 			}
-			$matched_products = apply_filters( 'wb_ajax_filter_restrict_products', $matched_products );
-			echo wp_json_encode( $matched_products );
+			if( !empty( $matched_products ) ) {
+				$matched_products = apply_filters( 'wb_ajax_filter_restrict_products', $matched_products );
+				echo wp_json_encode( $matched_products );
+			}
 		}
-		die();
+		wp_die();
 	}
 
 	/**

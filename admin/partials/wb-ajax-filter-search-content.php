@@ -89,32 +89,6 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 				 </div>
 				 </div>
 
-				 <div class="wbcom-settings-section-wrap">
-					 <div class="wbcom-settings-section-options-heading">
-						<label>
-							<?php esc_html_e( 'Search in product categories', 'wb-ajax-filter' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Extend search in product categories', 'wb-ajax-filter' ); ?></p>
-				 </div>
-				 <div class="wbcom-settings-section-options">
-						<label>
-							<input name="wb_ajax_filter_search_content_settings[search_in_product_categories]" type="checkbox" value="yes"<?php ( isset( $wb_ajax_filter_search_content_settings['search_in_product_categories'] ) ) ? checked( $wb_ajax_filter_search_content_settings['search_in_product_categories'], 'yes' ) : ''; ?>>							
-						</label>
-					 </div>
-				</div>
-				<div class="wbcom-settings-section-wrap">
-					 <div class="wbcom-settings-section-options-heading">
-						<label>
-							<?php esc_html_e( 'Search in product tags', 'wb-ajax-filter' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Extend search in product tags', 'wb-ajax-filter' ); ?></p>
-					   </div>
-					   <div class="wbcom-settings-section-options">
-						<label>
-							<input name="wb_ajax_filter_search_content_settings[search_in_product_tags]" type="checkbox" value="yes"<?php ( isset( $wb_ajax_filter_search_content_settings['search_in_product_tags'] ) ) ? checked( $wb_ajax_filter_search_content_settings['search_in_product_tags'], 'yes' ) : ''; ?>>
-						</label>
-					</div>
-					</div>
 					<div class="wbcom-settings-section-wrap">
 					  <div class="wbcom-settings-section-options-heading">
 						<label>
