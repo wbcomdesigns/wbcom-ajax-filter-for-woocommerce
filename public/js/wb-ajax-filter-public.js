@@ -159,7 +159,7 @@
 		}
 
 		function loadFilteredResults( presetID ){
-			if ( !checkFieldValues('preset')) {
+			if ( !checkFieldValues('preset') && ( undefined != presetID ) ) {
 				params.set( 'preset', presetID );
 			}	
 			if (loadResultWithAjax) {

@@ -684,6 +684,8 @@ class Wb_Ajax_Filter_Admin {
 	 * @author   Wbcom Designs
 	 */
 	public function wb_ajax_filter_init_plugin_settings() {
+		$wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' );
+
 		$this->plugin_settings_tabs['wb-ajax-filter-welcome'] = esc_html__( 'Welcome', 'wb-ajax-filter' );
 		register_setting( 'wb_ajax_filter_admin_welcome_options', 'wb_ajax_filter_admin_welcome_options' );
 		add_settings_section( 'wb-ajax-filter-welcome', ' ', array( $this, 'wb_ajax_filter_admin_welcome_content' ), 'wb-ajax-filter-welcome' );
@@ -704,10 +706,11 @@ class Wb_Ajax_Filter_Admin {
 		register_setting( 'wb_ajax_filter_search_settings', 'wb_ajax_filter_search_settings' );
 		add_settings_section( 'wb-ajax-filter-ajax-search-settings', ' ', array( $this, 'wb_ajax_filter_admin_ajax_search_settings_content' ), 'wb-ajax-filter-ajax-search-settings' );
 
-		$this->plugin_settings_tabs['wb-ajax-filter-search'] = esc_html__( 'Search Options', 'wb-ajax-filter' );
-		register_setting( 'wb_ajax_filter_search_content_settings', 'wb_ajax_filter_search_content_settings' );
-		add_settings_section( 'wb-ajax-filter-search', ' ', array( $this, 'wb_ajax_filter_admin_search_content' ), 'wb-ajax-filter-search' );
-
+		if( isset( $wb_ajax_filter_search_settings['enable_search'] ) && ( 'yes' === $wb_ajax_filter_search_settings['enable_search'] ) ) {
+			$this->plugin_settings_tabs['wb-ajax-filter-search'] = esc_html__( 'Search Options', 'wb-ajax-filter' );
+			register_setting( 'wb_ajax_filter_search_content_settings', 'wb_ajax_filter_search_content_settings' );
+			add_settings_section( 'wb-ajax-filter-search', ' ', array( $this, 'wb_ajax_filter_admin_search_content' ), 'wb-ajax-filter-search' );
+		}
 	}
 
 	/**

@@ -638,6 +638,15 @@
 				$('.wb-filter-type-price-range-min').val(null);
 			}
 		});
+
+		jQuery( 'input[name="wb_ajax_filter_search_settings[enable_search]"]' ).on('click', function(e){
+			let isChecked = $(this).is(':checked');
+			if( true == isChecked ) {
+				$('.wb_ajax_search_options').show();
+			}else {
+				$('.wb_ajax_search_options').hide();
+			}
+		});
 	});
 
 })(jQuery);
