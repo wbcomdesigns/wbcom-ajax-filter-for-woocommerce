@@ -15,7 +15,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 	$style = '';
 }
 ?>
-<div class="wb-ajax-filter-toggle-content-row wb-price-range-toggle wb-tax-toggle wb-review-toggle wb-stock-sale-toggle" style="<?php echo esc_attr( $style ); ?>">
+<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
 	<label><?php esc_html_e( 'Show count of items', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
 		<div class="wb-ajax-filter-onoff-container ">
