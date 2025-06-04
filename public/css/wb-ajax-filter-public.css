@@ -1,181 +1,232 @@
-/**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
-
- /*==========================
+/*==========================
  Search Filter Form
  ==========================*/
- a.wb-ajax-reset-all-filters {
+a.wb-ajax-reset-all-filters {
     cursor: pointer;
     text-decoration: underline;
     margin-bottom: 10px;
     display: block;
 }
- .wb-ajax-filter-ajaxsearch-filters-container {
+
+.wb-ajax-filter-ajaxsearch-filters-container {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
     justify-content: space-between;
     gap: 12px;
 }
+
 .wb-ajax-filter-ajaxsearch-filters {
     width: 60%;
     gap: 12px;
 }
+
 .wb-ajax-filter-ajaxsearchform-select {
-    width:25%;
+    width: 25%;
 }
+
 .wb-search-submit-container {
     width: 15%;
 }
-.wb-ajax-filter-ajaxsearch-filters-container .select2-container{
+
+.wb-ajax-filter-ajaxsearch-filters-container .select2-container {
     width: 100% !important;
     margin-bottom: 15px;
     height: 40px !important;
 }
+
 span.select2-dropdown.select2-dropdown--below {
     border-radius: 4px !important;
     top: -8px;
     border-color: #ccc !important;
 }
+
 span.select2-dropdown.select2-dropdown--above {
     border-radius: 4px !important;
     border-color: #ccc !important;
 }
+
 .wb-ajax-filter-ajaxsearchform-select.wb-ajax-filter-ajaxsearchform-select-list,
-.wb-ajax-filter-ajaxsearchform-select.wb-ajax-filter-ajaxsearchform-select-category{
-    width: 50%;
+.wb-ajax-filter-ajaxsearchform-select.wb-ajax-filter-ajaxsearchform-select-category {
+    width: 100%;
 }
+
 .wb-search-submit-container input[type="submit"] {
     height: 40px;
     width: 100%;
     padding: 0 !important;
 }
+
 a.wb-ajax-reset-all-filters.button {
-    margin:10px 0 !important;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: 10px 0 !important;
+    text-decoration: none;
+}
+
+a.wb-ajax-reset-all-filters.button .dashicons {
+    margin-right: 5px;
 }
 
 /*Filter Section UI*/
 .wb-ajax-filter-container-single h4.filter-title {
     margin-bottom: 10px;
 }
+
+.wb-ajax-filter-container-single h4.filter-title+.dashicons {
+    margin-top: 4px;
+    margin-left: 4px;
+}
+
 .wb-ajax-filters-container .wb-ajax-filter-container-single {
     margin-bottom: 20px;
 }
+
 a.wb-ajax-clear-single-filter {
     margin-bottom: 10px;
     display: block;
 }
+
 .wb-ajax-filters-container .select2-container {
     width: 100% !important;
 }
+
 .wb-ajax-filters-container {
-    padding:20px 10px;
+    padding: 20px 10px;
 }
-.wb-ajax-filter-content-container .wb-ajax-filters-container form{
+
+.wb-ajax-filter-content-container .wb-ajax-filters-container form {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
+
 .wb-ajax-filter-content-container .wb-ajax-filters-container .wb-ajax-filter-container-single {
     margin-bottom: 20px;
     padding: 0 10px;
 }
+
 .wb-ajax-filter-content-container ul.wb-price-ranges {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
+
 .wb-ajax-filter-content-container .wb-price-ranges li {
     width: 50%;
 }
-.wb-ajax-filter-content-container .wb-ajax-filters-container{
+
+.wb-ajax-filter-content-container .wb-ajax-filters-container {
     margin-bottom: 25px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
 }
+
 /*Width Filter Columns*/
 .wb-ajax-filter-content-container.filter-columns-1 .wb-ajax-filter-container-single {
     width: 100%;
 }
+
 .wb-ajax-filter-content-container.filter-columns-2 .wb-ajax-filter-container-single {
     width: 50%;
 }
+
 .wb-ajax-filter-content-container.filter-columns-3 .wb-ajax-filter-container-single {
     width: 33.33%;
 }
+
 .wb-ajax-filter-content-container.filter-columns-4 .wb-ajax-filter-container-single {
     width: 25%;
 }
+
 .wb-ajax-filter-content-container.filter-columns-5 .wb-ajax-filter-container-single {
     width: 20%;
 }
+
 li.select2-results__option {
     color: #000000 !important;
 }
+
 .plg-peepso .wb-ajax-filter-ajaxsearchform-select .select2-container--default .select2-selection--single {
     height: 40px;
 }
-.plg-peepso .wb-ajax-filter-ajaxsearchform-select .select2-container--default .select2-selection--singl .select2-selection__rendered{
+
+.plg-peepso .wb-ajax-filter-ajaxsearchform-select .select2-container--default .select2-selection--singl .select2-selection__rendered {
     line-height: initial !important;
 }
-
 
 /*Filter Section UI Wigdth*/
 .widget .wb-ajax-filter-ajaxsearch-filters-container {
     display: block !important;
 }
+
 .widget .wb-ajax-filter-ajaxsearch-filters,
 .widget .wb-ajax-filter-ajaxsearchform-select.wb-ajax-filter-ajaxsearchform-select-list,
 .widget .wb-ajax-filter-ajaxsearchform-select.wb-ajax-filter-ajaxsearchform-select-category,
 .widget .wb-ajax-filter-ajaxsearchform-select,
-.widget .wb-search-submit-container{
+.widget .wb-search-submit-container {
     width: 100%;
     display: block !important;
 }
-.widget .wb-ajax-search-container{
+
+.widget .wb-ajax-search-container {
     margin-bottom: 20px;
 }
+
 .widget .wb-ajax-filter-ajaxsearch-filters-container .select2-container {
     margin-bottom: 10px;
 }
+
 .widget .wb-ajax-filters-container {
     padding: 0;
 }
 
-
-
 /* Position tooltip above the element */
 .filter-item span.wb-ajax-filter-tooltip-text {
-    padding:4px 10px;
+    padding: 4px 10px;
     font-size: 13px;
     opacity: 0;
     line-height: 1;
-    top:4px;
-    margin-left:10px;
+    top: 4px;
+    margin-left: 10px;
     color: #fff;
+    -webkit-transition: all 0.4s;
     transition: all 0.4s;
     position: absolute;
 }
+
 .filter-item span.wb-ajax-filter-tooltip-text:before {
-    border: solid;    
+    border: solid;
     border-width: 6px 6px 0 6px;
     content: "";
     left: -8px;
     bottom: 8px;
     position: absolute;
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
     transform: rotate(90deg);
 }
+
 li.filter-item.wb-ajax-heirarchy-collapsible.opened .filter-item span.wb-ajax-filter-tooltip-text {
     margin-left: 35px;
 }
+
 li.filter-item.wb-ajax-heirarchy-collapsible.opened span.dashicons {
     cursor: pointer;
 }
 
-
-
-
-
 .filter-content ul.filter-items li.filter-item {
-     list-style-type: none;
-     position: relative;
-     padding:1px 0;
- }
+    list-style-type: none;
+    position: relative;
+    padding: 1px 0;
+}
+
 .wb-ajax-filter-container-single ul.filter-items,
 .wb-ajax-filter-container-single ul.wb-price-ranges {
     margin: 0;
@@ -197,24 +248,30 @@ ul.wb-price-ranges {
     min-height: 0px !important;
     border: 1px solid #bda8a8 !important;
 }
+
 .wb-search-submit-container input {
     min-height: 0px;
     height: 28px;
     text-align: center;
     padding: 0px 30px 0px 30px !important;
 }
+
 .wb-ajax-clear-single-filter {
     font-size: 13px;
 }
+
 span.select2-dropdown.select2-dropdown--above {
     border-radius: 10px;
 }
+
 span.select2-dropdown.select2-dropdown--below {
     border-radius: 10px;
 }
+
 .wb-ajax-active-filters-container {
     display: inline-block;
 }
+
 .wb-ajax-active-filters-container .wb-ajax-active-filters-container-single {
     border-radius: 4px;
     cursor: pointer;
@@ -227,13 +284,14 @@ span.select2-dropdown.select2-dropdown--below {
     padding: 4px 15px 3px;
     position: relative;
 }
+
 .wb-ajax-active-filters-container span.wb-ajax-filter-clear-single.button {
     background-position: center;
     background-repeat: no-repeat;
     border-radius: 100%;
     content: "";
     height: 15px;
-    padding:0;
+    padding: 0;
     line-height: 15px;
     position: absolute;
     right: -5px;
@@ -242,6 +300,7 @@ span.select2-dropdown.select2-dropdown--below {
     top: -8px;
     width: 15px;
 }
+
 .wb-ajax-active-filters-container span.dashicons.dashicons-no-alt {
     width: 15px;
     height: 15px;
@@ -249,6 +308,7 @@ span.select2-dropdown.select2-dropdown--below {
     font-size: 12px;
     line-height: 16px;
 }
+
 .theme-twentytwentyone .wb-ajax-active-filters-container span.dashicons.dashicons-no-alt {
     width: 15px;
     height: 15px;
@@ -269,10 +329,11 @@ div.wb-ajax-filter-loader-container {
     height: 100vh;
     width: 100%;
     display: block;
-    background:rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.7);
 }
+
 /* Center the loader */
-div.wb-ajax-filter-loader-container .gif-container-default{
+div.wb-ajax-filter-loader-container .gif-container-default {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -285,19 +346,31 @@ div.wb-ajax-filter-loader-container .gif-container-default{
     border-top: 5px solid #3498db;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
-  }
-  
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+}
 
-  div.wb-ajax-filter-loader-container .gif-container {
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+div.wb-ajax-filter-loader-container .gif-container {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -306,76 +379,94 @@ div.wb-ajax-filter-loader-container .gif-container-default{
     height: 60px;
     margin: -30px 0 0 -30px;
 }
-  
 
 /*Media Mobile View Style*/
 
 @media only screen and (max-width: 790px) {
 
-.wb-ajax-filter-content-container.filter-columns-5 .wb-ajax-filter-container-single,
-.wb-ajax-filter-content-container.filter-columns-4 .wb-ajax-filter-container-single,
-.wb-ajax-filter-content-container.filter-columns-3 .wb-ajax-filter-container-single {
-    width:33.33%;
-}
+    .wb-ajax-filter-content-container.filter-columns-5 .wb-ajax-filter-container-single,
+    .wb-ajax-filter-content-container.filter-columns-4 .wb-ajax-filter-container-single,
+    .wb-ajax-filter-content-container.filter-columns-3 .wb-ajax-filter-container-single {
+        width: 33.33%;
+    }
 
 }
 
 @media only screen and (max-width: 640px) {
 
-.wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearch-filters-container {
-    flex-wrap: wrap;
-    margin-bottom: 15px;
-    gap: 0;
-}
-.wb-ajax-filter-ajaxsearch-filters {
-    width: 100%;
-}
-.wb-ajax-filter-ajaxsearch-filters-container {
-    display: block !important;
-    margin-bottom: 20px;
-}
-.wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearch-filters,
-.wb-ajax-filter-ajaxsearchform-select,
-.wb-search-submit-container {
-    width: 100%;
-}
-.wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearchform-select,
-.wb-ajax-filter-content-container .wb-search-submit-container {
-    width: 49%;
-}
-.wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearch-filters-container .select2-container {
-    margin-bottom:12px;
-}
-.wb-ajax-filter-content-container.filter-columns-5 .wb-ajax-filter-container-single,
-.wb-ajax-filter-content-container.filter-columns-4 .wb-ajax-filter-container-single,
-.wb-ajax-filter-content-container.filter-columns-3 .wb-ajax-filter-container-single {
-    width:100%;
-}
+    .wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearch-filters-container {
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+        gap: 0;
+    }
+
+    .wb-ajax-filter-ajaxsearch-filters {
+        width: 100%;
+    }
+
+    .wb-ajax-filter-ajaxsearch-filters-container {
+        display: block !important;
+        margin-bottom: 20px;
+    }
+
+    .wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearch-filters,
+    .wb-ajax-filter-ajaxsearchform-select,
+    .wb-search-submit-container {
+        width: 100%;
+    }
+
+    .wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearchform-select,
+    .wb-ajax-filter-content-container .wb-search-submit-container {
+        width: 49%;
+    }
+
+    .wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearch-filters-container .select2-container {
+        margin-bottom: 12px;
+    }
+
+    .wb-ajax-filter-content-container.filter-columns-5 .wb-ajax-filter-container-single,
+    .wb-ajax-filter-content-container.filter-columns-4 .wb-ajax-filter-container-single,
+    .wb-ajax-filter-content-container.filter-columns-3 .wb-ajax-filter-container-single {
+        width: 100%;
+    }
 
 }
 
 @media only screen and (max-width: 440px) {
 
-.wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearchform-select,
-.wb-ajax-filter-content-container .wb-search-submit-container {
-    width:100%;
-}
+    .wb-ajax-filter-content-container .wb-ajax-filter-ajaxsearchform-select,
+    .wb-ajax-filter-content-container .wb-search-submit-container {
+        width: 100%;
+    }
 
 }
 
-a.wb-ajax-filter-toggle.wb-ajax-accordian{
-  cursor: pointer;
-  display: flex;
-  font-size: 15px;
-  transition: 0.4s;
+a.wb-ajax-filter-toggle.wb-ajax-accordian {
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 15px;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
 }
+
 .wb-ajax-accordion {
-  transition: 0.4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
 }
 
 li.filter-item.wb-ajax-level-1 {
     margin-left: 5%;
 }
+
 a.wb-term-label.wb-tooltip-added small.item-count {
     color: grey;
+}
+
+/* Reign */
+.wb-reign-theme .select2-container .select2-selection--single .select2-selection__rendered {
+    padding-top: 0;
+    padding-bottom: 0;
 }

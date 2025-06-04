@@ -9,33 +9,36 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
-?>
-<div class="wb-ajax-active-filters-container">
+if ( count( $params ) > 0 ) {
+	?>
+	<div class="wb-ajax-active-filters-container">
 	<?php
-	if ( count( $params ) > 0 ) {
-		$exclude_filters = array( 'preset', 'orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter' );
-		foreach ( $params as $key => $param ) {
-			if ( in_array( $key, $exclude_filters, true ) ) {
-				continue;
-			}
-			if ( is_array( $param ) ) {
-				foreach ( $param as $pm ) {
-					?>
-				<div class="wb-ajax-active-filters-container-single">
-					<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $pm ); ?></span>
-					<span class="wb-ajax-filter-clear-single button" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $pm ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
-				</div>
-					<?php
-				}
-			} else {
+	$exclude_filters = array( 'preset', 'orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter' );
+	foreach ( $params as $key => $param ) {
+		if ( in_array( $key, $exclude_filters, true ) ) {
+			continue;
+		}
+		if ( is_array( $param ) ) {
+			foreach ( $param as $pm ) {
 				?>
 			<div class="wb-ajax-active-filters-container-single">
-				<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $param ); ?></span>
-				<span class="wb-ajax-filter-clear-single button" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $param ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
+				<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $pm ); ?></span>
+				<span class="wb-ajax-filter-clear-single button" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $pm ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
 			</div>
 				<?php
 			}
+		} else {
+			?>
+		<div class="wb-ajax-active-filters-container-single">
+			<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $param ); ?></span>
+			<span class="wb-ajax-filter-clear-single button" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $param ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
+		</div>
+			<?php
 		}
 	}
 	?>
-</div>
+	</div>
+	<?php
+}
+?>
+
