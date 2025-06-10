@@ -619,24 +619,28 @@
 			var highestProductPrice =  $(this).attr( 'data-highest-price' );
 
 			if( parseInt( minPriceEntered ) > parseInt( highestProductPrice) ) {
-				$('.wb_price_range_min_error').text('Entered min price is greater than the highest price on this store.');
-				$( '.wb_price_range_min_error' ).show();
+				$(this).prev().prev().text('Entered min price is greater than the highest price on this store.');
+				$(this).prev().prev().show();
 				$(this).val(null);
-				$('.wb-filter-type-price-range-max').val(null);
+				$(this).closest('.wb-filter-type-price-range-max').val(null);
 				
-			} 
+			} else{
+				$(this).prev().prev().hide();
+			}
 		});
 
 		jQuery('.wb-ajax-filter-modal-content').on('change', '.wb-filter-type-price-range-max', function (e) {
 			var maxPriceEntered = $(this).val();
-			var minPriceEntered = $('.wb-filter-type-price-range-min').val();
-
+			var minPriceEntered = $(this).parent().prev().prev().children('input').val();
+			
 			if (parseInt(minPriceEntered) > parseInt(maxPriceEntered)) {
-				$('.wb_price_range_min_error').text('Max price cannot be smaller than Min price.');
-				$('.wb_price_range_min_error').show();
+				$(this).parent().prev().prev().children('span').text('Max price cannot be smaller than Min price.');
+				$(this).parent().prev().prev().children('span').show();
 				$(this).val(null);
-				$('.wb-filter-type-price-range-min').val(null);
-			}
+				$(this).$(this).parent().prev().prev().children('input').val(null);
+			} else {
+				$(this).parent().prev().prev().children('span').hide();
+			}	
 		});
 
 		jQuery( 'input[name="wb_ajax_filter_search_settings[enable_search]"]' ).on('click', function(e){
