@@ -148,7 +148,7 @@ function wb_ajax_filter_activation_redirect_settings( $plugin ) {
 		return;
 	}
 	if ( $plugin == plugin_basename( __FILE__ ) && class_exists( 'WooCommerce' ) ) {
-		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) {
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore
 			wp_redirect( admin_url( 'admin.php?page=wc-ajax-filter-settings' ) );
 			exit;
 		}
