@@ -9,23 +9,7 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
-$args = array(
-	'status'      => 'approve',
-	'post_status' => 'publish',
-	'post_type'   => 'product',
-);
-
-$commnts = get_comments( $args );
-$ratings = array();
-if( !empty( $commnts ) && is_array( $commnts ) ) {
-	foreach ( $commnts as $commnt ) {
-		$rating = get_comment_meta( $commnt->comment_ID, 'rating', true );
-		if ( ! in_array( $rating, $ratings, true ) ) {
-			$ratings[] = $rating;
-		}
-	}
-}
-sort( $ratings );
+$ratings                        = array( '1', '2', '3', '4', '5' );
 $clear_style                    = 'display:none;';
 $toggle_enabled                 = ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? true : false;
 $toggle_class                   = ( $toggle_enabled ) ? 'wb-ajax-accordian' : '';
