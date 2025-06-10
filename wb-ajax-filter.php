@@ -105,7 +105,7 @@ if ( ! function_exists( 'wb_ajax_filter_admin_notice_error' ) ) {
 			$plugin   = 'Wbcom Ajax Filter for WooCommerce';
 			$requires = 'Woocommerce';
 			
-			printf( '<div class="%1$s"><p><b>%2$s</b> requires %3$s plugin to installed and active.</p></div>', 
+			printf( '<div class="%1$s"><p><b>%2$s</b> requires %3$s plugin to be installed and active .</p></div>', 
 				esc_attr( $class ), 
 				esc_html( $plugin ), 
 				esc_html( $requires ) 
