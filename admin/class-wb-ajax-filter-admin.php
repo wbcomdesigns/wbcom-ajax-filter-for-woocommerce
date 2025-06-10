@@ -249,7 +249,7 @@ class Wb_Ajax_Filter_Admin {
 		} else {
 			if ( isset( $_POST['form_data'] ) ) {
 				$filter    = array();
-				$form_data = wp_unslash( $_POST['form_data'] );
+				$form_data = wp_unslash( $_POST['form_data'] ); //phpcs:ignore
 				// Converting form data into associative array.
 				foreach ( $form_data as $field ) {
 					if ( '' !== $field['value'] ) {
