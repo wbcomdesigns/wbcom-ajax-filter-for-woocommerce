@@ -13,7 +13,7 @@ $wb_ajax_filter_search_settings         = get_option( 'wb_ajax_filter_search_set
 $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_content_settings' );
 if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_ajax_filter_search_settings['enable_search'] ) {
 
-$selected_category = ( isset( $_GET['product_cat'] ) && !empty( $_GET['product_cat'] ) ) ? sanitize_text_field( $_GET['product_cat'] ) : '';
+$selected_category = ( isset( $_GET['product_cat'] ) && !empty( $_GET['product_cat'] ) ) ? sanitize_text_field( $_GET['product_cat'] ) : ''; //phpcs:ignore
 
 ?>
 <div class="wb-ajax-filter-ajaxsearch-filters-container" style="display: flex;">
