@@ -291,7 +291,7 @@
 			let presetID = jQuery(this).closest('.wb-ajax-filters-container').data('preset-id');
 			
 			if ( tag === 'SELECT' ) {
-				if ( filterVal !== '' && filterVal !== undefined ) {
+				if ( filterVal != '' && filterVal !== undefined ) {
 					setFieldValue( filter, filterVal );
 				} else {
 					removeField( filter );
