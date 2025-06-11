@@ -219,7 +219,7 @@
 					processResults: function ( data ) {
 						var options = [];
 						if ( jQuery( 'select[name="filters[taxonomy]"]' ).val() === '' ){
-							alert( 'Please select taxonomy' );
+							alert( wbAjaxFilterStrings.selectTaxonomy );
 						}
 						if ( data ) {
 							$.each( data, function ( index, text ) {
@@ -323,7 +323,8 @@
 		});
 
 		// Check if the Filter preset title already exists
-		jQuery( 'input[name="wb_ajax_filter_preset_title"]' ).keyup( function () {
+		jQuery( 'input[name="wb_ajax_filter_preset_title"]' ).on( 'keyup', function () {
+			
 			let postTitle = jQuery( this ).val();
 			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
 			if ( postTitle !== '' || postTitle !== undefined ) {
@@ -333,7 +334,7 @@
 					data: { action: 'check_filter_preset_title_wb', 'nonce': nonce, 'title': postTitle },
 					success: function ( response ) {
 						if ( 'exists' === response ) {
-							alert( 'Name already exists.' );
+							alert( wbAjaxFilterStrings.nameExists );
 							jQuery( 'input[name="wb_ajax_filter_preset_title"]' ).val('');
 						}
 					}
@@ -385,7 +386,7 @@
 		});
 
 		// Click to copy shortcode to clipboard
-		jQuery( '.text-to-copy' ).click(function () {
+		jQuery( '.text-to-copy' ).on( 'click', function () {
 			jQuery( this ).select();
 			document.execCommand( 'copy' );
 			jQuery( this ).siblings( '.wb-shortcode-copy' ).css( {
@@ -445,7 +446,7 @@
 
 		// Create a duplicate of the preset
 		jQuery( 'a.wb-copy-filter-preset' ).on( 'click', function () {
-			var copy = confirm( "Do you want to create duplicate of this preset?" );
+			var copy = confirm( wbAjaxFilterStrings.confirmDuplicate );
 			if ( copy == true ) {
 				let preset = jQuery( this ).data( 'preset' );
 				let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
@@ -464,7 +465,7 @@
 
 		// Delete a filter preset
 		jQuery( 'a.wb-delete-filter-preset' ).on( 'click', function () {
-			var del = confirm( "Are you sure you want to delete this preset?" );
+			var del = confirm( wbAjaxFilterStrings.confirmDelete );
 			if ( del == true ) {
 				let preset = jQuery( this ).data( 'preset' );
 				let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
@@ -483,7 +484,7 @@
 
 		// Create a duplicate of the preset
 		jQuery( 'span.wb-clone-single-filter' ).on( 'click', function () {
-			var copy = confirm( "Do you want to create duplicate of this filter?" );
+			var copy = confirm( wbAjaxFilterStrings.confirmDuplicate );
 			if ( copy == true ) {
 				let preset = jQuery( this ).data( 'preset' );
 				let filter_id = jQuery( this ).data( 'filter_id' );
@@ -503,7 +504,7 @@
 
 		// Delete a filter preset
 		jQuery( 'span.wb-delete-single-filter' ).on( 'click', function () {
-			var del = confirm( "Are you sure you want to delete this filter?" );
+			var del = confirm( wbAjaxFilterStrings.confirmDelete );
 			if ( del == true ) {
 				let preset = jQuery( this ).data( 'preset' );
 				let filter_id = jQuery( this ).data( 'filter_id' );
@@ -564,7 +565,7 @@
 			e.preventDefault();
 			var title = jQuery( 'input[name="wb_ajax_filter_preset_title"]' ).val();
 			if ( title == '' || title == undefined ) {
-				alert('Please enter name for preset');
+				alert( wbAjaxFilterStrings.nameRequired );
 				return false;
 			}
 			let nonce = wbcom_plugin_installer_params.wbcom_ajax_nonce;
@@ -597,11 +598,11 @@
 			e.preventDefault();
 			if (jQuery('select[name="filters[type]"]').val() == 'tax' ){
 				if (jQuery('select[name="filters[taxonomy]"]').val() == '' || jQuery('select[name="filters[taxonomy]"]').val() == undefined ){
-					alert('Please select a valid taxonomy');
+					alert( wbAjaxFilterStrings.validTaxonomy );
 					return false;
 				}
 				if (jQuery('#wb_ajax_filter_select2_terms').val() == '' || jQuery('#wb_ajax_filter_select2_terms').val() == undefined) {
-					alert('Please select terms');
+					alert( wbAjaxFilterStrings.selectTerms );
 					return false;
 				}
 			}
@@ -619,7 +620,7 @@
 			var highestProductPrice =  $(this).attr( 'data-highest-price' );
 
 			if( parseInt( minPriceEntered ) > parseInt( highestProductPrice) ) {
-				$(this).prev().prev().text('Entered min price is greater than the highest price on this store.');
+				$(this).prev().prev().text( wbAjaxFilterStrings.minPriceNotice );
 				$(this).prev().prev().show();
 				$(this).val(null);
 				$(this).closest('.wb-filter-type-price-range-max').val(null);
@@ -634,7 +635,7 @@
 			var minPriceEntered = $(this).parent().prev().prev().children('input').val();
 			
 			if (parseInt(minPriceEntered) > parseInt(maxPriceEntered)) {
-				$(this).parent().prev().prev().children('span').text('Max price cannot be smaller than Min price.');
+				$(this).parent().prev().prev().children('span').text( wbAjaxFilterStrings.maxPriceNotice );
 				$(this).parent().prev().prev().children('span').show();
 				$(this).val(null);
 				$(this).$(this).parent().prev().prev().children('input').val(null);

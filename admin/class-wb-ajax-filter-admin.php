@@ -136,6 +136,22 @@ class Wb_Ajax_Filter_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-admin' . $extension, array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'wp-color-picker' );
 		wp_enqueue_media();
+
+		wp_localize_script( 
+			$this->plugin_name,
+			'wbAjaxFilterStrings', 
+			array(
+				'confirmDelete'      => __( 'Are you sure you want to delete this preset?', 'wb-ajax-filter' ),
+				'confirmDuplicate'   => __( 'Do you want to create duplicate of this preset?', 'wb-ajax-filter' ),
+				'nameExists'         => __( 'Name already exists.', 'wb-ajax-filter' ),
+				'selectTaxonomy'     => __( 'Please select a taxonomy', 'wb-ajax-filter' ),
+				'selectTerms'        => __( 'Please select terms', 'wb-ajax-filter' ),
+				'nameRequired'       => __( 'Please enter name for preset.', 'wb-ajax-filter' ),
+				'validTaxonomy'      => __( 'Please select a valid taxonomy', 'wb-ajax-filter' ),
+				'minPriceNotice'     => __( 'Entered Min price is greater than the highest price on this store.', 'wb-ajax-filter' ),
+				'maxPriceNotice'     => __( 'Max price cannot be smaller than Min price.', 'wb-ajax-filter' )
+			)
+		);
 	}
 
 	/**
