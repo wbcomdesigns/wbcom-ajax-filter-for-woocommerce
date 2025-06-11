@@ -69,7 +69,6 @@ class Wb_Ajax_Filter_Activator {
 			'search_in_content'            => 'yes',			
 			'search_in_author'             => 'yes',
 			'search_type_more_words'       => 'and',
-			'hide_out_of_stock'            => 'yes',
 			'order_by_post_type'           => 'yes',
 		);
 		foreach ( $wb_ajax_filter_settings as $key => $settings ) {

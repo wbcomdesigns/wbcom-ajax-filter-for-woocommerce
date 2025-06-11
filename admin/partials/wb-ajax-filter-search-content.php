@@ -120,19 +120,6 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 						</label>
 					 </div>
 				   </div>
-				   <div class="wbcom-settings-section-wrap">
-					  <div class="wbcom-settings-section-options-heading">
-						<label>
-							<?php esc_html_e( 'Hide out of stock products', 'wb-ajax-filter' ); ?>
-						</label>
-					 	<p class="description"><?php esc_html_e( 'Enable this option if you don\'t want to show out of stock products in the results', 'wb-ajax-filter' ); ?></p>
-						</div>
-						<div class="wbcom-settings-section-options">
-						<label>
-							<input name="wb_ajax_filter_search_content_settings[hide_out_of_stock]" type="checkbox" value="yes"<?php ( isset( $wb_ajax_filter_search_content_settings['hide_out_of_stock'] ) ) ? checked( $wb_ajax_filter_search_content_settings['hide_out_of_stock'], 'yes' ) : ''; ?>>							
-						</label>
-					</div>
-					</div>
 					<div class="wbcom-settings-section-wrap">
 					  <div class="wbcom-settings-section-options-heading">
 						  <label>

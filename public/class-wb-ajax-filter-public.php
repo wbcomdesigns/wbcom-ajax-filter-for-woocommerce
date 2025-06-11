@@ -430,10 +430,10 @@ class Wb_Ajax_Filter_Public {
 	public function wb_ajax_filter_modify_wc_product_query( $q ) {
 		if ( is_shop() ) {
 			$params = $_GET; //phpcs:ignore
+			$meta_query      = array();
+			$search_settings = get_option( 'wb_ajax_filter_admin_general_options' );
 			if ( isset( $params['preset'] ) ) {
 				$preset_id       = $params['preset'];
-				$search_settings = get_option( 'wb_ajax_filter_search_content_settings' );
-				$meta_query      = array();
 				if ( isset( $search_settings['cf_name'] ) && '' !== $search_settings['cf_name'] && 'product' === $q->query_vars['post_type'] ) {
 					$custom = $search_settings['cf_name'];
 					if ( array_key_exists( 'meta_' . $custom, $params ) ) {
@@ -444,36 +444,11 @@ class Wb_Ajax_Filter_Public {
 						);
 					}
 				}
-				if ( isset( $search_settings['hide_out_of_stock'] ) && 'yes' === $search_settings['hide_out_of_stock'] ) {
-					$meta_query[] = array(
-						'key'     => '_stock_status',
-						'value'   => 'instock',
-						'compare' => '==',
-					);
-				}
+				
 				$q->query_vars['meta_query'] = $meta_query;
 				$filters                     = get_post_meta( $preset_id, '_wb_filter', true );
 				if ( $filters ) {
 					foreach ( $filters as $filter ) {
-						
-						if( $filter['type'] == 'stock_sale' ) {
-							if( array_key_exists( 'instock_filter', $params ) ) {
-								$meta_query[] = array(
-									'key'     => '_stock_status',
-									'value'   => 'instock',
-									'compare' => '==',
-								);
-							} else if( array_key_exists( 'onsale_filter', $params ) ) {
-								$meta_query[] = array(
-									'key'     => '_sale_price',
-									'value'   => '0',
-									'compare' => '>=',
-								);
-								$q->query_vars['post_type']  = array( 'product', 'product_variation' );
-							}
-							$q->query_vars['meta_query'] = $meta_query;
-							
-						}
 						
 						if ( isset( $filter['type'] ) && 'tax' == $filter['type'] ) {
 							$taxonomy     = $filter['taxonomy'];
@@ -513,7 +488,9 @@ class Wb_Ajax_Filter_Public {
 						
 					}
 				}
-			} else if( isset( $params['instock_filter'] ) || isset( $params['onsale_filter'] ) ) {
+			} 
+			if( !empty( $params ) && ( isset( $params['instock_filter'] ) || isset( $params['onsale_filter'] ) ) ) {
+				
 				if( array_key_exists( 'instock_filter', $params ) ) {
 					$meta_query[] = array(
 						'key'     => '_stock_status',
@@ -529,6 +506,16 @@ class Wb_Ajax_Filter_Public {
 					$q->query_vars['post_type']  = array( 'product', 'product_variation' );
 				}
 				$q->query_vars['meta_query'] = $meta_query;
+			} 
+			if( ! empty( $params ) && isset( $search_settings['hide_out_of_stock'] ) && 'yes' === $search_settings['hide_out_of_stock'] ) {
+				
+				$meta_query[] = array(
+					'key'     => '_stock_status',
+					'value'   => 'instock',
+					'compare' => '==',
+				);
+				$q->query_vars['meta_query'] = $meta_query;
+				
 			}
 		}
 		return $q;
