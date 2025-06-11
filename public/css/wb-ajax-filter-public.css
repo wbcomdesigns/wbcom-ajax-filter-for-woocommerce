@@ -34,6 +34,10 @@ a.wb-ajax-reset-all-filters {
     height: 40px !important;
 }
 
+.select2-container--default .select2-search--inline .select2-search__field {
+    min-height: auto;
+}
+
 span.select2-dropdown.select2-dropdown--below {
     border-radius: 4px !important;
     top: -8px;
