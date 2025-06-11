@@ -364,6 +364,16 @@ td.Preset-title {
     margin-top: 15px;
 }
 
+.wb-ajax-filter-add-preset-button a.page-title-action {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 5px;
+}
+
 .wb-ajax-filter-add-preset-button a.page-title-action,
 .wb-ajax-filter-toggle-content-row.wb-all-toggle button#wb-ajax-filer-create-filter-save {
     padding: 12px 25px !important;
