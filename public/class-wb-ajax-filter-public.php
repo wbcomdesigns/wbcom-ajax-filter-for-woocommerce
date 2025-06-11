@@ -277,8 +277,13 @@ class Wb_Ajax_Filter_Public {
 	 */
 	public function wb_ajax_check_parent_is_included( $term_id, $terms ) {
 		$exists = false;
-		foreach ( $terms as $tvm ) {
-			if ( (int) $term_id === (int) $tvm->id ) {
+		
+		if( empty( $terms ) || empty( $term_id ) ) {
+			$exists = false;
+		}
+
+		foreach ( $terms as $term ) {
+			if ( (int) $term_id === (int) $term->id ) {
 				$exists = true;
 			}
 		}
@@ -433,7 +438,7 @@ class Wb_Ajax_Filter_Public {
 			$meta_query      = array();
 			$search_settings = get_option( 'wb_ajax_filter_admin_general_options' );
 			if ( isset( $params['preset'] ) ) {
-				$preset_id       = $params['preset'];
+				$preset_id   = absint( $params['preset'] );
 				if ( isset( $search_settings['cf_name'] ) && '' !== $search_settings['cf_name'] && 'product' === $q->query_vars['post_type'] ) {
 					$custom = $search_settings['cf_name'];
 					if ( array_key_exists( 'meta_' . $custom, $params ) ) {
@@ -451,72 +456,14 @@ class Wb_Ajax_Filter_Public {
 					foreach ( $filters as $filter ) {
 						
 						if ( isset( $filter['type'] ) && 'tax' == $filter['type'] ) {
-							$taxonomy     = $filter['taxonomy'];
-							$include_tags = array( 'product_tag', 'product_cat' );
-							$attributes   = wc_get_attribute_taxonomy_names();
-							if ( in_array( $filter['taxonomy'], $attributes, true ) ) {
-								if ( strpos( $taxonomy, 'pa_' ) !== false ) {
-									$taxonomy = str_replace( 'pa_', 'filter_', $taxonomy );
-								}
-								if ( array_key_exists( $taxonomy, $params ) ) {
-									$tax_query = $q->query_vars['tax_query'];
-									foreach ( $tax_query as $key => $qr ) {
-										if ( is_array( $qr ) && isset( $qr['taxonomy'] ) && $filter['taxonomy'] === $qr['taxonomy'] ) {
-											if ( isset( $filter['multiple'] ) && isset( $filter['relation'] ) && 'yes' === $filter['multiple'] ) {
-												unset( $tax_query[ $key ]['operator'] );
-												$tax_query[ $key ]['operator'] = strtoupper( $filter['relation'] );
-
-											}
-										}
-									}
-									unset( $q->query_vars['tax_query'] );
-									$q->query_vars['tax_query'] = $tax_query;
-								}
-							} elseif ( in_array( $taxonomy, $include_tags, true ) ) {
-								$tax_query = $q->tax_query->queries;
-								foreach ( $tax_query as $key => $qr ) {
-									if ( is_array( $qr ) && isset( $qr['taxonomy'] ) && $filter['taxonomy'] === $qr['taxonomy'] ) {
-										if ( isset( $filter['multiple'] ) && isset( $filter['relation'] ) && 'yes' === $filter['multiple'] ) {
-											unset( $tax_query[ $key ]['operator'] );
-											$tax_query[ $key ]['operator'] = strtoupper( $filter['relation'] );
-										}
-									}
-								}
-								$q->tax_query->queries = $tax_query;
-							}
+							$q = $this->wb_ajax_apply_taxonomy_filter( $q, $filter, $params );
 						}
 						
 					}
 				}
 			} 
-			if( !empty( $params ) && ( isset( $params['instock_filter'] ) || isset( $params['onsale_filter'] ) ) ) {
-				
-				if( array_key_exists( 'instock_filter', $params ) ) {
-					$meta_query[] = array(
-						'key'     => '_stock_status',
-						'value'   => 'instock',
-						'compare' => '==',
-					);
-				} else if( array_key_exists( 'onsale_filter', $params ) ) {
-					$meta_query[] = array(
-						'key'     => '_sale_price',
-						'value'   => '0',
-						'compare' => '>=',
-					);
-					$q->query_vars['post_type']  = array( 'product', 'product_variation' );
-				}
-				$q->query_vars['meta_query'] = $meta_query;
-			} 
-			if( ! empty( $params ) && isset( $search_settings['hide_out_of_stock'] ) && 'yes' === $search_settings['hide_out_of_stock'] ) {
-				
-				$meta_query[] = array(
-					'key'     => '_stock_status',
-					'value'   => 'instock',
-					'compare' => '==',
-				);
-				$q->query_vars['meta_query'] = $meta_query;
-				
-			}
+			
+			$q = $this->wb_ajax_apply_meta_filter( $q, array(), $params );
 		}
 		return $q;
 	}
@@ -602,5 +549,95 @@ class Wb_Ajax_Filter_Public {
 	 */
 	public function wb_ajax_filter_redirect_single_search_result() {
 		return false;
+	}
+
+	/**
+	 * Function to build tax query to filter products.
+	 * 
+	 * @param array $q Product Query.
+	 * @param array $filter Custom Filter data.
+	 * @param array $params URL parameters.
+	 * 
+	 * @return array $q Modified Product Query.
+	 * 
+	 */
+	public function wb_ajax_apply_taxonomy_filter( $q, $filter, $params ) {
+
+		$taxonomy     = $filter['taxonomy'];
+		$include_tags = array( 'product_tag', 'product_cat' );
+		$attributes   = wc_get_attribute_taxonomy_names();
+		if ( in_array( $filter['taxonomy'], $attributes, true ) ) {
+			if ( strpos( $taxonomy, 'pa_' ) !== false ) {
+				$taxonomy = str_replace( 'pa_', 'filter_', $taxonomy );
+			}
+			if ( array_key_exists( $taxonomy, $params ) ) {
+				$tax_query = $q->query_vars['tax_query'];
+				foreach ( $tax_query as $key => $qr ) {
+					if ( is_array( $qr ) && isset( $qr['taxonomy'] ) && $filter['taxonomy'] === $qr['taxonomy'] ) {
+						if ( isset( $filter['multiple'] ) && isset( $filter['relation'] ) && 'yes' === $filter['multiple'] ) {
+							unset( $tax_query[ $key ]['operator'] );
+							$tax_query[ $key ]['operator'] = strtoupper( $filter['relation'] );
+
+						}
+					}
+				}
+				unset( $q->query_vars['tax_query'] );
+				$q->query_vars['tax_query'] = $tax_query;
+			}
+		} elseif ( in_array( $taxonomy, $include_tags, true ) ) {
+			$tax_query = $q->tax_query->queries;
+			foreach ( $tax_query as $key => $qr ) {
+				if ( is_array( $qr ) && isset( $qr['taxonomy'] ) && $filter['taxonomy'] === $qr['taxonomy'] ) {
+					if ( isset( $filter['multiple'] ) && isset( $filter['relation'] ) && 'yes' === $filter['multiple'] ) {
+						unset( $tax_query[ $key ]['operator'] );
+						$tax_query[ $key ]['operator'] = strtoupper( $filter['relation'] );
+					}
+				}
+			}
+			$q->tax_query->queries = $tax_query;
+		}
+		return $q;
+	}
+
+	/**
+	 * Function to build meta query to filter products.
+	 * 
+	 * @param array $q Product Query.
+	 * @param array $filter Custom Filter data.
+	 * @param array $params URL parameters.
+	 * 
+	 * @return array $q Modified Product Query.
+	 * 
+	 */
+	public function wb_ajax_apply_meta_filter( $q, $filter, $params ) {
+		if( !empty( $params ) && ( isset( $params['instock_filter'] ) || isset( $params['onsale_filter'] ) ) ) {
+				
+			if( array_key_exists( 'instock_filter', $params ) ) {
+				$meta_query[] = array(
+					'key'     => '_stock_status',
+					'value'   => 'instock',
+					'compare' => '==',
+				);
+			} else if( array_key_exists( 'onsale_filter', $params ) ) {
+				$meta_query[] = array(
+					'key'     => '_sale_price',
+					'value'   => '0',
+					'compare' => '>=',
+				);
+				$q->query_vars['post_type']  = array( 'product', 'product_variation' );
+			}
+			$q->query_vars['meta_query'] = $meta_query;
+		} 
+		if( ! empty( $params ) && isset( $search_settings['hide_out_of_stock'] ) && 'yes' === $search_settings['hide_out_of_stock'] ) {
+			
+			$meta_query[] = array(
+				'key'     => '_stock_status',
+				'value'   => 'instock',
+				'compare' => '==',
+			);
+			$q->query_vars['meta_query'] = $meta_query;
+			
+		}
+		return $q;
 	}
 }
