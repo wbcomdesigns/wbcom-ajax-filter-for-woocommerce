@@ -117,10 +117,11 @@ a.wb-ajax-clear-single-filter {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    gap: 10px;
 }
 
 .wb-ajax-filter-content-container .wb-price-ranges li {
-    width: 50%;
+    width: calc(50% - 5px);
 }
 
 .wb-ajax-filter-content-container .wb-ajax-filters-container {
@@ -386,7 +387,7 @@ div.wb-ajax-filter-loader-container .gif-container {
 
 /*Media Mobile View Style*/
 
-@media only screen and (max-width: 790px) {
+@media only screen and (max-width: 992px) {
 
     .wb-ajax-filter-content-container.filter-columns-5 .wb-ajax-filter-container-single,
     .wb-ajax-filter-content-container.filter-columns-4 .wb-ajax-filter-container-single,
@@ -433,6 +434,10 @@ div.wb-ajax-filter-loader-container .gif-container {
     .wb-ajax-filter-content-container.filter-columns-4 .wb-ajax-filter-container-single,
     .wb-ajax-filter-content-container.filter-columns-3 .wb-ajax-filter-container-single {
         width: 100%;
+    }
+
+    .wb-ajax-filter-content-container .wb-ajax-filters-container .wb-ajax-filter-container-single:last-child {
+        margin-bottom: 0;
     }
 
 }
