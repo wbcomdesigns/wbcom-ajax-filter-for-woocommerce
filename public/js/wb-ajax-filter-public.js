@@ -375,5 +375,10 @@
 				}
 			},
 		});
+		
+		//compatibility with woocommerce default sorting filter
+		$('.woocommerce-ordering').on('change', 'select.orderby', function () {
+			$(this).closest('form').trigger('submit');
+		});
 	});
 })(jQuery);
