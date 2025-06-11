@@ -283,72 +283,10 @@ class Wb_Ajax_Filter_Admin {
 				$filter    = array();
 				$form_data = wp_unslash( $_POST['form_data'] ); //phpcs:ignore
 				// Converting form data into associative array.
-				foreach ( $form_data as $field ) {
-					if ( '' !== $field['value'] ) {
-						$str_after_brack  = explode( '[', $field['name'] );
-						$str_before_brack = explode( ']', $str_after_brack[1] );
-						if ( 'order_options' === $str_before_brack[0] ) {
-							$filter[ $str_before_brack[0] ][] = $field['value'];
-						} elseif ( 'price_ranges' === $str_before_brack[0] ) {
-							$price_ranges_key      = explode( ']', $str_after_brack[2] );
-							$price_ranges_meta_key = explode( ']', $str_after_brack[3] );
-							$filter[ $str_before_brack[0] ][ $price_ranges_key[0] ][ $price_ranges_meta_key[0] ] = $field['value'];
-						} elseif ( isset( $filter['taxonomy'] ) && 'terms' === $str_before_brack[0] ) {
-							$term_data                        = get_term( $field['value'], $filter['taxonomy'] );
-							$tm                               = new stdClass();
-							$tm->id                           = $field['value'];
-							$tm->text                         = $term_data->name;
-							$filter[ $str_before_brack[0] ][] = $tm;
-						} elseif ( 'terms_text' === $str_before_brack[0] ) {
-							$price_ranges_key      = explode( ']', $str_after_brack[2] );
-							$price_ranges_meta_key = explode( ']', $str_after_brack[3] );
-							$filter[ $str_before_brack[0] ][ $price_ranges_key[0] ][ $price_ranges_meta_key[0] ] = $field['value'];
-						} else {
-							$filter[ $str_before_brack[0] ] = $field['value'];
-						}
-					}
-				}
-				$post_title = $filter['preset_title'];
-				if ( isset( $filter['preset_id'] ) && '' !== $filter['preset_id'] ) {
-					$post_id = $filter['preset_id'];
-					unset( $filter['preset_id'] );
-				} else {
-					$post_id = '';
-				}
-				$filter['filter_enabled'] = 'yes';
-				unset( $filter['preset_title'] );
-				if ( '' === $post_id ) {
-					$post_id = wp_insert_post(
-						array(
-							'post_type'      => 'wb_filter_preset',
-							'post_title'     => $post_title,
-							'post_content'   => 'Wb Ajax filter Preset',
-							'post_status'    => 'publish',
-							'comment_status' => 'closed',
-							'ping_status'    => 'closed',
-						)
-					);
-					if ( $post_id ) {
-						$filters[] = $filter;
-						update_post_meta( $post_id, '_wb_filter', $filters );
-						echo 'filter_created';
-					}
-				} else {
-					$filters    = get_post_meta( $post_id, '_wb_filter', true );
-					$new_filter = 0;
-					foreach ( $filters as $key => $val ) {
-						if ( $val['filter_id'] === $filter['filter_id'] ) {
-							$filters[ $key ] = $filter;
-							$new_filter++;
-							break;
-						}
-					}
-					if ( 0 === $new_filter ) {
-						$filters[] = $filter;
-					}
-					update_post_meta( $post_id, '_wb_filter', $filters );
-					echo 'filter_edited';
-				}
+				$filter_data   = $this->wb_ajax_process_form_data( $form_data );
+				$result        = $this->wb_ajax_save_filter_data( $filter_data );
+
+				echo $result;
 			}
 		}
 		die();
@@ -883,4 +821,91 @@ class Wb_Ajax_Filter_Admin {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-save.php';
 	}
 
+	/**
+	 * Function to create associative array of filter data using form data.
+	 * 
+	 * @param array $form_data Preset data.
+	 * @return array $filter Array of filter data.
+	 * 
+	 */
+	private function wb_ajax_process_form_data( $form_data ) {
+		$filter = array();
+		foreach ( $form_data as $field ) {
+			if ( '' !== $field['value'] ) {
+				$str_after_brack  = explode( '[', $field['name'] );
+				$str_before_brack = explode( ']', $str_after_brack[1] );
+				if ( 'order_options' === $str_before_brack[0] ) {
+					$filter[ $str_before_brack[0] ][] = $field['value'];
+				} elseif ( 'price_ranges' === $str_before_brack[0] ) {
+					$price_ranges_key      = explode( ']', $str_after_brack[2] );
+					$price_ranges_meta_key = explode( ']', $str_after_brack[3] );
+					$filter[ $str_before_brack[0] ][ $price_ranges_key[0] ][ $price_ranges_meta_key[0] ] = $field['value'];
+				} elseif ( isset( $filter['taxonomy'] ) && 'terms' === $str_before_brack[0] ) {
+					$term_data                        = get_term( $field['value'], $filter['taxonomy'] );
+					$tm                               = new stdClass();
+					$tm->id                           = $field['value'];
+					$tm->text                         = $term_data->name;
+					$filter[ $str_before_brack[0] ][] = $tm;
+				} elseif ( 'terms_text' === $str_before_brack[0] ) {
+					$price_ranges_key      = explode( ']', $str_after_brack[2] );
+					$price_ranges_meta_key = explode( ']', $str_after_brack[3] );
+					$filter[ $str_before_brack[0] ][ $price_ranges_key[0] ][ $price_ranges_meta_key[0] ] = $field['value'];
+				} else {
+					$filter[ $str_before_brack[0] ] = $field['value'];
+				}
+			}
+		}
+
+		return $filter;
+	}
+
+	/**
+	 * Function to save filter preset data.
+	 * 
+	 * @param array $filter Preset Filter Data.
+	 * @return string Message string.
+	 */
+	private function wb_ajax_save_filter_data( $filter ) {
+		$post_title = $filter['preset_title'];
+		if ( isset( $filter['preset_id'] ) && '' !== $filter['preset_id'] ) {
+			$post_id = $filter['preset_id'];
+			unset( $filter['preset_id'] );
+		} else {
+			$post_id = '';
+		}
+		$filter['filter_enabled'] = 'yes';
+		unset( $filter['preset_title'] );
+		if ( '' === $post_id ) {
+			$post_id = wp_insert_post(
+				array(
+					'post_type'      => 'wb_filter_preset',
+					'post_title'     => $post_title,
+					'post_content'   => 'Wb Ajax filter Preset',
+					'post_status'    => 'publish',
+					'comment_status' => 'closed',
+					'ping_status'    => 'closed',
+				)
+			);
+			if ( $post_id ) {
+				$filters[] = $filter;
+				update_post_meta( $post_id, '_wb_filter', $filters );
+				return 'filter_created';
+			}
+		} else {
+			$filters    = get_post_meta( $post_id, '_wb_filter', true );
+			$new_filter = 0;
+			foreach ( $filters as $key => $val ) {
+				if ( $val['filter_id'] === $filter['filter_id'] ) {
+					$filters[ $key ] = $filter;
+					$new_filter++;
+					break;
+				}
+			}
+			if ( 0 === $new_filter ) {
+				$filters[] = $filter;
+			}
+			update_post_meta( $post_id, '_wb_filter', $filters );
+			return 'filter_edited';
+		}
+	}
 }
