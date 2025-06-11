@@ -277,14 +277,10 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function create_filter_preset_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( isset( $_POST['form_data'] ) ) {
 				$filter    = array();
-				if( ! isset( $_POST['form_data'] ) || ! is_array( $_POST['form_data'] ) ) {
-					wp_send_json_error( 'Invalid Form Data.' );
-				}
-
 				$form_data = wp_unslash( $_POST['form_data'] ); //phpcs:ignore
 				// Converting form data into associative array.
 				foreach ( $form_data as $field ) {
@@ -335,7 +331,7 @@ class Wb_Ajax_Filter_Admin {
 					if ( $post_id ) {
 						$filters[] = $filter;
 						update_post_meta( $post_id, '_wb_filter', $filters );
-						wp_send_json_success( 'Filter created.' );
+						echo 'filter_created';
 					}
 				} else {
 					$filters    = get_post_meta( $post_id, '_wb_filter', true );
@@ -351,12 +347,11 @@ class Wb_Ajax_Filter_Admin {
 						$filters[] = $filter;
 					}
 					update_post_meta( $post_id, '_wb_filter', $filters );
-					
-					wp_send_json_success( 'Filter edited.' );
+					echo 'filter_edited';
 				}
 			}
 		}
-		wp_die();
+		die();
 	}
 
 	/**
@@ -364,10 +359,10 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function check_filter_preset_title_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( ! isset( $_POST['title'] ) ) {
-				wp_send_json_error( 'Title is missing.' );
+				exit;
 			}
 			$args    = array(
 				'post_type'    => 'wb_filter_preset',
@@ -377,25 +372,25 @@ class Wb_Ajax_Filter_Admin {
 			$filters = get_posts( $args );
 			foreach ( $filters as $filter ) {
 				if ( strtolower( $filter->post_title ) === $_POST['title'] || $_POST['title'] === $filter->post_title ) {
-					wp_send_json_success( 'Name exists.' );
+					echo 'exists';
+					die();
 				} else {
-					wp_send_json_success( 'Name does not exists.' );
+					echo 'not exists';
+					die();
 				}
 			}
 		}
-		wp_die();
+		die();
 	}
 	/**
 	 * Create a duplicate filter preset.
 	 */
 	public function duplicate_filter_preset_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
-			
+			exit();
 		} else {
 			if ( ! isset( $_POST['preset'] ) ) {
-				wp_send_json_error( 'Preset is missing.' );
-				
+				exit;
 			}
 			$preset_id   = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
 			$preset_data = get_post( $preset_id );
@@ -427,12 +422,10 @@ class Wb_Ajax_Filter_Admin {
 			if ( $post_id ) {
 				update_post_meta( $post_id, '_wb_filter', $filters );
 				update_post_meta( $post_id, 'parent_preset', $preset_id );
-				
-				wp_send_json_success( 'Preset Duplicated.' );
-				
+				echo 'copy_created';
 			}
 		}
-		wp_die();
+		exit();
 	}
 
 	/**
@@ -440,22 +433,16 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function delete_filter_preset_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( ! isset( $_POST['preset'] ) ) {
-				wp_send_json_error( 'Preset is missing.' );
+				exit;
 			}
-			$preset_id = absint( sanitize_text_field( wp_unslash( $_POST['preset'] ) ) );
-			
-			if( $preset_id <= 0 ) {
-				wp_send_json_error( 'Invalid Preset ID' );
-			}
-
+			$preset_id = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
 			wp_delete_post( $preset_id, false );
-			
-			wp_send_json_success( 'Preset deleted Successfully' );
+			echo 'preset_deleted';
 		}
-		wp_die();
+		exit();
 	}
 
 	/**
@@ -463,10 +450,10 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function duplicate_single_filter_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['filter_id'] ) ) {
-				wp_send_json_error( 'Filter id is missing.' );
+				exit;
 			}
 			$preset_id = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
 			$filter_id = sanitize_text_field( wp_unslash( $_POST['filter_id'] ) );
@@ -484,9 +471,9 @@ class Wb_Ajax_Filter_Admin {
 					update_post_meta( $preset_id, '_wb_filter', $filters );
 				}
 			}
-			wp_send_json_success( 'Filter Duplicated.' );
+			echo 'copy_created';
 		}
-		wp_die();
+		exit();
 	}
 
 	/**
@@ -494,10 +481,10 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function delete_single_filter_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['filter_id'] ) ) {
-				wp_send_json_error( 'Filter id is missing.' );
+				exit;
 			}
 			$new_filters = array();
 			$preset_id   = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
@@ -509,9 +496,9 @@ class Wb_Ajax_Filter_Admin {
 				}
 			}
 			update_post_meta( $preset_id, '_wb_filter', $new_filters );
-			wp_send_json_success( 'Preset deleted.' );
+			echo 'preset_deleted';
 		}
-		wp_die();
+		exit();
 	}
 
 	/**
@@ -519,14 +506,14 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function enable_disable_filter_preset_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['enabled'] ) ) {
-				wp_send_json_error( 'Filter is not enabled.' );
+				exit;
 			}
 			update_post_meta( sanitize_text_field( wp_unslash( $_POST['preset'] ) ), 'preset_enabled', sanitize_text_field( wp_unslash( $_POST['enabled'] ) ) );
 		}
-		wp_die();
+		exit();
 	}
 
 	/**
@@ -534,10 +521,10 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function enable_disable_single_filter_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['enabled'] ) && ! isset( $_POST['filter_id'] ) ) {
-				wp_send_json_error( 'Filter is not enabled.' );
+				exit;
 			}
 			$preset_id = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
 			$filter_id = sanitize_text_field( wp_unslash( $_POST['filter_id'] ) );
@@ -551,7 +538,7 @@ class Wb_Ajax_Filter_Admin {
 			}
 			update_post_meta( $preset_id, '_wb_filter', $filters );
 		}
-		wp_die();
+		exit();
 	}
 
 	/**
@@ -559,10 +546,10 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function edit_preset_post_title_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['title'] ) ) {
-				wp_send_json_error( 'Preset title is missing.' );
+				exit;
 			}
 			$preset_id     = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
 			$title         = sanitize_text_field( wp_unslash( $_POST['title'] ) );
@@ -573,7 +560,7 @@ class Wb_Ajax_Filter_Admin {
 
 			wp_update_post( $preset_update );
 		}
-		wp_die();
+		exit();
 	}
 
 	/**
@@ -581,10 +568,10 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function customize_term_text_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( ! isset( $_POST['id'] ) && ! isset( $_POST['text'] ) ) {
-				wp_send_json_error( 'Term text is missing.' );
+				exit;
 			}
 			$term_id = sanitize_text_field( wp_unslash( $_POST['id'] ) );
 			$text    = sanitize_text_field( wp_unslash( $_POST['text'] ) );
@@ -594,7 +581,7 @@ class Wb_Ajax_Filter_Admin {
 			$response = ob_get_clean();
 			echo wp_json_encode( $response );
 		}
-		wp_die();
+		exit();
 	}
 
 	/**
@@ -602,10 +589,10 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function sortable_single_filters_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( ! isset( $_POST['old_index'] ) && ! isset( $_POST['new_index'] ) && ! isset( $_POST['preset'] ) ) {
-				wp_send_json_error( 'Index is missing.' );
+				exit;
 			}
 			$old_index = sanitize_text_field( wp_unslash( $_POST['old_index'] ) );
 			$new_index = sanitize_text_field( wp_unslash( $_POST['new_index'] ) );
@@ -616,7 +603,7 @@ class Wb_Ajax_Filter_Admin {
 			array_splice( $filters, $new_index, 0, array( $filter ) );
 			update_post_meta( $preset, '_wb_filter', $filters );
 		}
-		wp_die();
+		exit();
 	}
 
 	/**
@@ -624,10 +611,10 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function check_custom_field_exists_wb_callback() {
 		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( ! isset( $_GET['q'] ) ) {
-				wp_send_json_error( 'Parameter is missing.' );
+				exit;
 			}
 			$field_slug = sanitize_text_field( wp_unslash( $_GET['q'] ) );
 			$args         = array(
@@ -649,7 +636,7 @@ class Wb_Ajax_Filter_Admin {
 			}
 			echo wp_json_encode( $matched_fields );
 		}
-		wp_die();
+		exit();
 	}
 
 	/**
@@ -671,10 +658,10 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function select2_get_terms_wb_callback() {
 		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			if ( ! isset( $_GET['q'] ) && ! isset( $_GET['cat'] ) ) {
-				wp_send_json_error( 'Taxonomy is missing.' );
+				exit;
 			}
 			$taxonomy = sanitize_text_field( wp_unslash( $_GET['cat'] ) );
 			if( ! empty( $taxonomy ) ) {
@@ -700,7 +687,7 @@ class Wb_Ajax_Filter_Admin {
 				}
 			}
 		}
-		wp_die();
+		die();
 	}
 
 	/**
@@ -708,14 +695,14 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function add_price_range_field_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( 'Security check failed.' );
+			exit();
 		} else {
 			ob_start();
 			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-add-price-range.php';
 			$response = ob_get_clean();
 			echo wp_json_encode( $response );
 		}
-		wp_die();
+		die();
 	}
 
 	/**
