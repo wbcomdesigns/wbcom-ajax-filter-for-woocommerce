@@ -606,4 +606,14 @@ class Wb_Ajax_Filter_Public {
 		}
 		return ob_get_clean();
 	}
+
+	/**
+	 * Function to redirect single product search result on shop page instead of redirecting to product page.
+	 * 
+	 * @since 1.2.1
+	 * @return bool false
+	 */
+	public function wb_ajax_filter_redirect_single_search_result() {
+		return false;
+	}
 }
