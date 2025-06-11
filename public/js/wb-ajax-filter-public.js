@@ -163,6 +163,7 @@
 				params.set( 'preset', presetID );
 			}	
 			if (loadResultWithAjax) {
+				urlHost = urlHost.split('page')[0];
 				history.pushState({}, null, urlHost + '?' + params.toString());
 				refreshShopPageTemplate(urlHost + '?' + params.toString());
 			} else {
