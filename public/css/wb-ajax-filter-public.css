@@ -256,6 +256,10 @@ ul.wb-price-ranges {
     padding: 0px 30px 0px 30px !important;
 }
 
+.wb-search-submit-container input[type="submit"] {
+    text-align: center !important;
+}
+
 .wb-ajax-clear-single-filter {
     font-size: 13px;
 }

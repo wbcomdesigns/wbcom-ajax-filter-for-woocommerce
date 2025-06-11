@@ -72,7 +72,15 @@ class Wb_Ajax_Filter_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wb-ajax-filter-public.css', array(), $this->version, 'all' );
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$extension = is_rtl() ? '.rtl.css' : '.css';
+			$path      = is_rtl() ? '/rtl' : '';
+		} else {
+			$extension = is_rtl() ? '.rtl.css' : '.min.css';
+			$path      = is_rtl() ? '/rtl' : '/min';
+		}
+		
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-public' . $extension, array(), $this->version, 'all' );
 		wp_enqueue_style( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/css/ion.rangeSlider.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
 		wp_add_inline_style( $this->plugin_name, $this->wb_ajax_add_custom_css_to_frontend() );
@@ -97,9 +105,16 @@ class Wb_Ajax_Filter_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-public.js', array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( 'wb_ajax_filter_shortcode', plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-shortcode.js', array( 'jquery' ), $this->version, true );
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$extension = '.js';
+			$path      = '';
+		} else {
+			$extension = '.min.js';
+			$path      = '/min';
+		}
+		
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-public' . $extension, array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'wb_ajax_filter_shortcode', plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-shortcode' . $extension, array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'jquery-ui-slider' );
 		wp_enqueue_script( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/js/ion.rangeSlider.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );

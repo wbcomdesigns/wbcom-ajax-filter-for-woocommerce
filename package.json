@@ -5,9 +5,15 @@
   "license": "GPL-2.0+",
   "description": "Wbcom Ajax Filter for Woocommerce Plugin allows your users to find the product they are looking for as quickly as possible.",
   "devDependencies": {
-    "grunt": "^1.4.1",
+    "grunt": "^1.6.1",
     "grunt-checktextdomain": "^1.0.1",
-    "grunt-wp-i18n": "^1.0.3"
+    "grunt-contrib-cssmin": "^5.0.0",
+    "grunt-contrib-uglify": "^5.2.2",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-rtlcss": "^2.0.2",
+    "grunt-shell": "^4.0.0",
+    "grunt-wp-i18n": "^1.0.3",
+    "load-grunt-tasks": "^3.5.2"
   },
   "engines": {
     "node": ">=6.9.1"
@@ -17,7 +23,6 @@
     "url": "https://github.com/wbcomdesigns/wbcom-ajax-filter-for-woocommerce"
   },
   "dependencies": {
-    "grunt-cli": "^1.4.3",
-    "load-grunt-tasks": "^3.5.2"
+    "grunt-cli": "^1.4.3"
   }
 }

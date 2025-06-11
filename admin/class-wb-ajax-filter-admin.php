@@ -84,7 +84,15 @@ class Wb_Ajax_Filter_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wb-ajax-filter-admin.css', array(), $this->version, 'all' );
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$extension = is_rtl() ? '.rtl.css' : '.css';
+			$path      = is_rtl() ? '/rtl' : '';
+		} else {
+			$extension = is_rtl() ? '.rtl.css' : '.min.css';
+			$path      = is_rtl() ? '/rtl' : '/min';
+		}
+
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-admin' . $extension, array(), $this->version, 'all' );
 		wp_enqueue_style( 'wp-color-picker' );
 		if ( 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
 			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
@@ -112,12 +120,20 @@ class Wb_Ajax_Filter_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$extension = '.js';
+			$path      = '';
+		} else {
+			$extension = '.min.js';
+			$path      = '/min';
+		}
+
 		if ( 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
 			wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( 'jquery-ui-core' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
 		}
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wb-ajax-filter-admin.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-admin' . $extension, array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'wp-color-picker' );
 		wp_enqueue_media();
 	}
