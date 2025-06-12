@@ -53,6 +53,8 @@ if ( ! defined( 'WB_AJAX_FILTER_PLUGIN_PATH' ) ) {
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-wb-ajax-filter-activator.php
+ * 
+ * @since 1.0.0
  */
 function activate_wb_ajax_filter() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wb-ajax-filter-activator.php';
@@ -62,6 +64,8 @@ function activate_wb_ajax_filter() {
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-wb-ajax-filter-deactivator.php
+ * 
+ * @since 1.0.0
  */
 function deactivate_wb_ajax_filter() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wb-ajax-filter-deactivator.php';
@@ -74,13 +78,15 @@ register_deactivation_hook( __FILE__, 'deactivate_wb_ajax_filter' );
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
+ * 
+ * @since 1.0.0
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-wb-ajax-filter.php';
 
 if ( ! function_exists( 'wb_ajax_filter_check_woocomerce' ) ) {
 	add_action( 'admin_init', 'wb_ajax_filter_check_woocomerce' );
 	/**
-	 * Function check for woocommerce is installed and activate.
+	 * Function to check if woocommerce is installed and active.
 	 *
 	 * @since    1.0.0
 	 */
@@ -158,6 +164,11 @@ function wb_ajax_filter_activation_redirect_settings( $plugin ) {
 
 add_action( 'plugins_loaded', 'wb_ajax_filter_initialize_plugin' );
 
+/** 
+ * Function to initialize the plugin execution.
+ * 
+ * @since 1.0.0
+ */
 function wb_ajax_filter_initialize_plugin() {
 	if( class_exists( 'WooCommerce' ) ) {
 		run_wb_ajax_filter();

@@ -10,14 +10,16 @@
  */
 
 /**
- * The admin-specific functionality of the plugin.
- *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
+ * WB Ajax Filter Admin Class
+ * 
+ * Handles all admin-specific functionality for the WB Ajax Filter plugin.
+ * Manages filter presets, settings, and admin interface interactions.
+ * 
  * @package    Wb_Ajax_Filter
  * @subpackage Wb_Ajax_Filter/admin
  * @author     Wbcom Designs <https://wbcomdesigns.com/>
+ * @since      1.0.0
+ * 
  */
 class Wb_Ajax_Filter_Admin {
 
@@ -273,7 +275,13 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Create new filter preset ajax callback.
+	 * Create or update a filter preset
+	 * 
+	 * Processes form data from the preset creation modal and either creates
+	 * a new preset or updates an existing one based on the provided data.
+	 * 
+	 * @since 1.0.0
+	 * @return void Outputs JSON response and terminates.
 	 */
 	public function create_filter_preset_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -293,7 +301,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Checks if Filter preset title already exists.
+	 * Checks if filter preset title name already exists.
+	 * 
+	 * @since 1.0.0
+	 * @return void Output json response and terminates.
 	 */
 	public function check_filter_preset_title_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -321,7 +332,10 @@ class Wb_Ajax_Filter_Admin {
 		die();
 	}
 	/**
-	 * Create a duplicate filter preset.
+	 * Creates a duplicate filter preset.
+	 * 
+	 * @since 1.0.0
+	 * @return void Output json response and terminates.
 	 */
 	public function duplicate_filter_preset_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -367,7 +381,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Delete filter preset.
+	 * Delete existing filter preset.
+	 * 
+	 * @since 1.0.0
+	 * @return void Output json response and terminates.
 	 */
 	public function delete_filter_preset_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -384,7 +401,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Create a duplicate of signle filter.
+	 * Creates a duplicate of single filter of a preset.
+	 * 
+	 * @since 1.0.0
+	 * @return void Output json response and terminates.
 	 */
 	public function duplicate_single_filter_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -415,7 +435,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Delete single filter.
+	 * Deletes a single filter in preset.
+	 * 
+	 * @since 1.0.0
+	 * @return void Output json response and terminates.
 	 */
 	public function delete_single_filter_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -440,7 +463,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Enable/Disable filter preset.
+	 * Enable/Disable filter preset to be rendered on shop page.
+	 * 
+	 * @since 1.0.0
+	 * @return void 
 	 */
 	public function enable_disable_filter_preset_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -455,7 +481,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Enable/Disable filter preset.
+	 * Enable/Disable single filter in preset to be rendered on shop page.
+	 * 
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public function enable_disable_single_filter_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -480,7 +509,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Change preset title.
+	 * Modifies the title of the preset.
+	 * 
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public function edit_preset_post_title_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -502,7 +534,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Customise terms text.
+	 * Customizes the text of the terms used in taxonomy filter.
+	 * 
+	 * @since 1.0.0
+	 * @return void Outputs JSON response and terminates.
 	 */
 	public function customize_term_text_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -523,7 +558,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Sort single filters.
+	 * Sort the position of single filters in preset.
+	 * 
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public function sortable_single_filters_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -545,7 +583,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Check custom fields exists.
+	 * Checks if the custom fields exists to be used in filter.
+	 * 
+	 * @since 1.0.0
+	 * @return void Outputs JSON response and terminates.
 	 */
 	public function check_custom_field_exists_wb_callback() {
 		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -578,7 +619,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Actions performed to create tabs on the sub menu page.
+	 * Function to create settings tabs on the plugin menu page.
+	 * 
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_plugin_settings_tabs() {
 		$current_tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-ajax-filter-welcome';
@@ -592,7 +636,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Search terms ajax callabck for select2.
+	 * Ajax callback function to search terms for select2 search box.
+	 * 
+	 * @since 1.0.0
+	 * @return void Outputs JSON response and terminates.
 	 */
 	public function select2_get_terms_wb_callback() {
 		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -629,7 +676,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Add price range field.
+	 * Includes the price range field while filter creation.
+	 * 
+	 * @since 1.0.0
+	 * @return void Outputs JSON response and terminates.
 	 */
 	public function add_price_range_field_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -644,11 +694,10 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Actions performed on loading plugin settings
+	 * Function to register the plugin settings.
 	 *
-	 * @since    1.0.9
-	 * @access   public
-	 * @author   Wbcom Designs
+	 * @since  1.0.9
+	 * @return void
 	 */
 	public function wb_ajax_filter_init_plugin_settings() {
 		$wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' );
@@ -682,6 +731,9 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin welcome setting tab content file.
+	 * 
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_admin_welcome_content() {
 		include_once 'partials/wb-ajax-filter-welcome-page.php';
@@ -689,6 +741,9 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin general setting tab content file.
+	 * 
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_admin_general_content() {
 		include_once 'partials/wb-ajax-filter-setting-general-tab.php';
@@ -696,6 +751,9 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin presets setting tab content file.
+	 * 
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_admin_presets_content() {
 		include_once 'partials/wb-ajax-filter-setting-presets-tab.php';
@@ -703,6 +761,9 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin customization setting tab content file.
+	 * 
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_admin_customization_content() {
 		include_once 'partials/wb-ajax-filter-setting-customization-tab.php';
@@ -710,6 +771,9 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin ajax search setting tab content file.
+	 * 
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_admin_ajax_search_settings_content() {
 		include_once 'partials/wb-ajax-filter-search-settings.php';
@@ -717,105 +781,130 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin search setting tab content file.
+	 * 
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_admin_search_content() {
 		include_once 'partials/wb-ajax-filter-search-content.php';
 	}
 
 	/**
-	 * Load create filter form field.
+	 * Includes filter name form field.
 	 *
-	 * @param filters $filters Filter array.
+	 * @param array $filters Filter array.
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_create_filter_name_field( $filters ) {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-name.php';
 	}
 
 	/**
-	 * Load create filter form field.
+	 * Includes filter type form field.
 	 *
-	 * @param filters $filters Filter array.
+	 * @param array $filters Filter array.
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_create_filter_for_field( $filters ) {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-for.php';
 	}
 
 	/**
-	 * Load create filter form field.
+	 * Includes taxonomy filter form field.
 	 *
-	 * @param filters $filters Filter array.
+	 * @param array $filters Filter array.
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_create_filter_tax_field( $filters ) {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-tax.php';
 	}
 
 	/**
-	 * Load create filter form field.
+	 * Includes price slider filter form field.
 	 *
-	 * @param filters $filters Filter array.
+	 * @param array $filters Filter array.
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_create_filter_price_slider_field( $filters ) {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-price-slider.php';
 	}
 
 	/**
-	 * Load create filter form field.
+	 * Includes order by filter form field.
 	 *
-	 * @param filters $filters Filter array.
+	 * @param array $filters Filter array.
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_create_filter_order_by_field( $filters ) {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-order-by.php';
 	}
 
 	/**
-	 * Load create filter form field.
+	 * Includes price range filter form field.
 	 *
-	 * @param filters $filters Filter array.
+	 * @param array $filters Filter array.
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_create_filter_price_range_field( $filters ) {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-price-range.php';
 	}
 
 	/**
-	 * Load create filter form field.
+	 * Includes stock filter form field.
 	 *
-	 * @param filters $filters Filter array.
+	 * @param array $filters Filter array.
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_create_filter_stock_field( $filters ) {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-stock.php';
 	}
 
 	/**
-	 * Load create filter form field.
+	 * Includes toogle filter form field.
 	 *
-	 * @param filters $filters Filter array.
+	 * @param array $filters Filter array.
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_create_filter_toggle_field( $filters ) {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-toggle.php';
 	}
 
 	/**
-	 * Load create filter form field.
+	 * Includes show count filter form field.
 	 *
-	 * @param filters $filters Filter array.
+	 * @param array $filters Filter array.
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_create_filter_count_field( $filters ) {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-count.php';
 	}
 
 	/**
-	 * Load create filter form field.
+	 * Includes adoptive filtering form field.
 	 *
-	 * @param filters $filters Filter array.
+	 * @param array $filters Filter array.
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_create_filter_adoptive_filtering_field( $filters ) {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-adoptive-filtering.php';
 	}
 
 	/**
-	 * Load create filter form field.
+	 * Includes save filter form field.
 	 *
-	 * @param filters $filters Filter array.
+	 * @param array $filters Filter array.
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function wb_ajax_filter_create_filter_save_button( $filters ) {
 		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-save.php';

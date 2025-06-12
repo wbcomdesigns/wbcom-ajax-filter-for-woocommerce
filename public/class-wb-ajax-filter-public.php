@@ -129,9 +129,10 @@ class Wb_Ajax_Filter_Public {
 	}
 
 	/**
-	 * Display search filters on frontend
+	 * Renders default search filters on shop page.
 	 *
-	 * @since    1.0.0
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function add_wb_ajax_filters() {
 		$customization_options = get_option( 'wb_ajax_filter_admin_customization_options' );
@@ -241,7 +242,7 @@ class Wb_Ajax_Filter_Public {
 	}
 
 	/**
-	 * Add ajax loader gif to frontend.
+	 * Add ajax loader gif on shop page.
 	 *
 	 * @since    1.0.0
 	 */
@@ -271,8 +272,8 @@ class Wb_Ajax_Filter_Public {
 	/**
 	 * Check if parent exists in terms array.
 	 *
-	 * @param term_id $term_id The term id to find.
-	 * @param terms   $terms    Theterms array.
+	 * @param int $term_id The term id to find.
+	 * @param array  $terms The terms array.
 	 * @since    1.0.0
 	 */
 	public function wb_ajax_check_parent_is_included( $term_id, $terms ) {
@@ -293,8 +294,8 @@ class Wb_Ajax_Filter_Public {
 	/**
 	 * Check string inside string
 	 *
-	 * @param content $content The content.
-	 * @param find    $find    The string to be searched inside content.
+	 * @param string $content The content.
+	 * @param string $find  The string to be searched inside content.
 	 * @since    1.0.0
 	 */
 	public function wb_check_content_contains_string( $content, $find ) {
@@ -306,7 +307,7 @@ class Wb_Ajax_Filter_Public {
 	}
 
 	/**
-	 * Ajax search autocomplete callback.
+	 * Ajax search box autocomplete callback.
 	 *
 	 * @since    1.0.0
 	 */
@@ -430,7 +431,7 @@ class Wb_Ajax_Filter_Public {
 	/**
 	 * Alter woocommerce products query.
 	 *
-	 * @param q $q Query Object.
+	 * @param object $q Query Object.
 	 */
 	public function wb_ajax_filter_modify_wc_product_query( $q ) {
 		if ( is_shop() ) {
@@ -468,6 +469,13 @@ class Wb_Ajax_Filter_Public {
 		return $q;
 	}
 
+	/**
+	 * Function to check if the preset is enabled or not.
+	 * 
+	 * @param array $presets Array of presets.
+	 * @since 1.0.0
+	 * @return bool True/False
+	 */
 	public function wb_ajax_filter_presets_are_enabled( $presets ) {
 		$enabled = false;
 		foreach ( $presets as $preset ) {
