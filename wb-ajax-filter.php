@@ -118,8 +118,7 @@ if ( ! function_exists( 'wb_ajax_filter_admin_notice_error' ) ) {
 			);
 
 			if ( null !== filter_input( INPUT_GET, 'activate' ) ) {
-				$activate = filter_input( INPUT_GET, 'activate' );
-				unset( $activate );
+				unset( $_GET['activate'] );
 			}
 		}
 	}

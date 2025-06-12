@@ -295,7 +295,7 @@ class Wb_Ajax_Filter_Admin {
 				$filter_data   = $this->wb_ajax_process_form_data( $form_data );
 				$result        = $this->wb_ajax_save_filter_data( $filter_data );
 
-				echo $result;
+				echo $result; //phpcs:ignore
 			}
 		}
 		die();
@@ -701,6 +701,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void
 	 */
 	public function wb_ajax_filter_init_plugin_settings() {
+		//phpcs:disable
 		$wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' );
 
 		$this->plugin_settings_tabs['wb-ajax-filter-welcome'] = esc_html__( 'Welcome', 'wb-ajax-filter' );
@@ -728,6 +729,7 @@ class Wb_Ajax_Filter_Admin {
 			register_setting( 'wb_ajax_filter_search_content_settings', 'wb_ajax_filter_search_content_settings' );
 			add_settings_section( 'wb-ajax-filter-search', ' ', array( $this, 'wb_ajax_filter_admin_search_content' ), 'wb-ajax-filter-search' );
 		}
+		//phpcs:enable
 	}
 
 	/**

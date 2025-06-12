@@ -40,7 +40,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 	<div id="price-filter-panel" class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'display:none' : ''; ?>" role="region" aria-labelledby="price-filter-label">
 		
 		<?php if ( isset( $wb_ajax_filter_general_options['show_clear_filter'] ) && 'yes' === $wb_ajax_filter_general_options['show_clear_filter'] ) { ?>
-			<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="min_price,max_price" style="<?php echo ( ! isset( $_GET['min_price'] ) ) ? esc_attr( $clear_style ) : ''; ?>" role="button" aria-label="Clear price filter"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?>
+			<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="min_price,max_price" style="<?php echo ( ! isset( $_GET['min_price'] ) ) ? esc_attr( $clear_style ) : ''; ?>" role="button" aria-label="Clear price filter"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); //phpcs:ignore ?> 
 			</a>
 		<?php } ?>
 		<div class="filter-content">

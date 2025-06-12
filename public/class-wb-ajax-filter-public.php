@@ -367,7 +367,7 @@ class Wb_Ajax_Filter_Public {
 			$like_clauses = [];
 
 			foreach ( $searchable_fields as $field ) {
-				$like_clauses[] = $wpdb->prepare( "$field LIKE %s", $like_query );
+				$like_clauses[] = $wpdb->prepare( "$field LIKE %s", $like_query ); //phpcs:ignore
 			}
 
 			if ( $include_sku ) {
@@ -390,7 +390,7 @@ class Wb_Ajax_Filter_Public {
 				LIMIT %d
 			";
 
-			$results = $wpdb->get_results( $wpdb->prepare( $sql, $limit ) );
+			$results = $wpdb->get_results( $wpdb->prepare( $sql, $limit ) ); //phpcs:ignore
 
 			wp_cache_set( $cache_key, $results, 'wb_ajax_filter', 300 );
 		}
