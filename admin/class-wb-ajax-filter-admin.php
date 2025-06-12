@@ -151,7 +151,8 @@ class Wb_Ajax_Filter_Admin {
 				'nameRequired'       => __( 'Please enter name for preset.', 'wb-ajax-filter' ),
 				'validTaxonomy'      => __( 'Please select a valid taxonomy', 'wb-ajax-filter' ),
 				'minPriceNotice'     => __( 'Entered Min price is greater than the highest price on this store.', 'wb-ajax-filter' ),
-				'maxPriceNotice'     => __( 'Max price cannot be smaller than Min price.', 'wb-ajax-filter' )
+				'maxPriceNotice'     => __( 'Max price cannot be smaller than Min price.', 'wb-ajax-filter' ),
+				'titleRequired'      => __( 'Filter name is required.', 'wb-ajax-filter' )
 			)
 		);
 	}

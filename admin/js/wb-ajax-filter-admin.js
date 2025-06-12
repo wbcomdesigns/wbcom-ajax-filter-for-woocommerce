@@ -606,6 +606,10 @@
 					return false;
 				}
 			}
+			if (jQuery('input[name="filters[filter_title]"]').val() == '' ) {
+				alert( wbAjaxFilterStrings.titleRequired );
+				return false;
+			}
 			jQuery( '#filter-preset-create' ).trigger( 'submit' );
 		});
 
