@@ -24,7 +24,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 		<span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>" aria-hidden="true"></span>
 		<?php endif; ?>
 	</a>
-	<div class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && 'closed' === $filters['toggle_style'] ) ? 'display:none' : ''; ?>" id="review-filter-panel">
+	<div class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && 'closed' === $toggle_style ) ? 'display:none' : ''; ?>" id="review-filter-panel">
 		<?php if ( isset( $wb_ajax_filter_general_options['show_clear_filter'] ) && 'yes' === $wb_ajax_filter_general_options['show_clear_filter'] ) { ?>
 		<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="rating_filter" style="<?php echo ( ! isset( $_GET['rating_filter'] ) ) ? esc_attr( $clear_style ) : ''; //phpcs:ignore?>" role="button" aria-label="Clear Review Filter"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
 		<?php } ?>

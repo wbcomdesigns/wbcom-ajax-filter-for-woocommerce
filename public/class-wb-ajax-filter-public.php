@@ -114,7 +114,6 @@ class Wb_Ajax_Filter_Public {
 		}
 		
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-public' . $extension, array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( 'wb_ajax_filter_shortcode', plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-shortcode' . $extension, array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'jquery-ui-slider' );
 		wp_enqueue_script( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/js/ion.rangeSlider.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
