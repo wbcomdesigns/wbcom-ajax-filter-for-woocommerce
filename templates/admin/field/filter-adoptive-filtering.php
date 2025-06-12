@@ -20,12 +20,12 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-radio-field-wrapper">
 		<div class="wb-ajax-filter-radio " data-value="hide" data-type="radio">
 			<div class="wb-ajax-filter-radio__row">
-				<input type="radio" name="filters[adoptive]" class="wb-input wb-filter-type-tax wb-filter-type-price-range wb-filter-type-review wb-filter-type-stock-sale" value="hide" <?php echo ( isset( $filters['adoptive'] ) && 'hide' === $filters['adoptive'] ) ? 'checked' : ''; ?>>
-				<label><?php esc_html_e( 'Terms will be hidden', 'wb-ajax-filter' ); ?></label>
+				<input id="hidden_term" type="radio" name="filters[adoptive]" class="wb-input wb-filter-type-tax wb-filter-type-price-range wb-filter-type-review wb-filter-type-stock-sale" value="hide" <?php echo ( isset( $filters['adoptive'] ) && 'hide' === $filters['adoptive'] ) ? 'checked' : ''; ?>>
+				<label for="hidden_term"><?php esc_html_e( 'Terms will be hidden', 'wb-ajax-filter' ); ?></label>
 			</div>
 			<div class="wb-ajax-filter-radio__row">
-				<input type="radio" name="filters[adoptive]" class="wb-input wb-filter-type-tax wb-filter-type-price-range wb-filter-type-review wb-filter-type-stock-sale" value="show" <?php echo ( isset( $filters['adoptive'] ) && 'show' === $filters['adoptive'] ) ? 'checked' : ''; ?>>
-				<label><?php esc_html_e( 'Terms will be visible, but not clickable', 'wb-ajax-filter' ); ?></label>
+				<input id="visible_term" type="radio" name="filters[adoptive]" class="wb-input wb-filter-type-tax wb-filter-type-price-range wb-filter-type-review wb-filter-type-stock-sale" value="show" <?php echo ( isset( $filters['adoptive'] ) && 'show' === $filters['adoptive'] ) ? 'checked' : ''; ?>>
+				<label for="visible_term"><?php esc_html_e( 'Terms will be visible, but not clickable', 'wb-ajax-filter' ); ?></label>
 			</div>
 		</div>
 	</div>

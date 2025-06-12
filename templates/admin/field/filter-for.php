@@ -11,8 +11,8 @@
 
 ?>
 <div class="wb-ajax-filter-toggle-content-row wb-all-toggle">
-	<label><?php esc_html_e( 'Filter for', 'wb-ajax-filter' ); ?></label>
-	<select name="filters[type]" class="wc-enhanced-select enhanced" data-value="tax" tabindex="-1" aria-hidden="true">
+	<label for="filter_type"><?php esc_html_e( 'Filter for', 'wb-ajax-filter' ); ?></label>
+	<select id="filter_type" name="filters[type]" class="wc-enhanced-select enhanced" data-value="tax" tabindex="-1" aria-hidden="true">
 		<option value="tax" <?php echo ( isset( $filters['type'] ) && 'tax' === $filters['type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Taxonomy', 'wb-ajax-filter' ); ?></option>
 		<option value="orderby" <?php echo ( isset( $filters['type'] ) && 'orderby' === $filters['type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Order by', 'wb-ajax-filter' ); ?></option>
 		<option value="price_range" <?php echo ( isset( $filters['type'] ) && 'price_range' === $filters['type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Price Range', 'wb-ajax-filter' ); ?></option>

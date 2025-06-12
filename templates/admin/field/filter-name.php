@@ -21,9 +21,9 @@ if ( isset( $_REQUEST['preset'] ) && '' === $_REQUEST['preset'] ) { //phpcs:igno
 <?php $wb_filter_filter_id = isset( $filters['filter_id'] ) ? $filters['filter_id'] : uniqid( 'wb_filter_' ); ?>
 <input type="hidden" name="filters[filter_id]" value="<?php echo esc_attr( $wb_filter_filter_id ); ?>">
 <div class="wb-ajax-filter-toggle-content-row wb-all-toggle">
-	<label><?php esc_html_e( 'Filter name', 'wb-ajax-filter' ); ?></label>
+	<label for="filter_title"><?php esc_html_e( 'Filter name', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper">
-		<input type="text" name="filters[filter_title]" value="<?php echo ( isset( $filters['filter_title'] ) ) ? esc_html( $filters['filter_title'] ) : ''; ?>">
+		<input id="filter_title" type="text" name="filters[filter_title]" value="<?php echo ( isset( $filters['filter_title'] ) ) ? esc_html( $filters['filter_title'] ) : ''; ?>">
 	</div>
 	<span class="description"><?php esc_html_e( 'Enter a name to identify this filter', 'wb-ajax-filter' ); ?></span>
 </div>

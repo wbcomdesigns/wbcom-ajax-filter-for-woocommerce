@@ -23,17 +23,17 @@ $toggle_style                   = ( isset( $filters['toggle_style'] ) && 'closed
 $toggle_icon                    = ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'dashicons-arrow-down-alt2' : 'dashicons-arrow-up-alt2';
 $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
 ?>
-<div class="wb-ajax-filter-container-single filter-orderby">
-	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?>">
+<div class="wb-ajax-filter-container-single filter-orderby" role="region" aria-label="Order By Filter">
+	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?>" role="button">
 		<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
 		<?php if ( $toggle_enabled ) : ?>
-		<span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>"></span>
+		<span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>" aria-hidden="true"></span>
 		<?php endif; ?>
 	</a>
 	<?php if ( isset( $filters['order_options'] ) && count( $filters['order_options'] ) > 0 ) : ?>
-	<div class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && 'closed' === $filters['toggle_style'] ) ? 'display:none' : ''; ?>">
+	<div class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && 'closed' === $filters['toggle_style'] ) ? 'display:none' : ''; ?>" id="order-by-filter-panel">
 		<?php if ( isset( $wb_ajax_filter_general_options['show_clear_filter'] ) && 'yes' === $wb_ajax_filter_general_options['show_clear_filter'] ) { ?>
-		<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="orderby" style="<?php echo ( ! isset( $_GET['orderby'] ) ) ? esc_attr( $clear_style ) : ''; //phpcs:ignore?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
+		<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="orderby" style="<?php echo ( ! isset( $_GET['orderby'] ) ) ? esc_attr( $clear_style ) : ''; //phpcs:ignore?>" role="button" aria-label="Clear Order By Filter"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
 		<?php } ?>
 		<div class="filter-content">
 			<div class="wb-ajax-filter filter-orderby">
@@ -50,3 +50,6 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 	</div>
 	<?php endif; ?>
 </div>
+
+<!-- Skip link at top of the page -->
+<a href="#order-by-filter-panel" class="skip-link screen-reader-text"><?php esc_html_e( 'Skip to order by filter', 'wb-ajax-filter' ); ?></a>

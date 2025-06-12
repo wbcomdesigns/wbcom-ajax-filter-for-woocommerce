@@ -28,16 +28,16 @@ $toggle_style                   = ( isset( $filters['toggle_style'] ) && 'closed
 $toggle_icon                    = ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'dashicons-arrow-down-alt2' : 'dashicons-arrow-up-alt2';
 $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
 ?>
-<div class="wb-ajax-filter-container-single filter-price-range">
-	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?>">
+<div class="wb-ajax-filter-container-single filter-price-range" role="region" aria-label="Price Range Filter">
+	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?>" role="button">
 		<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
 		<?php if ( $toggle_enabled ) : ?>
-		<span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>"></span>
+		<span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>" aria-hidden="true"></span>
 		<?php endif; ?>
 	</a>
-	<div class="wb-ajax-panel" style="<?php echo esc_attr( $toggle_style ); ?>">
+	<div class="wb-ajax-panel" style="<?php echo esc_attr( $toggle_style ); ?>" id="price-range-filter-panel">
 		<?php if ( isset( $wb_ajax_filter_general_options['show_clear_filter'] ) && 'yes' === $wb_ajax_filter_general_options['show_clear_filter'] ) { ?>
-		<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="min_price,max_price" style="<?php echo ( isset( $_GET['min_price'] ) ) ? '' : esc_attr( $clear_style ); //phpcs:ignore?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
+		<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="min_price,max_price" style="<?php echo ( isset( $_GET['min_price'] ) ) ? '' : esc_attr( $clear_style ); //phpcs:ignore?>" role="button" aria-label="Clear Price Range Filter"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
 		<?php } ?>
 		<div class="filter-content">
 			<div class="wb-ajax-filter filter-price-range">
@@ -79,3 +79,5 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 		</div>
 	</div>
 </div>
+<!-- Skip link at top of the page -->
+<a href="#price-range-filter-panel" class="skip-link screen-reader-text"><?php esc_html_e( 'Skip to price filter', 'wb-ajax-filter' ); ?></a>

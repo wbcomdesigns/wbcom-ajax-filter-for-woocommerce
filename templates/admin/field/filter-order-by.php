@@ -15,10 +15,10 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 }
 ?>
 <div class="wb-ajax-filter-toggle-content-row wb-orderby-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label><?php esc_html_e( 'Order options', 'wb-ajax-filter' ); ?></label>
+	<label for="order_by_form_field"><?php esc_html_e( 'Order options', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-buttons-field-wrapper">
 		<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-			<select name="filters[order_options][]" class="wc-enhanced-select enhanced wb-input wb-filter-type-orderby" multiple="" tabindex="-1" aria-hidden="true" data-selected_orders="<?php echo ( isset( $filters['order_options'] ) ) ? wp_json_encode( $filters['order_options'] ) : ''; ?>">
+			<select id="order_by_form_field" name="filters[order_options][]" class="wc-enhanced-select enhanced wb-input wb-filter-type-orderby" multiple="" tabindex="-1" aria-hidden="true" data-selected_orders="<?php echo ( isset( $filters['order_options'] ) ) ? wp_json_encode( $filters['order_options'] ) : ''; ?>">
 				<option value=""><?php esc_html_e( 'Default sorting', 'wb-ajax-filter' ); ?></option>
 				<option value="popularity"><?php esc_html_e( 'Sort by popularity', 'wb-ajax-filter' ); ?></option>
 				<option value="rating"><?php esc_html_e( 'Sort by average rating', 'wb-ajax-filter' ); ?></option>

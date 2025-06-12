@@ -11,10 +11,10 @@
 
 ?>
 <div class="wb-ajax-filter-toggle-content-row wb-all-toggle">
-	<label><?php esc_html_e( 'Show as toggle', 'wb-ajax-filter' ); ?></label>
+	<label for="show_toggle"><?php esc_html_e( 'Show as toggle', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
 		<div class="wb-ajax-filter-onoff-container">
-			<input type="checkbox" class="on_off" name="filters[show_toggle]" value="yes" <?php echo ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? 'checked' : ''; ?>>
+			<input id="show_toggle" type="checkbox" class="on_off" name="filters[show_toggle]" value="yes" <?php echo ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? 'checked' : ''; ?>>
 			<span class="wb-ajax-filter-onoff" data-text-on="YES" data-text-off="NO"></span>
 		</div>
 	</div>
@@ -25,12 +25,12 @@
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-radio-field-wrapper">
 		<div class="wb-ajax-filter-radio " data-value="opened" data-type="radio">
 			<div class="wb-ajax-filter-radio__row">
-				<input type="radio" name="filters[toggle_style]" value="closed" <?php echo ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'checked' : ''; ?>>
-				<label><?php esc_html_e( 'Closed by default', 'wb-ajax-filter' ); ?></label>
+				<input id="toggle_style_closed" type="radio" name="filters[toggle_style]" value="closed" <?php echo ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'checked' : ''; ?>>
+				<label for="toggle_style_closed"><?php esc_html_e( 'Closed by default', 'wb-ajax-filter' ); ?></label>
 			</div>
 			<div class="wb-ajax-filter-radio__row">
-				<input type="radio" name="filters[toggle_style]" value="opened" <?php echo ( isset( $filters['toggle_style'] ) && 'opened' === $filters['toggle_style'] ) ? 'checked' : ''; ?>>
-				<label><?php esc_html_e( 'Opened by default', 'wb-ajax-filter' ); ?></label>
+				<input id="toggle_style_opened" type="radio" name="filters[toggle_style]" value="opened" <?php echo ( isset( $filters['toggle_style'] ) && 'opened' === $filters['toggle_style'] ) ? 'checked' : ''; ?>>
+				<label for="toggle_style_opened"><?php esc_html_e( 'Opened by default', 'wb-ajax-filter' ); ?></label>
 			</div>
 		</div>
 	</div>

@@ -16,16 +16,16 @@ $toggle_class                   = ( $toggle_enabled ) ? 'wb-ajax-accordian' : ''
 $toggle_style                   = ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'display:none' : '';
 $toggle_icon                    = ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'dashicons-arrow-down-alt2' : 'dashicons-arrow-up-alt2';
 ?>
-<div class="wb-ajax-filter-container-single filter-stock-sale">
-	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?>">
+<div class="wb-ajax-filter-container-single filter-stock-sale" role="region" aria-label="Stock Sale Filter">
+	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?>" role="button">
 		<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
 		<?php if ( $toggle_enabled ) : ?>
 		<span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>"></span>
 		<?php endif; ?>
 	</a>
-	<div class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && 'closed' === $filters['toggle_style'] ) ? 'display:none' : ''; ?>">
+	<div class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && 'closed' === $filters['toggle_style'] ) ? 'display:none' : ''; ?>" id="stock-sale-filter-panel">
 		<?php if ( isset( $wb_ajax_filter_general_options['show_clear_filter'] ) && 'yes' === $wb_ajax_filter_general_options['show_clear_filter'] ) { ?>
-		<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="onsale_filter,instock_filter" style="<?php echo ( isset( $_GET['instock_filter'] ) || isset( $_GET['onsale_filter'] ) ) ? '' : esc_attr( $clear_style ); //phpcs:ignore?>"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
+		<a href="javascript:void(0)" class="wb-ajax-clear-single-filter" data-filter="onsale_filter,instock_filter" style="<?php echo ( isset( $_GET['instock_filter'] ) || isset( $_GET['onsale_filter'] ) ) ? '' : esc_attr( $clear_style ); //phpcs:ignore?>" role="button" aria-label="Clear Stock Sale Filter"><?php esc_html_e( 'Clear', 'wb-ajax-filter' ); ?></a>
 		<?php } ?>
 		<div class="filter-content">
 			<div class="wb-ajax-filter filter-stock-sale">
@@ -41,3 +41,5 @@ $toggle_icon                    = ( isset( $filters['toggle_style'] ) && 'closed
 		</div>
 	</div>
 </div>
+<!-- Skip link at top of the page -->
+<a href="#stock-sale-filter-panel" class="skip-link screen-reader-text"><?php esc_html_e( 'Skip to stock sale filter', 'wb-ajax-filter' ); ?></a>

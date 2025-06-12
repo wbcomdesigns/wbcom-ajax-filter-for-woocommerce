@@ -16,11 +16,11 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 }
 ?>
 <div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label>
+	<label for="select_taxonomy">
 		<?php esc_html_e( 'Choose taxonomy', 'wb-ajax-filter' ); ?>
 	</label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-		<select name="filters[taxonomy]" class="wc-enhanced-select taxonomy enhanced wb-input wb-filter-type-tax" data-value="" tabindex="-1" aria-hidden="true">
+		<select id="select_taxonomy" name="filters[taxonomy]" class="wc-enhanced-select taxonomy enhanced wb-input wb-filter-type-tax" data-value="" tabindex="-1" aria-hidden="true">
 			<option value=""><?php esc_html_e( 'Select taxonomy', 'wb-ajax-filter' ); ?></option>
 			<?php
 			$taxonomies = get_object_taxonomies( 'product', 'name' );
@@ -37,15 +37,15 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 	<span class="description"><?php esc_html_e( 'Select which taxonomy to use for this filter', 'wb-ajax-filter' ); ?></span>
 </div>
 <div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?><?php echo ( ! isset( $filters['taxonomy'] ) || ( isset( $filters['taxonomy'] ) && '' === $filters['taxonomy'] ) ) ? 'display:none' : ''; ?>">
-	<label><?php esc_html_e( 'Choose terms', 'wb-ajax-filter' ); ?></label>
+	<label for="wb_ajax_filter_select2_terms"><?php esc_html_e( 'Choose terms', 'wb-ajax-filter' ); ?></label>
 	<select id="wb_ajax_filter_select2_terms" class="wb-input wb-filter-type-tax" name="filters[terms][]" multiple="multiple" data-selected_terms='<?php echo ( isset( $filters['terms'] ) ) ? wp_json_encode( $filters['terms'] ) : ''; ?>' style="width:99%;max-width:25em;">
 	</select>
 	<span class="description"><?php esc_html_e( 'Select which terms to use for filtering', 'wb-ajax-filter' ); ?></span>
 </div>
 <div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label><?php esc_html_e( 'Filter type', 'wb-ajax-filter' ); ?></label>
+	<label for="filter_design"><?php esc_html_e( 'Filter type', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-		<select name="filters[filter_design]" class="wc-enhanced-select enhanced wb-input wb-filter-type-tax" data-value="checkbox" tabindex="-1" aria-hidden="true">
+		<select id="filter_design" name="filters[filter_design]" class="wc-enhanced-select enhanced wb-input wb-filter-type-tax" data-value="checkbox" tabindex="-1" aria-hidden="true">
 			<option value=""><?php esc_html_e( 'Select Design', 'wb-ajax-filter' ); ?></option>
 			<option value="checkbox" <?php echo ( isset( $filters['filter_design'] ) && 'checkbox' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Checkbox', 'wb-ajax-filter' ); ?></option>
 			<option value="radio" <?php echo ( isset( $filters['filter_design'] ) && 'radio' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Radio', 'wb-ajax-filter' ); ?></option>
@@ -72,9 +72,9 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 	</div>
 </div>
 <div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label><?php esc_html_e( 'Order by', 'wb-ajax-filter' ); ?></label>
+	<label for="order_by"><?php esc_html_e( 'Order by', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-		<select name="filters[order_by]" class="wb-ajax-filter-select wb-input wb-filter-type-tax" data-value="name">
+		<select id="order_by" name="filters[order_by]" class="wb-ajax-filter-select wb-input wb-filter-type-tax" data-value="name">
 			<option value=""><?php esc_html_e( 'Select Order By', 'wb-ajax-filter' ); ?></option>
 			<option value="name" <?php echo ( isset( $filters['order_by'] ) && 'name' === $filters['order_by'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Name', 'wb-ajax-filter' ); ?></option>
 			<option value="slug" <?php echo ( isset( $filters['order_by'] ) && 'slug' === $filters['order_by'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Slug', 'wb-ajax-filter' ); ?></option>
@@ -85,9 +85,9 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 	<span class="description"><?php esc_html_e( 'Select the default order for terms of this filter.', 'wb-ajax-filter' ); ?></span>
 </div>
 <div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label><?php esc_html_e( 'Order type', 'wb-ajax-filter' ); ?></label>
+	<label for="order_type"><?php esc_html_e( 'Order type', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-		<select name="filters[order]" class="wb-ajax-filter-select wb-input wb-filter-type-tax" data-value="">
+		<select id="order_type" name="filters[order]" class="wb-ajax-filter-select wb-input wb-filter-type-tax" data-value="">
 			<option value=""><?php esc_html_e( 'Select Order type', 'wb-ajax-filter' ); ?></option>
 			<option value="ASC" <?php echo ( isset( $filters['order'] ) && 'ASC' === $filters['order'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'ASC', 'wb-ajax-filter' ); ?></option>
 			<option value="DESC" <?php echo ( isset( $filters['order'] ) && 'DESC' === $filters['order'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'DESC', 'wb-ajax-filter' ); ?></option>
@@ -124,10 +124,10 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 	<span class="description"><?php esc_html_e( 'Choose how to show terms hierarchy', 'wb-ajax-filter' ); ?></span>
 </div>
 <div class="wb-ajax-filter-toggle-content-row wb-tax-toggle wb-ajax-filter-multiselect" style="<?php echo esc_attr( $style ); ?><?php echo ( isset( $filters['filter_design'] ) && 'radio' === $filters['filter_design'] ) ? 'display:none' : ''; ?>">
-	<label><?php esc_html_e( 'Allow multiple selection', 'wb-ajax-filter' ); ?></label>
+	<label for="multiple_selection"><?php esc_html_e( 'Allow multiple selection', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
 		<div class="wb-ajax-filter-onoff-container ">
-			<input type="checkbox" class="on_off wb-input wb-filter-type-tax" name="filters[multiple]" value="yes" <?php echo ( isset( $filters['multiple'] ) && 'yes' === $filters['multiple'] ) ? 'checked' : ''; ?>>
+			<input id="multiple_selection" type="checkbox" class="on_off wb-input wb-filter-type-tax" name="filters[multiple]" value="yes" <?php echo ( isset( $filters['multiple'] ) && 'yes' === $filters['multiple'] ) ? 'checked' : ''; ?>>
 			<span class="wb-ajax-filter-onoff" data-text-on="YES" data-text-off="NO"></span>
 		</div>
 	</div>
