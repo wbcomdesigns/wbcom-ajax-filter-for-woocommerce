@@ -226,7 +226,9 @@ class Wb_Ajax_Filter {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		
 		$this->loader->add_action( 'woocommerce_before_shop_loop', $plugin_public, 'add_wb_ajax_filters' );
+
 		$this->loader->add_action( 'woocommerce_product_query', $plugin_public, 'wb_ajax_filter_modify_wc_product_query', 999 );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'add_wb_ajax_filters_loader_in_footer' );
 		// Ajax callback.
@@ -235,6 +237,9 @@ class Wb_Ajax_Filter {
 		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_public, 'filter_preset_shortcode_callback' );
 
 		$this->loader->add_action( 'woocommerce_redirect_single_search_result', $plugin_public, 'wb_ajax_filter_redirect_single_search_result' );
+
+		//Added filters when no products found.
+		$this->loader->add_action( 'woocommerce_no_products_found', $plugin_public, 'add_wb_ajax_filters' );
 	}
 
 	/**
