@@ -313,119 +313,90 @@ class Wb_Ajax_Filter_Public {
 	 */
 	public function get_ajax_search_autocomplete_title_wb_callback() {
 		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_GET['q'] ) ) {
-				wp_die();
-			}
-			$args                   = array(
-				'post_type'      => 'product',
-				'posts_per_page' => -1
-			);
-			$products               = get_posts( $args );
+			wp_die();
+		}
+
+		if ( ! isset( $_GET['q'] ) ) {
+			wp_die();
+		}
+
+		$q               = sanitize_text_field( wp_unslash( $_GET['q'] ) );
+		$limit           = 10; // Default or get from settings
+		$matched_results = $this->get_search_suggestions( $q, $limit );
+
+		$matched_products = array();
+		foreach ( $matched_results as $product ) {
+			$matched_products[] = array( $product->post_title, $product->post_title );
+		}
+
+		if ( ! empty( $matched_products ) ) {
+			$matched_products = apply_filters( 'wb_ajax_filter_restrict_products', $matched_products );
+			echo wp_json_encode( $matched_products );
+		}
+
+		wp_die();
+	}
+
+	private function get_search_suggestions( $query, $limit = 10 ) {
+		global $wpdb;
+
+		$cache_key = 'wb_search_ext_' . md5( $query . $limit );
+		$results   = wp_cache_get( $cache_key, 'wb_ajax_filter' );
+
+		if ( false === $results ) {
 			$search_settings        = get_option( 'wb_ajax_filter_search_settings' );
 			$search_filter_settings = get_option( 'wb_ajax_filter_search_content_settings' );
-			$matched_products       = array();
-			$q                      = sanitize_text_field( wp_unslash( $_GET['q'] ) );
-			$multiple_word_search   = ( isset( $search_filter_settings['search_type_more_words'] ) && 'and' === $search_filter_settings['search_type_more_words'] ) ? true : false;
-			foreach ( $products as $product ) {
-				$match = false;
-				if ( count( $matched_products ) >= $search_settings['posts_per_page'] ) {
-					break;
-				}
-				if ( isset( $search_filter_settings['search_in_title'] ) && 'yes' === $search_filter_settings['search_in_title'] ) {
-					if ( $multiple_word_search ) {
-						if ( $this->wb_check_content_contains_string( $product->post_title, $q ) ) {
-							$match = true;
-						}
-					}
-					if ( ! $multiple_word_search ) {
-						$query = str_split( $q );
-						foreach ( $query as $val ) {
-							if ( $this->wb_check_content_contains_string( $product->post_title, $val ) ) {
-								$match = true;
-							}
-						}
-					}
-				}
-				if ( isset( $search_filter_settings['search_in_content'] ) && 'yes' === $search_filter_settings['search_in_content'] ) {
-					if ( $multiple_word_search ) {
-						if ( $this->wb_check_content_contains_string( $product->post_content, $q ) ) {
-							$match = true;
-						}
-					}
-					if ( ! $multiple_word_search ) {
-						$query = str_split( $q );
-						foreach ( $query as $val ) {
-							if ( $this->wb_check_content_contains_string( $product->post_content, $val ) ) {
-								$match = true;
-							}
-						}
-					}
-				}
-				if ( isset( $search_filter_settings['search_in_excerpt'] ) && 'yes' === $search_filter_settings['search_in_excerpt'] ) {
-					$excerpt = get_the_excerpt( $product->ID );
-					if ( $multiple_word_search ) {
-						if ( $this->wb_check_content_contains_string( $excerpt, $q ) ) {
-							$match = true;
-						}
-					}
-					if ( ! $multiple_word_search ) {
-						$query = str_split( $q );
-						foreach ( $query as $val ) {
-							if ( $this->wb_check_content_contains_string( $excerpt, $val ) ) {
-								$match = true;
-							}
-						}
-					}
-				}
-				if ( isset( $search_filter_settings['search_in_author'] ) && 'yes' === $search_filter_settings['search_in_author'] ) {
-					$author   = get_userdata( $product->post_author );
-					$username = $author->user_login;
-					$name     = $author->first_name . ' ' . $author->last_name;
-					if ( $multiple_word_search ) {
-						if ( $this->wb_check_content_contains_string( $username, $q ) || $this->wb_check_content_contains_string( $name, $q ) ) {
-							$match = true;
-						}
-					}
-					if ( ! $multiple_word_search ) {
-						$query = str_split( $q );
-						foreach ( $query as $val ) {
-							if ( $this->wb_check_content_contains_string( $username, $val ) || $this->wb_check_content_contains_string( $name, $val ) ) {
-								$match = true;
-							}
-						}
-					}
-				}
-				if ( isset( $search_filter_settings['search_by_sku'] ) && 'yes' === $search_filter_settings['search_by_sku'] ) {
-					$prod = wc_get_product( $product->ID );
-					$sku  = $prod->get_sku();
-					if ( $multiple_word_search ) {
-						if ( $this->wb_check_content_contains_string( $sku, $q ) ) {
-							$match = true;
-						}
-					}
-					if ( ! $multiple_word_search ) {
-						$query = str_split( $q );
-						foreach ( $query as $val ) {
-							if ( $this->wb_check_content_contains_string( $sku, $val ) ) {
-								$match = true;
-							}
-						}
-					}
-				}
 
-				if ( $match ) {
-					$tmp                = array( $product->post_title, $product->post_title );
-					$matched_products[] = $tmp;
-				}
+			$searchable_fields = [];
+
+			if ( isset( $search_filter_settings['search_in_title'] ) && $search_filter_settings['search_in_title'] === 'yes' ) {
+				$searchable_fields[] = 'p.post_title';
 			}
-			if( !empty( $matched_products ) ) {
-				$matched_products = apply_filters( 'wb_ajax_filter_restrict_products', $matched_products );
-				echo wp_json_encode( $matched_products );
+			if ( isset( $search_filter_settings['search_in_content'] ) && $search_filter_settings['search_in_content'] === 'yes' ) {
+				$searchable_fields[] = 'p.post_content';
 			}
+			if ( isset( $search_filter_settings['search_in_excerpt'] ) && $search_filter_settings['search_in_excerpt'] === 'yes' ) {
+				$searchable_fields[] = 'p.post_excerpt';
+			}
+			$include_sku = isset( $search_filter_settings['search_by_sku'] ) && $search_filter_settings['search_by_sku'] === 'yes';
+
+			if ( empty( $searchable_fields ) && ! $include_sku ) {
+				return []; // Nothing to search
+			}
+
+			$like_query = '%' . $wpdb->esc_like( $query ) . '%';
+			$like_clauses = [];
+
+			foreach ( $searchable_fields as $field ) {
+				$like_clauses[] = $wpdb->prepare( "$field LIKE %s", $like_query );
+			}
+
+			if ( $include_sku ) {
+				$like_clauses[] = $wpdb->prepare( "pm.meta_value LIKE %s", $like_query );
+			}
+
+			$where_clause = implode( ' OR ', $like_clauses );
+
+			// Dynamic limit fallback
+			$limit = isset( $search_settings['posts_per_page'] ) ? intval( $search_settings['posts_per_page'] ) : $limit;
+
+			// Final SQL query
+			$sql = "
+				SELECT DISTINCT p.ID, p.post_title
+				FROM {$wpdb->posts} p
+				" . ( $include_sku ? "LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id AND pm.meta_key = '_sku'" : '' ) . "
+				WHERE p.post_type = 'product'
+				AND p.post_status = 'publish'
+				AND ( $where_clause )
+				LIMIT %d
+			";
+
+			$results = $wpdb->get_results( $wpdb->prepare( $sql, $limit ) );
+
+			wp_cache_set( $cache_key, $results, 'wb_ajax_filter', 300 );
 		}
-		wp_die();
+
+		return $results;
 	}
 
 	/**
