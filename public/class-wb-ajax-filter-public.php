@@ -588,6 +588,9 @@ class Wb_Ajax_Filter_Public {
 	 * 
 	 */
 	public function wb_ajax_apply_meta_filter( $q, $filter, $params ) {
+				
+		$search_settings = get_option( 'wb_ajax_filter_admin_general_options' );
+
 		if( !empty( $params ) && ( isset( $params['instock_filter'] ) || isset( $params['onsale_filter'] ) ) ) {
 				
 			if( array_key_exists( 'instock_filter', $params ) ) {
