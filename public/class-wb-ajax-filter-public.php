@@ -148,6 +148,11 @@ class Wb_Ajax_Filter_Public {
 	 */
 	public function wb_ajax_add_custom_css_to_frontend() {
 		$css_settings = get_option( 'wb_ajax_filter_admin_customization_options' );
+
+		if( empty( $css_settings ) ) {
+			return '';
+		}
+
 		$custom_css   = '
 				.wb-ajax-filters-container{
 					background: ' . $css_settings['filters_area_background_color'] . ';

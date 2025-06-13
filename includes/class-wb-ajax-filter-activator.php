@@ -72,7 +72,12 @@ class Wb_Ajax_Filter_Activator {
 			'order_by_post_type'           => 'yes',
 		);
 		foreach ( $wb_ajax_filter_settings as $key => $settings ) {
-			update_option( $key, $settings );
+			
+			if( empty( get_option( $key ) ) ) {
+
+				update_option( $key, $settings );
+			}
+			
 		}
 	}
 
