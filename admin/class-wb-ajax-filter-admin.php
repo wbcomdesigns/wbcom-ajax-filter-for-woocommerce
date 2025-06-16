@@ -204,7 +204,7 @@ class Wb_Ajax_Filter_Admin {
 			add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'wb-ajax-filter' ), esc_html__( 'General', 'wb-ajax-filter' ), 'manage_options', 'wbcomplugins' );
 
 		}
-		add_submenu_page( 'wbcomplugins', esc_html__( 'Wbcom Ajax Filter for Woocommerce', 'wb-ajax-filter' ), esc_html__( 'Wbcom Ajax Filter for Woocommerce', 'wb-ajax-filter' ), 'manage_options', 'wc-ajax-filter-settings', array( $this, 'wb_ajax_filter_admin_options_page' ) );
+		add_submenu_page( 'wbcomplugins', esc_html__( 'Wbcom Ajax Filter for WooCommerce', 'wb-ajax-filter' ), esc_html__( 'Wbcom Ajax Filter for WooCommerce', 'wb-ajax-filter' ), 'manage_options', 'wc-ajax-filter-settings', array( $this, 'wb_ajax_filter_admin_options_page' ) );
 	}
 
 	/**

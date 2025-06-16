@@ -18,7 +18,7 @@
 			<span class="wb-ajax-filter-onoff" data-text-on="YES" data-text-off="NO"></span>
 		</div>
 	</div>
-	<span class="description"><?php esc_html_e( 'Enable if you want to show this filter as a toggle', 'wb-ajax-filter' ); ?></span>
+	<span class="description"><?php esc_html_e( 'Enable this to show this filter as a toggle.', 'wb-ajax-filter' ); ?></span>
 </div>
 <div class="wb-ajax-filter-toggle-content-row wb-show-style-toggle" <?php echo ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? '' : 'style="display:none;"'; ?>>
 	<label><?php esc_html_e( 'Toggle style', 'wb-ajax-filter' ); ?></label>
@@ -34,5 +34,5 @@
 			</div>
 		</div>
 	</div>
-	<span class="description"><?php esc_html_e( 'Choose if toggle has to closed or opened by default', 'wb-ajax-filter' ); ?></span>
+	<span class="description"><?php esc_html_e( 'Choose if the toggle should be closed or opened by default.', 'wb-ajax-filter' ); ?></span>
 </div>

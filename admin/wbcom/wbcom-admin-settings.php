@@ -300,7 +300,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		}
 
 	}
-
+	
 	function instantiate_wbcom_plugin_manager() {
 		new Wbcom_Admin_Settings();
 	}

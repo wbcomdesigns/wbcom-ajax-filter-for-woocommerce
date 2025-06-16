@@ -17,7 +17,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 <div class="wb-ajax-filter-toggle-content-row wb-price-range-toggle" style="<?php echo esc_attr( $style ); ?>">
 	<label><?php esc_html_e( 'Customize price ranges', 'wb-ajax-filter' ); ?></label>
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-custom-field-wrapper">
-		<button class="wb-ajax-filter-add-price-range button-primary"><?php esc_html_e( 'Add range', 'wb-ajax-filter' ); ?></button>
+		<button class="wb-ajax-filter-add-price-range button-primary"><?php esc_html_e( 'Add Range', 'wb-ajax-filter' ); ?></button>
 		<div class="wb-ajax-filter-ranges-wrapper ui-sortable" data-index="0">
 			<?php
 			if ( isset( $filters['price_ranges'] ) && ! empty( $filters['price_ranges'] ) ) {

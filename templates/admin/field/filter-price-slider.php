@@ -33,6 +33,6 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-number-field-wrapper">
 		<input id="price_slider_step" type="number" name="filters[price_slider_step]" class="wb-input wb-filter-type-price-slider" value="<?php echo ( isset( $filters['price_slider_step'] ) ) ? esc_attr( $filters['price_slider_step'] ) : 0; ?>" min="0" step="10">
 	</div>
-	<span class="description"><?php esc_html_e( 'Set the value for each increment of the price slider.', 'wb-ajax-filter' ); ?></span>
+	<span class="description"><?php esc_html_e( 'Set the step value for the price slider (how much each step increases the price).', 'wb-ajax-filter' ); ?></span>
 </div>
 

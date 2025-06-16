@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-16T12:38:18+00:00\n"
+"POT-Creation-Date: 2025-06-16T18:19:49+05:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wb-ajax-filter\n"
 
 #. Plugin Name of the plugin
@@ -26,7 +26,8 @@ msgstr ""
 
 #. Description of the plugin
 #: wb-ajax-filter.php
-msgid "Wbcom Ajax Filter For WooCommerce allows your users to find the product they are looking for as quickly as possible."
+#: admin/partials/wb-ajax-filter-welcome-page.php:19
+msgid "Provide your customers with a smooth and responsive shopping experience. Filter products by attributes, categories, and more using real-time AJAX requests, no more waiting for page reloads."
 msgstr ""
 
 #. Author of the plugin
@@ -104,7 +105,7 @@ msgid "General"
 msgstr ""
 
 #: admin/class-wb-ajax-filter-admin.php:207
-msgid "Wbcom Ajax Filter for Woocommerce"
+msgid "Wbcom Ajax Filter for WooCommerce"
 msgstr ""
 
 #: admin/class-wb-ajax-filter-admin.php:230
@@ -115,7 +116,6 @@ msgstr ""
 #. translators: %s:
 #: admin/class-wb-ajax-filter-admin.php:233
 #: admin/wbcom/templates/wbcom-license-page.php:13
-#, php-format
 msgid "Version %s"
 msgstr ""
 
@@ -148,11 +148,11 @@ msgid "Search Options"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:35
-msgid "Choose element types to search"
+msgid "Choose which element types to search."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:37
-msgid "Choose if you want to extend search also to posts and pages"
+msgid "Choose if you want to extend search also to posts and pages."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:43
@@ -170,7 +170,7 @@ msgid "Search in title"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:56
-msgid "Extend search in the title of the product"
+msgid "Extend search in the title of the product."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:68
@@ -178,7 +178,7 @@ msgid "Search in excerpt"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:70
-msgid "Extend search in the excerpt of the product"
+msgid "Extend search in the excerpt of the product."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:81
@@ -186,7 +186,7 @@ msgid "Search in content"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:83
-msgid "Extend search in the content of the product"
+msgid "Extend search in the content of the product."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:95
@@ -202,11 +202,11 @@ msgid "Multiple Word Search"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:114
-msgid "Show items containing all words typed"
+msgid "Show items containing all typed words."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:119
-msgid "Show items containing at least one of the words typed"
+msgid "Show items containing at least one of the typed words."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:126
@@ -214,11 +214,11 @@ msgid "Order Options"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:128
-msgid "Enable order by post type"
+msgid "Enable ordering by post type."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:139
-msgid "Search by Custom Field"
+msgid "Search by custom field"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:141
@@ -226,15 +226,15 @@ msgid "Custom field name"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:154
-msgid "Search by Sku Settings"
+msgid "Search by SKU Settings"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:156
-msgid "Extend search functionality so that search includes also sku"
+msgid "Extend search functionality to also include SKU."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:161
-msgid "Search by sku"
+msgid "Search by SKU"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-settings.php:36
@@ -242,7 +242,7 @@ msgid "Enable Search"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-settings.php:38
-msgid "Enable/Disable search field."
+msgid "Enable or disable the search field."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-settings.php:48
@@ -286,15 +286,15 @@ msgid "Show filter for search fields"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-settings.php:108
-msgid "Show filter for search fields (it allows searching the Whole site or only among products)"
+msgid "Show filter for search fields (it allows searching the Whole site or only among products)."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-settings.php:115
-msgid "Show the category list"
+msgid "Show the product categories dropdown"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-settings.php:117
-msgid "This option lets you decide to show the categories dropdown"
+msgid "Show a categories dropdown in the search form."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-customization-tab.php:21
@@ -382,6 +382,7 @@ msgid "Use default loader"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-customization-tab.php:158
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:178
 msgid "Upload custom loader"
 msgstr ""
 
@@ -389,12 +390,8 @@ msgstr ""
 msgid "Custom Ajax Loader"
 msgstr ""
 
-#: admin/partials/wb-ajax-filter-setting-customization-tab.php:178
-msgid "Upload"
-msgstr ""
-
 #: admin/partials/wb-ajax-filter-setting-customization-tab.php:179
-msgid "Reset"
+msgid "Reset to default"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-customization-tab.php:180
@@ -406,7 +403,7 @@ msgid "Filter View"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:40
-msgid "Choose to apply filters in real time using AJAX or whether to show a button to apply all filters."
+msgid "Choose whether to apply filters in real time using AJAX or show a button to apply all filters."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:46
@@ -422,7 +419,7 @@ msgid "Display Results"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:61
-msgid "Choose whether to render search results on page reload or without page reload."
+msgid "Choose whether to display search results with or without page reload."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:67
@@ -438,7 +435,7 @@ msgid "Hide empty terms"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:80
-msgid "Enable to hide empty terms from filters section"
+msgid "Hide filter terms that have no matching products."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:92
@@ -454,7 +451,7 @@ msgid "Show reset button"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:108
-msgid "Enable to show the \"Reset filter\" button to allow the user to cancel the filter selection in one click"
+msgid "Enable to show the \"Reset filter\" button to allow the user to cancel the filter selection in one click."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:123
@@ -462,7 +459,7 @@ msgid "Reset button position"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:125
-msgid "Choose the default position for reset button"
+msgid "Choose the default position for reset button."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:131
@@ -478,7 +475,7 @@ msgid "Show \"Clear\" above each filter"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:145
-msgid "Enable to show the \"Clear\" link above each filter of the preset"
+msgid "Enable to show the \"Clear\" link above each filter of the preset."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:157
@@ -494,11 +491,7 @@ msgid "Scroll top after filtering"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:173
-msgid "Enable this option if you want to scroll to top after filtering."
-msgstr ""
-
-#: admin/partials/wb-ajax-filter-welcome-page.php:19
-msgid "Wbcom Ajax Filter for Woocommerce Plugin allows your users to find the product they are looking for as quickly as possible."
+msgid "Enable this option to scroll to the top after filtering."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-welcome-page.php:24
@@ -506,7 +499,7 @@ msgid "Help &amp; Support Resources"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-welcome-page.php:25
-msgid "Here are all the resources you may need to get help from us. Documentation is usually the best place to start. Should you require help anytime, our customer care team is available to assist you at the support center."
+msgid "If you need assistance, here are some helpful resources. Our documentation is a great place to start, and our support team is available if you require further help."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-welcome-page.php:30
@@ -514,7 +507,7 @@ msgid "Documentation"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-welcome-page.php:31
-msgid "We have prepared an extensive guide on Wbcom Ajax Filter for Woocommerce to learn all aspects of the plugin. You will find most of your answers here."
+msgid "Explore our detailed guide on Wbcom Ajax Filter for WooCommerce to understand all the features and how to make the most of them."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-welcome-page.php:32
@@ -526,7 +519,7 @@ msgid "Support Center"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-welcome-page.php:39
-msgid "We strive to offer the best customer care via our support center. Once your theme is activated, you can ask us for help anytime."
+msgid "Our support team is here to assist you with any questions or issues. Feel free to contact us anytime through our support center."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-welcome-page.php:40
@@ -534,11 +527,11 @@ msgid "Get Support"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-welcome-page.php:45
-msgid "Got Feedback?"
+msgid "Share Your Feedback"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-welcome-page.php:46
-msgid "We want to hear about your experience with the plugin. We would also love to hear any suggestions you may for future updates."
+msgid "We’d love to hear about your experience with the plugin. Your feedback and suggestions help us improve future updates."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-welcome-page.php:47
@@ -1262,7 +1255,6 @@ msgstr ""
 
 #. translators: %1$s: Expire Time
 #: edd-license/edd-plugin-license.php:127
-#, php-format
 msgid "Your license key expired on %s."
 msgstr ""
 
@@ -1280,7 +1272,6 @@ msgstr ""
 
 #. translators: %1$s: Item Name
 #: edd-license/edd-plugin-license.php:147
-#, php-format
 msgid "This appears to be an invalid license key for %s."
 msgstr ""
 
@@ -1290,12 +1281,11 @@ msgstr ""
 
 #. translators: %1$s: Expire Time
 #: edd-license/edd-plugin-license.php:333
-#, php-format
-msgid "Your Ajax Filter For Woocommerce plugin license key expired on %s."
+msgid "Your Ajax Filter For WooCommerce plugin license key expired on %s."
 msgstr ""
 
 #: edd-license/edd-plugin-license.php:364
-msgid "Please activate your Ajax Filter For Woocommerce plugin license key."
+msgid "Please activate your Ajax Filter For WooCommerce plugin license key."
 msgstr ""
 
 #: edd-license/edd-plugin-license.php:434
@@ -1307,22 +1297,18 @@ msgid "Activate License"
 msgstr ""
 
 #: edd-license/edd-plugin-license.php:512
-#, php-format
 msgid "Expires %s."
 msgstr ""
 
 #: edd-license/edd-plugin-license.php:516
-#, php-format
 msgid "You have %1$s/%2$s-sites activated."
 msgstr ""
 
 #: edd-license/EDD_WB_Ajax_Filter_Plugin_Updater.php:261
-#, php-format
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s."
 msgstr ""
 
 #: edd-license/EDD_WB_Ajax_Filter_Plugin_Updater.php:270
-#, php-format
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s."
 msgstr ""
 
@@ -1335,7 +1321,7 @@ msgid "Error"
 msgstr ""
 
 #: templates/admin/field/filter-add-price-range.php:42
-msgid "Min"
+msgid "Minimum price"
 msgstr ""
 
 #: templates/admin/field/filter-add-price-range.php:46
@@ -1343,31 +1329,31 @@ msgid "Show \"&amp; Above\" in last range"
 msgstr ""
 
 #: templates/admin/field/filter-add-price-range.php:55
-msgid "Max"
+msgid "Maximum price"
 msgstr ""
 
 #: templates/admin/field/filter-adoptive-filtering.php:19
-msgid "Adoptive filtering"
+msgid "Adaptive filtering"
 msgstr ""
 
 #: templates/admin/field/filter-adoptive-filtering.php:24
-msgid "Terms will be hidden"
+msgid "Unavailable terms will be hidden."
 msgstr ""
 
 #: templates/admin/field/filter-adoptive-filtering.php:28
-msgid "Terms will be visible, but not clickable"
+msgid "Unavailable terms will be visible but not clickable."
 msgstr ""
 
 #: templates/admin/field/filter-adoptive-filtering.php:32
-msgid "Decide how to manage filter options that show no results when applying filters. Choose to hide them or make them visible (this will show them in lighter grey and not clickable)"
+msgid "Choose how to handle filter options that show no results. Choose to hide them or make them visible (this will show them in lighter grey and not clickable)."
 msgstr ""
 
 #: templates/admin/field/filter-count.php:19
-msgid "Show count of items"
+msgid "Show item count for each filter option"
 msgstr ""
 
 #: templates/admin/field/filter-count.php:25
-msgid "Enable if you want to show how many items are available for each term"
+msgid "Enable this if you want to show how many items are available for each term."
 msgstr ""
 
 #: templates/admin/field/filter-customize-term.php:23
@@ -1456,7 +1442,7 @@ msgid "Customize price ranges"
 msgstr ""
 
 #: templates/admin/field/filter-price-range.php:20
-msgid "Add range"
+msgid "Add Range"
 msgstr ""
 
 #: templates/admin/field/filter-price-slider.php:18
@@ -1480,7 +1466,7 @@ msgid "Slider step"
 msgstr ""
 
 #: templates/admin/field/filter-price-slider.php:36
-msgid "Set the value for each increment of the price slider."
+msgid "Set the step value for the price slider (how much each step increases the price)."
 msgstr ""
 
 #: templates/admin/field/filter-save.php:15
@@ -1492,7 +1478,7 @@ msgid "Show stock filter"
 msgstr ""
 
 #: templates/admin/field/filter-stock.php:25
-msgid "Enable if you want to show \"In Stock\" filter"
+msgid "Enable this to show the 'In Stock' filter"
 msgstr ""
 
 #: templates/admin/field/filter-stock.php:28
@@ -1500,7 +1486,8 @@ msgid "Show sale filter"
 msgstr ""
 
 #: templates/admin/field/filter-stock.php:35
-msgid "Enable if you want to show \"On Sale\" filter"
+#: templates/admin/field/filter-stock.php:36
+msgid "Enable this to show the 'On Sale' filter"
 msgstr ""
 
 #: templates/admin/field/filter-tax.php:20
@@ -1512,7 +1499,7 @@ msgid "Select taxonomy"
 msgstr ""
 
 #: templates/admin/field/filter-tax.php:37
-msgid "Select which taxonomy to use for this filter"
+msgid "Select which product attribute to filter by."
 msgstr ""
 
 #: templates/admin/field/filter-tax.php:40
@@ -1572,7 +1559,7 @@ msgid "Term order"
 msgstr ""
 
 #: templates/admin/field/filter-tax.php:85
-msgid "Select the default order for terms of this filter."
+msgid "Select the default order for filter terms"
 msgstr ""
 
 #: templates/admin/field/filter-tax.php:88
@@ -1592,7 +1579,7 @@ msgid "DESC"
 msgstr ""
 
 #: templates/admin/field/filter-tax.php:96
-msgid "Select the default order for terms of this filter"
+msgid "Select the default order for filter terms."
 msgstr ""
 
 #: templates/admin/field/filter-tax.php:99
@@ -1628,7 +1615,7 @@ msgid "Allow multiple selection"
 msgstr ""
 
 #: templates/admin/field/filter-tax.php:134
-msgid "Enable if the user can select multiple terms when filtering products"
+msgid "Enable this to allow users to select multiple terms when filtering products."
 msgstr ""
 
 #: templates/admin/field/filter-tax.php:137
@@ -1644,7 +1631,7 @@ msgid "OR - Results need to match at least one of the selected terms."
 msgstr ""
 
 #: templates/admin/field/filter-tax.php:150
-msgid "Choose how multiple terms selection should behave."
+msgid "Choose how selecting multiple terms should behave."
 msgstr ""
 
 #: templates/admin/field/filter-toggle.php:14
@@ -1652,7 +1639,7 @@ msgid "Show as toggle"
 msgstr ""
 
 #: templates/admin/field/filter-toggle.php:21
-msgid "Enable if you want to show this filter as a toggle"
+msgid "Enable this to show this filter as a toggle."
 msgstr ""
 
 #: templates/admin/field/filter-toggle.php:24
@@ -1668,7 +1655,7 @@ msgid "Opened by default"
 msgstr ""
 
 #: templates/admin/field/filter-toggle.php:37
-msgid "Choose if toggle has to closed or opened by default"
+msgid "Choose if the toggle should be closed or opened by default."
 msgstr ""
 
 #: templates/admin/preset-filter-create.php:29
@@ -1696,11 +1683,11 @@ msgid "Filters of this preset"
 msgstr ""
 
 #: templates/admin/preset-filter-create.php:68
-msgid "You don't have any filter yet."
+msgid "No filters have been created yet."
 msgstr ""
 
 #: templates/admin/preset-filter-create.php:69
-msgid "But don't worry, here you can create your first one!"
+msgid "Create your first filter using the options below."
 msgstr ""
 
 #: templates/admin/preset-filter-create.php:83
@@ -1708,7 +1695,7 @@ msgid "Add a new filter"
 msgstr ""
 
 #: templates/admin/preset-filters.php:21
-msgid "Add preset"
+msgid "Add Preset"
 msgstr ""
 
 #: templates/admin/preset-filters.php:29

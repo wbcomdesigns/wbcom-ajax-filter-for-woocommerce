@@ -32,9 +32,9 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 		<div class="wbcom-settings-section-wrap">
 			<div class="wbcom-settings-section-options-heading">
 						<label>
-							<?php esc_html_e( 'Choose element types to search', 'wb-ajax-filter' ); ?>
+							<?php esc_html_e( 'Choose which element types to search.', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Choose if you want to extend search also to posts and pages', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Choose if you want to extend search also to posts and pages.', 'wb-ajax-filter' ); ?></p>
 
 					 </div>
 					 <div class="wbcom-settings-section-options">
@@ -53,7 +53,7 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 						<label>
 							<?php esc_html_e( 'Search in title', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Extend search in the title of the product', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Extend search in the title of the product.', 'wb-ajax-filter' ); ?></p>
 
 					 </div>
 					 <div class="wbcom-settings-section-options">
@@ -67,7 +67,7 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 						<label>
 							<?php esc_html_e( 'Search in excerpt', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Extend search in the excerpt of the product', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Extend search in the excerpt of the product.', 'wb-ajax-filter' ); ?></p>
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label>
@@ -80,7 +80,7 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 						<label>
 							<?php esc_html_e( 'Search in content', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Extend search in the content of the product', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Extend search in the content of the product.', 'wb-ajax-filter' ); ?></p>
 				 </div>
 				 <div class="wbcom-settings-section-options">
 						<label>
@@ -111,12 +111,12 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 					 <div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_search_content_settings[search_type_more_words]" type="radio" value="and"<?php ( isset( $wb_ajax_filter_search_content_settings['search_type_more_words'] ) ) ? checked( $wb_ajax_filter_search_content_settings['search_type_more_words'], 'and' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Show items containing all words typed', 'wb-ajax-filter' ); ?></span>
+							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Show items containing all typed words.', 'wb-ajax-filter' ); ?></span>
 						</label>
 
 						<label>
 							<input name="wb_ajax_filter_search_content_settings[search_type_more_words]" type="radio" value="or"<?php ( isset( $wb_ajax_filter_search_content_settings['search_type_more_words'] ) ) ? checked( $wb_ajax_filter_search_content_settings['search_type_more_words'], 'or' ) : ''; ?>>
-							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Show items containing at least one of the words typed', 'wb-ajax-filter' ); ?></span>
+							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Show items containing at least one of the typed words.', 'wb-ajax-filter' ); ?></span>
 						</label>
 					 </div>
 				   </div>
@@ -125,7 +125,7 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 						  <label>
 							<?php esc_html_e( 'Order Options', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Enable order by post type', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enable ordering by post type.', 'wb-ajax-filter' ); ?></p>
 					   </div>
 					   <div class="wbcom-settings-section-options">
 						<label>
@@ -136,7 +136,7 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 						<div class="wbcom-settings-section-wrap">
 						  <div class="wbcom-settings-section-options-heading">
 						<label>
-							<?php esc_html_e( 'Search by Custom Field', 'wb-ajax-filter' ); ?>
+							<?php esc_html_e( 'Search by custom field', 'wb-ajax-filter' ); ?>
 						</label>
 						<p class="description"><?php esc_html_e( 'Custom field name', 'wb-ajax-filter' ); ?></p>
 					   </div>
@@ -151,14 +151,14 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 					   <div class="wbcom-settings-section-wrap">
 						  <div class="wbcom-settings-section-options-heading">
 							<label>
-								<?php esc_html_e( 'Search by Sku Settings', 'wb-ajax-filter' ); ?>
+								<?php esc_html_e( 'Search by SKU Settings', 'wb-ajax-filter' ); ?>
 						   </label>
-							<p class="description"><?php esc_html_e( 'Extend search functionality so that search includes also sku', 'wb-ajax-filter' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Extend search functionality to also include SKU.', 'wb-ajax-filter' ); ?></p>
 
 						 </div>
 						 <div class="wbcom-settings-section-options">
 						<label>
-							<?php esc_html_e( 'Search by sku', 'wb-ajax-filter' ); ?>
+							<?php esc_html_e( 'Search by SKU', 'wb-ajax-filter' ); ?>
 						</label><br>				
 						<label>
 							<input name="wb_ajax_filter_search_content_settings[search_by_sku]" type="checkbox" value="yes"<?php ( isset( $wb_ajax_filter_search_content_settings['search_by_sku'] ) ) ? checked( $wb_ajax_filter_search_content_settings['search_by_sku'], 'yes' ) : ''; ?>>

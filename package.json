@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "url": "https://github.com/wbcomdesigns/wbcom-ajax-filter-for-woocommerce",
   "license": "GPL-2.0+",
-  "description": "Wbcom Ajax Filter for Woocommerce Plugin allows your users to find the product they are looking for as quickly as possible.",
+  "description": "Wbcom Ajax Filter for WooCommerce Plugin allows your users to find the product they are looking for as quickly as possible.",
   "devDependencies": {
     "grunt": "^1.6.1",
     "grunt-checktextdomain": "^1.0.1",

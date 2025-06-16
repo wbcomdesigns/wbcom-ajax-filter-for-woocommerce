@@ -65,8 +65,8 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) { //phpcs:
 						if ( empty( $filters ) ) {
 							?>
 							<div class="wbcom-preset-filters-message">
-								<strong><?php esc_html_e( 'You don\'t have any filter yet.', 'wb-ajax-filter' ); ?></strong>
-								<?php esc_html_e( 'But don\'t worry, here you can create your first one!', 'wb-ajax-filter' ); ?>
+								<strong><?php esc_html_e( 'No filters have been created yet.', 'wb-ajax-filter' ); ?></strong>
+								<?php esc_html_e( 'Create your first filter using the options below.', 'wb-ajax-filter' ); ?>
 							</div>
 							<?php
 						} else {

@@ -22,7 +22,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 			<span class="wb-ajax-filter-onoff" data-text-on="YES" data-text-off="NO"></span>
 		</div>
 	</div>
-	<span class="description"><?php esc_html_e( 'Enable if you want to show "In Stock" filter', 'wb-ajax-filter' ); ?></span>
+	<span class="description"><?php esc_html_e( "Enable this to show the 'In Stock' filter", 'wb-ajax-filter' ); ?></span>
 </div>
 <div class="wb-ajax-filter-toggle-content-row wb-stock-sale-toggle" style="<?php echo esc_attr( $style ); ?>">
 	<label for="show_sale_filter"><?php esc_html_e( 'Show sale filter', 'wb-ajax-filter' ); ?></label>
@@ -32,6 +32,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 			<span class="yith-plugin-fw-onoff" data-text-on="YES" data-text-off="NO"></span>
 		</div>
 	</div>
-	<span class="description"><?php esc_html_e( 'Enable if you want to show "On Sale" filter', 'wb-ajax-filter' ); ?></span>
+	<span class="description"><?php esc_html_e( "Enable this to show the 'On Sale' filter", 'wb-ajax-filter' ); ?></span>
+	<span class="description"><?php esc_html_e( "Enable this to show the 'On Sale' filter", 'wb-ajax-filter' ); ?></span>
 </div>
 

@@ -35,7 +35,7 @@ $is_search_enabled              = ( isset( $wb_ajax_filter_search_settings['enab
 						<label>
 							<?php esc_html_e( 'Enable Search', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Enable/Disable search field.', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enable or disable the search field.', 'wb-ajax-filter' ); ?></p>
 					</div>			
 					<label>
 						<input name="wb_ajax_filter_search_settings[enable_search]" type="checkbox" value="yes" <?php ( isset( $wb_ajax_filter_search_settings['enable_search'] ) ) ? checked( $wb_ajax_filter_search_settings['enable_search'], 'yes' ) : ''; ?>>
@@ -105,16 +105,16 @@ $is_search_enabled              = ( isset( $wb_ajax_filter_search_settings['enab
 								<label>
 									<?php esc_html_e( 'Show filter for search fields', 'wb-ajax-filter' ); ?>
 								</label>				
-								<p class="description"><?php esc_html_e( 'Show filter for search fields (it allows searching the Whole site or only among products)', 'wb-ajax-filter' ); ?></p>	
+								<p class="description"><?php esc_html_e( 'Show filter for search fields (it allows searching the Whole site or only among products).', 'wb-ajax-filter' ); ?></p>	
 								<div class="swicher-option">
 									<input name="wb_ajax_filter_search_settings[show_search_list]" type="checkbox" value="yes" <?php ( isset( $wb_ajax_filter_search_settings['show_search_list'] ) ) ? checked( $wb_ajax_filter_search_settings['show_search_list'], 'yes' ) : ''; ?>>							
 								</div>
 							</div>
 							<div class="wbcom-filter-for-search-item">
 								<label>
-									<?php esc_html_e( 'Show the category list', 'wb-ajax-filter' ); ?>							
+									<?php esc_html_e( 'Show the product categories dropdown', 'wb-ajax-filter' ); ?>							
 								</label>	
-								<p class="description"><?php esc_html_e( 'This option lets you decide to show the categories dropdown', 'wb-ajax-filter' ); ?></p>
+								<p class="description"><?php esc_html_e( 'Show a categories dropdown in the search form.', 'wb-ajax-filter' ); ?></p>
 								<div class="swicher-option">
 									<input name="wb_ajax_filter_search_settings[show_category_list]" type="checkbox" value="yes"<?php ( isset( $wb_ajax_filter_search_settings['show_category_list'] ) ) ? checked( $wb_ajax_filter_search_settings['show_category_list'], 'yes' ) : ''; ?>>							
 								</div>

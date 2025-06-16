@@ -37,7 +37,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 							<?php esc_html_e( 'Filter View', 'wb-ajax-filter' ); ?>
 						</label>
 
-							<p class="description"><?php esc_html_e( 'Choose to apply filters in real time using AJAX or whether to show a button to apply all filters.', 'wb-ajax-filter' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Choose whether to apply filters in real time using AJAX or show a button to apply all filters.', 'wb-ajax-filter' ); ?></p>
 
 					   </div>
 					   <div class="wbcom-settings-section-options">
@@ -58,7 +58,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 							<?php esc_html_e( 'Display Results', 'wb-ajax-filter' ); ?>
 						</label>
 
-							<p class="description"><?php esc_html_e( 'Choose whether to render search results on page reload or without page reload.', 'wb-ajax-filter' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Choose whether to display search results with or without page reload.', 'wb-ajax-filter' ); ?></p>
 
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -77,7 +77,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 						<label>
 							<?php esc_html_e( 'Hide empty terms', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Enable to hide empty terms from filters section', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Hide filter terms that have no matching products.', 'wb-ajax-filter' ); ?></p>
 			   
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -105,7 +105,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 						<label>
 							<?php esc_html_e( 'Show reset button', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Enable to show the "Reset filter" button to allow the user to cancel the filter selection in one click', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enable to show the "Reset filter" button to allow the user to cancel the filter selection in one click.', 'wb-ajax-filter' ); ?></p>
 
 						</div>
 						<div class="wbcom-settings-section-options">
@@ -122,7 +122,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 						<label>
 							<?php esc_html_e( 'Reset button position', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Choose the default position for reset button', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Choose the default position for reset button.', 'wb-ajax-filter' ); ?></p>
 					 
 					  </div>
 					  <div class="wbcom-settings-section-options">
@@ -142,7 +142,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 						<label>
 							<?php esc_html_e( 'Show "Clear" above each filter', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Enable to show the "Clear" link above each filter of the preset', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enable to show the "Clear" link above each filter of the preset.', 'wb-ajax-filter' ); ?></p>
 
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -170,7 +170,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 						<label>
 							<?php esc_html_e( 'Scroll top after filtering', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Enable this option if you want to scroll to top after filtering.', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enable this option to scroll to the top after filtering.', 'wb-ajax-filter' ); ?></p>
 
 					</div>
 					<div class="wbcom-settings-section-options">

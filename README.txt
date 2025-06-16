@@ -1,7 +1,7 @@
 === Wbcom Designs - Ajax filter for WooCommerce ===
 Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/contact/
-Tags: Woocommerce plugin Addon
+Tags: WooCommerce plugin Addon
 Requires at least: 4.0
 Tested up to: 6.0.1
 Stable tag: 1.2.0
@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Wbcom Ajax Filter for Woocommerce Plugin allows your users to find the product they are looking for as quickly as possible.
+Wbcom Ajax Filter for WooCommerce Plugin allows your users to find the product they are looking for as quickly as possible.
 
 == Installation ==
 

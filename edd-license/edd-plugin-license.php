@@ -15,7 +15,7 @@ if ( ! defined( 'EDD_WB_AJAX_FILTER_STORE_URL' ) ) {
 }
 
 if ( ! defined( 'EDD_WB_AJAX_FILTER_ITEM_NAME' ) ) {
-	define( 'EDD_WB_AJAX_FILTER_ITEM_NAME', 'Ajax Filter For Woocommerce' );
+	define( 'EDD_WB_AJAX_FILTER_ITEM_NAME', 'Ajax Filter For WooCommerce' );
 }
 
 if ( ! defined( 'EDD_WB_AJAX_FILTER_PLUGIN_LICENSE_PAGE' ) ) {
@@ -330,7 +330,7 @@ function edd_wbcom_ajax_filter_admin_notices() {
 				<?php
 				$message = sprintf(
 							/* translators: %1$s: Expire Time*/
-					__( 'Your Ajax Filter For Woocommerce plugin license key expired on %s.', 'wb-ajax-filter' ),
+					__( 'Your Ajax Filter For WooCommerce plugin license key expired on %s.', 'wb-ajax-filter' ),
 					date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
 				);
 				echo esc_html( $message );
@@ -361,7 +361,7 @@ function edd_wbcom_ajax_filter_admin_notices() {
 		<div class="notice notice-error is-dismissible">
 			<p>
 			<?php
-			echo esc_html__( 'Please activate your Ajax Filter For Woocommerce plugin license key.', 'wb-ajax-filter' );
+			echo esc_html__( 'Please activate your Ajax Filter For WooCommerce plugin license key.', 'wb-ajax-filter' );
 			?>
 			</p>			
 		</div>
