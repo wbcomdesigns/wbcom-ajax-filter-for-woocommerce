@@ -12,39 +12,82 @@
 $filter_design = 'checkbox';
 $heirarchy     = ( isset( $filters['hierarchical'] ) ) ? $filters['hierarchical'] : false;
 $hide_term     = ( isset( $wb_ajax_filter_general_options['hide_empty_terms'] ) && 'yes' === $wb_ajax_filter_general_options['hide_empty_terms'] ) ? true : false;
+
+/**
+ * Function to retrieve parent term's child term count.
+ * 
+ * @param int $parent_term_id Parent term id.
+ * @param string $taxonomy Taxonomy.
+ * 
+ * @return int $total Child terms count. 
+ * 
+ */
+function get_taxonomy_child_terms_count( $parent_term_id, $taxonomy ) {
+	
+	if( empty( $parent_term_id ) || empty( $taxonomy ) ) {
+		return 0;
+	}
+	
+	$child_ids = get_term_children($parent_term_id, $taxonomy);
+
+    if (is_wp_error($child_ids) || empty($child_ids)) {
+        return 0;
+    }
+
+    $child_terms = get_terms(array(
+        'taxonomy'   => $taxonomy,
+        'include'    => $child_ids,
+        'hide_empty' => false,
+    ));
+	
+    $total = 0;
+
+    foreach ($child_terms as $term) {
+        $total += $term->count;
+    }
+
+    return $total;
+}
+
 ?>
 <div class="wb-ajax-filter filter-tax">
 	<ul class="filter-items filter-radio">
 		<?php
 		$terms_added = array();
-		foreach ( $filters['terms'] as $tm ) {
-			if ( in_array( $tm->id, $terms_added, true ) ) {
+		foreach ( $filters['terms'] as $term ) {
+			if ( in_array( $term->id, $terms_added, true ) ) {
 				continue;
 			}
-			$term_data     = get_term( $tm->id, $filters['taxonomy'] );
+			$term_data     = get_term( $term->id, $filters['taxonomy'] );
 			$parent_exists = ( 0 !== $term_data->parent ) ? Wb_Ajax_Filter_Public::wb_ajax_check_parent_is_included( $term_data->parent, $filters['terms'] ) : false;
 			if ( $parent_exists ) {
 				continue;
 			}
 			$checked            = ( isset( $params[ $filter_taxonomy ] ) && in_array( $term_data->slug, (array) $params[ $filter_taxonomy ], true ) ) ? 'checked' : '';
-			$disabled           = ( 0 === $term_data->count ) ? 'disabled' : '';
+			
 			$filter_item_class  = ( 0 === $term_data->parent || 'no' === $heirarchy ) ? 'wb-ajax-level-0' : '';
 			$filter_item_class .= ( 'collapsed' === $heirarchy ) ? ' wb-ajax-heirarchy-collapsible closed' : '';
 			$filter_item_class .= ( 'expanded' === $heirarchy ) ? ' wb-ajax-heirarchy-collapsible opened' : '';
+
+			$count_child_terms = get_taxonomy_child_terms_count( $term->id, $filters['taxonomy'] );
+			$count_child_terms = $count_child_terms + $term_data->count;
+
+			$disabled          = ( 0 === $count_child_terms ) ? 'disabled' : '';
+
 			if ( ( $hide_term && '' === $disabled ) || ( ! $hide_term && '' === $disabled ) || ( ! $hide_term && 'disabled' === $disabled ) ) {
 				?>
 			<li class="filter-item checkbox <?php echo esc_attr( $filter_item_class ); ?>" data-parent="<?php echo esc_attr( $term_data->slug ); ?>">
 				<label>
-					<input type="checkbox" name="<?php echo esc_attr( $filter_taxonomy . '_' . $tm->id ); ?>" class="wb-ajax-filter-selectible" value="<?php echo esc_attr( $term_data->slug ); ?>" data-filter="<?php echo esc_attr( $filter_taxonomy ); ?>" <?php echo esc_attr( $checked ); ?> <?php echo esc_attr( $disabled ); ?>>
+					<input type="checkbox" name="<?php echo esc_attr( $filter_taxonomy . '_' . $term->id ); ?>" class="wb-ajax-filter-selectible" value="<?php echo esc_attr( $term_data->slug ); ?>" data-filter="<?php echo esc_attr( $filter_taxonomy ); ?>" <?php echo esc_attr( $checked ); ?> <?php echo esc_attr( $disabled ); ?>>
 					<?php
-					$wb_ajax_terms_text = isset( $filters['terms_text'] ) && isset( $filters['terms_text'][ $tm->id ] ) && is_array( $filters['terms_text'][ $tm->id ] ) && array_key_exists( 'label', $filters['terms_text'][ $tm->id ] ) ? $filters['terms_text'][ $tm->id ]['label'] : $term_data->name;
+					$wb_ajax_terms_text = isset( $filters['terms_text'] ) && isset( $filters['terms_text'][ $term->id ] ) && is_array( $filters['terms_text'][ $term->id ] ) && array_key_exists( 'label', $filters['terms_text'][ $term->id ] ) ? $filters['terms_text'][ $term->id ]['label'] : $term_data->name;
 					?>
 					<a href="<?php echo esc_attr( $base_url ); ?>?wb_ajax=1&<?php echo esc_attr( $filter_taxonomy . '=' . $term_data->slug ); ?>" class="wb-term-label wb-tooltip-added <?php echo ( 'checked' === $checked ) ? 'filter-active' : ''; ?> <?php echo esc_attr( $disabled ); ?>" data-title="<?php echo esc_attr( $term_data->name ); ?>"><?php echo esc_html( $wb_ajax_terms_text ); ?>
 						<?php if ( isset( $filters['show_count'] ) && 'yes' === $filters['show_count'] ) : ?>
-							<small class="item-count">(<?php echo esc_html( $term_data->count ); ?>)</small>
+							<small class="item-count">(<?php echo esc_html( $count_child_terms ); ?>)</small>
 						<?php endif; ?>
 						<?php
-						$wb_filter_terms_text = isset( $filters['terms_text'] ) && isset( $filters['terms_text'][ $tm->id ] ) && is_array( $filters['terms_text'][ $tm->id ] ) && array_key_exists( 'tooltip', $filters['terms_text'][ $tm->id ] ) ? $filters['terms_text'][ $tm->id ]['tooltip'] : $term_data->name;
+						$wb_filter_terms_text = isset( $filters['terms_text'] ) && isset( $filters['terms_text'][ $term->id ] ) && is_array( $filters['terms_text'][ $term->id ] ) && array_key_exists( 'tooltip', $filters['terms_text'][ $term->id ] ) ? $filters['terms_text'][ $term->id ]['tooltip'] : $term_data->name;
 						?>
 						<span class="wb-ajax-filter-tooltip-text"><?php echo esc_html( $wb_filter_terms_text ); ?></span>
 					</a>
@@ -60,7 +103,7 @@ $hide_term     = ( isset( $wb_ajax_filter_general_options['hide_empty_terms'] ) 
 				<?php
 			}
 			if ( 0 === $term_data->parent && 'parents_only' !== $heirarchy ) {
-				$parent_id = $tm->id;
+				$parent_id = $term->id;
 				require 'term-children.php';
 			}
 		}
