@@ -188,6 +188,8 @@
 			e.preventDefault();
 			let filter = jQuery('#wb_ajax_search_input').attr('name');
 			let filterValue = jQuery('#wb_ajax_search_input').val();
+			let searchCategory = jQuery('#product_cat').val();
+
 			if (filterValue != '' && filterValue != undefined ){
 				addRemoveAjaxSearchfieldsOnChange( filter, filterValue );
 			}
@@ -198,8 +200,10 @@
 					addRemoveAjaxSearchfieldsOnChange(custom, customValue);
 				}
 			}
-			loadFilteredResults();
-			
+			if( filterValue != null || searchCategory != 0 ) {
+				loadFilteredResults();
+			}
+						
 		});
 
 		function addRemoveAjaxSearchfieldsOnChange( filter, filterValue ){
