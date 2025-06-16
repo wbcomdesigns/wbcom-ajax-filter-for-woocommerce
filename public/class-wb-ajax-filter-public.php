@@ -216,6 +216,7 @@ class Wb_Ajax_Filter_Public {
 				}
 				li a.price-range.filter-active{
 					color: ' . $css_settings['textual_terms_active_text_color'] . ';
+					border: 1px dotted ' . $css_settings['textual_terms_active_text_color'] . ';
 				}
 				li a.price-range:hover{
 					color: ' . $css_settings['textual_terms_hover_text_color'] . ';

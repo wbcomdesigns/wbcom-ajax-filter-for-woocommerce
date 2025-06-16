@@ -136,6 +136,10 @@ a.wb-ajax-clear-single-filter {
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
+.wb-ajax-filter-content-container .wb-price-ranges li a.price-range.filter-active {
+    padding: 2px 5px;
+}
+
 /*Width Filter Columns*/
 .wb-ajax-filter-content-container.filter-columns-1 .wb-ajax-filter-container-single {
     width: 100%;
