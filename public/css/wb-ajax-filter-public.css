@@ -91,7 +91,10 @@ a.wb-ajax-reset-all-filters.button .dashicons {
 
 a.wb-ajax-clear-single-filter {
     margin-bottom: 10px;
-    display: block;
+    display: inline-block;
+    border: 1px solid currentColor;
+    padding: 2px 5px;
+    border-radius: 4px;
 }
 
 .wb-ajax-filters-container .select2-container {
