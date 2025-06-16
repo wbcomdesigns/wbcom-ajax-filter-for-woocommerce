@@ -20,18 +20,6 @@ $base_url  = ( isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https
 $base_url .= isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
 $base_url .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REDIRECT_URL'] ) ) : '';
 ?>
-<div class="wb-ajax-search-container">
-	<form method="GET">
-		<?php
-		$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/search-form.php';
-		if ( file_exists( $custom_template ) ) {
-			include $custom_template;
-		} else {
-			require_once WB_AJAX_FILTER_TEMPLATE_PATH . 'public/search-form.php';
-		}
-		?>
-	</form>
-</div>
 <?php if ( 'yes' === $enabled ) { ?>
 	<div class="wb-ajax-filters-container" id="preset_<?php echo esc_attr( $preset_id ); ?>" data-preset-id="<?php echo esc_attr( $preset_id ); ?>">
 		<form method="POST">

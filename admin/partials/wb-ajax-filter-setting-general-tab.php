@@ -134,10 +134,6 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 							<input name="wb_ajax_filter_admin_general_options[reset_button_position]" type="radio" value="after_filters" <?php ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) ) ? checked( $wb_ajax_filter_general_options['reset_button_position'], 'after_filters' ) : ''; ?>>
 							<span class="description"><?php esc_html_e( 'After filters', 'wb-ajax-filter' ); ?></span>
 						</label><br>
-						<label>
-							<input name="wb_ajax_filter_admin_general_options[reset_button_position]" type="radio" value="before_products" <?php ( isset( $wb_ajax_filter_general_options['reset_button_position'] ) ) ? checked( $wb_ajax_filter_general_options['reset_button_position'], 'before_products' ) : ''; ?>>
-							<span class="description"><?php esc_html_e( 'Above products list', 'wb-ajax-filter' ); ?></span>
-						</label><br>
 					</div>
 				</div>
 				</div>
