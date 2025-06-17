@@ -240,7 +240,7 @@ class Wb_Ajax_Filter {
 		// Ajax callback.
 		$this->loader->add_action( 'wp_ajax_get_ajax_search_autocomplete_title_wb', $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' );
 		// Shortcode callback.
-		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_public, 'filter_preset_shortcode_callback' );
+		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_public, 'filter_preset_shortcode_callback', 10, 1 );
 
 		$this->loader->add_action( 'woocommerce_redirect_single_search_result', $plugin_public, 'wb_ajax_filter_redirect_single_search_result' );
 
