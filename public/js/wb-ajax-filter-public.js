@@ -203,7 +203,7 @@
 					addRemoveAjaxSearchfieldsOnChange(custom, customValue);
 				}
 			}
-			if( filterValue != null || searchCategory != 0 || customValue != undefined ) {
+			if( filterValue != null || searchCategory != 0 || customValue != '' ) {
 				loadFilteredResults();
 			}
 						
@@ -245,7 +245,7 @@
 				}
 			}
 			
-			if (filterValue == null && searchCategory == 0 && customValue == null ) {
+			if (filterValue == null && searchCategory == 0 && customValue == '' ) {
 				loadFilteredResults();
 			}
 		});
