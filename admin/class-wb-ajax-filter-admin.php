@@ -93,13 +93,16 @@ class Wb_Ajax_Filter_Admin {
 			$extension = is_rtl() ? '.rtl.css' : '.min.css';
 			$path      = is_rtl() ? '/rtl' : '/min';
 		}
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-admin' . $extension, array(), $this->version, 'all' );
-		wp_enqueue_style( 'wp-color-picker' );
-		if ( 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
-			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
+		if( 'wb-plugins_page_wbcom-license-page' === $screen || 'toplevel_page_wbcomplugins' === $screen || 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
+			
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-admin' . $extension, array(), $this->version, 'all' );
+			wp_enqueue_style( 'wp-color-picker' );
+			if ( 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
+				wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
+			}
+			wp_enqueue_style( 'wp-color-picker' );
 		}
-		wp_enqueue_style( 'wp-color-picker' );
+		
 	}
 
 	/**
@@ -130,31 +133,33 @@ class Wb_Ajax_Filter_Admin {
 			$path      = '/min';
 		}
 
-		if ( 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
+		if ( 'wb-plugins_page_wbcom-license-page' === $screen || 'toplevel_page_wbcomplugins' === $screen || 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
+			
 			wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( 'jquery-ui-core' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
-		}
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-admin' . $extension, array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( 'wp-color-picker' );
-		wp_enqueue_media();
+		
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-admin' . $extension, array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( 'wp-color-picker' );
+			wp_enqueue_media();
 
-		wp_localize_script( 
-			$this->plugin_name,
-			'wbAjaxFilterStrings', 
-			array(
-				'confirmDelete'      => __( 'Are you sure you want to delete this preset?', 'wb-ajax-filter' ),
-				'confirmDuplicate'   => __( 'Do you want to create duplicate of this preset?', 'wb-ajax-filter' ),
-				'nameExists'         => __( 'Name already exists.', 'wb-ajax-filter' ),
-				'selectTaxonomy'     => __( 'Please select a taxonomy', 'wb-ajax-filter' ),
-				'selectTerms'        => __( 'Please select terms', 'wb-ajax-filter' ),
-				'nameRequired'       => __( 'Please enter name for preset.', 'wb-ajax-filter' ),
-				'validTaxonomy'      => __( 'Please select a valid taxonomy', 'wb-ajax-filter' ),
-				'minPriceNotice'     => __( 'Entered Min price is greater than the highest price on this store.', 'wb-ajax-filter' ),
-				'maxPriceNotice'     => __( 'Max price cannot be smaller than Min price.', 'wb-ajax-filter' ),
-				'titleRequired'      => __( 'Filter name is required.', 'wb-ajax-filter' )
-			)
-		);
+			wp_localize_script( 
+				$this->plugin_name,
+				'wbAjaxFilterStrings', 
+				array(
+					'confirmDelete'      => __( 'Are you sure you want to delete this preset?', 'wb-ajax-filter' ),
+					'confirmDuplicate'   => __( 'Do you want to create duplicate of this preset?', 'wb-ajax-filter' ),
+					'nameExists'         => __( 'Name already exists.', 'wb-ajax-filter' ),
+					'selectTaxonomy'     => __( 'Please select a taxonomy', 'wb-ajax-filter' ),
+					'selectTerms'        => __( 'Please select terms', 'wb-ajax-filter' ),
+					'nameRequired'       => __( 'Please enter name for preset.', 'wb-ajax-filter' ),
+					'validTaxonomy'      => __( 'Please select a valid taxonomy', 'wb-ajax-filter' ),
+					'minPriceNotice'     => __( 'Entered Min price is greater than the highest price on this store.', 'wb-ajax-filter' ),
+					'maxPriceNotice'     => __( 'Max price cannot be smaller than Min price.', 'wb-ajax-filter' ),
+					'titleRequired'      => __( 'Filter name is required.', 'wb-ajax-filter' )
+				)
+			);
+		}
 	}
 
 	/**
