@@ -367,7 +367,7 @@ class Wb_Ajax_Filter_Public {
 				$searchable_fields[] = 'p.post_excerpt';
 			}
 			$include_sku = isset( $search_filter_settings['search_by_sku'] ) && $search_filter_settings['search_by_sku'] === 'yes';
-
+			
 			if ( empty( $searchable_fields ) && ! $include_sku ) {
 				return []; // Nothing to search
 			}
@@ -417,21 +417,9 @@ class Wb_Ajax_Filter_Public {
 		if ( is_shop() || is_product_category() || is_product_tag() ) {
 			$params = $_GET; //phpcs:ignore
 			$meta_query      = array();
-			$search_settings = get_option( 'wb_ajax_filter_admin_general_options' );
 			if ( isset( $params['preset'] ) ) {
 				$preset_id   = absint( $params['preset'] );
-				if ( isset( $search_settings['cf_name'] ) && '' !== $search_settings['cf_name'] && 'product' === $q->query_vars['post_type'] ) {
-					$custom = $search_settings['cf_name'];
-					if ( array_key_exists( 'meta_' . $custom, $params ) ) {
-						$meta_query[] = array(
-							'key'     => $custom,
-							'value'   => $params[ 'meta_' . $custom ],
-							'compare' => '==',
-						);
-					}
-				}
 				
-				$q->query_vars['meta_query'] = $meta_query;
 				$filters                     = get_post_meta( $preset_id, '_wb_filter', true );
 				if ( $filters ) {
 					foreach ( $filters as $filter ) {
@@ -624,8 +612,9 @@ class Wb_Ajax_Filter_Public {
 	 */
 	public function wb_ajax_apply_meta_filter( $q, $filter, $params ) {
 				
-		$search_settings = get_option( 'wb_ajax_filter_admin_general_options' );
-
+		$search_settings         = get_option( 'wb_ajax_filter_admin_general_options' );
+		$search_content_settings = get_option( 'wb_ajax_filter_search_content_settings' );
+		
 		if( !empty( $params ) && ( isset( $params['instock_filter'] ) || isset( $params['onsale_filter'] ) ) ) {
 				
 			if( array_key_exists( 'instock_filter', $params ) ) {
@@ -654,6 +643,21 @@ class Wb_Ajax_Filter_Public {
 			$q->query_vars['meta_query'] = $meta_query;
 			
 		}
+		if ( isset( $search_content_settings['cf_name'] ) && '' !== $search_content_settings['cf_name'] && isset( $q->query_vars['post_type'] ) && 'product' === $q->query_vars['post_type'] ) {
+			$custom = $search_content_settings['cf_name'];
+			
+			if ( array_key_exists( 'meta_' . $custom, $params ) ) {
+				$meta_query[] = array(
+					'key'     => $custom,
+					'value'   => $params[ 'meta_' . $custom ],
+					'compare' => '==',
+				);
+				$q->query_vars['meta_query'] = $meta_query;
+			}
+			
+		}
+		
+		
 		return $q;
 	}
 }

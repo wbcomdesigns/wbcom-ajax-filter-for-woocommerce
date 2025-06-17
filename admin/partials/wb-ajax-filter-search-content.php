@@ -138,7 +138,7 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 						<label>
 							<?php esc_html_e( 'Search by custom field', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Custom field name', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Extend search by adding custom field', 'wb-ajax-filter' ); ?></p>
 					   </div>
 						<div class="wbcom-settings-section-options wbcom-ajax-check-custom-option">
 							<select id="wb_ajax_check_custom_field_option" name="wb_ajax_filter_search_content_settings[cf_name]">
@@ -148,7 +148,23 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 							</select>
 						</div>
 					    </div>
-					   <div class="wbcom-settings-section-wrap">
+						<div class="wbcom-settings-section-wrap">
+						  <div class="wbcom-settings-section-options-heading">
+						<label>
+							<?php esc_html_e( 'Add placeholder for custom field', 'wb-ajax-filter' ); ?>
+						</label>
+						<p class="description"><?php esc_html_e( 'Add placeholder for custom field for clarity', 'wb-ajax-filter' ); ?></p>
+					   </div>
+						<div class="wbcom-settings-section-options wbcom-ajax-check-custom-option">
+							<div class="wbcom-settings-section-options">
+							<label>
+								<input name="wb_ajax_filter_search_content_settings[custom_field_label]" type="text" value="<?php echo ( isset( $wb_ajax_filter_search_content_settings['custom_field_label'] ) ) ? esc_html( $wb_ajax_filter_search_content_settings['custom_field_label'] ) : ''; ?>">
+							</label><br>
+						</div>	
+						</div>
+					    </div>
+
+						<div class="wbcom-settings-section-wrap">
 						  <div class="wbcom-settings-section-options-heading">
 							<label>
 								<?php esc_html_e( 'Search by SKU Settings', 'wb-ajax-filter' ); ?>
@@ -165,6 +181,7 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 						</label><br>
 					   </div>
 					   </div>
+					   
 
 				
 		

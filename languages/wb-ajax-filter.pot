@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-16T18:19:49+05:30\n"
+"POT-Creation-Date: 2025-06-17T14:48:11+05:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wb-ajax-filter\n"
@@ -370,11 +370,11 @@ msgid "Tooltip Text"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-customization-tab.php:147
-msgid "AJAX loader"
+msgid "Ajax loader"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-customization-tab.php:149
-msgid "Choose the style for AJAX loader icon"
+msgid "Choose the style for Ajax loader icon"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-customization-tab.php:154
@@ -390,12 +390,16 @@ msgstr ""
 msgid "Custom Ajax Loader"
 msgstr ""
 
+#: admin/partials/wb-ajax-filter-setting-customization-tab.php:170
+msgid "Upload the custom Ajax loader icon"
+msgstr ""
+
 #: admin/partials/wb-ajax-filter-setting-customization-tab.php:179
 msgid "Reset to default"
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-customization-tab.php:180
-msgid "Loader gif"
+msgid "Only GIFs are allowed."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-setting-general-tab.php:37

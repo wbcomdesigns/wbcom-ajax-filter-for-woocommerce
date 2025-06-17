@@ -71,6 +71,8 @@
 		}
 		if (urlTab && urlTab === 'wb-ajax-filter-search') {
 			jQuery('#wb_ajax_check_custom_field_option').select2({
+				placeholder :'Select Custom Field',
+				allowClear:true,
 				ajax: {
 					url: wbcom_plugin_installer_params.ajax_url,
 					dataType: 'json',
@@ -163,9 +165,9 @@
 			});
 			jQuery('input[name="wb_ajax_filter_admin_customization_options[ajax_loader_style]"]').on('change', function(){
 				if( jQuery(this).val() == 'custom' ){
-					jQuery(this).closest('tr').next('tr').show();
+					jQuery('.wb_ajax_filter_custom_loader_image').show();
 				} else {
-					jQuery(this).closest('tr').next('tr').hide();
+					jQuery('.wb_ajax_filter_custom_loader_image').hide();
 					jQuery('#wb_reset_upload_gif').trigger('click');
 				}
 			});

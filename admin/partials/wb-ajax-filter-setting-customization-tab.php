@@ -144,9 +144,9 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 				<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 						<label>
-							<?php esc_html_e( 'AJAX loader', 'wb-ajax-filter' ); ?>
+							<?php esc_html_e( 'Ajax loader', 'wb-ajax-filter' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Choose the style for AJAX loader icon', 'wb-ajax-filter' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Choose the style for Ajax loader icon', 'wb-ajax-filter' ); ?></p>
 					  </div>
 					  <div class="wbcom-settings-section-options">
 						<label>
@@ -161,13 +161,13 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 				</div>
 
 
-				<div class="wbcom-settings-section-wrap" style="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['ajax_loader_style'] ) && 'custom' !== $wb_ajax_filter_admin_customization_options['ajax_loader_style'] ) ? 'display:none;' : ''; ?>">
+				<div class="wbcom-settings-section-wrap wb_ajax_filter_custom_loader_image" style="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['ajax_loader_style'] ) && 'custom' !== $wb_ajax_filter_admin_customization_options['ajax_loader_style'] ) ? 'display:none;' : ''; ?>">
 				
 						<div class="wbcom-settings-section-options-heading">
 						<label>
 							<?php esc_html_e( 'Custom Ajax Loader', 'wb-ajax-filter' ); ?>
 						</label>
-					
+						<p class="description"><?php esc_html_e( 'Upload the custom Ajax loader icon', 'wb-ajax-filter' ); ?></p>
 					 </div>
 						<div class="gif-container">
 							<img src="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['loader_url'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['loader_url'] ) : ''; ?>" alt="" style="max-width:100%;">
@@ -175,9 +175,9 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 						<label>
 							<input name="wb_ajax_filter_admin_customization_options[loader_attachment_id]" type="hidden" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['loader_attachment_id'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['loader_attachment_id'] ) : ''; ?>">
 							<input name="wb_ajax_filter_admin_customization_options[loader_url]" type="text" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['loader_url'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['loader_url'] ) : ''; ?>">
-							<button class="btn" id="wb_upload_gif"><span class="dashicons dashicons-cloud-upload"></span><?php esc_html_e( 'Upload custom loader', 'wb-ajax-filter' ); ?></button>
-							<button class="btn" id="wb_reset_upload_gif"><?php esc_html_e( 'Reset to default', 'wb-ajax-filter' ); ?></button>
-							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Loader gif', 'wb-ajax-filter' ); ?></span>
+							<button class="button btn" id="wb_upload_gif"><span class="dashicons dashicons-cloud-upload"></span><?php esc_html_e( 'Upload custom loader', 'wb-ajax-filter' ); ?></button>
+							<button class="button btn" id="wb_reset_upload_gif"><?php esc_html_e( 'Reset to default', 'wb-ajax-filter' ); ?></button>
+							<span class="wb-ajax-filter-option-desc"><?php esc_html_e( 'Only GIFs are allowed.', 'wb-ajax-filter' ); ?></span>
 						</label><br>
 					
 				

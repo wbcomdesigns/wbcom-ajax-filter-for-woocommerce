@@ -189,6 +189,9 @@
 			let filter = jQuery('#wb_ajax_search_input').attr('name');
 			let filterValue = jQuery('#wb_ajax_search_input').val();
 			let searchCategory = jQuery('#product_cat').val();
+			
+			let customValue = '';
+			let custom      = '';
 
 			if (filterValue != '' && filterValue != undefined ){
 				addRemoveAjaxSearchfieldsOnChange( filter, filterValue );
@@ -200,7 +203,7 @@
 					addRemoveAjaxSearchfieldsOnChange(custom, customValue);
 				}
 			}
-			if( filterValue != null || searchCategory != 0 ) {
+			if( filterValue != null || searchCategory != 0 || customValue != undefined ) {
 				loadFilteredResults();
 			}
 						
