@@ -226,7 +226,28 @@
 		// Apply filters
 		jQuery('.wb-ajax-apply-all-filters').on('click', function( e ){
 			e.preventDefault();
-			loadFilteredResults();
+			
+			let filter = jQuery('#wb_ajax_search_input').attr('name');
+			let filterValue = jQuery('#wb_ajax_search_input').val();
+			let searchCategory = jQuery('#product_cat').val();
+
+			let customValue = '';
+			let custom = '';
+
+			if (filterValue != '' && filterValue != undefined) {
+				addRemoveAjaxSearchfieldsOnChange(filter, filterValue);
+			}
+			if (jQuery('.wb-ajax-filter-ajaxsearchform-input').length) {
+				let custom = jQuery('#wb_ajax_search_custom_field').attr('name');
+				let customValue = jQuery('#wb_ajax_search_custom_field').val();
+				if (customValue != '' && customValue != undefined) {
+					addRemoveAjaxSearchfieldsOnChange(custom, customValue);
+				}
+			}
+			
+			if (filterValue == null && searchCategory == 0 && customValue == null ) {
+				loadFilteredResults();
+			}
 		});
 
 		jQuery('a.wb-term-label').on('click', function(e){
