@@ -42,7 +42,7 @@ $selected_category = ( isset( $_GET['product_cat'] ) && !empty( $_GET['product_c
 					'show_count'      => true,
 					'value_field'     => 'slug',
 					'echo'            => true,
-					'selected'        =>$selected_category, 
+					'selected'        => get_query_var('product_cat'), 
 				)
 			);
 			

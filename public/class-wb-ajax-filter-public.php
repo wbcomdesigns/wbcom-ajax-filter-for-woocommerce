@@ -105,6 +105,8 @@ class Wb_Ajax_Filter_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		$wb_ajax_filter_search_settings   = get_option( 'wb_ajax_filter_search_settings' );
+		$wb_ajax_filter_search_label      = isset( $wb_ajax_filter_search_settings['search_input_label'] ) ? $wb_ajax_filter_search_settings['search_input_label'] : 'Search';
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 			$extension = '.js';
 			$path      = '';
@@ -123,6 +125,7 @@ class Wb_Ajax_Filter_Public {
 			array(
 				'ajax_url'         => admin_url( 'admin-ajax.php' ),
 				'wbcom_ajax_nonce' => wp_create_nonce( 'ajax-nonce' ),
+				'wb_ajax_filter_search_label' => $wb_ajax_filter_search_label
 			)
 		);
 	}
@@ -410,7 +413,8 @@ class Wb_Ajax_Filter_Public {
 	 * @param object $q Query Object.
 	 */
 	public function wb_ajax_filter_modify_wc_product_query( $q ) {
-		if ( is_shop() ) {
+		
+		if ( is_shop() || is_product_category() || is_product_tag() ) {
 			$params = $_GET; //phpcs:ignore
 			$meta_query      = array();
 			$search_settings = get_option( 'wb_ajax_filter_admin_general_options' );
@@ -510,12 +514,12 @@ class Wb_Ajax_Filter_Public {
 		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_active_labels'] ) && 'yes' === $wb_ajax_filter_general_options['show_active_labels'] ) {
 			require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/active-filters.php';
 		}
-		if ( $render_setting && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
+		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
 			require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
 		}
 		if( isset( $wb_ajax_filter_search_settings['enable_search'] ) && ( 'yes' == $wb_ajax_filter_search_settings['enable_search'] ) ) { ?>
 			<div class="wb-ajax-search-container">
-				<form method="GET">
+				<form method="GET" action="">
 					<?php
 					$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/search-form.php';
 					if ( file_exists( $custom_template ) ) {
@@ -543,7 +547,7 @@ class Wb_Ajax_Filter_Public {
 			do_action( 'wb_ajax_filter_after_content' );
 		}
 		
-		if ( $render_setting && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
+		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) &&  isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
 			require WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
 		}
 				

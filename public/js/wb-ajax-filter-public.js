@@ -67,7 +67,7 @@
 		// Enable select2 autocomplete js
 		jQuery('#wb_ajax_search_input').select2({
 			tags: true,
-			placeholder: 'Search',
+			placeholder: wbcom_plugin_installer_params.wb_ajax_filter_search_label,
 			ajax: {
 				url: wbcom_plugin_installer_params.ajax_url,
 				dataType: 'json',
@@ -115,7 +115,7 @@
 					if ( scrollToTopAfterLoadResults ) {
 						$('html,body').animate({ scrollTop: $('.site-header-wrapper').offset().top }, 'slow');
 					}
-					
+
 				}
 			});
 		}

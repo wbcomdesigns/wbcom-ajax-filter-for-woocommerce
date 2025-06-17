@@ -13,7 +13,7 @@ if ( count( $params ) > 0 ) {
 	?>
 	<div class="wb-ajax-active-filters-container" role="region" aria-label="Active Filters">
 	<?php
- 	$exclude_filters = array( 'preset', 'orderby', 's', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter' );
+ 	$exclude_filters = array( 'preset', 'orderby', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter' );
 	foreach ( $params as $key => $param ) {
 
 		if( empty( $param ) ) {
