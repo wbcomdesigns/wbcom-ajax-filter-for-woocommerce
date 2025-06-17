@@ -507,6 +507,10 @@ class Wb_Ajax_Filter_Public {
 
 		$render_setting  = ( isset( $wb_ajax_filter_search_settings['enable_search'] ) || ( $enable_filter_actions ) ) ? true : false;
 		
+		$customization_options = get_option( 'wb_ajax_filter_admin_customization_options' );
+		$columns               = isset( $customization_options['filters_per_column'] ) ? $customization_options['filters_per_column'] : 5;
+		echo '<div class="wb-ajax-filter-content-container filter-columns-' . esc_attr( $columns ) . '">';
+
 		do_action( 'wb_ajax_filter_before_content' );
 		if ( $render_setting && isset( $wb_ajax_filter_admin_custom['filters_title'] ) && '' !== $wb_ajax_filter_admin_custom['filters_title'] ) {
 			?>
@@ -552,6 +556,8 @@ class Wb_Ajax_Filter_Public {
 		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) &&  isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
 			require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
 		}
+
+		echo '</div>';
 				
 		return ob_get_clean();
 	}
