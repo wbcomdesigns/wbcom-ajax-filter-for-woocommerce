@@ -66,10 +66,8 @@ class Wb_Ajax_Filter_Activator {
 			'default_research'             => 'product',
 			'search_in_title'              => 'yes',
 			'search_in_excerpt'            => 'yes',
-			'search_in_content'            => 'yes',			
-			'search_in_author'             => 'yes',
+			'search_in_content'            => 'yes',
 			'search_type_more_words'       => 'and',
-			'order_by_post_type'           => 'yes',
 		);
 		foreach ( $wb_ajax_filter_settings as $key => $settings ) {
 			

@@ -89,19 +89,6 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 				 </div>
 				 </div>
 
-					<div class="wbcom-settings-section-wrap">
-					  <div class="wbcom-settings-section-options-heading">
-						<label>
-							<?php esc_html_e( 'Search in author', 'wb-ajax-filter' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Extend search in author', 'wb-ajax-filter' ); ?></p>
-					 </div>
-					 <div class="wbcom-settings-section-options">
-						<label>
-							<input name="wb_ajax_filter_search_content_settings[search_in_author]" type="checkbox" value="yes"<?php ( isset( $wb_ajax_filter_search_content_settings['search_in_author'] ) ) ? checked( $wb_ajax_filter_search_content_settings['search_in_author'], 'yes' ) : ''; ?>>
-						</label>
-					</div>
-				 </div>
 				 <div class="wbcom-settings-section-wrap wbcom-multiple-wb-ajax-filter">
 					  <div class="wbcom-settings-section-options-heading">
 						<label>
@@ -120,19 +107,7 @@ $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_con
 						</label>
 					 </div>
 				   </div>
-					<div class="wbcom-settings-section-wrap">
-					  <div class="wbcom-settings-section-options-heading">
-						  <label>
-							<?php esc_html_e( 'Order Options', 'wb-ajax-filter' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Enable ordering by post type.', 'wb-ajax-filter' ); ?></p>
-					   </div>
-					   <div class="wbcom-settings-section-options">
-						<label>
-							<input name="wb_ajax_filter_search_content_settings[order_by_post_type]" type="checkbox" value="yes"<?php ( isset( $wb_ajax_filter_search_content_settings['order_by_post_type'] ) ) ? checked( $wb_ajax_filter_search_content_settings['order_by_post_type'], 'yes' ) : ''; ?>>
-						</label><br>
-					   </div>
-						</div>
+					
 						<div class="wbcom-settings-section-wrap">
 						  <div class="wbcom-settings-section-options-heading">
 						<label>
