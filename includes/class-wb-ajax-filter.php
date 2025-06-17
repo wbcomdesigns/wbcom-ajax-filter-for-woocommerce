@@ -144,6 +144,12 @@ class Wb_Ajax_Filter {
 
 		/** This file is responsible for the plugin license functionality. */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'edd-license/edd-plugin-license.php';
+
+		/**
+		 * This file contains the general/common functions used in the plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wb-ajax-filter-general-functions.php';
+
 		$this->loader = new Wb_Ajax_Filter_Loader();
 
 	}
