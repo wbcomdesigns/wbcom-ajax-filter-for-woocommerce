@@ -9,7 +9,7 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
-$show_in = array( 'tax', 'price_range', 'review', 'stock_sale' );
+$show_in = array( 'tax' );
 $style   = 'display:none;';
 if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && in_array( $filters['type'], $show_in, true ) ) ) {
 	$style = '';
