@@ -197,8 +197,8 @@
 				addRemoveAjaxSearchfieldsOnChange( filter, filterValue );
 			}
 			if (jQuery('.wb-ajax-filter-ajaxsearchform-input').length ) {
-				let custom = jQuery('#wb_ajax_search_custom_field').attr('name');
-				let customValue = jQuery('#wb_ajax_search_custom_field').val();
+				custom = jQuery('#wb_ajax_search_custom_field').attr('name');
+				customValue = jQuery('#wb_ajax_search_custom_field').val();
 				if (customValue != '' && customValue != undefined) {
 					addRemoveAjaxSearchfieldsOnChange(custom, customValue);
 				}
@@ -238,8 +238,8 @@
 				addRemoveAjaxSearchfieldsOnChange(filter, filterValue);
 			}
 			if (jQuery('.wb-ajax-filter-ajaxsearchform-input').length) {
-				let custom = jQuery('#wb_ajax_search_custom_field').attr('name');
-				let customValue = jQuery('#wb_ajax_search_custom_field').val();
+				custom = jQuery('#wb_ajax_search_custom_field').attr('name');
+				customValue = jQuery('#wb_ajax_search_custom_field').val();
 				if (customValue != '' && customValue != undefined) {
 					addRemoveAjaxSearchfieldsOnChange(custom, customValue);
 				}
