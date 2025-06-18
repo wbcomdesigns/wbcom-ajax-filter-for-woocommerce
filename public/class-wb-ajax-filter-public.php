@@ -447,6 +447,28 @@ class Wb_Ajax_Filter_Public {
 	}
 
 	/**
+	 * Alter woocommerce search query for sku.
+	 *
+	 * @param object $q Query Object.
+	 */
+	public function wb_ajax_filters_product_search_by_sku( $search, $wp_query ) {
+		global $wpdb;
+		$search_filter_settings = get_option( 'wb_ajax_filter_search_content_settings' );
+		$include_sku = isset( $search_filter_settings['search_by_sku'] ) && $search_filter_settings['search_by_sku'] === 'yes';
+
+		if ( is_admin() || ! is_search() || ! isset( $wp_query->query_vars['s'] ) || ( ! is_array( $wp_query->query_vars['post_type'] ) && $wp_query->query_vars['post_type'] !== "product" ) || ( is_array( $wp_query->query_vars['post_type'] ) && ! in_array( "product", $wp_query->query_vars['post_type'] ) ) ) return $search; 
+		  if ( ! $include_sku || empty( $wp_query->query_vars['s'] ) ) return $search;
+		$product_id = wc_get_product_id_by_sku( $wp_query->query_vars['s'] );
+		if ( ! $product_id ) return $search;
+		$product = wc_get_product( $product_id );
+		if ( $product->is_type( 'variation' ) ) {
+			$product_id = $product->get_parent_id();
+		}
+		$search = str_replace( 'AND (((', "AND (({$wpdb->posts}.ID IN (" . $product_id . ")) OR ((", $search );  
+		return $search;   
+	}
+
+	/**
 	 * Function to check if the preset is enabled or not.
 	 * 
 	 * @param array $presets Array of presets.

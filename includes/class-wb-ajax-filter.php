@@ -246,6 +246,8 @@ class Wb_Ajax_Filter {
 
 		//Added filters when no products found.
 		$this->loader->add_action( 'woocommerce_no_products_found', $plugin_public, 'add_wb_ajax_filters' );
+
+		$this->loader->add_action( 'posts_search', $plugin_public, 'wb_ajax_filters_product_search_by_sku', 9999, 2 );
 	}
 
 	/**
