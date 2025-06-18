@@ -509,6 +509,7 @@ class Wb_Ajax_Filter_Public {
 		
 		$customization_options = get_option( 'wb_ajax_filter_admin_customization_options' );
 		$columns               = isset( $customization_options['filters_per_column'] ) ? $customization_options['filters_per_column'] : 5;
+		echo '<div class="woocommerce">';
 		echo '<div class="wb-ajax-filter-content-container filter-columns-' . esc_attr( $columns ) . '">';
 
 		do_action( 'wb_ajax_filter_before_content' );
@@ -557,6 +558,7 @@ class Wb_Ajax_Filter_Public {
 			require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
 		}
 
+		echo '</div>';
 		echo '</div>';
 				
 		return ob_get_clean();
