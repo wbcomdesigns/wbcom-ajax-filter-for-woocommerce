@@ -801,6 +801,13 @@ class Wb_Ajax_Filter_Admin {
 	public function wb_ajax_filter_admin_search_content() {
 		include_once 'partials/wb-ajax-filter-search-content.php';
 	}
+
+	/**
+	 * Include Wbcom ajax filter for woocommerce faq setting tab content file.
+	 * 
+	 * @since  1.0.0
+	 * @return void
+	 */
 	public function wb_ajax_filter_admin_ajax_faq_content(){
 		include_once 'partials/wb-ajax-filter-faq-content.php';
 	}
