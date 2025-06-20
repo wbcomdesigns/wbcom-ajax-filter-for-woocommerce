@@ -728,12 +728,17 @@ class Wb_Ajax_Filter_Admin {
 		$this->plugin_settings_tabs['wb-ajax-filter-ajax-search-settings'] = esc_html__( 'Search Settings', 'wb-ajax-filter' );
 		register_setting( 'wb_ajax_filter_search_settings', 'wb_ajax_filter_search_settings' );
 		add_settings_section( 'wb-ajax-filter-ajax-search-settings', ' ', array( $this, 'wb_ajax_filter_admin_ajax_search_settings_content' ), 'wb-ajax-filter-ajax-search-settings' );
-
+		
 		if( isset( $wb_ajax_filter_search_settings['enable_search'] ) && ( 'yes' === $wb_ajax_filter_search_settings['enable_search'] ) ) {
 			$this->plugin_settings_tabs['wb-ajax-filter-search'] = esc_html__( 'Search Options', 'wb-ajax-filter' );
 			register_setting( 'wb_ajax_filter_search_content_settings', 'wb_ajax_filter_search_content_settings' );
 			add_settings_section( 'wb-ajax-filter-search', ' ', array( $this, 'wb_ajax_filter_admin_search_content' ), 'wb-ajax-filter-search' );
 		}
+
+		$this->plugin_settings_tabs['wb-ajax-filter-ajax-faq'] = esc_html__( 'FAQ', 'wb-ajax-filter' );
+		register_setting( 'wb_ajax_filter_faq_settings', 'wb_ajax_filter_faq_settings' );
+		add_settings_section( 'wb-ajax-filter-ajax-faq', ' ', array( $this, 'wb_ajax_filter_admin_ajax_faq_content' ), 'wb-ajax-filter-ajax-faq' );
+		
 		//phpcs:enable
 	}
 
@@ -795,6 +800,9 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function wb_ajax_filter_admin_search_content() {
 		include_once 'partials/wb-ajax-filter-search-content.php';
+	}
+	public function wb_ajax_filter_admin_ajax_faq_content(){
+		include_once 'partials/wb-ajax-filter-faq-content.php';
 	}
 
 	/**

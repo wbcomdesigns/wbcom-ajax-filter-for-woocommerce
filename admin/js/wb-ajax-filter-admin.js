@@ -660,4 +660,22 @@
 		});
 	});
 
+	// faq tab accordion
+$(function () {
+var wb_ads_elmt = document.getElementsByClassName("wbcom-faq-accordion");
+var k;
+var wb_ads_elmt_len = wb_ads_elmt.length;
+for (k = 0; k < wb_ads_elmt_len; k++) {
+wb_ads_elmt[k].onclick = function () {
+this.classList.toggle("active");
+var panel = this.nextElementSibling;
+if (panel.style.maxHeight) {
+panel.style.maxHeight = null;
+} else {
+panel.style.maxHeight = panel.scrollHeight + "px";
+}
+};
+}
+});
+
 })(jQuery);

@@ -640,3 +640,7 @@ button.notice-dismiss:before {
 #wpwrap .notice.notice-error {
     display: none !important;
 }
+
+.nav-tab-wrapper ul li a#wb-ajax-filter-ajax-faq-tab:before {
+	content: "\f125" !important;
+}
