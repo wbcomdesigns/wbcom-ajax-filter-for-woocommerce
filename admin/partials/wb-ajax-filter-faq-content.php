@@ -101,18 +101,6 @@ if (! defined('ABSPATH') ) {
                         </div>
                     </div>
                 </div>
-                <div class="wbcom-faq-section-row">
-                    <div class="wbcom-faq-admin-row">
-                        <button class="wbcom-faq-accordion">
-                            <?php esc_html_e('What if I have a question or need support?', 'wb-ajax-filter'); ?>
-                        </button>
-                        <div class="wbcom-faq-panel">
-                            <p>
-                                <?php esc_html_e('No worries! Feel free to reach out to us anytime through our Contact page. We\'re always happy to help.', 'wb-ajax-filter'); ?>
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

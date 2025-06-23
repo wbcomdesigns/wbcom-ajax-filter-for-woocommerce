@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-18T12:11:41+00:00\n"
+"POT-Creation-Date: 2025-06-23T07:32:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wb-ajax-filter\n"
@@ -146,6 +146,66 @@ msgstr ""
 #: admin/class-wb-ajax-filter-admin.php:733
 #: admin/partials/wb-ajax-filter-search-content.php:22
 msgid "Search Options"
+msgstr ""
+
+#: admin/class-wb-ajax-filter-admin.php:738
+msgid "FAQ"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:25
+msgid "Frequently Asked Questions."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:32
+msgid "Does this plugin require WooCommerce to work?"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:36
+msgid "Yes, this plugin requires WooCommerce to function, as it is specifically built for WooCommerce product filtering"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:44
+msgid "Is it possible to create custom filters?"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:48
+msgid "Yes, custom filters can be created and configured to match specific product attributes, categories, reviews, or price ranges for more tailored filtering options."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:56
+msgid "Do I need to use any shortcode to display the filters?"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:60
+msgid "No, the plugin automatically integrates with your WooCommerce shop and archive pages."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:69
+msgid "How many product attributes does this plugin support?"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:73
+msgid "Currently, the plugin supports filtering by category, price, name, reviews, brands, product tags, in stock, and On sale."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:82
+msgid "What if I have a question?"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:86
+msgid "No problem. Please get in touch with us via our"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:87
+msgid "Contact page."
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:95
+msgid "What if I need additional features?"
+msgstr ""
+
+#: admin/partials/wb-ajax-filter-faq-content.php:99
+msgid "If you require extra features or custom functionality, our team is available for hire to assist with tailored development."
 msgstr ""
 
 #: admin/partials/wb-ajax-filter-search-content.php:35
