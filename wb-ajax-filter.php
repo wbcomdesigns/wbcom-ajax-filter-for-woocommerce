@@ -13,7 +13,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Wbcom Designs - Ajax Filter For WooCommerce
- * Plugin URI:        wb-ajax-filter
+ * Plugin URI:        https://wbcomdesigns.com/downloads/wbcom-ajax-filter-for-woocommerce/
  * Description:       Provide your customers with a smooth and responsive shopping experience. Filter products by attributes, categories, and more using real-time AJAX requests, no more waiting for page reloads.
  * Version:           1.2.0
  * Author:            Wbcom Designs
@@ -35,11 +35,11 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 
-if( ! defined( 'WB_AJAX_FILTER_VERSION' ) ) {
+if ( ! defined( 'WB_AJAX_FILTER_VERSION' ) ) {
 	define( 'WB_AJAX_FILTER_VERSION', '1.2.0' );
 }
 
-if( ! defined( 'WB_AJAX_FILTER_PLUGIN_URL' ) ) {
+if ( ! defined( 'WB_AJAX_FILTER_PLUGIN_URL' ) ) {
 	define( 'WB_AJAX_FILTER_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
 }
 
@@ -53,7 +53,7 @@ if ( ! defined( 'WB_AJAX_FILTER_PLUGIN_PATH' ) ) {
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-wb-ajax-filter-activator.php
- * 
+ *
  * @since 1.0.0
  */
 function activate_wb_ajax_filter() {
@@ -64,7 +64,7 @@ function activate_wb_ajax_filter() {
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-wb-ajax-filter-deactivator.php
- * 
+ *
  * @since 1.0.0
  */
 function deactivate_wb_ajax_filter() {
@@ -78,7 +78,7 @@ register_deactivation_hook( __FILE__, 'deactivate_wb_ajax_filter' );
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
- * 
+ *
  * @since 1.0.0
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-wb-ajax-filter.php';
@@ -110,11 +110,12 @@ if ( ! function_exists( 'wb_ajax_filter_admin_notice_error' ) ) {
 			$class    = 'notice notice-error is-dismissible';
 			$plugin   = 'Wbcom Ajax Filter for WooCommerce';
 			$requires = 'WooCommerce';
-			
-			printf( '<div class="%1$s"><p><b>%2$s</b> requires %3$s plugin to be installed and active .</p></div>', 
-				esc_attr( $class ), 
-				esc_html( $plugin ), 
-				esc_html( $requires ) 
+
+			printf(
+				'<div class="%1$s"><p><b>%2$s</b> requires %3$s plugin to be installed and active .</p></div>',
+				esc_attr( $class ),
+				esc_html( $plugin ),
+				esc_html( $requires )
 			);
 
 			if ( null !== filter_input( INPUT_GET, 'activate' ) ) {
@@ -152,8 +153,8 @@ function wb_ajax_filter_activation_redirect_settings( $plugin ) {
 	if ( ! isset( $_GET['plugin'] ) ) { //phpcs:ignore
 		return;
 	}
-	if ( $plugin == plugin_basename( __FILE__ ) && class_exists( 'WooCommerce' ) ) {
-		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore
+	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'WooCommerce' ) ) {
+		if ( isset( $_REQUEST['action'] ) && 'activate' === $_REQUEST['action'] && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] === $plugin ) { //phpcs:ignore
 			wp_redirect( admin_url( 'admin.php?page=wc-ajax-filter-settings' ) );
 			exit;
 		}
@@ -163,13 +164,13 @@ function wb_ajax_filter_activation_redirect_settings( $plugin ) {
 
 add_action( 'plugins_loaded', 'wb_ajax_filter_initialize_plugin' );
 
-/** 
+/**
  * Function to initialize the plugin execution.
- * 
+ *
  * @since 1.0.0
  */
 function wb_ajax_filter_initialize_plugin() {
-	if( class_exists( 'WooCommerce' ) ) {
+	if ( class_exists( 'WooCommerce' ) ) {
 		run_wb_ajax_filter();
 	} else {
 		add_action( 'admin_notices', 'wb_ajax_filter_admin_notice_error' );
@@ -189,6 +190,4 @@ function run_wb_ajax_filter() {
 
 	$plugin = new Wb_Ajax_Filter();
 	$plugin->run();
-
 }
-

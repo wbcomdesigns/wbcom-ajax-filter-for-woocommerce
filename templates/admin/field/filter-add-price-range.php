@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin/field
  */
 
+defined( 'ABSPATH' ) || exit;
+
 $style = 'display:none;';
 if ( isset( $_POST['count'] ) ) { //phpcs:ignore
 	$count = sanitize_text_field( wp_unslash( $_POST['count'] ) ); //phpcs:ignore
@@ -28,9 +30,9 @@ $args = array(
 	'order'          => 'desc',
 );
 
-$prices                         = get_posts( $args );
-$prod                           = wc_get_product( $prices[0]->ID );
-$highest_price                  = $prod->get_price();
+$prices        = get_posts( $args );
+$prod          = wc_get_product( $prices[0]->ID );
+$highest_price = $prod->get_price();
 
 ?>
 <div id="wb_range_<?php echo esc_html( $count ); ?>" class="wb-ajax-filter-range-box" data-range_id="<?php echo esc_html( $count ); ?>">

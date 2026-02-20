@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Variable available in this template
  *
@@ -20,8 +22,8 @@
  * @var $_REQUEST
  */
 
-$params = ( isset( $_SERVER['QUERY_STRING'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) : '';
-$params = str_replace( 'wb=list', 'wb=update&wb_index=' . $key, $params );
+$params       = ( isset( $_SERVER['QUERY_STRING'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) : '';
+$params       = str_replace( 'wb=list', 'wb=update&wb_index=' . $key, $params );
 $filter_title = isset( $filter['filter_title'] ) ? $filter['filter_title'] : '';
 ?>
 <div id="filter_<?php echo esc_attr( $filter_count ); ?>" class="wb-ajax-filter-toggle-row initialized" data-item_key="<?php echo esc_attr( $key ); ?>" data-preset="<?php echo ( isset( $_REQUEST['preset'] ) ) ? esc_attr( wp_unslash( $_REQUEST['preset'] ) ) : ''; //phpcs:ignore?>" data-filter_id="<?php echo esc_attr( $filter['filter_id'] ); ?>" style="">

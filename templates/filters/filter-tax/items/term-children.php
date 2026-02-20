@@ -8,6 +8,9 @@
  * @package    Wb_Ajax_Filter
  * @subpackage Wb_Ajax_Filter/template/filters
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $list_child_style = ( 'collapsed' === $heirarchy ) ? 'display:none;' : '';
 foreach ( $filters['terms'] as $child ) {
 	if ( in_array( $child->id, $terms_added, true ) ) {

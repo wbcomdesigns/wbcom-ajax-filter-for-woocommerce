@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin/field
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Variables available
  *

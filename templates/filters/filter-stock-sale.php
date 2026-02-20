@@ -9,6 +9,10 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $clear_style                    = 'display:none;';
 $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
 $toggle_enabled                 = ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? true : false;

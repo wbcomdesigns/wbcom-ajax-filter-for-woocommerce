@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
+defined( 'ABSPATH' ) || exit;
+
 $style = 'display:none;';
 if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 'price_range' === $filters['type'] ) ) {
 	$style = '';
@@ -25,7 +27,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 				$range_count = count( $filters['price_ranges'] );
 				foreach ( $filters['price_ranges'] as $range ) {
 					include WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-add-price-range.php';
-					$count++;
+					++$count;
 				}
 			}
 			?>

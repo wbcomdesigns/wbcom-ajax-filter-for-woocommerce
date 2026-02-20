@@ -10,6 +10,10 @@
  * @subpackage Wbcom_Ajax_Filter_For_Woocommerce/edd-license
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! defined( 'EDD_WB_AJAX_FILTER_STORE_URL' ) ) {
 	define( 'EDD_WB_AJAX_FILTER_STORE_URL', 'https://wbcomdesigns.com/' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file.
 }
@@ -24,7 +28,7 @@ if ( ! defined( 'EDD_WB_AJAX_FILTER_PLUGIN_LICENSE_PAGE' ) ) {
 
 if ( ! class_exists( 'EDD_WB_Ajax_Filter_Plugin_Updater' ) ) {
 	// load our custom updater.
-	include dirname( __FILE__ ) . '/EDD_WB_Ajax_Filter_Plugin_Updater.php';
+	include __DIR__ . '/EDD_WB_Ajax_Filter_Plugin_Updater.php';
 }
 
 /**
@@ -69,7 +73,7 @@ add_action( 'admin_init', 'edd_wbcom_ajax_filter_register_option' );
  */
 function edd_ajax_filter_sanitize_license( $new ) {
 	$old = get_option( 'edd_wbcom_ajax_filter_license_key' );
-	if ( $old && $old != $new ) {
+	if ( $old && $old !== $new ) {
 		delete_option( 'edd_wbcom_ajax_filter_license_status' ); // new license has been entered, so must reactivate.
 	}
 	return $new;
@@ -269,6 +273,11 @@ add_action( 'admin_init', 'edd_wbcom_ajax_filter_deactivate_license' );
  * @return void
  */
 add_action( 'admin_init', 'edd_wbcom_ajax_filter_check_license' );
+/**
+ * Check if a license key is still valid.
+ *
+ * @return void|false
+ */
 function edd_wbcom_ajax_filter_check_license() {
 	global $wp_version, $pagenow;
 
@@ -277,7 +286,7 @@ function edd_wbcom_ajax_filter_check_license() {
 		$license_data = get_transient( 'edd_wbcom_ajax_filter_license_key_data' );
 		$license      = trim( get_option( 'edd_wbcom_ajax_filter_license_key' ) );
 
-		if ( empty( $license_data ) && $license != '' ) {
+		if ( empty( $license_data ) && '' !== $license ) {
 
 			$api_params = array(
 				'edd_action' => 'check_license',
@@ -318,8 +327,8 @@ function edd_wbcom_ajax_filter_admin_notices() {
 	$license_data       = get_transient( 'edd_wbcom_ajax_filter_license_key_data' );
 	$license            = trim( get_option( 'edd_wbcom_ajax_filter_license_key' ) );
 
-	if ( isset( $license_activation ) && ! empty( $error_message ) || ( ! empty( $license_data ) && $license_data->license == 'expired' ) ) {
-		if ( $license_activation === '' ) {
+	if ( ( isset( $license_activation ) && ! empty( $error_message ) ) || ( ! empty( $license_data ) && 'expired' === $license_data->license ) ) {
+		if ( '' === $license_activation ) {
 			$license_activation = $license_data->license ?? '';
 		}
 		switch ( $license_activation ) {
@@ -356,7 +365,7 @@ function edd_wbcom_ajax_filter_admin_notices() {
 		}
 	}
 
-	if ( $license === '' ) {
+	if ( '' === $license ) {
 		?>
 		<div class="notice notice-error is-dismissible">
 			<p>
@@ -367,7 +376,6 @@ function edd_wbcom_ajax_filter_admin_notices() {
 		</div>
 		<?php
 	}
-
 }
 add_action( 'admin_notices', 'edd_wbcom_ajax_filter_admin_notices' );
 
@@ -381,18 +389,18 @@ function edd_wbcom_ajax_filter_render_license_section() {
 	$license = get_option( 'edd_wbcom_ajax_filter_license_key', true );
 	$status  = get_option( 'edd_wbcom_ajax_filter_license_status' );
 
-	$plugin_data = get_plugin_data( WB_AJAX_FILTER_PLUGIN_PATH . '/wb-ajax-filter.php', $markup = true, $translate = true );
+	$plugin_data = get_plugin_data( WB_AJAX_FILTER_PLUGIN_PATH . '/wb-ajax-filter.php', true, true );
 
 	$license_output = edd_ajax_filter_active_license_message();
 
-	if ( false !== $status && 'valid' === $status && ! empty( $license_output ) && $license_output['license_data']->license == 'valid' ) {
+	if ( false !== $status && 'valid' === $status && ! empty( $license_output ) && 'valid' === $license_output['license_data']->license ) {
 		$status_class = 'active';
 		$status_text  = 'Active';
-	} else if ( ! empty( $license_output ) && isset( $license_output['license_data']->license ) && $license_output['license_data']->license != '' && $license_output['license_data']->license == 'expired' ) {
+	} elseif ( ! empty( $license_output ) && isset( $license_output['license_data']->license ) && '' !== $license_output['license_data']->license && 'expired' === $license_output['license_data']->license ) {
 		$status_class = 'expired';
 		$status_text  = ucfirst( str_replace( '_', ' ', $license_output['license_data']->license ) );
 
-	} else if ( ! empty( $license_output ) && isset( $license_output['license_data']->license ) && $license_output['license_data']->license != '' && $license_output['license_data']->license == 'invalid' ) {
+	} elseif ( ! empty( $license_output ) && isset( $license_output['license_data']->license ) && '' !== $license_output['license_data']->license && 'invalid' === $license_output['license_data']->license ) {
 		$status_class = 'invalid';
 		$status_text  = ucfirst( str_replace( '_', ' ', $license_output['license_data']->license ) );
 
@@ -419,13 +427,13 @@ function edd_wbcom_ajax_filter_render_license_section() {
 		<?php settings_fields( 'edd_wbcom_ajax_filter_license' ); ?>
 		<table class="form-table wb-license-form-table">
 			<tr>
-				<td class="wb-plugin-name"><?php esc_html_e( $plugin_name, 'wb-ajax-filter' ); ?></td>
-				<td class="wb-plugin-version"><?php esc_html_e( $plugin_version, 'wb-ajax-filter' ); ?></td>
+				<td class="wb-plugin-name"><?php echo esc_html( $plugin_name ); ?></td>
+				<td class="wb-plugin-version"><?php echo esc_html( $plugin_version ); ?></td>
 				<td class="wb-plugin-license-key">
-					<input id="edd_wbcom_ajax_filter_license_key" name="edd_wbcom_ajax_filter_license_key" type="text" class="regular-text" value="<?php esc_attr_e( $license, 'wb-ajax-filter' ); ?>" />
+					<input id="edd_wbcom_ajax_filter_license_key" name="edd_wbcom_ajax_filter_license_key" type="text" class="regular-text" value="<?php echo esc_attr( $license ); ?>" />
 					<p><?php echo esc_html( $license_output['message'] ); ?></p>
 				</td>
-				<td class="wb-license-status <?php echo esc_attr( $status_class ); ?>"><?php esc_html_e( $status_text, 'wb-ajax-filter' ); ?></td>
+				<td class="wb-license-status <?php echo esc_attr( $status_class ); ?>"><?php echo esc_html( $status_text ); ?></td>
 				<td class="wb-license-action">
 					<?php
 					if ( false !== $status && 'valid' === $status ) {
@@ -481,10 +489,10 @@ function edd_ajax_filter_active_license_message() {
 			return false;
 		}
 
-			$output = array();
+			$output                 = array();
 			$output['license_data'] = json_decode( wp_remote_retrieve_body( $response ) );
-			$message = '';
-			// make sure the response came back okay
+			$message                = '';
+			// Make sure the response came back okay.
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 
 			if ( is_wp_error( $response ) ) {
@@ -494,25 +502,25 @@ function edd_ajax_filter_active_license_message() {
 			}
 		} else {
 			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-			// Get expire date
+			// Get expire date.
 			$expires = false;
-			if ( isset( $license_data->expires ) && 'lifetime' != $license_data->expires ) {
-				$expires    = date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) );
-			} elseif ( isset( $license_data->expires ) && 'lifetime' == $license_data->expires ) {
+			if ( isset( $license_data->expires ) && 'lifetime' !== $license_data->expires ) {
+				$expires = date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) );
+			} elseif ( isset( $license_data->expires ) && 'lifetime' === $license_data->expires ) {
 				$expires = 'lifetime';
 			}
 
-			if ( $license_data->license == 'valid' ) {
-				// Get site counts
+			if ( 'valid' === $license_data->license ) {
+				// Get site counts.
 				$site_count    = $license_data->site_count;
 				$license_limit = $license_data->license_limit;
-				$message = 'License key is active.';
-				if ( isset( $expires ) && 'lifetime' != $expires ) {
-					/* translate %s */
+				$message       = 'License key is active.';
+				if ( isset( $expires ) && 'lifetime' !== $expires ) {
+					/* translators: %s: expiration date. */
 					$message .= sprintf( __( 'Expires %s.', 'wb-ajax-filter' ), $expires ) . ' ';
 				}
 				if ( $license_limit ) {
-					/* translate  %1$s/%2$s */
+					/* translators: %1$s: site count, %2$s: license limit. */
 					$message .= sprintf( __( 'You have %1$s/%2$s-sites activated.', 'wb-ajax-filter' ), $site_count, $license_limit );
 				}
 			}

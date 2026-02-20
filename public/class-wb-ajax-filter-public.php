@@ -50,7 +50,6 @@ class Wb_Ajax_Filter_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-
 	}
 
 	/**
@@ -81,15 +80,13 @@ class Wb_Ajax_Filter_Public {
 			$path      = is_rtl() ? '/rtl' : '/min';
 		}
 
-		if( is_shop() || is_product_category()  || is_product_tag() || has_shortcode($post->post_content, 'wb_ajax_filters') ) {
-			
-			
+		if ( is_shop() || is_product_category() || is_product_tag() || has_shortcode( $post->post_content, 'wb_ajax_filters' ) ) {
+
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-public' . $extension, array(), $this->version, 'all' );
 			wp_enqueue_style( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/css/ion.rangeSlider.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
 			wp_add_inline_style( $this->plugin_name, $this->wb_ajax_add_custom_css_to_frontend() );
 		}
-
 	}
 
 	/**
@@ -112,8 +109,8 @@ class Wb_Ajax_Filter_Public {
 		 */
 		global $post;
 
-		$wb_ajax_filter_search_settings   = get_option( 'wb_ajax_filter_search_settings' );
-		$wb_ajax_filter_search_label      = isset( $wb_ajax_filter_search_settings['search_input_label'] ) ? $wb_ajax_filter_search_settings['search_input_label'] : 'Search';
+		$wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' );
+		$wb_ajax_filter_search_label    = isset( $wb_ajax_filter_search_settings['search_input_label'] ) ? $wb_ajax_filter_search_settings['search_input_label'] : 'Search';
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 			$extension = '.js';
 			$path      = '';
@@ -121,8 +118,8 @@ class Wb_Ajax_Filter_Public {
 			$extension = '.min.js';
 			$path      = '/min';
 		}
-		if( is_shop() || is_product_category()  || is_product_tag() || has_shortcode($post->post_content, 'wb_ajax_filters')  ) {
-			
+		if ( is_shop() || is_product_category() || is_product_tag() || has_shortcode( $post->post_content, 'wb_ajax_filters' ) ) {
+
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-public' . $extension, array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( 'jquery-ui-slider' );
 			wp_enqueue_script( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/js/ion.rangeSlider.min.js', array( 'jquery' ), $this->version, true );
@@ -131,9 +128,9 @@ class Wb_Ajax_Filter_Public {
 				$this->plugin_name,
 				'wbcom_plugin_installer_params',
 				array(
-					'ajax_url'         => admin_url( 'admin-ajax.php' ),
-					'wbcom_ajax_nonce' => wp_create_nonce( 'ajax-nonce' ),
-					'wb_ajax_filter_search_label' => $wb_ajax_filter_search_label
+					'ajax_url'                    => admin_url( 'admin-ajax.php' ),
+					'wbcom_ajax_nonce'            => wp_create_nonce( 'ajax-nonce' ),
+					'wb_ajax_filter_search_label' => $wb_ajax_filter_search_label,
 				)
 			);
 		}
@@ -161,11 +158,11 @@ class Wb_Ajax_Filter_Public {
 	public function wb_ajax_add_custom_css_to_frontend() {
 		$css_settings = get_option( 'wb_ajax_filter_admin_customization_options' );
 
-		if( empty( $css_settings ) ) {
+		if ( empty( $css_settings ) ) {
 			return '';
 		}
 
-		$custom_css   = '
+		$custom_css = '
 				.wb-ajax-filters-container{
 					background: ' . $css_settings['filters_area_background_color'] . ';
 				}
@@ -289,14 +286,14 @@ class Wb_Ajax_Filter_Public {
 	/**
 	 * Check if parent exists in terms array.
 	 *
-	 * @param int $term_id The term id to find.
-	 * @param array  $terms The terms array.
+	 * @param int   $term_id The term id to find.
+	 * @param array $terms The terms array.
 	 * @since    1.0.0
 	 */
 	public function wb_ajax_check_parent_is_included( $term_id, $terms ) {
 		$exists = false;
-		
-		if( empty( $terms ) || empty( $term_id ) ) {
+
+		if ( empty( $terms ) || empty( $term_id ) ) {
 			$exists = false;
 		}
 
@@ -338,7 +335,7 @@ class Wb_Ajax_Filter_Public {
 		}
 
 		$q               = sanitize_text_field( wp_unslash( $_GET['q'] ) );
-		$limit           = 10; // Default or get from settings
+		$limit           = 10; // Default or get from settings.
 		$matched_results = $this->get_search_suggestions( $q, $limit );
 
 		$matched_products = array();
@@ -354,6 +351,13 @@ class Wb_Ajax_Filter_Public {
 		wp_die();
 	}
 
+	/**
+	 * Get search suggestions for autocomplete.
+	 *
+	 * @param string $query Search query string.
+	 * @param int    $limit Maximum number of results.
+	 * @return array Search results.
+	 */
 	private function get_search_suggestions( $query, $limit = 10 ) {
 		global $wpdb;
 
@@ -364,40 +368,40 @@ class Wb_Ajax_Filter_Public {
 			$search_settings        = get_option( 'wb_ajax_filter_search_settings' );
 			$search_filter_settings = get_option( 'wb_ajax_filter_search_content_settings' );
 
-			$searchable_fields = [];
+			$searchable_fields = array();
 
-			if ( isset( $search_filter_settings['search_in_title'] ) && $search_filter_settings['search_in_title'] === 'yes' ) {
+			if ( isset( $search_filter_settings['search_in_title'] ) && 'yes' === $search_filter_settings['search_in_title'] ) {
 				$searchable_fields[] = 'p.post_title';
 			}
-			if ( isset( $search_filter_settings['search_in_content'] ) && $search_filter_settings['search_in_content'] === 'yes' ) {
+			if ( isset( $search_filter_settings['search_in_content'] ) && 'yes' === $search_filter_settings['search_in_content'] ) {
 				$searchable_fields[] = 'p.post_content';
 			}
-			if ( isset( $search_filter_settings['search_in_excerpt'] ) && $search_filter_settings['search_in_excerpt'] === 'yes' ) {
+			if ( isset( $search_filter_settings['search_in_excerpt'] ) && 'yes' === $search_filter_settings['search_in_excerpt'] ) {
 				$searchable_fields[] = 'p.post_excerpt';
 			}
-			$include_sku = isset( $search_filter_settings['search_by_sku'] ) && $search_filter_settings['search_by_sku'] === 'yes';
-			
+			$include_sku = isset( $search_filter_settings['search_by_sku'] ) && 'yes' === $search_filter_settings['search_by_sku'];
+
 			if ( empty( $searchable_fields ) && ! $include_sku ) {
-				return []; // Nothing to search
+				return array(); // Nothing to search.
 			}
 
-			$like_query = '%' . $wpdb->esc_like( $query ) . '%';
-			$like_clauses = [];
+			$like_query   = '%' . $wpdb->esc_like( $query ) . '%';
+			$like_clauses = array();
 
 			foreach ( $searchable_fields as $field ) {
 				$like_clauses[] = $wpdb->prepare( "$field LIKE %s", $like_query ); //phpcs:ignore
 			}
 
 			if ( $include_sku ) {
-				$like_clauses[] = $wpdb->prepare( "pm.meta_value LIKE %s", $like_query );
+				$like_clauses[] = $wpdb->prepare( 'pm.meta_value LIKE %s', $like_query );
 			}
 
 			$where_clause = implode( ' OR ', $like_clauses );
 
-			// Dynamic limit fallback
+			// Dynamic limit fallback.
 			$limit = isset( $search_settings['posts_per_page'] ) ? intval( $search_settings['posts_per_page'] ) : $limit;
 
-			// Final SQL query
+			// Final SQL query.
 			$sql = "
 				SELECT DISTINCT p.ID, p.post_title
 				FROM {$wpdb->posts} p
@@ -422,25 +426,24 @@ class Wb_Ajax_Filter_Public {
 	 * @param object $q Query Object.
 	 */
 	public function wb_ajax_filter_modify_wc_product_query( $q ) {
-		
+
 		if ( is_shop() || is_product_category() || is_product_tag() ) {
 			$params = $_GET; //phpcs:ignore
-			$meta_query      = array();
+			$meta_query = array();
 			if ( isset( $params['preset'] ) ) {
-				$preset_id   = absint( $params['preset'] );
-				
-				$filters                     = get_post_meta( $preset_id, '_wb_filter', true );
+				$preset_id = absint( $params['preset'] );
+
+				$filters = get_post_meta( $preset_id, '_wb_filter', true );
 				if ( $filters ) {
 					foreach ( $filters as $filter ) {
-						
-						if ( isset( $filter['type'] ) && 'tax' == $filter['type'] ) {
+
+						if ( isset( $filter['type'] ) && 'tax' === $filter['type'] ) {
 							$q = $this->wb_ajax_apply_taxonomy_filter( $q, $filter, $params );
 						}
-						
 					}
 				}
-			} 
-			
+			}
+
 			$q = $this->wb_ajax_apply_meta_filter( $q, array(), $params );
 		}
 		return $q;
@@ -449,28 +452,36 @@ class Wb_Ajax_Filter_Public {
 	/**
 	 * Alter woocommerce search query for sku.
 	 *
-	 * @param object $q Query Object.
+	 * @param string   $search   The search SQL.
+	 * @param WP_Query $wp_query The WP_Query instance.
+	 * @return string Modified search SQL.
 	 */
 	public function wb_ajax_filters_product_search_by_sku( $search, $wp_query ) {
 		global $wpdb;
 		$search_filter_settings = get_option( 'wb_ajax_filter_search_content_settings' );
-		$include_sku = isset( $search_filter_settings['search_by_sku'] ) && $search_filter_settings['search_by_sku'] === 'yes';
+		$include_sku            = isset( $search_filter_settings['search_by_sku'] ) && 'yes' === $search_filter_settings['search_by_sku'];
 
-		if ( is_admin() || ! is_search() || ! isset( $wp_query->query_vars['s'] ) || ( ! is_array( $wp_query->query_vars['post_type'] ) && $wp_query->query_vars['post_type'] !== "product" ) || ( is_array( $wp_query->query_vars['post_type'] ) && ! in_array( "product", $wp_query->query_vars['post_type'] ) ) ) return $search; 
-		  if ( ! $include_sku || empty( $wp_query->query_vars['s'] ) ) return $search;
+		if ( is_admin() || ! is_search() || ! isset( $wp_query->query_vars['s'] ) || ( ! is_array( $wp_query->query_vars['post_type'] ) && 'product' !== $wp_query->query_vars['post_type'] ) || ( is_array( $wp_query->query_vars['post_type'] ) && ! in_array( 'product', $wp_query->query_vars['post_type'], true ) ) ) {
+			return $search;
+		}
+		if ( ! $include_sku || empty( $wp_query->query_vars['s'] ) ) {
+			return $search;
+		}
 		$product_id = wc_get_product_id_by_sku( $wp_query->query_vars['s'] );
-		if ( ! $product_id ) return $search;
+		if ( ! $product_id ) {
+			return $search;
+		}
 		$product = wc_get_product( $product_id );
 		if ( $product->is_type( 'variation' ) ) {
 			$product_id = $product->get_parent_id();
 		}
-		$search = str_replace( 'AND (((', "AND (({$wpdb->posts}.ID IN (" . $product_id . ")) OR ((", $search );  
-		return $search;   
+		$search = str_replace( 'AND (((', "AND (({$wpdb->posts}.ID IN (" . $product_id . ')) OR ((', $search );
+		return $search;
 	}
 
 	/**
 	 * Function to check if the preset is enabled or not.
-	 * 
+	 *
 	 * @param array $presets Array of presets.
 	 * @since 1.0.0
 	 * @return bool True/False
@@ -489,19 +500,22 @@ class Wb_Ajax_Filter_Public {
 
 	/**
 	 * Filter preset shortcode callback.
+	 *
+	 * @param array $atts Shortcode attributes.
+	 * @return string Shortcode output.
 	 */
 	public function filter_preset_shortcode_callback( $atts ) {
 		ob_start();
 
-		$args  = array(
+		$args = array(
 			'post_type'   => 'wb_filter_preset',
 			'post_status' => 'publish',
 			'numberposts' => -1,
 		);
 
-		if( isset( $atts['slug'] ) && !empty( $atts['slug'] ) ) {
+		if ( isset( $atts['slug'] ) && ! empty( $atts['slug'] ) ) {
 			$args['name'] = $atts['slug'];
- 		}
+		}
 
 		$presets                        = get_posts( $args );
 		$wb_ajax_filter_admin_custom    = get_option( 'wb_ajax_filter_admin_customization_options' );
@@ -525,10 +539,10 @@ class Wb_Ajax_Filter_Public {
 				}
 			}
 		}
-		$enable_filter_actions = !empty( $presets ) ? self::wb_ajax_filter_presets_are_enabled( $presets ) : false;
+		$enable_filter_actions = ! empty( $presets ) ? self::wb_ajax_filter_presets_are_enabled( $presets ) : false;
 
-		$render_setting  = ( isset( $wb_ajax_filter_search_settings['enable_search'] ) || ( $enable_filter_actions ) ) ? true : false;
-		
+		$render_setting = ( isset( $wb_ajax_filter_search_settings['enable_search'] ) || ( $enable_filter_actions ) ) ? true : false;
+
 		$customization_options = get_option( 'wb_ajax_filter_admin_customization_options' );
 		$columns               = isset( $customization_options['filters_per_column'] ) ? $customization_options['filters_per_column'] : 5;
 		echo '<div class="woocommerce">';
@@ -546,7 +560,8 @@ class Wb_Ajax_Filter_Public {
 		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
 			require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
 		}
-		if( ( is_shop() || is_product_category() || is_product_tag() ) && isset( $wb_ajax_filter_search_settings['enable_search'] ) && ( 'yes' == $wb_ajax_filter_search_settings['enable_search'] ) ) { ?>
+		if ( ( is_shop() || is_product_category() || is_product_tag() ) && isset( $wb_ajax_filter_search_settings['enable_search'] ) && ( 'yes' === $wb_ajax_filter_search_settings['enable_search'] ) ) {
+			?>
 			<div class="wb-ajax-search-container">
 				<form method="GET" action="">
 					<?php
@@ -559,7 +574,8 @@ class Wb_Ajax_Filter_Public {
 					?>
 				</form>
 			</div>
-		<?php }
+			<?php
+		}
 
 		if ( ! empty( $presets ) ) {
 
@@ -569,26 +585,26 @@ class Wb_Ajax_Filter_Public {
 				$enabled     = get_post_meta( $preset_id, 'preset_enabled', true );
 				include WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
 			}
-			
+
 			if ( $enable_filter_actions && isset( $wb_ajax_filter_general_options['instant_filters'] ) && 'no' === $wb_ajax_filter_general_options['instant_filters'] ) {
 				require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/apply-filters.php';
 			}
 			do_action( 'wb_ajax_filter_after_content' );
 		}
-		
-		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) &&  isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
+
+		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
 			require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
 		}
 
 		echo '</div>';
 		echo '</div>';
-				
+
 		return ob_get_clean();
 	}
 
 	/**
 	 * Function to redirect single product search result on shop page instead of redirecting to product page.
-	 * 
+	 *
 	 * @since 1.2.1
 	 * @return bool false
 	 */
@@ -598,13 +614,12 @@ class Wb_Ajax_Filter_Public {
 
 	/**
 	 * Function to build tax query to filter products.
-	 * 
+	 *
 	 * @param array $q Product Query.
 	 * @param array $filter Custom Filter data.
 	 * @param array $params URL parameters.
-	 * 
+	 *
 	 * @return array $q Modified Product Query.
-	 * 
 	 */
 	public function wb_ajax_apply_taxonomy_filter( $q, $filter, $params ) {
 
@@ -646,62 +661,59 @@ class Wb_Ajax_Filter_Public {
 
 	/**
 	 * Function to build meta query to filter products.
-	 * 
+	 *
 	 * @param array $q Product Query.
 	 * @param array $filter Custom Filter data.
 	 * @param array $params URL parameters.
-	 * 
+	 *
 	 * @return array $q Modified Product Query.
-	 * 
 	 */
 	public function wb_ajax_apply_meta_filter( $q, $filter, $params ) {
-				
+
 		$search_settings         = get_option( 'wb_ajax_filter_admin_general_options' );
 		$search_content_settings = get_option( 'wb_ajax_filter_search_content_settings' );
-		
-		if( !empty( $params ) && ( isset( $params['instock_filter'] ) || isset( $params['onsale_filter'] ) ) ) {
-				
-			if( array_key_exists( 'instock_filter', $params ) ) {
+
+		if ( ! empty( $params ) && ( isset( $params['instock_filter'] ) || isset( $params['onsale_filter'] ) ) ) {
+
+			if ( array_key_exists( 'instock_filter', $params ) ) {
 				$meta_query[] = array(
 					'key'     => '_stock_status',
 					'value'   => 'instock',
 					'compare' => '==',
 				);
-			} else if( array_key_exists( 'onsale_filter', $params ) ) {
-				$meta_query[] = array(
+			} elseif ( array_key_exists( 'onsale_filter', $params ) ) {
+				$meta_query[]               = array(
 					'key'     => '_sale_price',
 					'value'   => '0',
 					'compare' => '>=',
 				);
-				$q->query_vars['post_type']  = array( 'product', 'product_variation' );
+				$q->query_vars['post_type'] = array( 'product', 'product_variation' );
 			}
 			$q->query_vars['meta_query'] = $meta_query;
-		} 
-		if( ! empty( $params ) && isset( $search_settings['hide_out_of_stock'] ) && 'yes' === $search_settings['hide_out_of_stock'] ) {
-			
-			$meta_query[] = array(
+		}
+		if ( ! empty( $params ) && isset( $search_settings['hide_out_of_stock'] ) && 'yes' === $search_settings['hide_out_of_stock'] ) {
+
+			$meta_query[]                = array(
 				'key'     => '_stock_status',
 				'value'   => 'instock',
 				'compare' => '==',
 			);
 			$q->query_vars['meta_query'] = $meta_query;
-			
+
 		}
 		if ( isset( $search_content_settings['cf_name'] ) && '' !== $search_content_settings['cf_name'] && isset( $q->query_vars['post_type'] ) && 'product' === $q->query_vars['post_type'] ) {
 			$custom = $search_content_settings['cf_name'];
-			
+
 			if ( array_key_exists( 'meta_' . $custom, $params ) ) {
-				$meta_query[] = array(
+				$meta_query[]                = array(
 					'key'     => $custom,
 					'value'   => $params[ 'meta_' . $custom ],
 					'compare' => '==',
 				);
 				$q->query_vars['meta_query'] = $meta_query;
 			}
-			
 		}
-		
-		
+
 		return $q;
 	}
 }

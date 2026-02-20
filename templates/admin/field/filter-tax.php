@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
+defined( 'ABSPATH' ) || exit;
+
 $exclude_tax = array( 'product_type', 'product_visibility', 'product_shipping_class' );
 $style       = 'display:none;';
 if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 'tax' === $filters['type'] ) ) {

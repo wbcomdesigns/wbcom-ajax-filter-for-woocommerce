@@ -9,6 +9,10 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $args = array(
 	'posts_per_page' => 1,
 	'post_type'      => 'product',

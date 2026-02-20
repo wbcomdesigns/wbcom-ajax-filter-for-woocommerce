@@ -63,20 +63,18 @@ class Wb_Ajax_Filter_Activator {
 			'show_category_list'  => 'yes',
 		);
 		$wb_ajax_filter_settings['wb_ajax_filter_search_content_settings']     = array(
-			'default_research'             => 'product',
-			'search_in_title'              => 'yes',
-			'search_in_excerpt'            => 'yes',
-			'search_in_content'            => 'yes',
-			'search_type_more_words'       => 'and',
+			'default_research'       => 'product',
+			'search_in_title'        => 'yes',
+			'search_in_excerpt'      => 'yes',
+			'search_in_content'      => 'yes',
+			'search_type_more_words' => 'and',
 		);
 		foreach ( $wb_ajax_filter_settings as $key => $settings ) {
-			
-			if( empty( get_option( $key ) ) ) {
+
+			if ( empty( get_option( $key ) ) ) {
 
 				update_option( $key, $settings );
 			}
-			
 		}
 	}
-
 }

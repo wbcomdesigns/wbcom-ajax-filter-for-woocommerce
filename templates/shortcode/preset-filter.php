@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Variables available for this template
  *
@@ -37,7 +39,7 @@ $base_url .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_text_field( wp_unslash
 				} else {
 					require WB_AJAX_FILTER_TEMPLATE_PATH . 'filters/filter-' . $filters['type'] . '.php';
 				}
-				$filter_count++;
+				++$filter_count;
 			}
 			?>
 		</form>

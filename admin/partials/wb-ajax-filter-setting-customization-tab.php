@@ -70,24 +70,24 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 								<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[filters_area_accent_color]" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['filters_area_accent_color'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['filters_area_accent_color'] ) : '#fff'; ?>">
 							</div>
 						</div>
-					 </div>
-					 </div>
-					 <div class="wbcom-settings-section-wrap">
+					</div>
+					</div>
+					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 						<label>
 							<?php esc_html_e( 'Filter Columns', 'wb-ajax-filter' ); ?>
 						</label>
 						<p class="description"><?php esc_html_e( 'Choose number of filters in a row', 'wb-ajax-filter' ); ?></p>
 
-					   </div>
-					   <div class="wbcom-settings-section-options">
+						</div>
+						<div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_admin_customization_options[filters_per_column]" type="number" min="2" max="5" value="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['filters_per_column'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['filters_per_column'] ) : '5'; ?>">
 						</label><br>
 
-					   </div>
-				   </div>
-				   <div class="wbcom-settings-section-wrap">
+						</div>
+					</div>
+					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 						<label>
 							<?php esc_html_e( 'Options style', 'wb-ajax-filter' ); ?>
@@ -103,10 +103,10 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 							<input name="wb_ajax_filter_admin_customization_options[filters_style]" type="radio" value="custom"<?php ( isset( $wb_ajax_filter_admin_customization_options['filters_style'] ) ) ? checked( $wb_ajax_filter_admin_customization_options['filters_style'], 'custom' ) : ''; ?>>
 							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Custom style', 'wb-ajax-filter' ); ?></span>
 						</label><br>
-					 </div>
-					 </div>
+					</div>
+					</div>
 
-					 <div class="wbcom-settings-section-wrap">
+					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 						<label>
 							<?php esc_html_e( 'Textual terms color', 'wb-ajax-filter' ); ?>
@@ -140,15 +140,15 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 							</div>
 						</div>
 					</div>
-				   </div>
+					</div>
 				<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 						<label>
 							<?php esc_html_e( 'Ajax loader', 'wb-ajax-filter' ); ?>
 						</label>
 						<p class="description"><?php esc_html_e( 'Choose the style for Ajax loader icon', 'wb-ajax-filter' ); ?></p>
-					  </div>
-					  <div class="wbcom-settings-section-options">
+						</div>
+						<div class="wbcom-settings-section-options">
 						<label>
 							<input name="wb_ajax_filter_admin_customization_options[ajax_loader_style]" type="radio" value="default"<?php ( isset( $wb_ajax_filter_admin_customization_options['ajax_loader_style'] ) ) ? checked( $wb_ajax_filter_admin_customization_options['ajax_loader_style'], 'default' ) : ''; ?>>
 							<span class="wb-ajax-filter-option-text"><?php esc_html_e( 'Use default loader', 'wb-ajax-filter' ); ?></span>
@@ -168,7 +168,7 @@ $wb_ajax_filter_admin_customization_options = get_option( 'wb_ajax_filter_admin_
 							<?php esc_html_e( 'Custom Ajax Loader', 'wb-ajax-filter' ); ?>
 						</label>
 						<p class="description"><?php esc_html_e( 'Upload the custom Ajax loader icon', 'wb-ajax-filter' ); ?></p>
-					 </div>
+					</div>
 						<div class="gif-container">
 							<img src="<?php echo ( isset( $wb_ajax_filter_admin_customization_options['loader_url'] ) ) ? esc_attr( $wb_ajax_filter_admin_customization_options['loader_url'] ) : ''; ?>" alt="" style="max-width:100%;">
 						</div>

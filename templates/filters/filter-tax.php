@@ -9,6 +9,10 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $clear_style = 'display:none;';
 $attributes  = wc_get_attribute_taxonomy_names();
 if ( isset( $filters['taxonomy'] ) ) {

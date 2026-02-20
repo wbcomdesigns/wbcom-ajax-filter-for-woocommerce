@@ -9,6 +9,10 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $ratings                        = array( '1', '2', '3', '4', '5' );
 $clear_style                    = 'display:none;';
 $toggle_enabled                 = ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? true : false;
@@ -33,15 +37,19 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 				<select class="wb-ajax-filter-selectible" data-filter="rating_filter">
 					<option value=""><?php esc_html_e( 'Select Ratings', 'wb-ajax-filter' ); ?></option>
 				<?php
-				if( !empty($ratings) && is_array($ratings) ) {
-					foreach ( $ratings as $val ) { ?>
+				if ( ! empty( $ratings ) && is_array( $ratings ) ) {
+					foreach ( $ratings as $val ) {
+						?>
 						<option value="<?php echo esc_attr( $val ); ?>" <?php echo ( isset( $params['rating_filter'] ) && $val === $params['rating_filter'] ) ? 'selected' : ''; ?>>
 							<?php printf( 'Rated %1$s out of 5', esc_html( $val ) ); ?>
 						</option>
-					<?php }//end foreach 
-				}else {?>
+						<?php
+					}//end foreach
+				} else {
+					?>
 					<option value=""><?php esc_html_e( 'No Ratings yet.', 'wb-ajax-filter' ); ?></option>
-				<?php }
+					<?php
+				}
 				?>
 				</select>
 			</div>

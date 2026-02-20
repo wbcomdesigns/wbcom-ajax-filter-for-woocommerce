@@ -9,6 +9,10 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 global  $woocommerce;
 $args = array(
 	'posts_per_page' => 1,
@@ -43,7 +47,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 			<div class="wb-ajax-filter filter-price-range">
 				<ul class="wb-price-ranges">
 					<?php
-					if( isset( $filters['price_ranges'] ) && !empty( $filters['price_ranges'] ) ) {
+					if ( isset( $filters['price_ranges'] ) && ! empty( $filters['price_ranges'] ) ) {
 						foreach ( $filters['price_ranges'] as $range ) {
 							if ( isset( $range['min'] ) && $highest_price >= $range['min'] ) {
 								if ( isset( $range['max'] ) ) {
@@ -66,14 +70,16 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 											<?php esc_html_e( '& above', 'wb-ajax-filter' ); ?>
 										</a>
 									</li>
-								<?php }
+									<?php
+								}
 							}
 						}
-					} else {?>
+					} else {
+						?>
 					<li><p><?php esc_html_e( 'Filter Criteria not available.', 'wb-ajax-filter' ); ?></p></li> 
-					<?php
+						<?php
 					}
-				?>
+					?>
 				</ul>
 			</div>
 		</div>

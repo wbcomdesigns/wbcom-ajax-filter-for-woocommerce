@@ -9,10 +9,12 @@
  * @subpackage Wb_Ajax_Filter/admin
  */
 
+defined( 'ABSPATH' ) || exit;
+
 if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) { //phpcs:ignore
 	$preset_id = ( isset( $_REQUEST['preset'] ) && '' !== $_REQUEST['preset'] ) ? wp_unslash( $_REQUEST['preset'] ) : ''; //phpcs:ignore
 	$preset_data = get_post( $preset_id );
-	$filters = get_post_meta( $preset_id, '_wb_filter', true );
+	$filters     = get_post_meta( $preset_id, '_wb_filter', true );
 }
 ?>
 <div class="wb-ajax-filter-form-wraper">

@@ -9,6 +9,10 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $sort                           = array(
 	'popularity' => 'Sort by popularity',
 	'rating'     => 'Sort by average rating',

@@ -1,9 +1,9 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Class to add top header pages of wbcom plugin and additional features.
  *
  * @author   Wbcom Designs
- * @package  Bp_Hashtags
+ * @package  Wb_Ajax_Filter
  */
 
 // Exit if accessed directly.
@@ -45,10 +45,9 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				echo esc_html( $display_extention );
 				die;
 			}
-
 		}
 
-		
+
 
 		/**
 		 * Function for upgrade plugin.
@@ -151,11 +150,11 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				}
 
 				wp_register_script(
-					$handle    = 'wbcom_admin_setting_js',
-					$src       = WB_AJAX_FILTER_PLUGIN_URL . 'admin/wbcom/assets/js' . $path . '/wbcom-admin-setting' . $extension,
-					$deps      = array( 'jquery' ),
-					$ver       = time(),
-					$in_footer = true
+					'wbcom_admin_setting_js',
+					WB_AJAX_FILTER_PLUGIN_URL . 'admin/wbcom/assets/js' . $path . '/wbcom-admin-setting' . $extension,
+					array( 'jquery' ),
+					time(),
+					true
 				);
 				wp_localize_script(
 					'wbcom_admin_setting_js',
@@ -182,7 +181,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 
 				wp_enqueue_style( 'wbcom-admin-setting-css', WB_AJAX_FILTER_PLUGIN_URL . 'admin/wbcom/assets/css' . $path . '/wbcom-admin-setting' . $extension );
 			}
-
 		}
 
 		/**
@@ -255,8 +253,11 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 * @access public
 		 */
 		public function wbcom_admin_setting_header_html() {
-			$page          = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
-			$plugin_active = $theme_active = $support_active = $settings_active = '';
+			$page            = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
+			$plugin_active   = '';
+			$theme_active    = '';
+			$support_active  = '';
+			$settings_active = '';
 			switch ( $page ) {
 				case 'wbcom-plugins-page':
 					$plugin_active = 'is_active';
@@ -298,10 +299,12 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			</div>
 			<?php
 		}
-
 	}
-	
-	function instantiate_wbcom_plugin_manager() {
+
+	/**
+	 * Instantiate the Wbcom_Admin_Settings class.
+	 */
+	function instantiate_wbcom_plugin_manager() { //phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed
 		new Wbcom_Admin_Settings();
 	}
 

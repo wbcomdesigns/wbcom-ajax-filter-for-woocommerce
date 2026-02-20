@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <div class="wb-ajax-reset-all-filters-container">
 	<a href="javascript:void(0)" class="wb-ajax-reset-all-filters button" role="button" aria-label="Reset Filter"><span class="dashicons dashicons-undo"></span><?php esc_html_e( 'Reset filters', 'wb-ajax-filter' ); ?></a>

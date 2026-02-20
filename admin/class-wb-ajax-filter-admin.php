@@ -9,17 +9,20 @@
  * @subpackage Wb_Ajax_Filter/admin
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * WB Ajax Filter Admin Class
- * 
+ *
  * Handles all admin-specific functionality for the WB Ajax Filter plugin.
  * Manages filter presets, settings, and admin interface interactions.
- * 
+ *
  * @package    Wb_Ajax_Filter
  * @subpackage Wb_Ajax_Filter/admin
  * @author     Wbcom Designs <https://wbcomdesigns.com/>
  * @since      1.0.0
- * 
  */
 class Wb_Ajax_Filter_Admin {
 
@@ -93,8 +96,8 @@ class Wb_Ajax_Filter_Admin {
 			$extension = is_rtl() ? '.rtl.css' : '.min.css';
 			$path      = is_rtl() ? '/rtl' : '/min';
 		}
-		if( 'wb-plugins_page_wbcom-license-page' === $screen || 'toplevel_page_wbcomplugins' === $screen || 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
-			
+		if ( 'wb-plugins_page_wbcom-license-page' === $screen || 'toplevel_page_wbcomplugins' === $screen || 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
+
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-admin' . $extension, array(), $this->version, 'all' );
 			wp_enqueue_style( 'wp-color-picker' );
 			if ( 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
@@ -102,7 +105,6 @@ class Wb_Ajax_Filter_Admin {
 			}
 			wp_enqueue_style( 'wp-color-picker' );
 		}
-		
 	}
 
 	/**
@@ -134,29 +136,29 @@ class Wb_Ajax_Filter_Admin {
 		}
 
 		if ( 'wb-plugins_page_wbcom-license-page' === $screen || 'toplevel_page_wbcomplugins' === $screen || 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
-			
+
 			wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( 'jquery-ui-core' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
-		
+
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-admin' . $extension, array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( 'wp-color-picker' );
 			wp_enqueue_media();
 
-			wp_localize_script( 
+			wp_localize_script(
 				$this->plugin_name,
-				'wbAjaxFilterStrings', 
+				'wbAjaxFilterStrings',
 				array(
-					'confirmDelete'      => __( 'Are you sure you want to delete this preset?', 'wb-ajax-filter' ),
-					'confirmDuplicate'   => __( 'Do you want to create duplicate of this preset?', 'wb-ajax-filter' ),
-					'nameExists'         => __( 'Name already exists.', 'wb-ajax-filter' ),
-					'selectTaxonomy'     => __( 'Please select a taxonomy', 'wb-ajax-filter' ),
-					'selectTerms'        => __( 'Please select terms', 'wb-ajax-filter' ),
-					'nameRequired'       => __( 'Please enter name for preset.', 'wb-ajax-filter' ),
-					'validTaxonomy'      => __( 'Please select a valid taxonomy', 'wb-ajax-filter' ),
-					'minPriceNotice'     => __( 'Entered Min price is greater than the highest price on this store.', 'wb-ajax-filter' ),
-					'maxPriceNotice'     => __( 'Max price cannot be smaller than Min price.', 'wb-ajax-filter' ),
-					'titleRequired'      => __( 'Filter name is required.', 'wb-ajax-filter' )
+					'confirmDelete'    => __( 'Are you sure you want to delete this preset?', 'wb-ajax-filter' ),
+					'confirmDuplicate' => __( 'Do you want to create duplicate of this preset?', 'wb-ajax-filter' ),
+					'nameExists'       => __( 'Name already exists.', 'wb-ajax-filter' ),
+					'selectTaxonomy'   => __( 'Please select a taxonomy', 'wb-ajax-filter' ),
+					'selectTerms'      => __( 'Please select terms', 'wb-ajax-filter' ),
+					'nameRequired'     => __( 'Please enter name for preset.', 'wb-ajax-filter' ),
+					'validTaxonomy'    => __( 'Please select a valid taxonomy', 'wb-ajax-filter' ),
+					'minPriceNotice'   => __( 'Entered Min price is greater than the highest price on this store.', 'wb-ajax-filter' ),
+					'maxPriceNotice'   => __( 'Max price cannot be smaller than Min price.', 'wb-ajax-filter' ),
+					'titleRequired'    => __( 'Filter name is required.', 'wb-ajax-filter' ),
 				)
 			);
 		}
@@ -177,7 +179,7 @@ class Wb_Ajax_Filter_Admin {
 		}
 	}
 
-	/** Register post type for presets */
+	/** Register post type for presets. */
 	public function wb_ajax_filter_register_post_type() {
 		$post_type_labels = array(
 			'name'          => _x( 'Filter presets', '[Admin] name of presets custom post type', 'wb-ajax-filter' ),
@@ -219,7 +221,7 @@ class Wb_Ajax_Filter_Admin {
 	 * @access public
 	 */
 	public function wb_ajax_filter_admin_options_page() {
-		global $allowedposttags;
+		global $allowedposttags; //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-ajax-filter-welcome';
 		?>
 	<div class="wrap">
@@ -233,10 +235,12 @@ class Wb_Ajax_Filter_Admin {
 					<div class="wbcom_admin_header-wrapper">
 						<div id="wb_admin_plugin_name">
 							<?php esc_html_e( 'Wbcom Ajax Filter For WooCommerce', 'wb-ajax-filter' ); ?>
-							<span><?php 
+							<span>
+							<?php
 							/* translators: %s: */
 							printf( esc_html__( 'Version %s', 'wb-ajax-filter' ), esc_attr( WB_AJAX_FILTER_VERSION ) );
-							?></span>
+							?>
+							</span>
 						</div>
 						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 					</div>
@@ -282,33 +286,32 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Create or update a filter preset
-	 * 
+	 *
 	 * Processes form data from the preset creation modal and either creates
 	 * a new preset or updates an existing one based on the provided data.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void Outputs JSON response and terminates.
 	 */
 	public function create_filter_preset_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
 			exit();
-		} else {
-			if ( isset( $_POST['form_data'] ) ) {
+		} elseif ( isset( $_POST['form_data'] ) ) {
 				$filter    = array();
 				$form_data = wp_unslash( $_POST['form_data'] ); //phpcs:ignore
 				// Converting form data into associative array.
-				$filter_data   = $this->wb_ajax_process_form_data( $form_data );
-				$result        = $this->wb_ajax_save_filter_data( $filter_data );
+				$filter_data = $this->wb_ajax_process_form_data( $form_data );
+				$result      = $this->wb_ajax_save_filter_data( $filter_data );
 
 				echo $result; //phpcs:ignore
-			}
+
 		}
 		die();
 	}
 
 	/**
 	 * Checks if filter preset title name already exists.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void Output json response and terminates.
 	 */
@@ -326,7 +329,7 @@ class Wb_Ajax_Filter_Admin {
 			);
 			$filters = get_posts( $args );
 			foreach ( $filters as $filter ) {
-				if ( strtolower( $filter->post_title ) === $_POST['title'] || $_POST['title'] === $filter->post_title ) {
+				if ( strtolower( $filter->post_title ) === sanitize_text_field( wp_unslash( $_POST['title'] ) ) || sanitize_text_field( wp_unslash( $_POST['title'] ) ) === $filter->post_title ) {
 					echo 'exists';
 					die();
 				} else {
@@ -339,7 +342,7 @@ class Wb_Ajax_Filter_Admin {
 	}
 	/**
 	 * Creates a duplicate filter preset.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void Output json response and terminates.
 	 */
@@ -388,7 +391,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Delete existing filter preset.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void Output json response and terminates.
 	 */
@@ -408,7 +411,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Creates a duplicate of single filter of a preset.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void Output json response and terminates.
 	 */
@@ -442,7 +445,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Deletes a single filter in preset.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void Output json response and terminates.
 	 */
@@ -470,9 +473,9 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Enable/Disable filter preset to be rendered on shop page.
-	 * 
+	 *
 	 * @since 1.0.0
-	 * @return void 
+	 * @return void
 	 */
 	public function enable_disable_filter_preset_wb_callback() {
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
@@ -488,7 +491,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Enable/Disable single filter in preset to be rendered on shop page.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void
 	 */
@@ -516,7 +519,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Modifies the title of the preset.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void
 	 */
@@ -541,7 +544,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Customizes the text of the terms used in taxonomy filter.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void Outputs JSON response and terminates.
 	 */
@@ -565,7 +568,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Sort the position of single filters in preset.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void
 	 */
@@ -590,7 +593,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Checks if the custom fields exists to be used in filter.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void Outputs JSON response and terminates.
 	 */
@@ -601,8 +604,8 @@ class Wb_Ajax_Filter_Admin {
 			if ( ! isset( $_GET['q'] ) ) {
 				exit;
 			}
-			$field_slug = sanitize_text_field( wp_unslash( $_GET['q'] ) );
-			$args         = array(
+			$field_slug     = sanitize_text_field( wp_unslash( $_GET['q'] ) );
+			$args           = array(
 				'post_type'      => 'product',
 				'posts_per_page' => -1,
 			);
@@ -612,7 +615,7 @@ class Wb_Ajax_Filter_Admin {
 			foreach ( $products as $prod ) {
 				$meta_fields = get_post_meta( $prod->ID, '', false );
 				foreach ( $meta_fields as $key => $value ) {
-					if ( strpos( $key, $field_slug ) !== false && ! in_array( $key, $exclude ) ) {
+					if ( strpos( $key, $field_slug ) !== false && ! in_array( $key, $exclude, true ) ) {
 						$temp             = array( $key, $key );
 						$exclude[]        = $key;
 						$matched_fields[] = $temp;
@@ -626,7 +629,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Function to create settings tabs on the plugin menu page.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void
 	 */
@@ -643,7 +646,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Ajax callback function to search terms for select2 search box.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void Outputs JSON response and terminates.
 	 */
@@ -655,17 +658,17 @@ class Wb_Ajax_Filter_Admin {
 				exit;
 			}
 			$taxonomy = sanitize_text_field( wp_unslash( $_GET['cat'] ) );
-			if( ! empty( $taxonomy ) ) {
-				
-				$terms    = get_terms(
+			if ( ! empty( $taxonomy ) ) {
+
+				$terms = get_terms(
 					array(
 						'taxonomy'   => $taxonomy,
 						'hide_empty' => false,
 					),
 				);
-				
-				if( !empty( $terms ) && is_array( $terms ) ) {
-					$results  = array();
+
+				if ( ! empty( $terms ) && is_array( $terms ) ) {
+					$results = array();
 					foreach ( $terms as $term ) {
 						if ( strpos( $term->name, ucfirst( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false && strpos( $term->name, strtolower( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false ) {
 							continue;
@@ -683,7 +686,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Includes the price range field while filter creation.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void Outputs JSON response and terminates.
 	 */
@@ -744,7 +747,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin welcome setting tab content file.
-	 * 
+	 *
 	 * @since  1.0.0
 	 * @return void
 	 */
@@ -754,7 +757,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin general setting tab content file.
-	 * 
+	 *
 	 * @since  1.0.0
 	 * @return void
 	 */
@@ -764,7 +767,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin presets setting tab content file.
-	 * 
+	 *
 	 * @since  1.0.0
 	 * @return void
 	 */
@@ -774,7 +777,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin customization setting tab content file.
-	 * 
+	 *
 	 * @since  1.0.0
 	 * @return void
 	 */
@@ -784,7 +787,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin ajax search setting tab content file.
-	 * 
+	 *
 	 * @since  1.0.0
 	 * @return void
 	 */
@@ -794,7 +797,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce admin search setting tab content file.
-	 * 
+	 *
 	 * @since  1.0.0
 	 * @return void
 	 */
@@ -804,11 +807,11 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Include Wbcom ajax filter for woocommerce faq setting tab content file.
-	 * 
+	 *
 	 * @since  1.0.0
 	 * @return void
 	 */
-	public function wb_ajax_filter_admin_ajax_faq_content(){
+	public function wb_ajax_filter_admin_ajax_faq_content() {
 		include_once 'partials/wb-ajax-filter-faq-content.php';
 	}
 
@@ -935,10 +938,9 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Function to create associative array of filter data using form data.
-	 * 
+	 *
 	 * @param array $form_data Preset data.
 	 * @return array $filter Array of filter data.
-	 * 
 	 */
 	private function wb_ajax_process_form_data( $form_data ) {
 		$filter = array();
@@ -973,7 +975,7 @@ class Wb_Ajax_Filter_Admin {
 
 	/**
 	 * Function to save filter preset data.
-	 * 
+	 *
 	 * @param array $filter Preset Filter Data.
 	 * @return string Message string.
 	 */
@@ -1009,7 +1011,7 @@ class Wb_Ajax_Filter_Admin {
 			foreach ( $filters as $key => $val ) {
 				if ( $val['filter_id'] === $filter['filter_id'] ) {
 					$filters[ $key ] = $filter;
-					$new_filter++;
+					++$new_filter;
 					break;
 				}
 			}
