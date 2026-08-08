@@ -26,6 +26,33 @@ Every surface this product is known by. When these drift, a site owner reports a
 | Basecamp board | `Ajax filter for WooCommerce` (42374786) |
 | Basecamp URL | https://3.basecamp.com/5798509/projects/42374786 |
 
+## Current Task List
+
+Ordered by how many store owners are affected, not by how interesting the code is.
+Derived from a code audit on 2026-08-08 that verified every open Basecamp card against this branch.
+**Work happens on this branch (`1.2.2`).**
+
+### 1. Security - release blocker
+- [ ] **Any logged-in customer can trash any post on the site.** Two gaps combine: the nonce guard is skipped when the nonce is simply omitted (`if ( isset($_POST['nonce']) && ! wp_verify_nonce(...) ) {exit} else {work}`), and there is **no capability check anywhere** (`current_user_can` = 0 outside the EDD updater, `check_ajax_referer` = 0). Worked example: `delete_filter_preset_wb_callback()` at `admin/class-wb-ajax-filter-admin.php:395-407` passes `$_POST['preset']` to `wp_delete_post()` with no post-type assertion.
+- [ ] **Fix as ONE shared `verify_admin_request()` gate** every callback enters through - fail-closed `check_ajax_referer()`, `manage_woocommerce`, post-type assertion. The bypassable pattern repeats at ~15 sites; patching them individually recreates the hole on the next handler.
+- [ ] Do **not** apply the `FILTER_SANITIZE_STRING` line from the old "Code enhancements" card - deprecated in PHP 8.1.
+
+### 2. Feature dead for most shoppers
+- [ ] **Search autocomplete does nothing when logged out.** `get_ajax_search_autocomplete_title_wb` is registered `wp_ajax_` only; the plugin registers zero `wp_ajax_nopriv_` handlers. The owner tests it as admin, it works, and real shoppers get nothing. Register it for nopriv with its own public nonce - not the admin one.
+
+### 3. Big-site (2,000+ products)
+- [ ] `admin/class-wb-ajax-filter-admin.php:607-615` - `posts_per_page => -1` then `get_post_meta()` per product in a foreach. N+1, and reachable by any logged-in user via the nonce bypass = trivial DoS.
+- [ ] `templates/filters/filter-tax.php:15,57` - two unbounded `get_terms()` per taxonomy filter per page load; `:15`'s result is never even used.
+- [ ] `public/class-wb-ajax-filter-public.php:403-411` - unindexable `LIKE '%...%'` over `post_content`, cached only in non-persistent object cache.
+
+### Notes
+`templates/` (34 files) is a public contract - fix inside files, never rename paths. `_wb_filter` post meta has no schema version; add a stamp + read-time normalizer (S) rather than migrating to a custom table.
+
+### Ground rules for this list
+- A card is a lead, not a spec. Several open cards were found to be already fixed or factually wrong about this tree - re-verify before building.
+- Fix at the seam, not on the screen that reported it. Where a fix has a shared cause, the entry below says so.
+- Most customers do not run our themes. Verify on a generic theme (Storefront or a block theme), not only on Reign/BuddyX.
+
 ## What It Does
 Adds AJAX product filtering to WooCommerce shop and archive pages. Shoppers narrow results by attribute, category, price range, and custom fields without a page reload. Filter sets are authored in the admin as reusable **presets** (a custom post type), so one store can run different filter layouts on different pages.
 
