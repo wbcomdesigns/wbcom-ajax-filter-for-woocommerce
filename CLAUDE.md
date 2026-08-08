@@ -12,6 +12,20 @@
 - **Pro Version:** none (single tier, EDD-licensed)
 - **Basecamp:** https://3.basecamp.com/5798509/projects/42374786
 
+## Names & Identity
+
+Every surface this product is known by. When these drift, a site owner reports a bug under one name and support searches for another.
+
+| Surface | Value |
+|---|---|
+| Plugin Name (what the site owner sees) | `Wbcom Designs - Ajax Filter For WooCommerce` |
+| Install slug (`wp-content/plugins/`) | `wbcom-ajax-filter-for-woocommerce` |
+| Git repo | `wbcom-ajax-filter-for-woocommerce` |
+| Text domain | `wb-ajax-filter` |
+| readme.txt title | `Wbcom Designs - Ajax filter for WooCommerce` |
+| Basecamp board | `Ajax filter for WooCommerce` (42374786) |
+| Basecamp URL | https://3.basecamp.com/5798509/projects/42374786 |
+
 ## What It Does
 Adds AJAX product filtering to WooCommerce shop and archive pages. Shoppers narrow results by attribute, category, price range, and custom fields without a page reload. Filter sets are authored in the admin as reusable **presets** (a custom post type), so one store can run different filter layouts on different pages.
 
