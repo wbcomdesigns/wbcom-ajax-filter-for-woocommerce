@@ -132,10 +132,10 @@ alone resolves to nothing on BuddyX.
 }
 ```
 
-- [ ] **Build the bridge block** above, with `surface` and `muted` alongside the four shown.
-- [ ] **Components read only `--wb-*` tokens.** No component references a theme token, a preset or a hex directly - that single indirection layer is what makes one theme change land everywhere, and what stops a third-party theme falling through to nothing.
-- [ ] **Do not add a plugin-side dark class.** Reign and BuddyX both flip dark mode with the same root attribute, `[data-bx-mode="dark"]`. Because our tokens read from theme tokens, dark mode arrives for free. Forcing our own class produces a dark panel on a light page - a state the product never reaches - and you end up "fixing" bugs that do not exist.
-- [ ] **Scope any standalone dark values so the theme always wins:** `@media (prefers-color-scheme: dark) { :root:not([data-bx-mode]) { ... } }`. Dark mode is a root token override, never a per-component rule.
+- [x] **Build the bridge block** above, with `surface` and `muted` alongside the four shown. *(Done b022bb4: block heads `public/css/wb-ajax-filter-public.css` (and min/rtl variants) with accent/accent-fg/bg/surface/text/muted/border/link; owner customization colours still override via `wp_add_inline_style`, whose colour keys are now `wp_parse_args`-guarded.)*
+- [x] **Components read only `--wb-*` tokens.** No component references a theme token, a preset or a hex directly - that single indirection layer is what makes one theme change land everywhere, and what stops a third-party theme falling through to nothing. *(Done b022bb4: zero raw hex outside the bridge block in public AND admin CSS; tooltip/chip-close gained token-driven accent fills instead of depending on saved customization colours.)*
+- [x] **Do not add a plugin-side dark class.** Reign and BuddyX both flip dark mode with the same root attribute, `[data-bx-mode="dark"]`. Because our tokens read from theme tokens, dark mode arrives for free. Forcing our own class produces a dark panel on a light page - a state the product never reaches - and you end up "fixing" bugs that do not exist. *(No class added.)*
+- [x] **Scope any standalone dark values so the theme always wins:** `@media (prefers-color-scheme: dark) { :root:not([data-bx-mode]) { ... } }`. Dark mode is a root token override, never a per-component rule. *(Done b022bb4: the dark block redeclares only accent/bg/text literal fallbacks under exactly that guard; muted/border/surface/link derive via color-mix.)*
 - [ ] **Verify on Reign and BuddyX separately** - they resolve through different tokens, so passing on one proves nothing about the other. Change the theme accent, reload, confirm our output moved.
 - [ ] **Toggle dark mode with the theme's own control**, never by hand-adding a class. If the theme chrome stays light while our panel darkens, you are in an artificial state - stop and use the real toggle.
 - [ ] **Check a third-party theme** (Storefront or a block theme). Most customers run neither of ours; the preset and literal fallbacks are what they get and must look deliberate.
@@ -160,9 +160,9 @@ profile. Same component vocabulary, different source, so components are written 
 }
 ```
 
-- [ ] **One vocabulary, two bridges.** `--wb-accent`, `-bg`, `-surface`, `-text`, `-muted`, `-border` mean the same thing in both contexts; only the source differs. A component that reads them works on the front end and in wp-admin without a second implementation.
-- [ ] **Admin accent follows the user's colour scheme** via `--wp-admin-theme-color`. Always pass the fallback — the variable is defined in block-library CSS and is not guaranteed present on a plain settings screen.
-- [ ] **Do not reuse frontend theme tokens in admin.** `--bx-color-*` and `--reign-*` do not exist in wp-admin; referencing them there silently falls through to the literal, so the screen stops following the admin scheme.
+- [x] **One vocabulary, two bridges.** `--wb-accent`, `-bg`, `-surface`, `-text`, `-muted`, `-border` mean the same thing in both contexts; only the source differs. A component that reads them works on the front end and in wp-admin without a second implementation. *(Done b022bb4: admin bridge heads `admin/css/wb-ajax-filter-admin.css` + variants; all 39 raw hex mapped to tokens, plus danger/success.)*
+- [x] **Admin accent follows the user's colour scheme** via `--wp-admin-theme-color`. Always pass the fallback — the variable is defined in block-library CSS and is not guaranteed present on a plain settings screen. *(Done b022bb4, including the shared shell: lib/wbcom-settings 1.0.1 chains `--wbcom-accent` from the same variable.)*
+- [x] **Do not reuse frontend theme tokens in admin.** `--bx-color-*` and `--reign-*` do not exist in wp-admin; referencing them there silently falls through to the literal, so the screen stops following the admin scheme. *(Admin bridge sources only `--wp-admin-theme-color*` + literals.)*
 - [ ] **Verify by switching admin colour scheme** (Users → Profile) and confirming the panel follows. The reference implementation does not do this — it hardcodes 33 hex values — so do not copy its palette, only its structure.
 
 ### No admin-ajax — REST or server-rendered
