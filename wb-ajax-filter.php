@@ -50,6 +50,16 @@ if ( ! defined( 'WB_AJAX_FILTER_PLUGIN_FILE' ) ) {
 if ( ! defined( 'WB_AJAX_FILTER_PLUGIN_PATH' ) ) {
 	define( 'WB_AJAX_FILTER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 }
+
+/*
+ * The shared Wbcom settings screen (Pattern A) is a bundled library: every Wbcom
+ * plugin ships its own copy, each copy registers its version, and the newest
+ * registered copy is the one that loads. See lib/wbcom-settings/loader.php.
+ */
+if ( file_exists( WB_AJAX_FILTER_PLUGIN_PATH . 'lib/wbcom-settings/loader.php' ) ) {
+	require_once WB_AJAX_FILTER_PLUGIN_PATH . 'lib/wbcom-settings/loader.php';
+	wbcom_settings_register( '1.0.0', WB_AJAX_FILTER_PLUGIN_PATH . 'lib/wbcom-settings/class-wbcom-settings-page.php' );
+}
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-wb-ajax-filter-activator.php

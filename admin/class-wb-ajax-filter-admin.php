@@ -27,6 +27,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Wb_Ajax_Filter_Admin {
 
 	/**
+	 * The settings page slug.
+	 *
+	 * Unchanged across releases so bookmarks, the plugins-list Settings link
+	 * and the activation redirect keep working.
+	 *
+	 * @since 1.2.2
+	 * @var   string
+	 */
+	const PAGE_SLUG = 'wc-ajax-filter-settings';
+
+	/**
 	 * The ID of this plugin.
 	 *
 	 * @since    1.0.0
@@ -44,17 +55,6 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	private $version;
 
-
-	/**
-	 * Plugin_settings_tabs
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @var mixed     $plugin_settings_tabs    The settings Tabs.
-	 */
-
-	public $plugin_settings_tabs;
-
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -70,25 +70,32 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
+	 * Whether the current request is this plugin's settings screen.
+	 *
+	 * @since  1.2.2
+	 * @return bool
+	 */
+	private function is_settings_page() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Routing only.
+		$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+
+		return self::PAGE_SLUG === $page;
+	}
+
+	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since    1.0.0
+	 * The shared Wbcom settings shell (lib/wbcom-settings/) ships its own
+	 * stylesheet; this one carries only the plugin-specific preset builder
+	 * and color picker layout.
 	 *
-	 * @param screen $screen Current screen.
+	 * @since    1.0.0
 	 */
-	public function enqueue_styles( $screen ) {
+	public function enqueue_styles() {
+		if ( ! $this->is_settings_page() ) {
+			return;
+		}
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wb_Ajax_Filter_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wb_Ajax_Filter_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 			$extension = is_rtl() ? '.rtl.css' : '.css';
 			$path      = is_rtl() ? '/rtl' : '';
@@ -96,37 +103,22 @@ class Wb_Ajax_Filter_Admin {
 			$extension = is_rtl() ? '.rtl.css' : '.min.css';
 			$path      = is_rtl() ? '/rtl' : '/min';
 		}
-		if ( 'wb-plugins_page_wbcom-license-page' === $screen || 'toplevel_page_wbcomplugins' === $screen || 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
 
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-admin' . $extension, array(), $this->version, 'all' );
-			wp_enqueue_style( 'wp-color-picker' );
-			if ( 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
-				wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
-			}
-			wp_enqueue_style( 'wp-color-picker' );
-		}
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-admin' . $extension, array(), $this->version, 'all' );
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
 	 * @since    1.0.0
-	 *
-	 * @param screen $screen Current screen.
 	 */
-	public function enqueue_scripts( $screen ) {
+	public function enqueue_scripts() {
+		if ( ! $this->is_settings_page() ) {
+			return;
+		}
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wb_Ajax_Filter_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wb_Ajax_Filter_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 			$extension = '.js';
 			$path      = '';
@@ -135,48 +127,42 @@ class Wb_Ajax_Filter_Admin {
 			$path      = '/min';
 		}
 
-		if ( 'wb-plugins_page_wbcom-license-page' === $screen || 'toplevel_page_wbcomplugins' === $screen || 'wb-plugins_page_wc-ajax-filter-settings' === $screen ) {
+		wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'jquery-ui-core' );
+		wp_enqueue_script( 'jquery-ui-sortable' );
 
-			wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( 'jquery-ui-core' );
-			wp_enqueue_script( 'jquery-ui-sortable' );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-admin' . $extension, array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'wp-color-picker' );
+		wp_enqueue_media();
 
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-admin' . $extension, array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( 'wp-color-picker' );
-			wp_enqueue_media();
+		// The preset-builder JS reads its AJAX endpoint and nonce from this
+		// object. It was previously localized by the deleted admin/wbcom/
+		// wrapper; the plugin now owns its own admin nonce seam.
+		wp_localize_script(
+			$this->plugin_name,
+			'wbcom_plugin_installer_params',
+			array(
+				'ajax_url'         => admin_url( 'admin-ajax.php' ),
+				'wbcom_ajax_nonce' => wp_create_nonce( 'ajax-nonce' ),
+			)
+		);
 
-			wp_localize_script(
-				$this->plugin_name,
-				'wbAjaxFilterStrings',
-				array(
-					'confirmDelete'    => __( 'Are you sure you want to delete this preset?', 'wb-ajax-filter' ),
-					'confirmDuplicate' => __( 'Do you want to create duplicate of this preset?', 'wb-ajax-filter' ),
-					'nameExists'       => __( 'Name already exists.', 'wb-ajax-filter' ),
-					'selectTaxonomy'   => __( 'Please select a taxonomy', 'wb-ajax-filter' ),
-					'selectTerms'      => __( 'Please select terms', 'wb-ajax-filter' ),
-					'nameRequired'     => __( 'Please enter name for preset.', 'wb-ajax-filter' ),
-					'validTaxonomy'    => __( 'Please select a valid taxonomy', 'wb-ajax-filter' ),
-					'minPriceNotice'   => __( 'Entered Min price is greater than the highest price on this store.', 'wb-ajax-filter' ),
-					'maxPriceNotice'   => __( 'Max price cannot be smaller than Min price.', 'wb-ajax-filter' ),
-					'titleRequired'    => __( 'Filter name is required.', 'wb-ajax-filter' ),
-				)
-			);
-		}
-	}
-
-	/**
-	 * Wbcom_hide_all_admin_notices_from_setting_page
-	 *
-	 * @return void
-	 */
-	public function wbcom_hide_all_admin_notices_from_setting_page() {
-		$wbcom_pages_array  = array( 'wbcomplugins', 'wbcom-plugins-page', 'wbcom-support-page', 'wc-ajax-filter-settings' );
-		$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
-
-		if ( in_array( $wbcom_setting_page, $wbcom_pages_array, true ) ) {
-			remove_all_actions( 'admin_notices' );
-			remove_all_actions( 'all_admin_notices' );
-		}
+		wp_localize_script(
+			$this->plugin_name,
+			'wbAjaxFilterStrings',
+			array(
+				'confirmDelete'    => __( 'Are you sure you want to delete this preset?', 'wb-ajax-filter' ),
+				'confirmDuplicate' => __( 'Do you want to create duplicate of this preset?', 'wb-ajax-filter' ),
+				'nameExists'       => __( 'Name already exists.', 'wb-ajax-filter' ),
+				'selectTaxonomy'   => __( 'Please select a taxonomy', 'wb-ajax-filter' ),
+				'selectTerms'      => __( 'Please select terms', 'wb-ajax-filter' ),
+				'nameRequired'     => __( 'Please enter name for preset.', 'wb-ajax-filter' ),
+				'validTaxonomy'    => __( 'Please select a valid taxonomy', 'wb-ajax-filter' ),
+				'minPriceNotice'   => __( 'Entered Min price is greater than the highest price on this store.', 'wb-ajax-filter' ),
+				'maxPriceNotice'   => __( 'Max price cannot be smaller than Min price.', 'wb-ajax-filter' ),
+				'titleRequired'    => __( 'Filter name is required.', 'wb-ajax-filter' ),
+			)
+		);
 	}
 
 	/** Register post type for presets. */
@@ -199,72 +185,126 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Actions performed on loading admin_menu.
+	 * Register this plugin's screen on the shared Wbcom settings shell.
 	 *
-	 * @since    1.0.0
-	 * @access   public
-	 * @author   Wbcom Designs
+	 * The shell (lib/wbcom-settings/) owns the menu entry, sidebar, routing,
+	 * assets and notice suppression; this plugin only contributes nav entries
+	 * and tab bodies through the two prefixed seams below.
+	 *
+	 * @since 1.2.2
 	 */
-	public function wb_ajax_filter_add_admin_settings() {
-		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
-			add_menu_page( esc_html__( 'WB Plugins', 'wb-ajax-filter' ), esc_html__( 'WB Plugins', 'wb-ajax-filter' ), 'manage_options', 'wbcomplugins', array( $this, 'wb_ajax_filter_admin_options_page' ), 'dashicons-lightbulb', 59 );
-			add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'wb-ajax-filter' ), esc_html__( 'General', 'wb-ajax-filter' ), 'manage_options', 'wbcomplugins' );
-
+	public function boot_settings_page() {
+		if ( ! class_exists( 'Wbcom_Settings_Page' ) ) {
+			return;
 		}
-		add_submenu_page( 'wbcomplugins', esc_html__( 'Wbcom Ajax Filter for WooCommerce', 'wb-ajax-filter' ), esc_html__( 'Wbcom Ajax Filter for WooCommerce', 'wb-ajax-filter' ), 'manage_options', 'wc-ajax-filter-settings', array( $this, 'wb_ajax_filter_admin_options_page' ) );
+
+		Wbcom_Settings_Page::boot(
+			array(
+				'prefix'     => 'wb_ajax_filter',
+				'slug'       => self::PAGE_SLUG,
+				'assets_url' => WB_AJAX_FILTER_PLUGIN_URL,
+				'version'    => $this->version,
+				'icon'       => 'filter',
+				'labels'     => array(
+					'menu_title' => __( 'Ajax Filter', 'wb-ajax-filter' ),
+					'brand'      => __( 'Ajax Filter', 'wb-ajax-filter' ),
+					'subtitle'   => __( 'AJAX product filtering for WooCommerce', 'wb-ajax-filter' ),
+					'nav_label'  => __( 'Ajax Filter settings sections', 'wb-ajax-filter' ),
+					'pro_badge'  => __( 'Pro', 'wb-ajax-filter' ),
+				),
+			)
+		);
+
+		add_filter( 'wb_ajax_filter_settings_nav_groups', array( $this, 'settings_nav_groups' ) );
+		add_action( 'wb_ajax_filter_settings_tab_content', array( $this, 'render_settings_tab' ) );
 	}
 
 	/**
-	 * Actions performed to create a submenu page content.
+	 * Create the shared "WB Plugins" parent menu when no other Wbcom plugin has.
 	 *
-	 * @since    1.0.0
-	 * @access public
+	 * @since 1.2.2
 	 */
-	public function wb_ajax_filter_admin_options_page() {
-		global $allowedposttags; //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-		$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-ajax-filter-welcome';
-		?>
-	<div class="wrap">
-		<div class="wbcom-bb-plugins-offer-wrapper">
-				<div id="wb_admin_logo">
-				</div>
-			</div>
-		<div class="wbcom-wrap">
+	public function register_parent_menu() {
+		if ( ! class_exists( 'Wbcom_Settings_Page' ) || ! empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
+			return;
+		}
 
-				<div class="blpro-header">
-					<div class="wbcom_admin_header-wrapper">
-						<div id="wb_admin_plugin_name">
-							<?php esc_html_e( 'Wbcom Ajax Filter For WooCommerce', 'wb-ajax-filter' ); ?>
-							<span>
-							<?php
-							/* translators: %s: */
-							printf( esc_html__( 'Version %s', 'wb-ajax-filter' ), esc_attr( WB_AJAX_FILTER_VERSION ) );
-							?>
-							</span>
-						</div>
-						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-					</div>
-				</div>
-			<div class="wbcom-admin-settings-page">
-				<?php
-				settings_errors();
-				$this->wb_ajax_filter_plugin_settings_tabs();
-				settings_fields( $tab );
-				do_settings_sections( $tab );
-				?>
-			</div>
-		</div>
-	</div>
-		<?php
+		add_menu_page(
+			esc_html__( 'WB Plugins', 'wb-ajax-filter' ),
+			esc_html__( 'WB Plugins', 'wb-ajax-filter' ),
+			'manage_options',
+			'wbcomplugins',
+			array( 'Wbcom_Settings_Page', 'render_welcome' ),
+			'dashicons-lightbulb',
+			59
+		);
 	}
 
+	/**
+	 * Declare the settings nav.
+	 *
+	 * The filters tab keeps its historical id: the preset builder templates,
+	 * the footer modal gate and back-links all address tab=wb-ajax-filter-presets.
+	 *
+	 * @since  1.2.2
+	 * @param  array $groups Groups declared so far.
+	 * @return array
+	 */
+	public function settings_nav_groups( $groups ) {
+		$groups['main'] = array(
+			'label' => __( 'Ajax Filter', 'wb-ajax-filter' ),
+			'items' => array(
+				'wb-ajax-filter-presets' => array(
+					'title' => __( 'Your Filters', 'wb-ajax-filter' ),
+					'icon'  => 'sliders-horizontal',
+				),
+				'advanced'               => array(
+					'title' => __( 'Advanced', 'wb-ajax-filter' ),
+					'icon'  => 'settings-2',
+				),
+				'license'                => array(
+					'title' => __( 'License', 'wb-ajax-filter' ),
+					'icon'  => 'key-round',
+				),
+			),
+		);
+
+		return $groups;
+	}
+
+	/**
+	 * Render one settings tab.
+	 *
+	 * @since 1.2.2
+	 * @param string $tab Tab id.
+	 */
+	public function render_settings_tab( $tab ) {
+		switch ( $tab ) {
+			case 'wb-ajax-filter-presets':
+				include plugin_dir_path( __FILE__ ) . 'partials/tab-filters.php';
+				break;
+			case 'advanced':
+				include plugin_dir_path( __FILE__ ) . 'partials/tab-advanced.php';
+				break;
+			case 'license':
+				include plugin_dir_path( __FILE__ ) . 'partials/tab-license.php';
+				break;
+		}
+	}
 
 	/**
 	 * Add modal wrapper to the footer of admin section.
+	 *
+	 * The filters tab is the default (first) tab, so the modal must also load
+	 * when the settings page is opened with no tab parameter at all.
 	 */
 	public function wb_ajax_filter_add_modal_to_admin_footer() {
-		$page = ( isset( $_REQUEST['tab'] ) && 'wb-ajax-filter-presets' === sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) ) ? true : false; //phpcs:ignore
-		if ( is_admin() && $page ) {
+		if ( ! is_admin() || ! $this->is_settings_page() ) {
+			return;
+		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Routing only.
+		$tab = isset( $_REQUEST['tab'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) : '';
+		if ( '' === $tab || 'wb-ajax-filter-presets' === $tab ) {
 			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-modal.php';
 		}
 	}
@@ -652,23 +692,6 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
-	 * Function to create settings tabs on the plugin menu page.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function wb_ajax_filter_plugin_settings_tabs() {
-		$current_tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'wb-ajax-filter-welcome';
-		// xprofile setup tab.
-		echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
-		foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
-			$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
-			echo '<li class=' . esc_attr( $tab_key ) . '><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=wc-ajax-filter-settings&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
-		}
-		echo '</div></ul></div>';
-	}
-
-	/**
 	 * Ajax callback function to search terms for select2 search box.
 	 *
 	 * @since 1.0.0
@@ -727,114 +750,19 @@ class Wb_Ajax_Filter_Admin {
 	/**
 	 * Function to register the plugin settings.
 	 *
+	 * The two search options share one settings group so the merged Search
+	 * card on the Advanced tab saves both in a single form submit. Option
+	 * NAMES are unchanged, so values saved under the old multi-tab screen
+	 * carry over untouched.
+	 *
 	 * @since  1.0.9
 	 * @return void
 	 */
 	public function wb_ajax_filter_init_plugin_settings() {
-		//phpcs:disable
-		$wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' );
-
-		$this->plugin_settings_tabs['wb-ajax-filter-welcome'] = esc_html__( 'Welcome', 'wb-ajax-filter' );
-		register_setting( 'wb_ajax_filter_admin_welcome_options', 'wb_ajax_filter_admin_welcome_options' );
-		add_settings_section( 'wb-ajax-filter-welcome', ' ', array( $this, 'wb_ajax_filter_admin_welcome_content' ), 'wb-ajax-filter-welcome' );
-
-		$this->plugin_settings_tabs['wb-ajax-filter-presets'] = esc_html__( 'Filter Presets', 'wb-ajax-filter' );
-		register_setting( 'wb_ajax_filter_admin_presets_options', 'wb_ajax_filter_admin_presets_options' );
-		add_settings_section( 'wb-ajax-filter-presets', ' ', array( $this, 'wb_ajax_filter_admin_presets_content' ), 'wb-ajax-filter-presets' );
-
-		$this->plugin_settings_tabs['wb-ajax-filter-general'] = esc_html__( 'General Settings', 'wb-ajax-filter' );
 		register_setting( 'wb_ajax_filter_admin_general_options', 'wb_ajax_filter_admin_general_options' );
-		add_settings_section( 'wb-ajax-filter-general', ' ', array( $this, 'wb_ajax_filter_admin_general_content' ), 'wb-ajax-filter-general' );
-
-		$this->plugin_settings_tabs['wb-ajax-filter-customization'] = esc_html__( 'Customization', 'wb-ajax-filter' );
 		register_setting( 'wb_ajax_filter_admin_customization_options', 'wb_ajax_filter_admin_customization_options' );
-		add_settings_section( 'wb-ajax-filter-customization', ' ', array( $this, 'wb_ajax_filter_admin_customization_content' ), 'wb-ajax-filter-customization' );
-
-		$this->plugin_settings_tabs['wb-ajax-filter-ajax-search-settings'] = esc_html__( 'Search Settings', 'wb-ajax-filter' );
 		register_setting( 'wb_ajax_filter_search_settings', 'wb_ajax_filter_search_settings' );
-		add_settings_section( 'wb-ajax-filter-ajax-search-settings', ' ', array( $this, 'wb_ajax_filter_admin_ajax_search_settings_content' ), 'wb-ajax-filter-ajax-search-settings' );
-		
-		if( isset( $wb_ajax_filter_search_settings['enable_search'] ) && ( 'yes' === $wb_ajax_filter_search_settings['enable_search'] ) ) {
-			$this->plugin_settings_tabs['wb-ajax-filter-search'] = esc_html__( 'Search Options', 'wb-ajax-filter' );
-			register_setting( 'wb_ajax_filter_search_content_settings', 'wb_ajax_filter_search_content_settings' );
-			add_settings_section( 'wb-ajax-filter-search', ' ', array( $this, 'wb_ajax_filter_admin_search_content' ), 'wb-ajax-filter-search' );
-		}
-
-		$this->plugin_settings_tabs['wb-ajax-filter-ajax-faq'] = esc_html__( 'FAQ', 'wb-ajax-filter' );
-		register_setting( 'wb_ajax_filter_faq_settings', 'wb_ajax_filter_faq_settings' );
-		add_settings_section( 'wb-ajax-filter-ajax-faq', ' ', array( $this, 'wb_ajax_filter_admin_ajax_faq_content' ), 'wb-ajax-filter-ajax-faq' );
-		
-		//phpcs:enable
-	}
-
-	/**
-	 * Include Wbcom ajax filter for woocommerce admin welcome setting tab content file.
-	 *
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function wb_ajax_filter_admin_welcome_content() {
-		include_once 'partials/wb-ajax-filter-welcome-page.php';
-	}
-
-	/**
-	 * Include Wbcom ajax filter for woocommerce admin general setting tab content file.
-	 *
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function wb_ajax_filter_admin_general_content() {
-		include_once 'partials/wb-ajax-filter-setting-general-tab.php';
-	}
-
-	/**
-	 * Include Wbcom ajax filter for woocommerce admin presets setting tab content file.
-	 *
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function wb_ajax_filter_admin_presets_content() {
-		include_once 'partials/wb-ajax-filter-setting-presets-tab.php';
-	}
-
-	/**
-	 * Include Wbcom ajax filter for woocommerce admin customization setting tab content file.
-	 *
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function wb_ajax_filter_admin_customization_content() {
-		include_once 'partials/wb-ajax-filter-setting-customization-tab.php';
-	}
-
-	/**
-	 * Include Wbcom ajax filter for woocommerce admin ajax search setting tab content file.
-	 *
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function wb_ajax_filter_admin_ajax_search_settings_content() {
-		include_once 'partials/wb-ajax-filter-search-settings.php';
-	}
-
-	/**
-	 * Include Wbcom ajax filter for woocommerce admin search setting tab content file.
-	 *
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function wb_ajax_filter_admin_search_content() {
-		include_once 'partials/wb-ajax-filter-search-content.php';
-	}
-
-	/**
-	 * Include Wbcom ajax filter for woocommerce faq setting tab content file.
-	 *
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function wb_ajax_filter_admin_ajax_faq_content() {
-		include_once 'partials/wb-ajax-filter-faq-content.php';
+		register_setting( 'wb_ajax_filter_search_settings', 'wb_ajax_filter_search_content_settings' );
 	}
 
 	/**

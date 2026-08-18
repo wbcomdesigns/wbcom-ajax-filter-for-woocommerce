@@ -203,7 +203,7 @@ assets/css/admin.css
 - [ ] **Quick actions** routing to the tab that changes the thing just described.
 - [ ] **Sidebar generated from a tab registry** - one array keyed by slug with `label`, `icon`, `group` (main / settings / account). Adding a screen touches one array, not markup in three places.
 - [ ] **Version pill in the header; dependency state shown on screen** rather than rendering an empty dashboard.
-- [ ] **Replace the shared `admin/wbcom/` header/nav framework** where present - do not layer the new shell on top of it.
+- [x] **Replace the shared `admin/wbcom/` header/nav framework** where present - do not layer the new shell on top of it. *(Done: `admin/wbcom/` deleted; settings rebuilt on the bundled Pattern A shell `lib/wbcom-settings/` - same library Audio/Document Preview and BuddyWoo carry, newest copy on a site wins. Thin IA: Your Filters (presets, default tab) / Advanced (behaviour + search + appearance, option keys unchanged, the two search option groups saved by one form) / License (EDD form re-homed from the deleted `wbcom-license-page`). Welcome and FAQ tabs deleted; support links live on the License tab.)*
 - [ ] **Verify at 1440px and 390px, light and dark, LTR and RTL.** Colours from CSS custom properties, never hardcoded hex.
 
 **Two things that will bite:**
@@ -271,7 +271,7 @@ WordPress Plugin Boilerplate (loader pattern). `Wb_Ajax_Filter_Loader` registers
 | `admin/class-wb-ajax-filter-admin.php` | Preset builder UI, settings, AJAX handlers |
 | `public/class-wb-ajax-filter-public.php` | Front-end filter rendering and query handling |
 | `templates/` | 34 overridable template partials (filter field types, layouts) |
-| `admin/wbcom/` | Shared Wbcom admin header/nav + license UI |
+| `lib/wbcom-settings/` | Bundled Pattern A settings shell (shared across Wbcom plugins; newest copy on a site loads) |
 | `edd-license/EDD_WB_Ajax_Filter_Plugin_Updater.php` | EDD Software Licensing updater |
 
 Codebase: ~7,400 PHP LOC across 62 files.

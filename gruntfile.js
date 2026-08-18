@@ -62,16 +62,7 @@ module.exports = function (grunt) {
 						ext: '.min.css', // Extension for minified files
 					}],
 				},
-				wbcom: {
-					files: [{
-						expand: true,
-						cwd: 'admin/wbcom/assets/css/', // Source directory for admin CSS files
-						src: ['*.css', '!*.min.css', '!vendor/*.css'], // Minify all admin CSS files except already minified ones
-						dest: 'admin/wbcom/assets/css/min/', // Destination directory for minified admin CSS
-						ext: '.min.css', // Extension for minified files
-					}],
 				},
-			},
 
 			// Task for JavaScript minification
 			uglify: {
@@ -99,19 +90,7 @@ module.exports = function (grunt) {
 						ext: '.min.js', // Extension for minified files
 					}],
 				},
-				wbcom: {
-					options: {
-						mangle: false, // Prevents variable name mangling
-					},
-					files: [{
-						expand: true,
-						cwd: 'admin/wbcom/assets/js', // Source directory for admin JS files
-						src: ['*.js', '!*.min.js', '!vendor/*.js'], // Minify all admin JS files except already minified ones
-						dest: 'admin/wbcom/assets/js/min/', // Destination directory for minified admin JS
-						ext: '.min.js', // Extension for minified files
-					}],
 				},
-			},
 
 			// Task for watching file changes
 			watch: {
@@ -166,14 +145,6 @@ module.exports = function (grunt) {
 						cwd: 'admin/css/', // Source directory for admin CSS
 						src: ['**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
 						dest: 'admin/css/rtl/', // Destination directory for admin RTL CSS
-						ext: '.rtl.css', // Extension for RTL files
-						flatten: true // Prevents creating subdirectories
-					},
-					{
-						expand: true,
-						cwd: 'admin/wbcom/assets/css/', // Source directory for public CSS
-						src: ['**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
-						dest: 'admin/wbcom/assets/css/rtl/', // Destination directory for public RTL CSS
 						ext: '.rtl.css', // Extension for RTL files
 						flatten: true // Prevents creating subdirectories
 					}

@@ -128,22 +128,16 @@ class Wb_Ajax_Filter {
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
+		 * The settings screen itself is the shared Wbcom shell bundled at
+		 * lib/wbcom-settings/ and registered from the plugin bootstrap.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wb-ajax-filter-admin.php';
-
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
-		require_once plugin_dir_path( __DIR__ ) . 'admin/wbcom/wbcom-admin-settings.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-wb-ajax-filter-public.php';
-
-		/** This file adds the plugin license module UI. */
-		require_once plugin_dir_path( __DIR__ ) . 'admin/wbcom/wbcom-paid-plugin-settings.php';
 
 		/** This file is responsible for the plugin license functionality. */
 		require_once plugin_dir_path( __DIR__ ) . 'edd-license/edd-plugin-license.php';
@@ -197,7 +191,10 @@ class Wb_Ajax_Filter {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts', 999 );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_ajax_filter_add_admin_settings' );
+		// Shared Wbcom settings shell (lib/wbcom-settings/): register our screen early,
+		// then make sure the shared parent menu exists before the shell adds submenus at 20.
+		$this->loader->add_action( 'init', $plugin_admin, 'boot_settings_page', 1 );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_parent_menu', 5 );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wb_ajax_filter_init_plugin_settings' );
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'wb_ajax_filter_add_modal_to_admin_footer' );
 		// Ajax callbacks.
@@ -229,7 +226,6 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_count_field', 90 );
 		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_adoptive_filtering_field', 100 );
 		$this->loader->add_action( 'wb_ajax_filter_after_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_save_button', 10 );
-		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'wbcom_hide_all_admin_notices_from_setting_page' );
 	}
 
 	/**
