@@ -1,4 +1,68 @@
 /*==========================
+Theme token bridge
+==========================*/
+
+/*
+ * Components in this file read ONLY --wb-* tokens - never a theme token, a
+ * preset or a hex directly. The chain tries the BuddyX vocabulary, then
+ * Reign's (each theme defines only its own), then BOTH theme.json preset
+ * slugs (Reign's accent slug is `primary`, BuddyX's is `accent`), then a
+ * literal for themes that define none. Owner colours saved on the settings
+ * screen still win: they are printed after this file via wp_add_inline_style().
+ */
+:root,
+.wb-ajax-filter-content-container {
+	--wb-accent: var(--bx-color-accent,
+			var(--reign-accent-color,
+			var(--wp--preset--color--primary,
+			var(--wp--preset--color--accent, #157dfd))));
+	--wb-accent-fg: #ffffff;
+	--wb-bg: var(--bx-color-bg-page,
+			var(--reign-site-body-bg-color,
+			var(--wp--preset--color--base, #ffffff)));
+	--wb-surface: var(--bx-color-bg-elevated,
+			var(--reign-site-sections-bg-color,
+			var(--wb-bg)));
+	--wb-text: var(--bx-color-text,
+			var(--reign-site-body-text-color,
+			var(--wp--preset--color--contrast, #1a1a1a)));
+	--wb-muted: var(--bx-color-fg-muted,
+			var(--reign-site-alternate-text-color,
+			color-mix(in srgb, var(--wb-text) 60%, transparent)));
+	--wb-border: var(--bx-color-border,
+			var(--reign-site-border-color,
+			color-mix(in srgb, var(--wb-text) 12%, transparent)));
+	--wb-link: var(--bx-color-link,
+			var(--reign-site-link-color,
+			var(--wb-accent)));
+}
+
+/*
+ * Dark mode is a root token override, never a per-component rule. Reign and
+ * BuddyX flip their own tokens behind [data-bx-mode] (dark AND auto), so the
+ * chain above follows them for free - :not([data-bx-mode]) keeps this block
+ * from fighting that. It only swaps the LITERAL fallbacks, for themes that
+ * define no tokens at all, when the OS asks for dark. Muted, border, surface
+ * and link derive from text/bg/accent, so they need no dark redeclaration.
+ */
+@media (prefers-color-scheme: dark) {
+
+	:root:not([data-bx-mode]),
+	:root:not([data-bx-mode]) .wb-ajax-filter-content-container {
+		--wb-accent: var(--bx-color-accent,
+				var(--reign-accent-color,
+				var(--wp--preset--color--primary,
+				var(--wp--preset--color--accent, #4c9aff))));
+		--wb-bg: var(--bx-color-bg-page,
+				var(--reign-site-body-bg-color,
+				var(--wp--preset--color--base, #1e1e1e)));
+		--wb-text: var(--bx-color-text,
+				var(--reign-site-body-text-color,
+				var(--wp--preset--color--contrast, #e5e5e5)));
+	}
+}
+
+/*==========================
 Search Filter Form
 ==========================*/
 a.wb-ajax-reset-all-filters {
@@ -41,12 +105,12 @@ a.wb-ajax-reset-all-filters {
 span.select2-dropdown.select2-dropdown--below {
 	border-radius: 4px !important;
 	top: -8px;
-	border-color: #ccc !important;
+	border-color: var(--wb-border) !important;
 }
 
 span.select2-dropdown.select2-dropdown--above {
 	border-radius: 4px !important;
-	border-color: #ccc !important;
+	border-color: var(--wb-border) !important;
 }
 
 .wb-ajax-filter-ajaxsearchform-select.wb-ajax-filter-ajaxsearchform-select-list,
@@ -133,7 +197,7 @@ a.wb-ajax-clear-single-filter {
 
 .wb-ajax-filter-content-container .wb-ajax-filters-container {
 	margin-bottom: 25px;
-	box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 1px var(--wb-border);
 }
 
 .wb-ajax-filter-content-container .wb-price-ranges li a.price-range.filter-active {
@@ -162,7 +226,7 @@ a.wb-ajax-clear-single-filter {
 }
 
 li.select2-results__option {
-	color: #000000 !important;
+	color: var(--wb-text) !important;
 }
 
 .plg-peepso .wb-ajax-filter-ajaxsearchform-select .select2-container--default .select2-selection--single {
@@ -207,7 +271,8 @@ li.select2-results__option {
 	line-height: 1;
 	top: 4px;
 	margin-left: 10px;
-	color: #fff;
+	background: var(--wb-accent);
+	color: var(--wb-accent-fg);
 	-webkit-transition: all 0.4s;
 	transition: all 0.4s;
 	position: absolute;
@@ -216,6 +281,7 @@ li.select2-results__option {
 .filter-item span.wb-ajax-filter-tooltip-text:before {
 	border: solid;
 	border-width: 6px 6px 0 6px;
+	border-color: var(--wb-accent) transparent;
 	content: "";
 	left: -8px;
 	bottom: 8px;
@@ -258,7 +324,7 @@ ul.wb-price-ranges {
 .wb-search-input-container input {
 	height: 28px !important;
 	min-height: 0px !important;
-	border: 1px solid #bda8a8 !important;
+	border: 1px solid var(--wb-border) !important;
 }
 
 .wb-search-submit-container input {
@@ -302,6 +368,8 @@ span.select2-dropdown.select2-dropdown--below {
 }
 
 .wb-ajax-active-filters-container span.wb-ajax-filter-clear-single.button {
+	background: var(--wb-accent);
+	color: var(--wb-accent-fg);
 	background-position: center;
 	background-repeat: no-repeat;
 	border-radius: 100%;
@@ -320,7 +388,7 @@ span.select2-dropdown.select2-dropdown--below {
 .wb-ajax-active-filters-container span.dashicons.dashicons-no-alt {
 	width: 15px;
 	height: 15px;
-	color: #fff;
+	color: var(--wb-accent-fg);
 	font-size: 12px;
 	line-height: 16px;
 }
@@ -328,7 +396,7 @@ span.select2-dropdown.select2-dropdown--below {
 .theme-twentytwentyone .wb-ajax-active-filters-container span.dashicons.dashicons-no-alt {
 	width: 15px;
 	height: 15px;
-	color: #fff;
+	color: var(--wb-accent-fg);
 	font-size: 14px;
 	line-height: 15px;
 	position: absolute;
@@ -345,7 +413,10 @@ div.wb-ajax-filter-loader-container {
 	height: 100vh;
 	width: 100%;
 	display: block;
+	/* Literal first: color-mix() is the token path, the rgba() line is the
+	   fallback for engines without it. */
 	background: rgba(255, 255, 255, 0.7);
+	background: color-mix(in srgb, var(--wb-bg) 70%, transparent);
 }
 
 /* Center the loader */
@@ -357,9 +428,9 @@ div.wb-ajax-filter-loader-container .gif-container-default {
 	width: 50px;
 	height: 50px;
 	margin: -25px 0 0 -25px;
-	border: 5px solid #f3f3f3;
+	border: 5px solid var(--wb-border);
 	border-radius: 50%;
-	border-top: 5px solid #3498db;
+	border-top: 5px solid var(--wb-accent);
 	-webkit-animation: spin 2s linear infinite;
 	animation: spin 2s linear infinite;
 }
@@ -482,7 +553,7 @@ li.filter-item.wb-ajax-level-1 {
 }
 
 a.wb-term-label.wb-tooltip-added small.item-count {
-	color: grey;
+	color: var(--wb-muted);
 }
 
 /* Reign */

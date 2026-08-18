@@ -6,7 +6,7 @@
  * two products cannot drift into looking like two different admin experiences.
  *
  * @package Wbcom_Settings
- * @version 1.0.0
+ * @version 1.0.1
  */
 
 .wbcom-admin *,
@@ -20,7 +20,8 @@
 	--wbcom-surface: #fff;
 	--wbcom-muted: #646970;
 	--wbcom-text: #1e1e1e;
-	--wbcom-accent: #2271b1;
+	--wbcom-accent: var(--wp-admin-theme-color, #2271b1);
+	--wbcom-accent-strong: var(--wp-admin-theme-color-darker-10, #135e96);
 	--wbcom-sidebar-bg: #f6f7f7;
 	margin-inline-end: 20px;
 }
@@ -358,7 +359,7 @@
 }
 
 .wbcom-btn--primary:hover {
-	background: #135e96;
+	background: var(--wbcom-accent-strong);
 	color: #fff;
 }
 

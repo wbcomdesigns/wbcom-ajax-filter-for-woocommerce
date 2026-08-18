@@ -24,7 +24,7 @@
  * added by a Pro plugin from being laid out differently to one added by its free half.
  *
  * @package Wbcom_Settings
- * @version 1.0.0
+ * @version 1.0.1
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -42,7 +42,7 @@ class Wbcom_Settings_Page {
 	 * @since 1.0.0
 	 * @var   string
 	 */
-	const VERSION = '1.0.0';
+	const VERSION = '1.0.1';
 
 	/**
 	 * Parent menu slug shared by every Wbcom plugin.

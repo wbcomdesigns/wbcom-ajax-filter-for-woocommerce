@@ -185,6 +185,25 @@ class Wb_Ajax_Filter_Public {
 			return '';
 		}
 
+		/*
+		 * The option is shared with non-colour settings (filters_per_column), so a
+		 * colour key can be absent. An empty value produces an invalid declaration
+		 * the CSS parser drops, which lets the --wb-* theme-token defaults in
+		 * wb-ajax-filter-public.css stand; a missing key would be a PHP warning.
+		 */
+		$css_settings = wp_parse_args(
+			$css_settings,
+			array(
+				'filters_area_background_color'    => '',
+				'filters_area_titles_color'        => '',
+				'filters_area_accent_color'        => '',
+				'textual_terms_tooltip_text_color' => '',
+				'textual_terms_text_color'         => '',
+				'textual_terms_hover_text_color'   => '',
+				'textual_terms_active_text_color'  => '',
+			)
+		);
+
 		$custom_css = '
 				.wb-ajax-filters-container{
 					background: ' . $css_settings['filters_area_background_color'] . ';
