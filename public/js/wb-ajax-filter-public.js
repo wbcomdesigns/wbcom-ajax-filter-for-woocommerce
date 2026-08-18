@@ -68,6 +68,31 @@
 				}
 			}
 
+			// Mobile filter drawer: activate the collapse (progressive enhancement -
+			// without this class the CSS never hides the filter stack) and wire the toggle.
+			jQuery( '.wb-ajax-filter-content-container' ).addClass( 'wb-ajax-filters-js' );
+			jQuery( '.wb-ajax-mobile-filters-toggle' ).on(
+				'click',
+				function () {
+					var panel  = jQuery( '#' + jQuery( this ).attr( 'aria-controls' ) );
+					var isOpen = ! panel.hasClass( 'wb-ajax-filters-open' );
+					panel.toggleClass( 'wb-ajax-filters-open', isOpen );
+					jQuery( this ).attr( 'aria-expanded', isOpen ? 'true' : 'false' );
+				}
+			);
+
+			// Keyboard support for the chip remove control (span[role=button]).
+			jQuery( '.wb-ajax-active-filters-container' ).on(
+				'keydown',
+				'.wb-ajax-filter-clear-single',
+				function ( e ) {
+					if ( 'Enter' === e.key || ' ' === e.key ) {
+						e.preventDefault();
+						jQuery( this ).trigger( 'click' );
+					}
+				}
+			);
+
 			// Enable select2 js
 			jQuery( '.wb-ajax-search_categories' ).select2();
 			jQuery( '.wb-ajax-filter-post-type' ).select2();

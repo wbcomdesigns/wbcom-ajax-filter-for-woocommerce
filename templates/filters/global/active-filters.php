@@ -11,39 +11,19 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( count( $params ) > 0 ) {
+$wb_active_chips = wb_ajax_filter_get_active_chips( $params );
+if ( count( $wb_active_chips ) > 0 ) {
 	?>
 	<div class="wb-ajax-active-filters-container" role="region" aria-label="Active Filters">
 	<?php
-	$exclude_filters = array( 'preset', 'orderby', 'post_type', 'onsale_filter', 'instock_filter', 'min_price', 'max_price', 'rating_filter' );
-	foreach ( $params as $key => $param ) {
-
-		if ( empty( $param ) ) {
-			continue;
-		}
-		if ( in_array( $key, $exclude_filters, true ) ) {
-			continue;
-		}
-		if ( is_array( $param ) ) {
-			foreach ( $param as $pm ) {
-				if ( empty( $pm ) ) {
-					continue;
-				}
-				?>
-			<div class="wb-ajax-active-filters-container-single">
-				<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $pm ); ?></span>
-				<span class="wb-ajax-filter-clear-single button" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $pm ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
-			</div>
-				<?php
-			}
-		} else {
-			?>
+	foreach ( $wb_active_chips as $wb_chip ) {
+		// data-filter-value stays the RAW url value - the clear-single JS removes it from the query string.
+		?>
 		<div class="wb-ajax-active-filters-container-single">
-			<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $param ); ?></span>
-			<span class="wb-ajax-filter-clear-single button" data-filter="<?php echo esc_attr( $key ); ?>" data-filter-value="<?php echo esc_attr( $param ); ?>"><span class="dashicons dashicons-no-alt"></span></span>
+			<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $wb_chip['label'] ); ?></span>
+			<span class="wb-ajax-filter-clear-single button" role="button" tabindex="0" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: active filter label. */ __( 'Remove filter: %s', 'wb-ajax-filter' ), $wb_chip['label'] ) ); ?>" data-filter="<?php echo esc_attr( $wb_chip['filter'] ); ?>" data-filter-value="<?php echo esc_attr( $wb_chip['value'] ); ?>"><span class="dashicons dashicons-no-alt" aria-hidden="true"></span></span>
 		</div>
-			<?php
-		}
+		<?php
 	}
 	?>
 	</div>

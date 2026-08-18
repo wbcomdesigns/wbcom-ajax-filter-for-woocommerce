@@ -560,6 +560,31 @@ class Wb_Ajax_Filter_Public {
 		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_active_labels'] ) && 'yes' === $wb_ajax_filter_general_options['show_active_labels'] ) {
 			require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/active-filters.php';
 		}
+
+		/*
+		 * Mobile drawer: below 640px the whole filter stack collapses behind this
+		 * one button so products stay above the fold (no admin setting - default
+		 * behavior). The button and wrapper are inert on desktop; JS adds the
+		 * `wb-ajax-filters-js` class that activates the collapse, so shoppers
+		 * without JS still see the (GET-submittable) search form.
+		 */
+		if ( $render_setting ) {
+			static $wb_collapsible_index = 0;
+			++$wb_collapsible_index;
+			$wb_collapsible_id = 'wb-ajax-filters-collapsible-' . $wb_collapsible_index;
+			$wb_chip_count     = count( wb_ajax_filter_get_active_chips( isset( $params ) ? $params : array() ) );
+			?>
+			<button type="button" class="wb-ajax-mobile-filters-toggle" aria-expanded="false" aria-controls="<?php echo esc_attr( $wb_collapsible_id ); ?>">
+				<span class="wb-ajax-mobile-filters-toggle-label"><?php esc_html_e( 'Filters', 'wb-ajax-filter' ); ?></span>
+				<?php if ( $wb_chip_count > 0 ) : ?>
+					<span class="wb-ajax-mobile-filters-count"><?php echo esc_html( number_format_i18n( $wb_chip_count ) ); ?></span>
+				<?php endif; ?>
+				<span class="wb-ajax-mobile-filters-chevron" aria-hidden="true"></span>
+			</button>
+			<div class="wb-ajax-filters-collapsible" id="<?php echo esc_attr( $wb_collapsible_id ); ?>">
+			<?php
+		}
+
 		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
 			require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
 		}
@@ -597,6 +622,10 @@ class Wb_Ajax_Filter_Public {
 
 		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
 			require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
+		}
+
+		if ( $render_setting ) {
+			echo '</div>'; // .wb-ajax-filters-collapsible.
 		}
 
 		echo '</div>';
