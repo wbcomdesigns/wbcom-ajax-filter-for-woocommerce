@@ -33,12 +33,20 @@ $base_url .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_text_field( wp_unslash
 				if ( strpos( $filters['type'], '_' ) !== false ) {
 					$filters['type'] = str_replace( '_', '-', $filters['type'] );
 				}
-				$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/filter-' . $filters['type'] . '.php';
-				if ( file_exists( $custom_template ) ) {
-					include $custom_template;
-				} else {
-					require WB_AJAX_FILTER_TEMPLATE_PATH . 'filters/filter-' . $filters['type'] . '.php';
-				}
+				// Theme override: yourtheme/wb-ajax-filter/filters/filter-<type>.php
+				// (legacy flat copies at yourtheme/wb-ajax-filter/filter-<type>.php still win).
+				wb_ajax_filter_get_template(
+					'filters/filter-' . $filters['type'] . '.php',
+					array(
+						'filters'                        => $filters,
+						'preset_id'                      => $preset_id,
+						'filter_count'                   => $filter_count,
+						'params'                         => isset( $params ) ? $params : array(),
+						'base_url'                       => $base_url,
+						'wb_ajax_filter_general_options' => isset( $wb_ajax_filter_general_options ) ? $wb_ajax_filter_general_options : get_option( 'wb_ajax_filter_admin_general_options' ),
+					),
+					'filter-' . $filters['type'] . '.php'
+				);
 				++$filter_count;
 			}
 			?>

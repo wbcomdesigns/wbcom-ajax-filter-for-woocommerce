@@ -71,7 +71,21 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 				}
 				$filters['terms'] = $new_terms_array;
 				if ( isset( $filters['filter_design'] ) && '' !== $filters['filter_design'] ) {
-					require 'filter-tax/items/' . $filters['filter_design'] . '.php';
+					// Theme override: yourtheme/wb-ajax-filter/filters/filter-tax/items/<design>.php.
+					// checkbox.php/radio.php pull in term-children.php with a plain relative
+					// require on purpose - it writes back into the parent's $terms_added
+					// accumulator, so it must share scope. A theme overriding either file
+					// must copy term-children.php alongside it.
+					wb_ajax_filter_get_template(
+						'filters/filter-tax/items/' . $filters['filter_design'] . '.php',
+						array(
+							'filters'         => $filters,
+							'filter_taxonomy' => isset( $filter_taxonomy ) ? $filter_taxonomy : '',
+							'params'          => isset( $params ) ? $params : array(),
+							'base_url'        => isset( $base_url ) ? $base_url : '',
+							'wb_ajax_filter_general_options' => $wb_ajax_filter_general_options,
+						)
+					);
 				}
 			}
 			?>

@@ -59,19 +59,46 @@ class Wb_Ajax_Filter_Public {
 	 * @param hook $hook hook.
 	 */
 	public function enqueue_styles( $hook ) {
+		if ( ! $this->should_load_assets() ) {
+			return;
+		}
+		$this->enqueue_filter_styles();
+	}
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wb_Ajax_Filter_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wb_Ajax_Filter_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+	/**
+	 * Whether the current request renders the filter UI.
+	 *
+	 * Covers the auto-rendered WooCommerce archives, the shortcode, and the
+	 * Gutenberg block. Blocks placed in FSE templates (not post content) are
+	 * not visible here - the block's render callback enqueues the assets
+	 * directly for that case.
+	 *
+	 * @since 1.2.2
+	 * @return bool
+	 */
+	private function should_load_assets() {
 		global $post;
+
+		if ( is_shop() || is_product_category() || is_product_tag() ) {
+			return true;
+		}
+
+		if ( $post instanceof WP_Post ) {
+			return has_shortcode( $post->post_content, 'wb_ajax_filters' ) || has_block( 'wb-ajax-filter/filters', $post );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Enqueue the public stylesheets. Public so the filters block's render
+	 * callback can enqueue them when the block sits in an FSE template area
+	 * the wp_enqueue_scripts gate cannot see.
+	 *
+	 * @since 1.2.2
+	 * @return void
+	 */
+	public function enqueue_filter_styles() {
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 			$extension = is_rtl() ? '.rtl.css' : '.css';
 			$path      = is_rtl() ? '/rtl' : '';
@@ -80,13 +107,10 @@ class Wb_Ajax_Filter_Public {
 			$path      = is_rtl() ? '/rtl' : '/min';
 		}
 
-		if ( is_shop() || is_product_category() || is_product_tag() || has_shortcode( $post->post_content, 'wb_ajax_filters' ) ) {
-
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-public' . $extension, array(), $this->version, 'all' );
-			wp_enqueue_style( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/css/ion.rangeSlider.min.css', array(), $this->version, 'all' );
-			wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
-			wp_add_inline_style( $this->plugin_name, $this->wb_ajax_add_custom_css_to_frontend() );
-		}
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-public' . $extension, array(), $this->version, 'all' );
+		wp_enqueue_style( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/css/ion.rangeSlider.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
+		wp_add_inline_style( $this->plugin_name, $this->wb_ajax_add_custom_css_to_frontend() );
 	}
 
 	/**
@@ -95,20 +119,21 @@ class Wb_Ajax_Filter_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
+		if ( ! $this->should_load_assets() ) {
+			return;
+		}
+		$this->enqueue_filter_scripts();
+	}
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wb_Ajax_Filter_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wb_Ajax_Filter_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-		global $post;
-
+	/**
+	 * Enqueue the public scripts. Public so the filters block's render
+	 * callback can enqueue them when the block sits in an FSE template area
+	 * the wp_enqueue_scripts gate cannot see.
+	 *
+	 * @since 1.2.2
+	 * @return void
+	 */
+	public function enqueue_filter_scripts() {
 		$wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' );
 		$wb_ajax_filter_search_label    = isset( $wb_ajax_filter_search_settings['search_input_label'] ) ? $wb_ajax_filter_search_settings['search_input_label'] : 'Search';
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
@@ -118,22 +143,20 @@ class Wb_Ajax_Filter_Public {
 			$extension = '.min.js';
 			$path      = '/min';
 		}
-		if ( is_shop() || is_product_category() || is_product_tag() || has_shortcode( $post->post_content, 'wb_ajax_filters' ) ) {
 
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-public' . $extension, array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( 'jquery-ui-slider' );
-			wp_enqueue_script( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/js/ion.rangeSlider.min.js', array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
-			wp_localize_script(
-				$this->plugin_name,
-				'wbcom_plugin_installer_params',
-				array(
-					'ajax_url'                    => admin_url( 'admin-ajax.php' ),
-					'wbcom_ajax_nonce'            => wp_create_nonce( 'wb-ajax-filter-public-nonce' ),
-					'wb_ajax_filter_search_label' => $wb_ajax_filter_search_label,
-				)
-			);
-		}
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-public' . $extension, array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'jquery-ui-slider' );
+		wp_enqueue_script( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/js/ion.rangeSlider.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
+		wp_localize_script(
+			$this->plugin_name,
+			'wbcom_plugin_installer_params',
+			array(
+				'ajax_url'                    => admin_url( 'admin-ajax.php' ),
+				'wbcom_ajax_nonce'            => wp_create_nonce( 'wb-ajax-filter-public-nonce' ),
+				'wb_ajax_filter_search_label' => $wb_ajax_filter_search_label,
+			)
+		);
 	}
 
 	/**
@@ -290,7 +313,7 @@ class Wb_Ajax_Filter_Public {
 	 * @param array $terms The terms array.
 	 * @since    1.0.0
 	 */
-	public function wb_ajax_check_parent_is_included( $term_id, $terms ) {
+	public static function wb_ajax_check_parent_is_included( $term_id, $terms ) {
 		$exists = false;
 
 		if ( empty( $terms ) || empty( $term_id ) ) {
@@ -558,7 +581,10 @@ class Wb_Ajax_Filter_Public {
 			<?php
 		}
 		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_active_labels'] ) && 'yes' === $wb_ajax_filter_general_options['show_active_labels'] ) {
-			require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/active-filters.php';
+			wb_ajax_filter_get_template(
+				'filters/global/active-filters.php',
+				array( 'params' => isset( $params ) ? $params : array() )
+			);
 		}
 
 		/*
@@ -586,20 +612,13 @@ class Wb_Ajax_Filter_Public {
 		}
 
 		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
-			require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
+			wb_ajax_filter_get_template( 'filters/global/reset-filters.php' );
 		}
 		if ( ( is_shop() || is_product_category() || is_product_tag() ) && isset( $wb_ajax_filter_search_settings['enable_search'] ) && ( 'yes' === $wb_ajax_filter_search_settings['enable_search'] ) ) {
 			?>
 			<div class="wb-ajax-search-container">
 				<form method="GET" action="">
-					<?php
-					$custom_template = get_stylesheet_directory() . '/wb-ajax-filter/search-form.php';
-					if ( file_exists( $custom_template ) ) {
-						include_once $custom_template;
-					} else {
-						require_once WB_AJAX_FILTER_TEMPLATE_PATH . 'public/search-form.php';
-					}
-					?>
+					<?php wb_ajax_filter_get_template( 'public/search-form.php', array(), 'search-form.php' ); ?>
 				</form>
 			</div>
 			<?php
@@ -611,17 +630,26 @@ class Wb_Ajax_Filter_Public {
 				$preset_id   = $preset->ID;
 				$all_filters = apply_filters( 'wb_ajax_filter_get_preset_filters', get_post_meta( $preset_id, '_wb_filter', true ), $preset_id );
 				$enabled     = get_post_meta( $preset_id, 'preset_enabled', true );
-				include WB_AJAX_FILTER_TEMPLATE_PATH . '/shortcode/preset-filter.php';
+				wb_ajax_filter_get_template(
+					'shortcode/preset-filter.php',
+					array(
+						'preset_id'                      => $preset_id,
+						'all_filters'                    => $all_filters,
+						'enabled'                        => $enabled,
+						'params'                         => isset( $params ) ? $params : array(),
+						'wb_ajax_filter_general_options' => $wb_ajax_filter_general_options,
+					)
+				);
 			}
 
 			if ( $enable_filter_actions && isset( $wb_ajax_filter_general_options['instant_filters'] ) && 'no' === $wb_ajax_filter_general_options['instant_filters'] ) {
-				require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/apply-filters.php';
+				wb_ajax_filter_get_template( 'filters/global/apply-filters.php' );
 			}
 			do_action( 'wb_ajax_filter_after_content' );
 		}
 
 		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && ( 'after_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) ) {
-			require_once WB_AJAX_FILTER_TEMPLATE_PATH . '/filters/global/reset-filters.php';
+			wb_ajax_filter_get_template( 'filters/global/reset-filters.php' );
 		}
 
 		if ( $render_setting ) {

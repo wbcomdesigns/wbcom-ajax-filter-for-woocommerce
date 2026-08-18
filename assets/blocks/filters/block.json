@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wb-ajax-filter/filters",
+	"title": "Ajax Product Filters",
+	"category": "woocommerce",
+	"icon": "filter",
+	"description": "Place the AJAX product filters anywhere - shop templates, pages, or block-theme template areas.",
+	"keywords": [ "filter", "woocommerce", "products", "ajax", "search" ],
+	"textdomain": "wb-ajax-filter",
+	"attributes": {
+		"preset": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ]
+	},
+	"example": {},
+	"editorScript": "file:./index.js"
+}

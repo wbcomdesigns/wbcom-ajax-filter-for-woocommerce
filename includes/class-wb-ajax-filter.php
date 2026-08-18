@@ -139,6 +139,12 @@ class Wb_Ajax_Filter {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-wb-ajax-filter-public.php';
 
+		/**
+		 * The class responsible for the Gutenberg block (block themes have no
+		 * classic WooCommerce hooks to auto-render through).
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-blocks.php';
+
 		/** This file is responsible for the plugin license functionality. */
 		require_once plugin_dir_path( __DIR__ ) . 'edd-license/edd-plugin-license.php';
 
@@ -252,6 +258,11 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wp_ajax_nopriv_get_ajax_search_autocomplete_title_wb', $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' );
 		// Shortcode callback.
 		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_public, 'filter_preset_shortcode_callback', 10, 1 );
+
+		// Gutenberg block: same renderer as the shortcode, placeable on block themes.
+		$plugin_blocks = new Wb_Ajax_Filter_Blocks( $plugin_public );
+		$this->loader->add_action( 'init', $plugin_blocks, 'register_blocks' );
+		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_blocks, 'localize_editor_presets' );
 
 		$this->loader->add_action( 'woocommerce_redirect_single_search_result', $plugin_public, 'wb_ajax_filter_redirect_single_search_result' );
 

@@ -12,6 +12,55 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'wb_ajax_filter_get_template' ) ) {
+
+	/**
+	 * Load a frontend template, letting the active theme override it.
+	 *
+	 * Resolution order:
+	 * 1. Legacy flat override kept for themes that copied files before 1.2.2:
+	 *    yourtheme/wb-ajax-filter/<legacy name>.php (e.g. filter-tax.php,
+	 *    search-form.php - the flat names the old inline checks looked for).
+	 * 2. wc_get_template(), so themes override at a path mirroring the plugin
+	 *    tree: yourtheme/wb-ajax-filter/<template name> (e.g.
+	 *    yourtheme/wb-ajax-filter/filters/filter-tax.php). This also makes the
+	 *    templates visible to WooCommerce's template debug/system-status tools
+	 *    and the woocommerce_locate_template filter.
+	 * 3. The plugin's own templates/ directory.
+	 *
+	 * @param string $template_name Template path relative to templates/ (e.g. 'filters/filter-tax.php').
+	 * @param array  $args          Variables to expose to the template.
+	 * @param string $legacy_name   Optional pre-1.2.2 flat filename to honor from yourtheme/wb-ajax-filter/.
+	 *
+	 * @return void
+	 */
+	function wb_ajax_filter_get_template( $template_name, $args = array(), $legacy_name = '' ) {
+
+		if ( '' !== $legacy_name ) {
+			$legacy_template = get_stylesheet_directory() . '/wb-ajax-filter/' . $legacy_name;
+			if ( file_exists( $legacy_template ) ) {
+				if ( ! empty( $args ) && is_array( $args ) ) {
+					extract( $args ); // phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- template scope, mirrors wc_get_template().
+				}
+				include $legacy_template;
+				return;
+			}
+		}
+
+		if ( function_exists( 'wc_get_template' ) ) {
+			wc_get_template( $template_name, $args, 'wb-ajax-filter/', WB_AJAX_FILTER_TEMPLATE_PATH );
+			return;
+		}
+
+		// WooCommerce is a hard dependency, so this branch only runs if a template
+		// is rendered before WooCommerce loads (or in isolated tooling).
+		if ( ! empty( $args ) && is_array( $args ) ) {
+			extract( $args ); // phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- template scope, mirrors wc_get_template().
+		}
+		include WB_AJAX_FILTER_TEMPLATE_PATH . $template_name;
+	}
+}
+
 if ( ! function_exists( 'get_taxonomy_child_terms_count' ) ) {
 
 	/**

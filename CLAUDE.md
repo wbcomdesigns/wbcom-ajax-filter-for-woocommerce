@@ -66,8 +66,8 @@ Derived from a code audit on 2026-08-08 that verified every open Basecamp card a
 
 **Store owner expects:**
 
-- [ ] **Gutenberg block** - Block themes often never fire the classic WooCommerce hooks this plugin renders through, so the owner sees nothing and has no way to place it by hand.
-- [ ] **Theme-overridable templates** - The owner cannot restyle output without editing plugin files, which an update overwrites.
+- [x] **Gutenberg block** - Block themes often never fire the classic WooCommerce hooks this plugin renders through, so the owner sees nothing and has no way to place it by hand. *(Fixed: dynamic block `wb-ajax-filter/filters` (assets/blocks/filters, no build step - plain-JS editor script + hand-written asset manifest) renders through the same shortcode seam; preset picker in the sidebar via ServerSideRender preview. Asset gate now also covers has_block + null $post; the render callback enqueues directly for FSE template areas.)*
+- [x] **Theme-overridable templates** - The owner cannot restyle output without editing plugin files, which an update overwrites. *(Fixed: all frontend template loads route through `wb_ajax_filter_get_template()` -> `wc_get_template`, override at `yourtheme/wb-ajax-filter/<same relative path>`; pre-1.2.2 flat copies (`filter-<type>.php`, `search-form.php`) still win for back-compat. `term-children.php` stays a shared-scope relative require on purpose - it writes back into the parent's $terms_added accumulator.)*
 - [ ] **Admin screen for stored data** - Anything the plugin stores, the owner must be able to see, moderate and export from wp-admin. Otherwise support means phpMyAdmin.
 
 **Developer extending it expects:**
