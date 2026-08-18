@@ -153,6 +153,12 @@ class Wb_Ajax_Filter {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/wb-ajax-filter-general-functions.php';
 
+		/**
+		 * The activator also owns the one-time Default preset seeding, which must be
+		 * retryable at runtime (existing sites update without the activation hook firing).
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-activator.php';
+
 		$this->loader = new Wb_Ajax_Filter_Loader();
 	}
 
@@ -182,6 +188,12 @@ class Wb_Ajax_Filter {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Wb_Ajax_Filter_Admin( $this->get_plugin_name(), $this->get_version() );
+
+		// One-time Default preset seed for installs that never ran the activation hook
+		// (plugin updates) or activated before WooCommerce. Latches after the first
+		// successful pass, so this is a single autoloaded get_option() per request.
+		// Priority 20: after WooCommerce registers its taxonomies and after our CPT.
+		$this->loader->add_action( 'init', 'Wb_Ajax_Filter_Activator', 'maybe_seed_default_preset', 20 );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts', 999 );

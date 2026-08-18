@@ -21,8 +21,16 @@ $args = array(
 	'order'          => 'desc',
 );
 
-$prices                         = get_posts( $args );
-$prod                           = wc_get_product( $prices[0]->ID );
+$prices = get_posts( $args );
+// A store with no priced products has nothing to slide over; rendering anyway
+// would fatal on $prices[0] below.
+if ( empty( $prices ) ) {
+	return;
+}
+$prod = wc_get_product( $prices[0]->ID );
+if ( ! $prod ) {
+	return;
+}
 $highest_price                  = $prod->get_price();
 $clear_style                    = 'display:none;';
 $toggle_enabled                 = ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? true : false;
