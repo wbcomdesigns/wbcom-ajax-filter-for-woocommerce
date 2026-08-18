@@ -6,6 +6,66 @@
 	 * resides in this file.
 	 */
 
+	/**
+	 * In-page replacement for the native alert()/confirm() dialogs, styled with
+	 * the admin token bridge. Returns a Promise resolving true (OK/Confirm) or
+	 * false (Cancel/Escape). Falls back to the native dialogs only where the
+	 * <dialog> element is unsupported.
+	 */
+	function wbFilterDialog( message, confirmMode ) {
+		var strings = window.wbAjaxFilterStrings || {};
+		var okText  = strings.ok || 'OK';
+		var cancel  = strings.cancel || 'Cancel';
+
+		return new Promise(
+			function ( resolve ) {
+				var dlg = document.getElementById( 'wb-ajax-filter-dialog' );
+				if ( ! dlg ) {
+					dlg = document.createElement( 'dialog' );
+					dlg.id        = 'wb-ajax-filter-dialog';
+					dlg.className = 'wb-ajax-filter-dialog';
+					dlg.innerHTML = '<p class="wb-ajax-filter-dialog-message"></p>' +
+						'<div class="wb-ajax-filter-dialog-actions">' +
+						'<button type="button" class="button wb-ajax-filter-dialog-cancel"></button>' +
+						'<button type="button" class="button button-primary wb-ajax-filter-dialog-ok"></button>' +
+						'</div>';
+					document.body.appendChild( dlg );
+				}
+
+				if ( typeof dlg.showModal !== 'function' ) {
+					resolve( confirmMode ? window.confirm( message ) : ( window.alert( message ), true ) );
+					return;
+				}
+
+				dlg.querySelector( '.wb-ajax-filter-dialog-message' ).textContent = message;
+				var okBtn     = dlg.querySelector( '.wb-ajax-filter-dialog-ok' );
+				var cancelBtn = dlg.querySelector( '.wb-ajax-filter-dialog-cancel' );
+				okBtn.textContent        = okText;
+				cancelBtn.textContent    = cancel;
+				cancelBtn.style.display  = confirmMode ? '' : 'none';
+
+				var done = function ( result ) {
+					dlg.close();
+					resolve( result );
+				};
+				okBtn.onclick     = function () { done( true ); };
+				cancelBtn.onclick = function () { done( false ); };
+				dlg.oncancel      = function ( e ) { e.preventDefault(); done( false ); };
+
+				dlg.showModal();
+				okBtn.focus();
+			}
+		);
+	}
+
+	function wbFilterAlert( message ) {
+		return wbFilterDialog( message, false );
+	}
+
+	function wbFilterConfirm( message ) {
+		return wbFilterDialog( message, true );
+	}
+
 	jQuery( document ).ready(
 		function ($) {
 			// get url fields
@@ -255,7 +315,7 @@
 							processResults: function ( data ) {
 								var options = [];
 								if ( jQuery( 'select[name="filters[taxonomy]"]' ).val() === '' ) {
-									alert( wbAjaxFilterStrings.selectTaxonomy );
+									wbFilterAlert( wbAjaxFilterStrings.selectTaxonomy );
 								}
 								if ( data ) {
 									$.each(
@@ -401,7 +461,7 @@
 								data: { action: 'check_filter_preset_title_wb', 'nonce': nonce, 'title': postTitle },
 								success: function ( response ) {
 									if ( 'exists' === response ) {
-										alert( wbAjaxFilterStrings.nameExists );
+										wbFilterAlert( wbAjaxFilterStrings.nameExists );
 										jQuery( 'input[name="wb_ajax_filter_preset_title"]' ).val( '' );
 									}
 								}
@@ -559,12 +619,16 @@
 			);
 
 			// Create a duplicate of the preset
-			jQuery( 'a.wb-copy-filter-preset' ).on(
+			jQuery( '.wb-copy-filter-preset' ).on(
 				'click',
 				function () {
-					var copy = confirm( wbAjaxFilterStrings.confirmDuplicate );
-					if ( copy == true ) {
-						let preset = jQuery( this ).data( 'preset' );
+					var trigger = jQuery( this );
+					wbFilterConfirm( wbAjaxFilterStrings.confirmDuplicate ).then(
+						function ( copy ) {
+						if ( copy !== true ) {
+							return;
+						}
+						let preset = trigger.data( 'preset' );
 						let nonce  = wbcom_plugin_installer_params.wbcom_ajax_nonce;
 						jQuery.ajax(
 							{
@@ -578,17 +642,22 @@
 								}
 							}
 						);
-					}
+						}
+					);
 				}
 			);
 
 			// Delete a filter preset
-			jQuery( 'a.wb-delete-filter-preset' ).on(
+			jQuery( '.wb-delete-filter-preset' ).on(
 				'click',
 				function () {
-					var del = confirm( wbAjaxFilterStrings.confirmDelete );
-					if ( del == true ) {
-						let preset = jQuery( this ).data( 'preset' );
+					var trigger = jQuery( this );
+					wbFilterConfirm( wbAjaxFilterStrings.confirmDelete ).then(
+						function ( del ) {
+						if ( del !== true ) {
+							return;
+						}
+						let preset = trigger.data( 'preset' );
 						let nonce  = wbcom_plugin_installer_params.wbcom_ajax_nonce;
 						jQuery.ajax(
 							{
@@ -602,18 +671,23 @@
 								}
 							}
 						);
-					}
+						}
+					);
 				}
 			);
 
 			// Create a duplicate of the preset
-			jQuery( 'span.wb-clone-single-filter' ).on(
+			jQuery( '.wb-clone-single-filter' ).on(
 				'click',
 				function () {
-					var copy = confirm( wbAjaxFilterStrings.confirmDuplicate );
-					if ( copy == true ) {
-						let preset    = jQuery( this ).data( 'preset' );
-						let filter_id = jQuery( this ).data( 'filter_id' );
+					var trigger = jQuery( this );
+					wbFilterConfirm( wbAjaxFilterStrings.confirmDuplicate ).then(
+						function ( copy ) {
+						if ( copy !== true ) {
+							return;
+						}
+						let preset    = trigger.data( 'preset' );
+						let filter_id = trigger.data( 'filter_id' );
 						let nonce     = wbcom_plugin_installer_params.wbcom_ajax_nonce;
 						jQuery.ajax(
 							{
@@ -627,18 +701,23 @@
 								}
 							}
 						);
-					}
+						}
+					);
 				}
 			);
 
 			// Delete a filter preset
-			jQuery( 'span.wb-delete-single-filter' ).on(
+			jQuery( '.wb-delete-single-filter' ).on(
 				'click',
 				function () {
-					var del = confirm( wbAjaxFilterStrings.confirmDelete );
-					if ( del == true ) {
-						let preset    = jQuery( this ).data( 'preset' );
-						let filter_id = jQuery( this ).data( 'filter_id' );
+					var trigger = jQuery( this );
+					wbFilterConfirm( wbAjaxFilterStrings.confirmDelete ).then(
+						function ( del ) {
+						if ( del !== true ) {
+							return;
+						}
+						let preset    = trigger.data( 'preset' );
+						let filter_id = trigger.data( 'filter_id' );
 						let nonce     = wbcom_plugin_installer_params.wbcom_ajax_nonce;
 						jQuery.ajax(
 							{
@@ -652,7 +731,8 @@
 								}
 							}
 						);
-					}
+						}
+					);
 				}
 			);
 
@@ -709,7 +789,7 @@
 					e.preventDefault();
 					var title = jQuery( 'input[name="wb_ajax_filter_preset_title"]' ).val();
 					if ( title == '' || title == undefined ) {
-						alert( wbAjaxFilterStrings.nameRequired );
+						wbFilterAlert( wbAjaxFilterStrings.nameRequired );
 						return false;
 					}
 					let nonce  = wbcom_plugin_installer_params.wbcom_ajax_nonce;
@@ -756,16 +836,16 @@
 					e.preventDefault();
 					if (jQuery( 'select[name="filters[type]"]' ).val() == 'tax' ) {
 						if (jQuery( 'select[name="filters[taxonomy]"]' ).val() == '' || jQuery( 'select[name="filters[taxonomy]"]' ).val() == undefined ) {
-							alert( wbAjaxFilterStrings.validTaxonomy );
+							wbFilterAlert( wbAjaxFilterStrings.validTaxonomy );
 							return false;
 						}
 						if (jQuery( '#wb_ajax_filter_select2_terms' ).val() == '' || jQuery( '#wb_ajax_filter_select2_terms' ).val() == undefined) {
-							alert( wbAjaxFilterStrings.selectTerms );
+							wbFilterAlert( wbAjaxFilterStrings.selectTerms );
 							return false;
 						}
 					}
 					if (jQuery( 'input[name="filters[filter_title]"]' ).val() == '' ) {
-						alert( wbAjaxFilterStrings.titleRequired );
+						wbFilterAlert( wbAjaxFilterStrings.titleRequired );
 						return false;
 					}
 					jQuery( '#filter-preset-create' ).trigger( 'submit' );

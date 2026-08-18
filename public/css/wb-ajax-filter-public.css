@@ -135,8 +135,9 @@ a.wb-ajax-reset-all-filters.button {
 	text-decoration: none;
 }
 
-a.wb-ajax-reset-all-filters.button .dashicons {
-	margin-right: 5px;
+a.wb-ajax-reset-all-filters.button .dashicons,
+a.wb-ajax-reset-all-filters.button .wb-icon {
+	margin-inline-end: 5px;
 }
 
 /*Filter Section UI*/
@@ -144,9 +145,10 @@ a.wb-ajax-reset-all-filters.button .dashicons {
 	margin-bottom: 10px;
 }
 
-.wb-ajax-filter-container-single h4.filter-title+.dashicons {
+.wb-ajax-filter-container-single h4.filter-title+.dashicons,
+.wb-ajax-filter-container-single h4.filter-title+.wb-icon {
 	margin-top: 4px;
-	margin-left: 4px;
+	margin-inline-start: 4px;
 }
 
 .wb-ajax-filters-container .wb-ajax-filter-container-single {
@@ -270,7 +272,7 @@ li.select2-results__option {
 	opacity: 0;
 	line-height: 1;
 	top: 4px;
-	margin-left: 10px;
+	margin-inline-start: 10px;
 	background: var(--wb-accent);
 	color: var(--wb-accent-fg);
 	-webkit-transition: all 0.4s;
@@ -292,7 +294,7 @@ li.select2-results__option {
 }
 
 li.filter-item.wb-ajax-heirarchy-collapsible.opened .filter-item span.wb-ajax-filter-tooltip-text {
-	margin-left: 35px;
+	margin-inline-start: 35px;
 }
 
 li.filter-item.wb-ajax-heirarchy-collapsible.opened span.dashicons {
@@ -361,7 +363,7 @@ span.select2-dropdown.select2-dropdown--below {
 	font-size: 13px;
 	font-weight: 400;
 	line-height: 1.5;
-	margin-right: 5px;
+	margin-inline-end: 5px;
 	margin-bottom: 0;
 	padding: 4px 15px 3px;
 	position: relative;
@@ -549,7 +551,7 @@ a.wb-ajax-filter-toggle.wb-ajax-accordian {
 }
 
 li.filter-item.wb-ajax-level-1 {
-	margin-left: 5%;
+	margin-inline-start: 5%;
 }
 
 a.wb-term-label.wb-tooltip-added small.item-count {
@@ -656,4 +658,92 @@ Mobile filter drawer
 		display: none;
 	}
 
+}
+/* --- Inline SVG icons (Lucide) --------------------------------------------
+   Dashicons is not enqueued for logged-out visitors, so all plugin icons are
+   inline SVGs painting with currentColor. Direction-sensitive chevrons are
+   rotated per state here; the RTL stylesheet mirrors chevron-right. */
+
+.wb-icon {
+	display: inline-block;
+	vertical-align: middle;
+	flex-shrink: 0;
+}
+
+.wb-ajax-filter-toggle .wb-ajax-toggle-icon {
+	transition: transform 0.2s ease;
+}
+
+.wb-ajax-filter-toggle.wb-ajax-open .wb-ajax-toggle-icon {
+	transform: rotate(180deg);
+}
+
+.filter-item .wb-ajax-term-toggle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2px;
+	margin: 0;
+	background: transparent;
+	border: 0;
+	color: inherit;
+	cursor: pointer;
+}
+
+.filter-item .wb-ajax-term-toggle .wb-icon {
+	transition: transform 0.2s ease;
+}
+
+li.filter-item.wb-ajax-heirarchy-collapsible.opened .wb-ajax-term-toggle .wb-icon {
+	transform: rotate(90deg);
+}
+
+.wb-ajax-active-filters-container span.wb-ajax-filter-clear-single.button .wb-icon {
+	display: block;
+	width: 11px;
+	height: 11px;
+	margin: 2px auto 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.wb-ajax-filter-toggle .wb-ajax-toggle-icon,
+	.filter-item .wb-ajax-term-toggle .wb-icon {
+		transition: none;
+	}
+}
+
+/* --- Visible focus for keyboard users -------------------------------------
+   Vendor stylesheets (select2, ion.rangeSlider) remove outlines with no
+   replacement; these rules restore a ring. Plugin CSS is enqueued after the
+   vendor handles (dependency order), so they win the cascade. */
+
+.wb-ajax-filter-toggle:focus-visible,
+a.wb-ajax-clear-single-filter:focus-visible,
+a.wb-ajax-reset-all-filters.button:focus-visible,
+.wb-ajax-filter-clear-single:focus-visible,
+.filter-item .wb-ajax-term-toggle:focus-visible,
+a.wb-term-label:focus-visible,
+input.wb-ajax-filter-selectible:focus-visible,
+.wb-ajax-apply-all-filters:focus-visible {
+	outline: 2px solid var(--wb-accent);
+	outline-offset: 2px;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple,
+.select2-container--default .select2-selection--single:focus-visible,
+.select2-container--default .select2-search--inline .select2-search__field:focus-visible,
+.select2-search--dropdown .select2-search__field:focus-visible {
+	outline: 2px solid var(--wb-accent);
+	outline-offset: 1px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:focus-visible {
+	outline: 2px solid var(--wb-accent);
+	outline-offset: -2px;
+}
+
+.irs-handle:focus-visible {
+	outline: 2px solid var(--wb-accent);
+	outline-offset: 2px;
 }

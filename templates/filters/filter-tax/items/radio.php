@@ -60,13 +60,9 @@ $filter_design = 'radio';
 
 						</a>
 					</label>
-					<?php if ( 'open' !== $heirarchy ) : ?>
-						<?php if ( 'collapsed' === $heirarchy ) : ?>
-							<span class="dashicons dashicons-arrow-right-alt2"></span>
-						<?php elseif ( 'expanded' === $heirarchy ) : ?>
-							<span class="dashicons dashicons-arrow-down-alt2"></span>
-						<?php endif; ?>
-					<?php endif; ?>
+					<?php if ( 'collapsed' === $heirarchy || 'expanded' === $heirarchy ) : ?>
+					<button type="button" class="wb-ajax-term-toggle" aria-expanded="<?php echo ( 'expanded' === $heirarchy ) ? 'true' : 'false'; ?>" aria-label="<?php esc_attr_e( 'Toggle child terms', 'wb-ajax-filter' ); ?>"><?php wb_ajax_filter_icon( 'chevron-right', 'wb-ajax-term-toggle-icon', 14 ); ?></button>
+				<?php endif; ?>
 				</li>
 				<?php
 				$terms_added[] = $filter_term->id;

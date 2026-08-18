@@ -61,6 +61,67 @@ if ( ! function_exists( 'wb_ajax_filter_get_template' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wb_ajax_filter_get_icon' ) ) {
+
+	/**
+	 * Return an inline SVG icon (Lucide set) for plugin UI.
+	 *
+	 * Inline SVG instead of Dashicons on purpose: WordPress does not enqueue the
+	 * Dashicons font for logged-out visitors, so font icons render as blank
+	 * squares for real shoppers. SVGs paint with currentColor, need no font, and
+	 * flip correctly under RTL where directional (handled in CSS via rotation).
+	 *
+	 * @param string $icon        Icon key (chevron-down, chevron-up, chevron-right, arrow-left, x, rotate-ccw, plus, pencil, copy, trash).
+	 * @param string $extra_class Additional classes for the svg element.
+	 * @param int    $size        Rendered size in px (width and height).
+	 *
+	 * @return string SVG markup, or '' for an unknown key.
+	 */
+	function wb_ajax_filter_get_icon( $icon, $extra_class = '', $size = 16 ) {
+
+		$paths = array(
+			'chevron-down'  => '<path d="m6 9 6 6 6-6"/>',
+			'chevron-up'    => '<path d="m18 15-6-6-6 6"/>',
+			'chevron-right' => '<path d="m9 18 6-6-6-6"/>',
+			'arrow-left'    => '<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>',
+			'x'             => '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+			'rotate-ccw'    => '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>',
+			'plus'          => '<path d="M5 12h14"/><path d="M12 5v14"/>',
+			'pencil'        => '<path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>',
+			'copy'          => '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+			'trash'         => '<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>',
+		);
+
+		if ( ! isset( $paths[ $icon ] ) ) {
+			return '';
+		}
+
+		return sprintf(
+			'<svg class="wb-icon wb-icon--%1$s%2$s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="%3$d" height="%3$d" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">%4$s</svg>',
+			esc_attr( $icon ),
+			'' !== $extra_class ? ' ' . esc_attr( $extra_class ) : '',
+			(int) $size,
+			$paths[ $icon ]
+		);
+	}
+}
+
+if ( ! function_exists( 'wb_ajax_filter_icon' ) ) {
+
+	/**
+	 * Echo an inline SVG icon. Template-facing wrapper around wb_ajax_filter_get_icon().
+	 *
+	 * @param string $icon        Icon key.
+	 * @param string $extra_class Additional classes for the svg element.
+	 * @param int    $size        Rendered size in px.
+	 *
+	 * @return void
+	 */
+	function wb_ajax_filter_icon( $icon, $extra_class = '', $size = 16 ) {
+		echo wb_ajax_filter_get_icon( $icon, $extra_class, $size ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG assembled from a fixed internal map, classes escaped inside.
+	}
+}
+
 if ( ! function_exists( 'get_taxonomy_child_terms_count' ) ) {
 
 	/**

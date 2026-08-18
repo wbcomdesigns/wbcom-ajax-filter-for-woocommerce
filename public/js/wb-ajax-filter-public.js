@@ -23,18 +23,24 @@
 				}
 			}
 
-			jQuery( '.filter-item span.dashicons' ).on(
+			// Hierarchy child-term toggle. New markup is a real <button.wb-ajax-term-toggle>
+			// (keyboard reachable); the span.dashicons branch keeps theme-overridden
+			// pre-1.2.2 template copies working.
+			jQuery( '.filter-item .wb-ajax-term-toggle, .filter-item span.dashicons' ).on(
 				'click',
 				function () {
-					if (jQuery( this ).hasClass( 'dashicons-arrow-down-alt2' )) {
-						jQuery( this ).removeClass( 'dashicons-arrow-down-alt2' );
-						jQuery( this ).addClass( 'dashicons-arrow-right-alt2' );
-					} else if (jQuery( this ).hasClass( 'dashicons-arrow-right-alt2' )) {
-						jQuery( this ).removeClass( 'dashicons-arrow-right-alt2' );
-						jQuery( this ).addClass( 'dashicons-arrow-down-alt2' );
+					var toggle = jQuery( this );
+					if ( toggle.hasClass( 'dashicons-arrow-down-alt2' ) ) {
+						toggle.removeClass( 'dashicons-arrow-down-alt2' ).addClass( 'dashicons-arrow-right-alt2' );
+					} else if ( toggle.hasClass( 'dashicons-arrow-right-alt2' ) ) {
+						toggle.removeClass( 'dashicons-arrow-right-alt2' ).addClass( 'dashicons-arrow-down-alt2' );
 					}
-					let parentTerm = jQuery( this ).closest( 'li' ).data( 'parent' );
-					jQuery( this ).closest( 'ul' ).find( 'li' ).each(
+					var item   = toggle.closest( 'li' );
+					var opened = ! item.hasClass( 'opened' );
+					item.toggleClass( 'opened', opened ).toggleClass( 'closed', ! opened );
+					toggle.attr( 'aria-expanded', opened ? 'true' : 'false' );
+					let parentTerm = item.data( 'parent' );
+					toggle.closest( 'ul' ).find( 'li' ).each(
 						function () {
 							let childOf = jQuery( this ).data( 'child-of' );
 							if ( childOf == parentTerm ) {
@@ -46,17 +52,22 @@
 				}
 			);
 
+			// Accordion toggle. State lives in the wb-ajax-open class (rotates the SVG
+			// chevron in CSS); the dashicons class swap keeps theme-overridden
+			// pre-1.2.2 template copies working.
 			jQuery( '.wb-ajax-accordian' ).on(
 				'click',
 				function () {
-					if ( jQuery( this ).find( 'span.dashicons' ).hasClass( 'dashicons-arrow-down-alt2' ) ) {
-							jQuery( this ).find( 'span.dashicons' ).removeClass( 'dashicons-arrow-down-alt2' );
-							jQuery( this ).find( 'span.dashicons' ).addClass( 'dashicons-arrow-up-alt2' );
-					} else if (jQuery( this ).find( 'span.dashicons' ).hasClass( 'dashicons-arrow-up-alt2' ) ) {
-						jQuery( this ).find( 'span.dashicons' ).removeClass( 'dashicons-arrow-up-alt2' );
-						jQuery( this ).find( 'span.dashicons' ).addClass( 'dashicons-arrow-down-alt2' );
+					var accordian = jQuery( this );
+					var icon      = accordian.find( 'span.dashicons' );
+					if ( icon.hasClass( 'dashicons-arrow-down-alt2' ) ) {
+						icon.removeClass( 'dashicons-arrow-down-alt2' ).addClass( 'dashicons-arrow-up-alt2' );
+					} else if ( icon.hasClass( 'dashicons-arrow-up-alt2' ) ) {
+						icon.removeClass( 'dashicons-arrow-up-alt2' ).addClass( 'dashicons-arrow-down-alt2' );
 					}
-					jQuery( this ).next( '.wb-ajax-panel' ).toggle( 250 );
+					var open = ! accordian.hasClass( 'wb-ajax-open' );
+					accordian.toggleClass( 'wb-ajax-open', open ).attr( 'aria-expanded', open ? 'true' : 'false' );
+					accordian.next( '.wb-ajax-panel' ).toggle( 250 );
 				}
 			);
 

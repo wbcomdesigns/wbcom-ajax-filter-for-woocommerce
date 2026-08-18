@@ -32,15 +32,15 @@ if ( isset( $filters['taxonomy'] ) ) {
 $toggle_enabled                 = ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? true : false;
 $toggle_class                   = ( $toggle_enabled ) ? 'wb-ajax-accordian' : '';
 $toggle_style                   = ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'display:none' : '';
-$toggle_icon                    = ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'dashicons-arrow-down-alt2' : 'dashicons-arrow-up-alt2';
+$toggle_open                    = ! ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] );
 $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
 ?>
 <div class="wb-ajax-filter-container-single wb-ajax-filter-tax" id="filter_<?php echo esc_attr( $preset_id . '_' . $filter_count ); ?>" data-filter-type="<?php echo esc_attr( $filters['type'] ); ?>" data-filter-id="<?php echo esc_attr( $filter_count ); ?>" data-taxonomy="<?php echo esc_attr( $filter_taxonomy ); ?>" data-multiple="<?php echo ( isset( $filters['multiple'] ) && 'yes' === $filters['multiple'] ) ? esc_attr( $filters['multiple'] ) : ''; ?>" data-relation="<?php echo isset( $filters['relation'] ) ? esc_attr( $filters['relation'] ) : ''; ?>" role="region" aria-label="Taxonomy Filter">
 	
-	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?>" role="button">
+	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?><?php echo ( $toggle_enabled && $toggle_open ) ? ' wb-ajax-open' : ''; ?>" role="button"<?php echo $toggle_enabled ? ' aria-expanded="' . esc_attr( $toggle_open ? 'true' : 'false' ) . '"' : ''; ?>>
 		<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
 		<?php if ( $toggle_enabled ) : ?>
-		<span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>" aria-hidden="true"></span>
+		<?php wb_ajax_filter_icon( 'chevron-down', 'wb-ajax-toggle-icon' ); ?>
 		<?php endif; ?>
 	</a>
 	<div class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'display:none' : ''; ?>" id="taxonomy-filter-panel">
