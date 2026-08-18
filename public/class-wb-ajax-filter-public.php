@@ -107,9 +107,11 @@ class Wb_Ajax_Filter_Public {
 			$path      = is_rtl() ? '/rtl' : '/min';
 		}
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-public' . $extension, array(), $this->version, 'all' );
 		wp_enqueue_style( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/css/ion.rangeSlider.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
+		// Depends on the vendor styles so the plugin sheet prints after them: its
+		// :focus-visible rules replace the outlines the vendor CSS removes.
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-public' . $extension, array( 'wb-ion-rangeslider', 'wb-select2' ), $this->version, 'all' );
 		wp_add_inline_style( $this->plugin_name, $this->wb_ajax_add_custom_css_to_frontend() );
 	}
 
@@ -214,7 +216,8 @@ class Wb_Ajax_Filter_Public {
 				.wb-ajax-filter-container-single h4{
 					color: ' . $css_settings['filters_area_titles_color'] . ';
 				}
-				.wb-ajax-filter-container-single .wb-ajax-accordian span.dashicons{
+				.wb-ajax-filter-container-single .wb-ajax-accordian span.dashicons,
+				.wb-ajax-filter-container-single .wb-ajax-accordian .wb-icon{
 					color: ' . $css_settings['filters_area_titles_color'] . ';
 				}
 				.select2-container--default .select2-search--dropdown input.select2-search__field{

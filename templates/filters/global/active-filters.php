@@ -21,7 +21,7 @@ if ( count( $wb_active_chips ) > 0 ) {
 		?>
 		<div class="wb-ajax-active-filters-container-single">
 			<span class="wb-ajax-filter-single-keyword"><?php echo esc_html( $wb_chip['label'] ); ?></span>
-			<span class="wb-ajax-filter-clear-single button" role="button" tabindex="0" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: active filter label. */ __( 'Remove filter: %s', 'wb-ajax-filter' ), $wb_chip['label'] ) ); ?>" data-filter="<?php echo esc_attr( $wb_chip['filter'] ); ?>" data-filter-value="<?php echo esc_attr( $wb_chip['value'] ); ?>"><span class="dashicons dashicons-no-alt" aria-hidden="true"></span></span>
+			<span class="wb-ajax-filter-clear-single button" role="button" tabindex="0" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: active filter label. */ __( 'Remove filter: %s', 'wb-ajax-filter' ), $wb_chip['label'] ) ); ?>" data-filter="<?php echo esc_attr( $wb_chip['filter'] ); ?>" data-filter-value="<?php echo esc_attr( $wb_chip['value'] ); ?>"><?php wb_ajax_filter_icon( 'x', 'wb-ajax-chip-close-icon', 12 ); ?></span>
 		</div>
 		<?php
 	}

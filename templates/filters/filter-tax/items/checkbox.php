@@ -59,12 +59,8 @@ $hide_term     = ( isset( $wb_ajax_filter_general_options['hide_empty_terms'] ) 
 						<span class="wb-ajax-filter-tooltip-text"><?php echo esc_html( $wb_filter_terms_text ); ?></span>
 					</a>
 				</label>
-				<?php if ( 'open' !== $heirarchy ) : ?>
-					<?php if ( 'collapsed' === $heirarchy ) : ?>
-						<span class="dashicons dashicons-arrow-right-alt2"></span>
-					<?php elseif ( 'expanded' === $heirarchy ) : ?>
-						<span class="dashicons dashicons-arrow-down-alt2"></span>
-					<?php endif; ?>
+				<?php if ( 'collapsed' === $heirarchy || 'expanded' === $heirarchy ) : ?>
+					<button type="button" class="wb-ajax-term-toggle" aria-expanded="<?php echo ( 'expanded' === $heirarchy ) ? 'true' : 'false'; ?>" aria-label="<?php esc_attr_e( 'Toggle child terms', 'wb-ajax-filter' ); ?>"><?php wb_ajax_filter_icon( 'chevron-right', 'wb-ajax-term-toggle-icon', 14 ); ?></button>
 				<?php endif; ?>
 			</li>
 				<?php
