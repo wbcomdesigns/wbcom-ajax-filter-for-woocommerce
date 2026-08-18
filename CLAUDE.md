@@ -196,13 +196,13 @@ includes/admin/views/settings-*.php       one file per settings group
 assets/css/admin.css
 ```
 
-- [ ] **Land on an Overview, not a settings form.** Opening the plugin answers "what is this doing on my store right now?" before offering a single input.
-- [ ] **This plugin's Overview should surface:** active filter presets, fields per preset, and which archive pages the filter renders on.
-- [ ] **Stat tiles each carry an explanatory caption.** A bare number is not information - the reference writes "Every row recorded in the profile-views table" under its count.
-- [ ] **A "Current configuration" snapshot** written as consequences, not stored values - "Yes, anonymous visits are stored but filtered out of aggregate counts", never `exclude_logout_user_count: 1`.
-- [ ] **Quick actions** routing to the tab that changes the thing just described.
-- [ ] **Sidebar generated from a tab registry** - one array keyed by slug with `label`, `icon`, `group` (main / settings / account). Adding a screen touches one array, not markup in three places.
-- [ ] **Version pill in the header; dependency state shown on screen** rather than rendering an empty dashboard.
+- [x] **Land on an Overview, not a settings form.** Opening the plugin answers "what is this doing on my store right now?" before offering a single input. *(Done: `overview` is the first tab in `settings_nav_groups()`, so the tab-less URL and the activation redirect land there.)*
+- [x] **This plugin's Overview should surface:** active filter presets, fields per preset, and which archive pages the filter renders on. *(Done: `get_overview_stats()` - one bounded posts query + batched meta, capped at 100 with the true COUNT(*) total; surfaces list shop/category/tag archives + shortcode.)*
+- [x] **Stat tiles each carry an explanatory caption.** A bare number is not information - the reference writes "Every row recorded in the profile-views table" under its count. *(Done: presets enabled / filter fields live / product search tiles, each captioned.)*
+- [x] **A "Current configuration" snapshot** written as consequences, not stored values - "Yes, anonymous visits are stored but filtered out of aggregate counts", never `exclude_logout_user_count: 1`. *(Done: AJAX, instant apply, search + scope, reset placement, chips, styling - each as what the shopper experiences.)*
+- [x] **Quick actions** routing to the tab that changes the thing just described. *(Done: presets / Advanced / License / view shop.)*
+- [x] **Sidebar generated from a tab registry** - one array keyed by slug with `label`, `icon`, `group` (main / settings / account). Adding a screen touches one array, not markup in three places. *(Done by the shell seam: `settings_nav_groups()` IS the registry; the shared shell builds sidebar, routing and default tab from it.)*
+- [x] **Version pill in the header; dependency state shown on screen** rather than rendering an empty dashboard. *(Done: version + WooCommerce-state + no-preset-enabled badges on the Overview meta row - plugin-owned markup, so the shared `lib/wbcom-settings` shell stays unforked and byte-identical with its siblings.)*
 - [x] **Replace the shared `admin/wbcom/` header/nav framework** where present - do not layer the new shell on top of it. *(Done: `admin/wbcom/` deleted; settings rebuilt on the bundled Pattern A shell `lib/wbcom-settings/` - same library Audio/Document Preview and BuddyWoo carry, newest copy on a site wins. Thin IA: Your Filters (presets, default tab) / Advanced (behaviour + search + appearance, option keys unchanged, the two search option groups saved by one form) / License (EDD form re-homed from the deleted `wbcom-license-page`). Welcome and FAQ tabs deleted; support links live on the License tab.)*
 - [ ] **Verify at 1440px and 390px, light and dark, LTR and RTL.** Colours from CSS custom properties, never hardcoded hex.
 

@@ -644,3 +644,107 @@ button.notice-dismiss:before {
 .nav-tab-wrapper ul li a#wb-ajax-filter-ajax-faq-tab:before {
 	content: "\f125" !important;
 }
+/* Overview tab (Pattern A shell). Token-driven colours and logical properties
+   only, so the same rules serve LTR and RTL unchanged. */
+.wb-ajax-overview-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	margin-block-end: 16px;
+}
+.wb-ajax-overview-tiles {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 16px;
+	margin-block-end: 20px;
+}
+.wb-ajax-overview-tile {
+	background: var(--wbcom-surface);
+	border: 1px solid var(--wbcom-border);
+	border-radius: 8px;
+	padding: 16px;
+}
+.wb-ajax-overview-tile__value {
+	display: block;
+	font-size: 24px;
+	line-height: 1.2;
+	font-weight: 600;
+	color: var(--wbcom-text);
+}
+.wb-ajax-overview-tile__label {
+	display: block;
+	margin-block-start: 4px;
+	font-weight: 600;
+	color: var(--wbcom-text);
+}
+.wb-ajax-overview-tile__caption {
+	margin: 6px 0 0;
+	font-size: 12px;
+	line-height: 1.5;
+	color: var(--wbcom-muted);
+}
+.wb-ajax-overview-snapshot {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.wb-ajax-overview-snapshot li {
+	display: flex;
+	gap: 10px;
+	align-items: flex-start;
+	margin-block-end: 10px;
+	color: var(--wbcom-text);
+}
+.wb-ajax-overview-snapshot li:last-child {
+	margin-block-end: 0;
+}
+.wb-ajax-overview-snapshot [data-lucide] {
+	flex: none;
+	margin-block-start: 2px;
+	color: var(--wbcom-accent);
+}
+.wb-ajax-overview-presets {
+	width: 100%;
+	border-collapse: collapse;
+}
+.wb-ajax-overview-presets th,
+.wb-ajax-overview-presets td {
+	text-align: start;
+	padding: 10px 12px;
+	border-block-end: 1px solid var(--wbcom-border);
+}
+.wb-ajax-overview-presets th {
+	color: var(--wbcom-muted);
+	font-weight: 600;
+}
+.wb-ajax-overview-presets tbody tr:last-child td {
+	border-block-end: none;
+}
+.wb-ajax-overview-presets a {
+	color: var(--wbcom-accent);
+	text-decoration: none;
+}
+.wb-ajax-overview-presets a:hover,
+.wb-ajax-overview-presets a:focus-visible {
+	text-decoration: underline;
+}
+.wb-ajax-overview-presets a:focus-visible {
+	outline: 2px solid var(--wbcom-accent);
+	outline-offset: 2px;
+}
+.wb-ajax-overview-truncated {
+	margin: 12px 0 0;
+	color: var(--wbcom-muted);
+	font-size: 12px;
+}
+.wb-ajax-overview-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+@media (max-width: 782px) {
+	.wb-ajax-overview-tiles {
+		grid-template-columns: 1fr;
+	}
+}

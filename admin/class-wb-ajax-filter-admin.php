@@ -243,8 +243,14 @@ class Wb_Ajax_Filter_Admin {
 	/**
 	 * Declare the settings nav.
 	 *
-	 * The filters tab keeps its historical id: the preset builder templates,
-	 * the footer modal gate and back-links all address tab=wb-ajax-filter-presets.
+	 * This array IS the tab registry: the shell builds the sidebar, the section
+	 * routing and the default tab from it, so adding a screen means adding one
+	 * entry here plus a case in render_settings_tab() - no markup elsewhere.
+	 *
+	 * Overview is first, so opening the plugin answers "what is this doing on
+	 * my store right now?" before offering an input. The filters tab keeps its
+	 * historical id: the preset builder templates, the footer modal gate and
+	 * back-links all address tab=wb-ajax-filter-presets.
 	 *
 	 * @since  1.2.2
 	 * @param  array $groups Groups declared so far.
@@ -254,6 +260,10 @@ class Wb_Ajax_Filter_Admin {
 		$groups['main'] = array(
 			'label' => __( 'Ajax Filter', 'wb-ajax-filter' ),
 			'items' => array(
+				'overview'               => array(
+					'title' => __( 'Overview', 'wb-ajax-filter' ),
+					'icon'  => 'layout-dashboard',
+				),
 				'wb-ajax-filter-presets' => array(
 					'title' => __( 'Your Filters', 'wb-ajax-filter' ),
 					'icon'  => 'sliders-horizontal',
@@ -273,6 +283,85 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
+	 * The numbers the Overview tab renders.
+	 *
+	 * One bounded posts query plus one batched meta query (get_posts primes the
+	 * meta cache), so the per-preset reads below never hit the database again.
+	 * The list is capped at 100 presets; the true total still comes from
+	 * wp_count_posts() (a COUNT(*)), and the tab says when the list is cut.
+	 *
+	 * @since  1.2.2
+	 * @return array {
+	 *     @type array $presets       Rows: id, title, enabled, fields, edit_url.
+	 *     @type int   $total         Published presets on the site.
+	 *     @type int   $enabled_count Presets whose filters render to shoppers.
+	 *     @type int   $live_fields   Enabled fields inside enabled presets.
+	 *     @type bool  $truncated     True when more presets exist than listed.
+	 * }
+	 */
+	public function get_overview_stats() {
+		$counts = wp_count_posts( 'wb_filter_preset' );
+		$total  = isset( $counts->publish ) ? (int) $counts->publish : 0;
+
+		$presets = get_posts(
+			array(
+				'post_type'      => 'wb_filter_preset',
+				'post_status'    => 'publish',
+				'posts_per_page' => 100,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+			)
+		);
+
+		$rows          = array();
+		$enabled_count = 0;
+		$live_fields   = 0;
+
+		foreach ( $presets as $preset ) {
+			$enabled = ( 'yes' === get_post_meta( $preset->ID, 'preset_enabled', true ) );
+			$fields  = get_post_meta( $preset->ID, '_wb_filter', true );
+			$fields  = is_array( $fields ) ? $fields : array();
+
+			$field_count = 0;
+			foreach ( $fields as $field ) {
+				if ( ! isset( $field['filter_enabled'] ) || 'yes' === $field['filter_enabled'] ) {
+					++$field_count;
+				}
+			}
+
+			if ( $enabled ) {
+				++$enabled_count;
+				$live_fields += $field_count;
+			}
+
+			$rows[] = array(
+				'id'       => $preset->ID,
+				'title'    => $preset->post_title,
+				'enabled'  => $enabled,
+				'fields'   => $field_count,
+				'edit_url' => add_query_arg(
+					array(
+						'action' => 'edit',
+						'wb'     => 'list',
+						'page'   => self::PAGE_SLUG,
+						'tab'    => 'wb-ajax-filter-presets',
+						'preset' => $preset->ID,
+					),
+					admin_url( 'admin.php' )
+				),
+			);
+		}
+
+		return array(
+			'presets'       => $rows,
+			'total'         => $total,
+			'enabled_count' => $enabled_count,
+			'live_fields'   => $live_fields,
+			'truncated'     => $total > count( $rows ),
+		);
+	}
+
+	/**
 	 * Render one settings tab.
 	 *
 	 * @since 1.2.2
@@ -280,6 +369,9 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function render_settings_tab( $tab ) {
 		switch ( $tab ) {
+			case 'overview':
+				include plugin_dir_path( __FILE__ ) . 'partials/tab-overview.php';
+				break;
 			case 'wb-ajax-filter-presets':
 				include plugin_dir_path( __FILE__ ) . 'partials/tab-filters.php';
 				break;
@@ -295,18 +387,17 @@ class Wb_Ajax_Filter_Admin {
 	/**
 	 * Add modal wrapper to the footer of admin section.
 	 *
-	 * The filters tab is the default (first) tab, so the modal must also load
-	 * when the settings page is opened with no tab parameter at all.
+	 * The shared shell renders every tab's section in the DOM and switches
+	 * between them client-side without a reload, so the preset builder (and
+	 * this modal it depends on) can be reached from any tab. Gating on the
+	 * tab parameter therefore broke the builder after a client-side switch;
+	 * the modal loads whenever the settings screen does.
 	 */
 	public function wb_ajax_filter_add_modal_to_admin_footer() {
 		if ( ! is_admin() || ! $this->is_settings_page() ) {
 			return;
 		}
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Routing only.
-		$tab = isset( $_REQUEST['tab'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) : '';
-		if ( '' === $tab || 'wb-ajax-filter-presets' === $tab ) {
-			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-modal.php';
-		}
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-modal.php';
 	}
 
 	/**
