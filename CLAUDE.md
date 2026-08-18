@@ -52,7 +52,7 @@ Derived from a code audit on 2026-08-08 that verified every open Basecamp card a
 - [ ] Do **not** apply the `FILTER_SANITIZE_STRING` line from the old "Code enhancements" card - deprecated in PHP 8.1.
 
 ### 2. Feature dead for most shoppers
-- [ ] **Search autocomplete does nothing when logged out.** `get_ajax_search_autocomplete_title_wb` is registered `wp_ajax_` only; the plugin registers zero `wp_ajax_nopriv_` handlers. The owner tests it as admin, it works, and real shoppers get nothing. Register it for nopriv with its own public nonce - not the admin one.
+- [x] **Search autocomplete does nothing when logged out.** `get_ajax_search_autocomplete_title_wb` is registered `wp_ajax_` only; the plugin registers zero `wp_ajax_nopriv_` handlers. The owner tests it as admin, it works, and real shoppers get nothing. Register it for nopriv with its own public nonce - not the admin one. *(Fixed: nopriv registered; public surface localizes and verifies `wb-ajax-filter-public-nonce`, admin keeps `ajax-nonce`.)*
 
 ### 3. Big-site (2,000+ products)
 - [ ] `admin/class-wb-ajax-filter-admin.php:607-615` - `posts_per_page => -1` then `get_post_meta()` per product in a foreach. N+1, and reachable by any logged-in user via the nonce bypass = trivial DoS.

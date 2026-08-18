@@ -129,7 +129,7 @@ class Wb_Ajax_Filter_Public {
 				'wbcom_plugin_installer_params',
 				array(
 					'ajax_url'                    => admin_url( 'admin-ajax.php' ),
-					'wbcom_ajax_nonce'            => wp_create_nonce( 'ajax-nonce' ),
+					'wbcom_ajax_nonce'            => wp_create_nonce( 'wb-ajax-filter-public-nonce' ),
 					'wb_ajax_filter_search_label' => $wb_ajax_filter_search_label,
 				)
 			);
@@ -329,8 +329,9 @@ class Wb_Ajax_Filter_Public {
 		// Fail-closed: the old `isset( $_GET['nonce'] ) && ! wp_verify_nonce()` guard was
 		// skipped entirely when the nonce was omitted. This is a public read-only search,
 		// so it needs a valid nonce but no capability check. check_ajax_referer() dies with
-		// a 403 when the nonce is missing or invalid.
-		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		// a 403 when the nonce is missing or invalid. The action is deliberately NOT the
+		// admin 'ajax-nonce' - the public surface carries its own nonce.
+		check_ajax_referer( 'wb-ajax-filter-public-nonce', 'nonce' );
 
 		if ( ! isset( $_GET['q'] ) ) {
 			wp_die();

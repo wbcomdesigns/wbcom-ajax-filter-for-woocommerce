@@ -238,8 +238,10 @@ class Wb_Ajax_Filter {
 
 		$this->loader->add_action( 'woocommerce_product_query', $plugin_public, 'wb_ajax_filter_modify_wc_product_query', 999 );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'add_wb_ajax_filters_loader_in_footer' );
-		// Ajax callback.
+		// Ajax callback. Registered for nopriv too: most shoppers browse logged out,
+		// and admin-ajax.php only routes wp_ajax_ for authenticated users.
 		$this->loader->add_action( 'wp_ajax_get_ajax_search_autocomplete_title_wb', $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' );
+		$this->loader->add_action( 'wp_ajax_nopriv_get_ajax_search_autocomplete_title_wb', $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' );
 		// Shortcode callback.
 		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_public, 'filter_preset_shortcode_callback', 10, 1 );
 
