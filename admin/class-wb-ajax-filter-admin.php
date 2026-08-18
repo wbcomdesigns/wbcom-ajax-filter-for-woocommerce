@@ -268,6 +268,10 @@ class Wb_Ajax_Filter_Admin {
 					'title' => __( 'Your Filters', 'wb-ajax-filter' ),
 					'icon'  => 'sliders-horizontal',
 				),
+				'stored-data'            => array(
+					'title' => __( 'Stored Data', 'wb-ajax-filter' ),
+					'icon'  => 'database',
+				),
 				'advanced'               => array(
 					'title' => __( 'Advanced', 'wb-ajax-filter' ),
 					'icon'  => 'settings-2',
@@ -374,6 +378,9 @@ class Wb_Ajax_Filter_Admin {
 				break;
 			case 'wb-ajax-filter-presets':
 				include plugin_dir_path( __FILE__ ) . 'partials/tab-filters.php';
+				break;
+			case 'stored-data':
+				include plugin_dir_path( __FILE__ ) . 'partials/tab-data.php';
 				break;
 			case 'advanced':
 				include plugin_dir_path( __FILE__ ) . 'partials/tab-advanced.php';

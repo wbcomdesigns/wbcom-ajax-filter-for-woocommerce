@@ -127,11 +127,30 @@ class Wb_Ajax_Filter {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-i18n.php';
 
 		/**
+		 * The one owner of stored-preset queries, record serialization and
+		 * moderation - read by the Stored Data screen, the REST API and exports.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-presets.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 * The settings screen itself is the shared Wbcom shell bundled at
 		 * lib/wbcom-settings/ and registered from the plugin bootstrap.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wb-ajax-filter-admin.php';
+
+		/**
+		 * The Stored Data screen controller: moderation actions on admin_init,
+		 * export downloads on admin-post. The WP_List_Table subclass itself is
+		 * required lazily by the tab partial - core only loads list tables in
+		 * wp-admin.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wb-ajax-filter-data-screen.php';
+
+		/**
+		 * REST controller exposing the same preset records to store managers.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-rest-controller.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -202,6 +221,11 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'init', $plugin_admin, 'boot_settings_page', 1 );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_parent_menu', 5 );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wb_ajax_filter_init_plugin_settings' );
+
+		// Stored Data screen: state changes run before any output, downloads via admin-post.
+		$data_screen = new Wb_Ajax_Filter_Data_Screen();
+		$this->loader->add_action( 'admin_init', $data_screen, 'handle_actions' );
+		$this->loader->add_action( 'admin_post_wb_ajax_filter_export', $data_screen, 'handle_export' );
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'wb_ajax_filter_add_modal_to_admin_footer' );
 		// Ajax callbacks.
 		$this->loader->add_action( 'wp_ajax_load_create_filter_template_wb', $plugin_admin, 'load_create_filter_template_wb_callback' );
@@ -270,6 +294,10 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'woocommerce_no_products_found', $plugin_public, 'add_wb_ajax_filters' );
 
 		$this->loader->add_action( 'posts_search', $plugin_public, 'wb_ajax_filters_product_search_by_sku', 9999, 2 );
+
+		// REST API: the stored presets, readable and moderatable by store managers.
+		$rest_controller = new Wb_Ajax_Filter_REST_Controller();
+		$this->loader->add_action( 'rest_api_init', $rest_controller, 'register_routes' );
 	}
 
 	/**

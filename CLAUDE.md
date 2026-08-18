@@ -68,11 +68,11 @@ Derived from a code audit on 2026-08-08 that verified every open Basecamp card a
 
 - [x] **Gutenberg block** - Block themes often never fire the classic WooCommerce hooks this plugin renders through, so the owner sees nothing and has no way to place it by hand. *(Fixed: dynamic block `wb-ajax-filter/filters` (assets/blocks/filters, no build step - plain-JS editor script + hand-written asset manifest) renders through the same shortcode seam; preset picker in the sidebar via ServerSideRender preview. Asset gate now also covers has_block + null $post; the render callback enqueues directly for FSE template areas.)*
 - [x] **Theme-overridable templates** - The owner cannot restyle output without editing plugin files, which an update overwrites. *(Fixed: all frontend template loads route through `wb_ajax_filter_get_template()` -> `wc_get_template`, override at `yourtheme/wb-ajax-filter/<same relative path>`; pre-1.2.2 flat copies (`filter-<type>.php`, `search-form.php`) still win for back-compat. `term-children.php` stays a shared-scope relative require on purpose - it writes back into the parent's $terms_added accumulator.)*
-- [ ] **Admin screen for stored data** - Anything the plugin stores, the owner must be able to see, moderate and export from wp-admin. Otherwise support means phpMyAdmin.
+- [x] **Admin screen for stored data** - Anything the plugin stores, the owner must be able to see, moderate and export from wp-admin. Otherwise support means phpMyAdmin. *(Fixed: Stored Data tab on the settings shell - `Wb_Ajax_Filter_Presets_List_Table` (paginated 20/page, All/Enabled/Disabled views with true counts, title search, sortable title/date), enable/disable/delete moderation processed fail-closed on `admin_init` (nonce -> `manage_woocommerce` -> post-type assert), JSON/CSV export via `admin_post_wb_ajax_filter_export`. Full JSON export carries preset configs + the four option groups, so one file is a support/config snapshot.)*
 
 **Developer extending it expects:**
 
-- [ ] **REST API** - No mobile app, headless storefront or external integration can reach this data.
+- [x] **REST API** - No mobile app, headless storefront or external integration can reach this data. *(Fixed: `wb-ajax-filter/v1/presets` - GET collection (paginated/bounded 1-100, status/orderby/order enums, X-WP-Total headers), GET/POST/DELETE item (moderate enabled+title, delete). Every route's `permission_callback` requires `manage_woocommerce`; preset config names custom-field keys and taxonomy structure, so it is store-management data, not public catalogue data. All three surfaces read one seam: `Wb_Ajax_Filter_Presets` owns query bounds, the record shape and moderation.)*
 - [ ] **Documented hooks/filters** - Developers extending the plugin have to read the source to find the extension points.
 - [ ] **Test suite** - Nothing catches a regression before a customer does.
 - [ ] **WPCS config** - Coding-standard drift is invisible until a WordPress.org review rejects it.
@@ -269,6 +269,10 @@ WordPress Plugin Boilerplate (loader pattern). `Wb_Ajax_Filter_Loader` registers
 | `includes/class-wb-ajax-filter-deactivator.php` | Deactivation routine |
 | `includes/class-wb-ajax-filter-i18n.php` | Text domain loading |
 | `admin/class-wb-ajax-filter-admin.php` | Preset builder UI, settings, AJAX handlers |
+| `includes/class-wb-ajax-filter-presets.php` | The one owner of stored-preset queries (bounded/whitelisted), the record shape, moderation and export payloads |
+| `includes/class-wb-ajax-filter-rest-controller.php` | `wb-ajax-filter/v1/presets` REST routes (capability-gated, paginated) |
+| `admin/class-wb-ajax-filter-data-screen.php` | Stored Data controller: admin_init moderation actions, admin-post export downloads |
+| `admin/class-wb-ajax-filter-presets-list-table.php` | WP_List_Table over the stored presets (Stored Data tab) |
 | `public/class-wb-ajax-filter-public.php` | Front-end filter rendering and query handling |
 | `templates/` | 34 overridable template partials (filter field types, layouts) |
 | `lib/wbcom-settings/` | Bundled Pattern A settings shell (shared across Wbcom plugins; newest copy on a site loads) |
@@ -321,6 +325,16 @@ Admin settings screens expose paired before/after actions for each tab:
 | `wb_ajax_filter_search_settings` | Search behaviour |
 | `wb_ajax_filter_search_content_settings` | Search content scope |
 | `edd_wbcom_ajax_filter_license_key` / `_status` | EDD license state |
+
+### REST API
+`wb-ajax-filter/v1` (every route requires `manage_woocommerce`):
+
+| Route | Methods | Purpose |
+|-------|---------|---------|
+| `/presets` | GET | Paginated records (`page`, `per_page` 1-100, `search`, `status`, `orderby`, `order`, `with_config`); totals in `X-WP-Total` / `X-WP-TotalPages` |
+| `/presets/<id>` | GET | One record with its full `_wb_filter` config |
+| `/presets/<id>` | POST/PUT/PATCH | Moderate: `enabled` flag, `title` |
+| `/presets/<id>` | DELETE | Permanent delete (matches the builder's behaviour) |
 
 ### AJAX actions
 Preset CRUD and the filter builder are AJAX-heavy:
