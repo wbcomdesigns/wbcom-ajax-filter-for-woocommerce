@@ -160,10 +160,14 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 					'wbcom_admin_setting_js',
 					'wbcom_plugin_installer_params',
 					array(
-						'ajax_url'        => admin_url( 'admin-ajax.php' ),
-						'activate_text'   => esc_html__( 'Activate', 'wb-ajax-filter' ),
-						'deactivate_text' => esc_html__( 'Deactivate', 'wb-ajax-filter' ),
-						'nonce'           => wp_create_nonce( 'wbcom_admin_setting_nonce' ),
+						'ajax_url'         => admin_url( 'admin-ajax.php' ),
+						'activate_text'    => esc_html__( 'Activate', 'wb-ajax-filter' ),
+						'deactivate_text'  => esc_html__( 'Deactivate', 'wb-ajax-filter' ),
+						'nonce'            => wp_create_nonce( 'wbcom_admin_setting_nonce' ),
+						// Nonce consumed by the Ajax Filter admin JS (preset CRUD). The preset
+						// callbacks verify this fail-closed via check_ajax_referer( 'ajax-nonce' ),
+						// so without it every preset action would be rejected.
+						'wbcom_ajax_nonce' => wp_create_nonce( 'ajax-nonce' ),
 					)
 				);
 				wp_enqueue_script( 'wbcom_admin_setting_js' );

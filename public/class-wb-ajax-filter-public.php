@@ -326,9 +326,11 @@ class Wb_Ajax_Filter_Public {
 	 * @since    1.0.0
 	 */
 	public function get_ajax_search_autocomplete_title_wb_callback() {
-		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_die();
-		}
+		// Fail-closed: the old `isset( $_GET['nonce'] ) && ! wp_verify_nonce()` guard was
+		// skipped entirely when the nonce was omitted. This is a public read-only search,
+		// so it needs a valid nonce but no capability check. check_ajax_referer() dies with
+		// a 403 when the nonce is missing or invalid.
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
 
 		if ( ! isset( $_GET['q'] ) ) {
 			wp_die();

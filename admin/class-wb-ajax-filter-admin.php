@@ -270,17 +270,51 @@ class Wb_Ajax_Filter_Admin {
 	}
 
 	/**
+	 * Shared capability gate for the admin AJAX callbacks.
+	 *
+	 * Each callback first calls check_ajax_referer( 'ajax-nonce', 'nonce' ) inline - which
+	 * dies with a 403 when the nonce is missing or invalid, closing the old bypass where an
+	 * omitted nonce skipped verification entirely - and then this method, which blocks any
+	 * user who cannot manage the store (e.g. a logged-in customer) before any write runs.
+	 *
+	 * @since 1.2.2
+	 * @return void Dies with a 403 response when the current user is not a store manager.
+	 */
+	private function require_woocommerce_manager() {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'wb-ajax-filter' ), 403 );
+		}
+	}
+
+	/**
+	 * Assert that an ID really is a filter preset before any write touches it.
+	 *
+	 * Without this, a request could pass any post ID (a product, an order, a page) to
+	 * wp_delete_post()/wp_update_post()/update_post_meta() and mutate unrelated content.
+	 *
+	 * @since 1.2.2
+	 * @param mixed $preset_id Candidate post ID from the request.
+	 * @return int Validated preset post ID; dies with a 400 response otherwise.
+	 */
+	private function verify_preset_id( $preset_id ) {
+		$preset_id = absint( $preset_id );
+		if ( ! $preset_id || 'wb_filter_preset' !== get_post_type( $preset_id ) ) {
+			wp_send_json_error( esc_html__( 'Invalid filter preset.', 'wb-ajax-filter' ), 400 );
+		}
+		return $preset_id;
+	}
+
+	/**
 	 * Call create filter template inside modal through ajax.
 	 */
 	public function load_create_filter_template_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			ob_start();
-			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-filter-create-form.php';
-			$response = ob_get_clean();
-			echo wp_json_encode( $response );
-		}
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		ob_start();
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/preset-filter-create-form.php';
+		$response = ob_get_clean();
+		echo wp_json_encode( $response );
 		die();
 	}
 
@@ -294,17 +328,17 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void Outputs JSON response and terminates.
 	 */
 	public function create_filter_preset_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} elseif ( isset( $_POST['form_data'] ) ) {
-				$filter    = array();
-				$form_data = wp_unslash( $_POST['form_data'] ); //phpcs:ignore
-				// Converting form data into associative array.
-				$filter_data = $this->wb_ajax_process_form_data( $form_data );
-				$result      = $this->wb_ajax_save_filter_data( $filter_data );
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
 
-				echo $result; //phpcs:ignore
+		if ( isset( $_POST['form_data'] ) ) {
+			$filter    = array();
+			$form_data = wp_unslash( $_POST['form_data'] ); //phpcs:ignore
+			// Converting form data into associative array.
+			$filter_data = $this->wb_ajax_process_form_data( $form_data );
+			$result      = $this->wb_ajax_save_filter_data( $filter_data );
 
+			echo $result; //phpcs:ignore
 		}
 		die();
 	}
@@ -316,26 +350,25 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void Output json response and terminates.
 	 */
 	public function check_filter_preset_title_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_POST['title'] ) ) {
-				exit;
-			}
-			$args    = array(
-				'post_type'    => 'wb_filter_preset',
-				'post_status'  => 'publish',
-				'number_posts' => -1,
-			);
-			$filters = get_posts( $args );
-			foreach ( $filters as $filter ) {
-				if ( strtolower( $filter->post_title ) === sanitize_text_field( wp_unslash( $_POST['title'] ) ) || sanitize_text_field( wp_unslash( $_POST['title'] ) ) === $filter->post_title ) {
-					echo 'exists';
-					die();
-				} else {
-					echo 'not exists';
-					die();
-				}
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		if ( ! isset( $_POST['title'] ) ) {
+			exit;
+		}
+		$args    = array(
+			'post_type'    => 'wb_filter_preset',
+			'post_status'  => 'publish',
+			'number_posts' => -1,
+		);
+		$filters = get_posts( $args );
+		foreach ( $filters as $filter ) {
+			if ( strtolower( $filter->post_title ) === sanitize_text_field( wp_unslash( $_POST['title'] ) ) || sanitize_text_field( wp_unslash( $_POST['title'] ) ) === $filter->post_title ) {
+				echo 'exists';
+				die();
+			} else {
+				echo 'not exists';
+				die();
 			}
 		}
 		die();
@@ -347,44 +380,43 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void Output json response and terminates.
 	 */
 	public function duplicate_filter_preset_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_POST['preset'] ) ) {
-				exit;
-			}
-			$preset_id   = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
-			$preset_data = get_post( $preset_id );
-			$filters     = get_post_meta( $preset_id, '_wb_filter', true );
-			$args        = array(
-				'post_type'    => 'wb_filter_preset',
-				'number_posts' => -1,
-				'meta_query'   => array(
-					array(
-						'key'     => 'parent_preset',
-						'value'   => $preset_id,
-						'compare' => '==',
-					),
-				),
-			);
-			$siblings    = get_posts( $args );
-			$count       = count( $siblings ) + 1;
-			$title       = $preset_data->post_title . ' Copy ' . $count;
-			$post_id     = wp_insert_post(
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		if ( ! isset( $_POST['preset'] ) ) {
+			exit;
+		}
+		$preset_id   = $this->verify_preset_id( sanitize_text_field( wp_unslash( $_POST['preset'] ) ) );
+		$preset_data = get_post( $preset_id );
+		$filters     = get_post_meta( $preset_id, '_wb_filter', true );
+		$args        = array(
+			'post_type'    => 'wb_filter_preset',
+			'number_posts' => -1,
+			'meta_query'   => array(
 				array(
-					'post_type'      => 'wb_filter_preset',
-					'post_title'     => $title,
-					'post_content'   => 'Wb Ajax filter Preset',
-					'post_status'    => 'publish',
-					'comment_status' => 'closed',
-					'ping_status'    => 'closed',
-				)
-			);
-			if ( $post_id ) {
-				update_post_meta( $post_id, '_wb_filter', $filters );
-				update_post_meta( $post_id, 'parent_preset', $preset_id );
-				echo 'copy_created';
-			}
+					'key'     => 'parent_preset',
+					'value'   => $preset_id,
+					'compare' => '==',
+				),
+			),
+		);
+		$siblings    = get_posts( $args );
+		$count       = count( $siblings ) + 1;
+		$title       = $preset_data->post_title . ' Copy ' . $count;
+		$post_id     = wp_insert_post(
+			array(
+				'post_type'      => 'wb_filter_preset',
+				'post_title'     => $title,
+				'post_content'   => 'Wb Ajax filter Preset',
+				'post_status'    => 'publish',
+				'comment_status' => 'closed',
+				'ping_status'    => 'closed',
+			)
+		);
+		if ( $post_id ) {
+			update_post_meta( $post_id, '_wb_filter', $filters );
+			update_post_meta( $post_id, 'parent_preset', $preset_id );
+			echo 'copy_created';
 		}
 		exit();
 	}
@@ -396,16 +428,15 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void Output json response and terminates.
 	 */
 	public function delete_filter_preset_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_POST['preset'] ) ) {
-				exit;
-			}
-			$preset_id = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
-			wp_delete_post( $preset_id, false );
-			echo 'preset_deleted';
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		if ( ! isset( $_POST['preset'] ) ) {
+			exit;
 		}
+		$preset_id = $this->verify_preset_id( sanitize_text_field( wp_unslash( $_POST['preset'] ) ) );
+		wp_delete_post( $preset_id, false );
+		echo 'preset_deleted';
 		exit();
 	}
 
@@ -416,30 +447,29 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void Output json response and terminates.
 	 */
 	public function duplicate_single_filter_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['filter_id'] ) ) {
-				exit;
-			}
-			$preset_id = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
-			$filter_id = sanitize_text_field( wp_unslash( $_POST['filter_id'] ) );
-			$filters   = get_post_meta( $preset_id, '_wb_filter', true );
-			foreach ( $filters as $key => $filter ) {
-				if ( $filter_id === $filter['filter_id'] ) {
-					$copy_filter = array();
-					$copy_filter = $filter;
-					unset( $copy_filter['filter_id'] );
-					unset( $copy_filter['filter_title'] );
-					$copy_filter['filter_id']    = esc_html( uniqid( 'wb_filter_' ) );
-					$title                       = $filter['filter_title'] . ' Copy';
-					$copy_filter['filter_title'] = $title;
-					$filters[]                   = $copy_filter;
-					update_post_meta( $preset_id, '_wb_filter', $filters );
-				}
-			}
-			echo 'copy_created';
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['filter_id'] ) ) {
+			exit;
 		}
+		$preset_id = $this->verify_preset_id( sanitize_text_field( wp_unslash( $_POST['preset'] ) ) );
+		$filter_id = sanitize_text_field( wp_unslash( $_POST['filter_id'] ) );
+		$filters   = get_post_meta( $preset_id, '_wb_filter', true );
+		foreach ( $filters as $key => $filter ) {
+			if ( $filter_id === $filter['filter_id'] ) {
+				$copy_filter = array();
+				$copy_filter = $filter;
+				unset( $copy_filter['filter_id'] );
+				unset( $copy_filter['filter_title'] );
+				$copy_filter['filter_id']    = esc_html( uniqid( 'wb_filter_' ) );
+				$title                       = $filter['filter_title'] . ' Copy';
+				$copy_filter['filter_title'] = $title;
+				$filters[]                   = $copy_filter;
+				update_post_meta( $preset_id, '_wb_filter', $filters );
+			}
+		}
+		echo 'copy_created';
 		exit();
 	}
 
@@ -450,24 +480,23 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void Output json response and terminates.
 	 */
 	public function delete_single_filter_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['filter_id'] ) ) {
-				exit;
-			}
-			$new_filters = array();
-			$preset_id   = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
-			$filter_id   = sanitize_text_field( wp_unslash( $_POST['filter_id'] ) );
-			$filters     = get_post_meta( $preset_id, '_wb_filter', true );
-			foreach ( $filters as $key => $filter ) {
-				if ( $filter_id !== $filter['filter_id'] ) {
-					$new_filters[] = $filter;
-				}
-			}
-			update_post_meta( $preset_id, '_wb_filter', $new_filters );
-			echo 'preset_deleted';
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['filter_id'] ) ) {
+			exit;
 		}
+		$new_filters = array();
+		$preset_id   = $this->verify_preset_id( sanitize_text_field( wp_unslash( $_POST['preset'] ) ) );
+		$filter_id   = sanitize_text_field( wp_unslash( $_POST['filter_id'] ) );
+		$filters     = get_post_meta( $preset_id, '_wb_filter', true );
+		foreach ( $filters as $key => $filter ) {
+			if ( $filter_id !== $filter['filter_id'] ) {
+				$new_filters[] = $filter;
+			}
+		}
+		update_post_meta( $preset_id, '_wb_filter', $new_filters );
+		echo 'preset_deleted';
 		exit();
 	}
 
@@ -478,14 +507,14 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void
 	 */
 	public function enable_disable_filter_preset_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['enabled'] ) ) {
-				exit;
-			}
-			update_post_meta( sanitize_text_field( wp_unslash( $_POST['preset'] ) ), 'preset_enabled', sanitize_text_field( wp_unslash( $_POST['enabled'] ) ) );
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['enabled'] ) ) {
+			exit;
 		}
+		$preset_id = $this->verify_preset_id( sanitize_text_field( wp_unslash( $_POST['preset'] ) ) );
+		update_post_meta( $preset_id, 'preset_enabled', sanitize_text_field( wp_unslash( $_POST['enabled'] ) ) );
 		exit();
 	}
 
@@ -496,24 +525,23 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void
 	 */
 	public function enable_disable_single_filter_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['enabled'] ) && ! isset( $_POST['filter_id'] ) ) {
-				exit;
-			}
-			$preset_id = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
-			$filter_id = sanitize_text_field( wp_unslash( $_POST['filter_id'] ) );
-			$filters   = get_post_meta( $preset_id, '_wb_filter', true );
-			foreach ( $filters as $key => $filter ) {
-				if ( $filter_id === $filter['filter_id'] ) {
-					unset( $filter['filter_enabled'] );
-					$filter['filter_enabled'] = sanitize_text_field( wp_unslash( $_POST['enabled'] ) );
-					$filters[ $key ]          = $filter;
-				}
-			}
-			update_post_meta( $preset_id, '_wb_filter', $filters );
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['enabled'] ) && ! isset( $_POST['filter_id'] ) ) {
+			exit;
 		}
+		$preset_id = $this->verify_preset_id( sanitize_text_field( wp_unslash( $_POST['preset'] ) ) );
+		$filter_id = sanitize_text_field( wp_unslash( $_POST['filter_id'] ) );
+		$filters   = get_post_meta( $preset_id, '_wb_filter', true );
+		foreach ( $filters as $key => $filter ) {
+			if ( $filter_id === $filter['filter_id'] ) {
+				unset( $filter['filter_enabled'] );
+				$filter['filter_enabled'] = sanitize_text_field( wp_unslash( $_POST['enabled'] ) );
+				$filters[ $key ]          = $filter;
+			}
+		}
+		update_post_meta( $preset_id, '_wb_filter', $filters );
 		exit();
 	}
 
@@ -524,21 +552,20 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void
 	 */
 	public function edit_preset_post_title_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['title'] ) ) {
-				exit;
-			}
-			$preset_id     = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
-			$title         = sanitize_text_field( wp_unslash( $_POST['title'] ) );
-			$preset_update = array(
-				'ID'         => $preset_id,
-				'post_title' => $title,
-			);
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
 
-			wp_update_post( $preset_update );
+		if ( ! isset( $_POST['preset'] ) && ! isset( $_POST['title'] ) ) {
+			exit;
 		}
+		$preset_id     = $this->verify_preset_id( sanitize_text_field( wp_unslash( $_POST['preset'] ) ) );
+		$title         = sanitize_text_field( wp_unslash( $_POST['title'] ) );
+		$preset_update = array(
+			'ID'         => $preset_id,
+			'post_title' => $title,
+		);
+
+		wp_update_post( $preset_update );
 		exit();
 	}
 
@@ -549,20 +576,19 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void Outputs JSON response and terminates.
 	 */
 	public function customize_term_text_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_POST['id'] ) && ! isset( $_POST['text'] ) ) {
-				exit;
-			}
-			$term_id = sanitize_text_field( wp_unslash( $_POST['id'] ) );
-			$text    = sanitize_text_field( wp_unslash( $_POST['text'] ) );
-			$tooltip = sanitize_text_field( wp_unslash( $_POST['text'] ) );
-			ob_start();
-			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-customize-term.php';
-			$response = ob_get_clean();
-			echo wp_json_encode( $response );
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		if ( ! isset( $_POST['id'] ) && ! isset( $_POST['text'] ) ) {
+			exit;
 		}
+		$term_id = sanitize_text_field( wp_unslash( $_POST['id'] ) );
+		$text    = sanitize_text_field( wp_unslash( $_POST['text'] ) );
+		$tooltip = sanitize_text_field( wp_unslash( $_POST['text'] ) );
+		ob_start();
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-customize-term.php';
+		$response = ob_get_clean();
+		echo wp_json_encode( $response );
 		exit();
 	}
 
@@ -573,21 +599,20 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void
 	 */
 	public function sortable_single_filters_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_POST['old_index'] ) && ! isset( $_POST['new_index'] ) && ! isset( $_POST['preset'] ) ) {
-				exit;
-			}
-			$old_index = sanitize_text_field( wp_unslash( $_POST['old_index'] ) );
-			$new_index = sanitize_text_field( wp_unslash( $_POST['new_index'] ) );
-			$preset    = sanitize_text_field( wp_unslash( $_POST['preset'] ) );
-			$filters   = get_post_meta( $preset, '_wb_filter', true );
-			$filter    = $filters[ $old_index ];
-			unset( $filters[ $old_index ] );
-			array_splice( $filters, $new_index, 0, array( $filter ) );
-			update_post_meta( $preset, '_wb_filter', $filters );
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		if ( ! isset( $_POST['old_index'] ) && ! isset( $_POST['new_index'] ) && ! isset( $_POST['preset'] ) ) {
+			exit;
 		}
+		$old_index = sanitize_text_field( wp_unslash( $_POST['old_index'] ) );
+		$new_index = sanitize_text_field( wp_unslash( $_POST['new_index'] ) );
+		$preset    = $this->verify_preset_id( sanitize_text_field( wp_unslash( $_POST['preset'] ) ) );
+		$filters   = get_post_meta( $preset, '_wb_filter', true );
+		$filter    = $filters[ $old_index ];
+		unset( $filters[ $old_index ] );
+		array_splice( $filters, $new_index, 0, array( $filter ) );
+		update_post_meta( $preset, '_wb_filter', $filters );
 		exit();
 	}
 
@@ -598,32 +623,31 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void Outputs JSON response and terminates.
 	 */
 	public function check_custom_field_exists_wb_callback() {
-		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_GET['q'] ) ) {
-				exit;
-			}
-			$field_slug     = sanitize_text_field( wp_unslash( $_GET['q'] ) );
-			$args           = array(
-				'post_type'      => 'product',
-				'posts_per_page' => -1,
-			);
-			$products       = get_posts( $args );
-			$matched_fields = array();
-			$exclude        = array();
-			foreach ( $products as $prod ) {
-				$meta_fields = get_post_meta( $prod->ID, '', false );
-				foreach ( $meta_fields as $key => $value ) {
-					if ( strpos( $key, $field_slug ) !== false && ! in_array( $key, $exclude, true ) ) {
-						$temp             = array( $key, $key );
-						$exclude[]        = $key;
-						$matched_fields[] = $temp;
-					}
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		if ( ! isset( $_GET['q'] ) ) {
+			exit;
+		}
+		$field_slug     = sanitize_text_field( wp_unslash( $_GET['q'] ) );
+		$args           = array(
+			'post_type'      => 'product',
+			'posts_per_page' => -1,
+		);
+		$products       = get_posts( $args );
+		$matched_fields = array();
+		$exclude        = array();
+		foreach ( $products as $prod ) {
+			$meta_fields = get_post_meta( $prod->ID, '', false );
+			foreach ( $meta_fields as $key => $value ) {
+				if ( strpos( $key, $field_slug ) !== false && ! in_array( $key, $exclude, true ) ) {
+					$temp             = array( $key, $key );
+					$exclude[]        = $key;
+					$matched_fields[] = $temp;
 				}
 			}
-			echo wp_json_encode( $matched_fields );
 		}
+		echo wp_json_encode( $matched_fields );
 		exit();
 	}
 
@@ -651,34 +675,33 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void Outputs JSON response and terminates.
 	 */
 	public function select2_get_terms_wb_callback() {
-		if ( isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			if ( ! isset( $_GET['q'] ) && ! isset( $_GET['cat'] ) ) {
-				exit;
-			}
-			$taxonomy = sanitize_text_field( wp_unslash( $_GET['cat'] ) );
-			if ( ! empty( $taxonomy ) ) {
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
 
-				$terms = get_terms(
-					array(
-						'taxonomy'   => $taxonomy,
-						'hide_empty' => false,
-					),
-				);
+		if ( ! isset( $_GET['q'] ) && ! isset( $_GET['cat'] ) ) {
+			exit;
+		}
+		$taxonomy = sanitize_text_field( wp_unslash( $_GET['cat'] ) );
+		if ( ! empty( $taxonomy ) ) {
 
-				if ( ! empty( $terms ) && is_array( $terms ) ) {
-					$results = array();
-					foreach ( $terms as $term ) {
-						if ( strpos( $term->name, ucfirst( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false && strpos( $term->name, strtolower( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false ) {
-							continue;
-						}
-						$tmp       = array( $term->term_id, $term->name );
-						$results[] = $tmp;
+			$terms = get_terms(
+				array(
+					'taxonomy'   => $taxonomy,
+					'hide_empty' => false,
+				),
+			);
+
+			if ( ! empty( $terms ) && is_array( $terms ) ) {
+				$results = array();
+				foreach ( $terms as $term ) {
+					if ( strpos( $term->name, ucfirst( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false && strpos( $term->name, strtolower( sanitize_text_field( wp_unslash( $_GET['q'] ) ) ) ) === false ) {
+						continue;
 					}
-					$results = apply_filters( 'wb_ajax_filter_restrict_terms', $results, $taxonomy );
-					echo wp_json_encode( $results );
+					$tmp       = array( $term->term_id, $term->name );
+					$results[] = $tmp;
 				}
+				$results = apply_filters( 'wb_ajax_filter_restrict_terms', $results, $taxonomy );
+				echo wp_json_encode( $results );
 			}
 		}
 		die();
@@ -691,14 +714,13 @@ class Wb_Ajax_Filter_Admin {
 	 * @return void Outputs JSON response and terminates.
 	 */
 	public function add_price_range_field_wb_callback() {
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
-		} else {
-			ob_start();
-			include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-add-price-range.php';
-			$response = ob_get_clean();
-			echo wp_json_encode( $response );
-		}
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+		$this->require_woocommerce_manager();
+
+		ob_start();
+		include_once WB_AJAX_FILTER_TEMPLATE_PATH . 'admin/field/filter-add-price-range.php';
+		$response = ob_get_clean();
+		echo wp_json_encode( $response );
 		die();
 	}
 
