@@ -164,7 +164,16 @@
 							$( 'body' ).replaceWith( $response.find( 'body' ) );
 							jQuery( '.wb-ajax-filter-loader-container' ).hide();
 							if ( scrollToTopAfterLoadResults ) {
-								$( 'html,body' ).animate( { scrollTop: $( '.site-header-wrapper' ).offset().top }, 'slow' );
+								// Scroll to the plugin's own wrapper, which exists on every theme.
+								// The previous hardcoded '.site-header-wrapper' only existed on one theme,
+								// so on Reign/Storefront/block themes offset() was undefined and threw.
+								var $scrollTarget = $( '.wb-ajax-filters-container' ).first();
+								if ( ! $scrollTarget.length ) {
+									$scrollTarget = $( '.woocommerce' ).first();
+								}
+								if ( $scrollTarget.length && $scrollTarget.offset() ) {
+									$( 'html,body' ).animate( { scrollTop: $scrollTarget.offset().top }, 'slow' );
+								}
 							}
 
 						}
