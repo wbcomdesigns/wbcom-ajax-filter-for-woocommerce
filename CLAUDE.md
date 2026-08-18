@@ -80,9 +80,9 @@ Derived from a code audit on 2026-08-08 that verified every open Basecamp card a
 
 **The filter block costs a mobile shopper the whole first screen.** Rendered at 390px on a real store: a "Filters" heading, an empty reserved gap, a Reset button and three dropdowns - the first product image starts roughly 580px down.
 
-- [ ] **Active-filter chip renders as a bare `1`** with a close button and no label - reads as a rendering bug, not a control.
-- [ ] **"Search by Category" is clipped by its own caret** at 390px.
-- [ ] **The filter block reserves vertical space with no filter applied.** Collapse behind a "Filter" toggle on mobile so products are above the fold.
+- [x] **Active-filter chip renders as a bare `1`** with a close button and no label - reads as a rendering bug, not a control. *(Fixed c3d781d: chips resolve term slugs AND WC layered-nav term IDs to term names via shared `wb_ajax_filter_get_active_filter_label()`; raw value kept in `data-filter-value` for the clear JS. Browser pass at 390px still owed - Playwright denied on the unattended run.)*
+- [x] **"Search by Category" is clipped by its own caret** at 390px. *(Fixed c3d781d: select2 selection box aligned to the forced 40px, `padding-inline-end` reserves the caret, label ellipsizes. Browser pass owed.)*
+- [x] **The filter block reserves vertical space with no filter applied.** Collapse behind a "Filter" toggle on mobile so products are above the fold. *(Fixed c3d781d: below 640px the stack collapses behind one Filters button with active-count badge; JS-gated so no-JS shoppers keep the form; chips stay visible outside the drawer. Browser pass owed.)*
 - [ ] **6 native `confirm()` calls** - highest in the suite.
 - [ ] **Templates: 34 files**, the largest template surface here and an explicit public contract.
 - [ ] Only 1 dead-code lead - clean on that axis.
