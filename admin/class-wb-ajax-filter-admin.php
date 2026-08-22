@@ -769,24 +769,48 @@ class Wb_Ajax_Filter_Admin {
 		if ( ! isset( $_GET['q'] ) ) {
 			exit;
 		}
-		$field_slug     = sanitize_text_field( wp_unslash( $_GET['q'] ) );
-		$args           = array(
-			'post_type'      => 'product',
-			'posts_per_page' => -1,
+		$field_slug = sanitize_text_field( wp_unslash( $_GET['q'] ) );
+
+		/*
+		 * Ask the database for DISTINCT meta keys, rather than reading every
+		 * product to find out which key names exist.
+		 *
+		 * This used to run `posts_per_page => -1` over the whole catalogue and
+		 * then call get_post_meta() inside the loop - every product, every meta
+		 * row, to discover a handful of key NAMES. On a store with a few
+		 * thousand products that is an admin request that never finishes, and
+		 * before the nonce bypass was closed any logged-in user could fire it.
+		 *
+		 * meta_key is indexed by WordPress, so one LIKE with a LIMIT answers the
+		 * same question in a single query, bounded whatever the catalogue size.
+		 * The match is a substring anywhere in the key, which is what the old
+		 * strpos() check did.
+		 */
+		global $wpdb;
+
+		$limit = (int) apply_filters( 'wb_ajax_filter_custom_field_search_limit', 30 );
+		$like  = '%' . $wpdb->esc_like( $field_slug ) . '%';
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Indexed lookup for an admin autocomplete; table names cannot be placeholders and the user value is prepared.
+		$meta_keys = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT pm.meta_key
+				   FROM {$wpdb->postmeta} pm
+				   INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+				  WHERE p.post_type = 'product'
+				    AND pm.meta_key LIKE %s
+				  ORDER BY pm.meta_key ASC
+				  LIMIT %d",
+				$like,
+				$limit
+			)
 		);
-		$products       = get_posts( $args );
+
 		$matched_fields = array();
-		$exclude        = array();
-		foreach ( $products as $prod ) {
-			$meta_fields = get_post_meta( $prod->ID, '', false );
-			foreach ( $meta_fields as $key => $value ) {
-				if ( strpos( $key, $field_slug ) !== false && ! in_array( $key, $exclude, true ) ) {
-					$temp             = array( $key, $key );
-					$exclude[]        = $key;
-					$matched_fields[] = $temp;
-				}
-			}
+		foreach ( (array) $meta_keys as $key ) {
+			$matched_fields[] = array( $key, $key );
 		}
+
 		echo wp_json_encode( $matched_fields );
 		exit();
 	}
