@@ -122,7 +122,7 @@ if ( ! function_exists( 'wb_ajax_filter_icon' ) ) {
 	}
 }
 
-if ( ! function_exists( 'get_taxonomy_child_terms_count' ) ) {
+if ( ! function_exists( 'wb_ajax_filter_get_taxonomy_child_terms_count' ) ) {
 
 	/**
 	 * Function to retrieve parent term's child term count.
@@ -132,7 +132,7 @@ if ( ! function_exists( 'get_taxonomy_child_terms_count' ) ) {
 	 *
 	 * @return int $total Child terms count.
 	 */
-	function get_taxonomy_child_terms_count( $parent_term_id, $taxonomy ) {
+	function wb_ajax_filter_get_taxonomy_child_terms_count( $parent_term_id, $taxonomy ) {
 
 		if ( empty( $parent_term_id ) || empty( $taxonomy ) ) {
 			return 0;
@@ -239,5 +239,34 @@ if ( ! function_exists( 'wb_ajax_filter_get_active_chips' ) ) {
 		}
 
 		return $chips;
+	}
+}
+
+if ( ! function_exists( 'get_taxonomy_child_terms_count' ) ) {
+
+	/**
+	 * Deprecated alias kept for template overrides copied before 1.3.0.
+	 *
+	 * The real function is wb_ajax_filter_get_taxonomy_child_terms_count(). The
+	 * old name sat unprefixed in the global namespace, which is a genuine
+	 * collision risk: `get_taxonomy_child_terms_count` is a name any plugin
+	 * might pick. The function_exists guard around it made that WORSE rather
+	 * than safer - it did not fatal, it silently handed this plugin whichever
+	 * definition loaded first, so a collision showed up as wrong child counts
+	 * rather than as an error anyone could see.
+	 *
+	 * The name cannot simply be dropped, because it is called from templates a
+	 * site owner is invited to copy into their theme - three of them - and
+	 * those copies keep calling the old name after an update. This alias means
+	 * an override written against 1.2.x keeps working.
+	 *
+	 * @deprecated 1.3.0 Use wb_ajax_filter_get_taxonomy_child_terms_count().
+	 *
+	 * @param int    $parent_term_id Parent term id.
+	 * @param string $taxonomy       Taxonomy.
+	 * @return int Child terms count.
+	 */
+	function get_taxonomy_child_terms_count( $parent_term_id, $taxonomy ) {
+		return wb_ajax_filter_get_taxonomy_child_terms_count( $parent_term_id, $taxonomy );
 	}
 }

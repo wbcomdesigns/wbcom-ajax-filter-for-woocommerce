@@ -1,0 +1,20 @@
+{
+  "generated": "2026-08-22T17:37:42+00:00",
+  "suppressions": [
+    {
+      "id": "option-possible-dual-key:wb_ajax_filter_search_settings <> wb_ajax_filter_search_content_settings",
+      "reason": "Informational only, and NOT yet verified. The two names may be one datum stored twice, which would need every write site to sync both. Left recorded rather than dismissed so the next person checks it instead of re-discovering it.",
+      "severity": "info"
+    },
+    {
+      "id": "hook-consumed-never-fired:wb_ajax_filter_settings_nav_groups",
+      "reason": "Fired by the vendored settings shell, which the audit cannot see on two counts: lib/ is excluded from scope, and the shell builds the name at runtime as $prefix . '_settings_nav_groups' (lib/wbcom-settings/class-wbcom-settings-page.php:324). The listener at admin/class-wb-ajax-filter-admin.php:220 does run - the settings navigation renders.",
+      "severity": "error"
+    },
+    {
+      "id": "hook-consumed-never-fired:wb_ajax_filter_settings_tab_content",
+      "reason": "Same as the nav-groups hook: fired dynamically by the vendored shell as $prefix . '_settings_tab_content' (lib/wbcom-settings/class-wbcom-settings-page.php:525), outside audit scope. The listener at admin/class-wb-ajax-filter-admin.php:221 does run - tab bodies render.",
+      "severity": "error"
+    }
+  ]
+}

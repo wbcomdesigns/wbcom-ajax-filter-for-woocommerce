@@ -66,7 +66,7 @@ if ( file_exists( WB_AJAX_FILTER_PLUGIN_PATH . 'lib/wbcom-settings/loader.php' )
  *
  * @since 1.0.0
  */
-function activate_wb_ajax_filter() {
+function wb_ajax_filter_activate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wb-ajax-filter-activator.php';
 	Wb_Ajax_Filter_Activator::activate();
 }
@@ -77,13 +77,13 @@ function activate_wb_ajax_filter() {
  *
  * @since 1.0.0
  */
-function deactivate_wb_ajax_filter() {
+function wb_ajax_filter_deactivate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wb-ajax-filter-deactivator.php';
 	Wb_Ajax_Filter_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_wb_ajax_filter' );
-register_deactivation_hook( __FILE__, 'deactivate_wb_ajax_filter' );
+register_activation_hook( __FILE__, 'wb_ajax_filter_activate' );
+register_deactivation_hook( __FILE__, 'wb_ajax_filter_deactivate' );
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -106,7 +106,7 @@ if ( ! function_exists( 'wb_ajax_filter_check_woocomerce' ) ) {
 			add_action( 'admin_notices', 'wb_ajax_filter_admin_notice_error' );
 			deactivate_plugins( plugin_basename( __FILE__ ) );
 		} else {
-			run_wb_ajax_filter();
+			wb_ajax_filter_run();
 		}
 	}
 }
@@ -165,7 +165,10 @@ function wb_ajax_filter_activation_redirect_settings( $plugin ) {
 	}
 	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'WooCommerce' ) ) {
 		if ( isset( $_REQUEST['action'] ) && 'activate' === $_REQUEST['action'] && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] === $plugin ) { //phpcs:ignore
-			wp_redirect( admin_url( 'admin.php?page=wc-ajax-filter-settings' ) );
+			// wp_safe_redirect, not wp_redirect. The target is admin_url() so there
+			// is no open-redirect risk here today, but the safe variant is the one
+			// that stays correct if this ever takes a value from the request.
+			wp_safe_redirect( admin_url( 'admin.php?page=wc-ajax-filter-settings' ) );
 			exit;
 		}
 	}
@@ -181,7 +184,7 @@ add_action( 'plugins_loaded', 'wb_ajax_filter_initialize_plugin' );
  */
 function wb_ajax_filter_initialize_plugin() {
 	if ( class_exists( 'WooCommerce' ) ) {
-		run_wb_ajax_filter();
+		wb_ajax_filter_run();
 	} else {
 		add_action( 'admin_notices', 'wb_ajax_filter_admin_notice_error' );
 	}
@@ -196,7 +199,7 @@ function wb_ajax_filter_initialize_plugin() {
  *
  * @since    1.0.0
  */
-function run_wb_ajax_filter() {
+function wb_ajax_filter_run() {
 
 	$plugin = new Wb_Ajax_Filter();
 	$plugin->run();

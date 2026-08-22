@@ -23,7 +23,7 @@ $show_term_count = ( isset( $filters['show_count'] ) && ( 'yes' === $filters['sh
 			$term_data = get_term( $filter_term->id, $filters['taxonomy'] );
 
 
-			$count_child_terms = get_taxonomy_child_terms_count( $filter_term->id, $filters['taxonomy'] );
+			$count_child_terms = wb_ajax_filter_get_taxonomy_child_terms_count( $filter_term->id, $filters['taxonomy'] );
 			$count_child_terms = $count_child_terms + $term_data->count;
 
 			$disabled = ( 0 === $count_child_terms ) ? 'disabled' : '';

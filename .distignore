@@ -1,0 +1,79 @@
+# Files excluded from the customer zip.
+#
+# Every pattern here is matched by rsync --exclude, which matches at ANY depth
+# unless the pattern is anchored with a leading slash. That is deliberate for
+# things like .git and node_modules, and dangerous for short generic names -
+# a bare `src` would strip a bundled library's own src/ directory as well as
+# the plugin's. Anchor anything generic.
+#
+# What must NOT be listed here, however tempting: edd-license/ and
+# lib/wbcom-settings/. Both are committed RUNTIME code, not development
+# dependencies - composer does not restore them on a customer's site, so if
+# they are not in the zip they are not on their site, and licensing and the
+# settings screen break on every fresh install.
+
+# Version control and editor state
+.git
+.gitignore
+.gitattributes
+.editorconfig
+.vscode
+.idea
+*.code-workspace
+
+# CI and code-quality config
+.github
+.phpcs.xml
+.phpcs.xml.dist
+phpcs.xml
+phpcs.xml.dist
+phpunit.xml
+phpunit.xml.dist
+phpstan.neon
+phpstan.neon.dist
+.travis.yml
+
+# Node and build tooling. The minified and RTL assets are COMMITTED, so the
+# zip needs no build step - only the tooling that would regenerate them is
+# excluded.
+node_modules
+package.json
+package-lock.json
+gruntfile.js
+Gruntfile.js
+webpack.config.js
+
+# Every markdown file, at any depth.
+#
+# A wildcard rather than a list of filenames. Naming them one at a time means
+# anything added later ships by default, and that is not hypothetical: the
+# sibling Price Quote plugin shipped an internal QA report carrying a local dev
+# URL, and its Pro half shipped a competitive audit, to every customer.
+# Customer documentation is README.txt; working notes belong in docs/.
+*.md
+
+# Working notes and internal docs
+/plan
+/docs
+/audit
+
+# Build inputs and outputs
+/bin
+/dist
+/tests
+.distignore
+.contract-audit-baseline.json
+
+# Tooling scratch that is gitignored but still on disk.
+#
+# .distignore is applied by rsync against the WORKING TREE, not against git's
+# index, so "it is in .gitignore" is not protection - a gitignored directory
+# sitting on disk ships anyway. .autovap-wt holds full worktree copies of the
+# plugin, 2.8M of duplicate code, and would have gone out in the zip.
+.autovap-wt
+.worktrees
+*.log
+
+# OS noise
+.DS_Store
+Thumbs.db
