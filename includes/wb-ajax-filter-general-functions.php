@@ -178,12 +178,34 @@ if ( ! function_exists( 'wb_ajax_filter_get_active_filter_label' ) ) {
 	 * @return string Human-readable label.
 	 */
 	function wb_ajax_filter_get_active_filter_label( $filter_key, $value ) {
-
+		/*
+		 * Resolve the key to a taxonomy, allowing for all three spellings that
+		 * reach this function.
+		 *
+		 * The `filter_` branch used to assume everything after the prefix was a
+		 * product ATTRIBUTE and prepend pa_ unconditionally. That is right for
+		 * filter_color -> pa_color and wrong for filter_product_cat, which
+		 * became pa_product_cat, matched no taxonomy, and fell through to
+		 * returning the raw value - so a category chip read "uncategorized",
+		 * the slug, instead of "Uncategorized", the term name. WooCommerce's
+		 * layered nav emits filter_product_cat and filter_product_tag beside
+		 * filter_<attribute>, so the prefix alone does not tell you which.
+		 *
+		 * Ask the taxonomy registry rather than guessing from the name: use the
+		 * key as-is when it is already a taxonomy, then the un-prefixed
+		 * remainder, then the pa_ form.
+		 */
 		$taxonomy = '';
-		if ( 'product_cat' === $filter_key || 'product_tag' === $filter_key ) {
+		if ( taxonomy_exists( $filter_key ) ) {
 			$taxonomy = $filter_key;
 		} elseif ( 0 === strpos( $filter_key, 'filter_' ) ) {
-			$taxonomy = 'pa_' . substr( $filter_key, 7 );
+			$bare = substr( $filter_key, 7 );
+
+			if ( taxonomy_exists( $bare ) ) {
+				$taxonomy = $bare;
+			} elseif ( taxonomy_exists( 'pa_' . $bare ) ) {
+				$taxonomy = 'pa_' . $bare;
+			}
 		}
 
 		if ( $taxonomy && taxonomy_exists( $taxonomy ) ) {
