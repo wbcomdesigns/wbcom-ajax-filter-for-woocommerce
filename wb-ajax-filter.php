@@ -58,7 +58,7 @@ if ( ! defined( 'WB_AJAX_FILTER_PLUGIN_PATH' ) ) {
  */
 if ( file_exists( WB_AJAX_FILTER_PLUGIN_PATH . 'lib/wbcom-settings/loader.php' ) ) {
 	require_once WB_AJAX_FILTER_PLUGIN_PATH . 'lib/wbcom-settings/loader.php';
-	wbcom_settings_register( '1.0.1', WB_AJAX_FILTER_PLUGIN_PATH . 'lib/wbcom-settings/class-wbcom-settings-page.php' );
+	wbcom_settings_register( '1.0.2', WB_AJAX_FILTER_PLUGIN_PATH . 'lib/wbcom-settings/class-wbcom-settings-page.php' );
 }
 /**
  * The code that runs during plugin activation.

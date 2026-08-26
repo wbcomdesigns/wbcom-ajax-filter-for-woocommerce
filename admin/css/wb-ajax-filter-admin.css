@@ -101,7 +101,6 @@ form#filter-preset-create {
 	}
 }
 
-
 .wb-ajax-filter-toggle-content-row {
 	padding: 25px;
 	overflow: hidden;
@@ -316,8 +315,6 @@ span.view-all-presets {
 	font-size: 13px;
 	line-height: 1.1;
 }
-
-
 
 /*Add Filter Presets*/
 .wb-ajax-filter-create-preset-section h2 {
@@ -593,16 +590,6 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
 	width: 100% !important;
 }
 
-
-/* div#setting-error-settings_updated {
-	position: absolute;
-	bottom: 153px;
-	left: 40%;
-	width: 50%;
-	z-index: 9;
-	border-radius: 8px;
-} */
-
 .nav-tab-wrapper ul .wb-ajax-filter-presets a:before {
 	content: "\f536" !important;
 }
@@ -615,25 +602,12 @@ a.wb-ajax-filter-save-title-button.button-primary.wb-add-new-filter {
 	content: "\f348" !important;
 }
 
-
 .nav-tab-wrapper ul .wb-ajax-filter-ajax-search-settings a:before {
 	content: "\f107" !important;
 }
 
 .nav-tab-wrapper ul .wb-ajax-filter-search a:before {
 	content: "\f179" !important;
-}
-
-div#setting-error-settings_updated {
-	position: absolute;
-	right: 50px;
-	z-index: 99;
-	border-radius: 10px;
-	line-height: normal;
-	background: transparent;
-	border: none;
-	box-shadow: none;
-	color: var(--wb-success);
 }
 
 button.notice-dismiss:before {
