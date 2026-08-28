@@ -101,12 +101,13 @@ if ( ! function_exists( 'wb_ajax_filter_check_woocomerce' ) ) {
 	 * @since    1.0.0
 	 */
 	function wb_ajax_filter_check_woocomerce() {
+		// Only job here is to deactivate when WooCommerce is missing. Running the
+		// plugin is handled once on plugins_loaded (below); re-running it here
+		// bootstrapped a second Wb_Ajax_Filter instance on every admin load.
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			add_action( 'admin_notices', 'wb_ajax_filter_admin_notice_error' );
 			deactivate_plugins( plugin_basename( __FILE__ ) );
-		} else {
-			wb_ajax_filter_run();
 		}
 	}
 }
