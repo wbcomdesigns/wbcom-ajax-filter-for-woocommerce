@@ -206,6 +206,7 @@ function wb_ajax_filter_initialize_plugin() {
  */
 function wb_ajax_filter_run() {
 
-	$plugin = new Wb_Ajax_Filter();
-	$plugin->run();
+	// Constructing the core class registers every admin and public hook directly
+	// with WordPress; there is no separate run step.
+	new Wb_Ajax_Filter();
 }
