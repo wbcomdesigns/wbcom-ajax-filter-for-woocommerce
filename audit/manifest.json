@@ -1,0 +1,212 @@
+{
+  "header": {
+    "name": "Wbcom Designs - Ajax Filter For WooCommerce",
+    "slug": "wbcom-ajax-filter-for-woocommerce",
+    "mainFile": "wb-ajax-filter.php",
+    "version": "1.3.0",
+    "textDomain": "wb-ajax-filter",
+    "domainPath": "/languages",
+    "requiresWP": "4.0",
+    "testedUpTo": "6.9",
+    "requiresPHP": null,
+    "description": "Real-time AJAX product filtering for WooCommerce shop archives - filter by taxonomy, price, stock, rating and order-by, no page reload.",
+    "author": "Wbcom Designs",
+    "pluginURI": "https://wbcomdesigns.com/downloads/wbcom-ajax-filter-for-woocommerce/",
+    "requiresPlugins": "woocommerce",
+    "network": false
+  },
+  "pluginPath": "wbcom-ajax-filter-for-woocommerce",
+  "cssPrefix": "wb-ajax-filter",
+  "hasEnqueueCalls": true,
+  "hasIntegrationConditionals": true,
+  "generated": {
+    "generator": "manual catalog (qa/gate-catalog)",
+    "schema": "v3-functional",
+    "date": "2026-08-29",
+    "sourceRef": "qa/gate-catalog @ bbae1e5"
+  },
+  "stats": {
+    "phpFiles": 62,
+    "jsFiles": 5,
+    "cssFiles": 6
+  },
+  "constants": [
+    "WB_AJAX_FILTER_VERSION",
+    "WB_AJAX_FILTER_PLUGIN_URL",
+    "WB_AJAX_FILTER_PLUGIN_FILE",
+    "WB_AJAX_FILTER_PLUGIN_PATH",
+    "WB_AJAX_FILTER",
+    "WB_AJAX_FILTER_URL",
+    "WB_AJAX_FILTER_PATH",
+    "WB_AJAX_FILTER_TEMPLATE_PATH"
+  ],
+  "bootstrap": {
+    "runsOnce": true,
+    "entryHook": "plugins_loaded -> wb_ajax_filter_initialize_plugin -> wb_ajax_filter_run()",
+    "coreClass": "Wb_Ajax_Filter",
+    "loader": "Wb_Ajax_Filter_Loader",
+    "dependencyGuard": "admin_init -> wb_ajax_filter_check_woocomerce (deactivate only when WooCommerce missing; does NOT re-run the bootstrap)",
+    "note": "1.3.0 fixed a double bootstrap (commit b9e0d9d): the admin_init WooCommerce check previously also instantiated Wb_Ajax_Filter, producing 2 instances / 4 callbacks per admin load. Instantiation now happens once on plugins_loaded."
+  },
+  "cpts": [
+    {
+      "post_type": "wb_filter_preset",
+      "public": false,
+      "show_ui": true,
+      "show_in_menu": false,
+      "supports": ["title"],
+      "registered_in": "admin/class-wb-ajax-filter-admin.php:wb_ajax_filter_register_post_type",
+      "purpose": "Stores each saved filter preset; field configuration lives in the _wb_filter post meta."
+    }
+  ],
+  "post_meta": [
+    { "key": "_wb_filter", "on": "wb_filter_preset", "shape": "array of filter-field configs", "owner": "Wb_Ajax_Filter_Presets::META_CONFIG" },
+    { "key": "preset_enabled", "on": "wb_filter_preset", "shape": "'yes' when live; absent/other = disabled", "owner": "Wb_Ajax_Filter_Presets::META_ENABLED" }
+  ],
+  "options": [
+    "wb_ajax_filter_admin_general_options",
+    "wb_ajax_filter_admin_customization_options",
+    "wb_ajax_filter_search_settings",
+    "wb_ajax_filter_search_content_settings",
+    "wb_ajax_filter_default_preset_seeded"
+  ],
+  "data_stores": [
+    {
+      "name": "Filter presets",
+      "backing": "wb_filter_preset CPT + _wb_filter / preset_enabled meta",
+      "owner": "Wb_Ajax_Filter_Presets (single data-access seam)",
+      "reachable": {
+        "frontend": "shortcode / block / auto-render on shop archives",
+        "admin": "Your Filters (preset builder) + Stored Data (list/moderate/export) + Overview",
+        "rest": "wb-ajax-filter/v1/presets"
+      },
+      "pagination": "Wb_Ajax_Filter_Presets::normalize_args - mandatory LIMIT/OFFSET, per_page capped at MAX_PER_PAGE (100), whitelisted orderby, COUNT via wp_count_posts()"
+    }
+  ],
+  "rest": {
+    "namespace": "wb-ajax-filter/v1",
+    "intent": "Deliberate public API for headless storefronts, mobile apps and external integrations - the same preset records the Stored Data screen lists.",
+    "endpoints": [
+      {
+        "route": "/wb-ajax-filter/v1/presets",
+        "methods": ["READABLE"],
+        "permission": "manage_woocommerce",
+        "gated_by": "Wb_Ajax_Filter_REST_Controller::permissions_check (fail-closed, never __return_true)",
+        "callback": "get_items",
+        "params": ["page", "per_page", "search", "status", "orderby", "order", "with_config"],
+        "totals": "X-WP-Total / X-WP-TotalPages headers",
+        "file": "includes/class-wb-ajax-filter-rest-controller.php:43"
+      },
+      {
+        "route": "/wb-ajax-filter/v1/presets/(?P<id>[\\d]+)",
+        "methods": ["READABLE", "EDITABLE", "DELETABLE"],
+        "permission": "manage_woocommerce",
+        "gated_by": "Wb_Ajax_Filter_REST_Controller::permissions_check (fail-closed)",
+        "callback": "get_item / update_item / delete_item",
+        "writable_fields": ["enabled", "title"],
+        "file": "includes/class-wb-ajax-filter-rest-controller.php:57"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "name": "wb-ajax-filter/filters",
+      "title": "Ajax Product Filters",
+      "apiVersion": 3,
+      "category": "woocommerce",
+      "dynamic": true,
+      "render_callback": "Wb_Ajax_Filter_Blocks::render_filters_block",
+      "attributes": ["preset"],
+      "renderer": "Shares the shortcode renderer Wb_Ajax_Filter_Public::filter_preset_shortcode_callback",
+      "editor_data": "wbAjaxFilterBlock.presets (preset picker) via localize_editor_presets",
+      "metadata": "assets/blocks/filters/block.json",
+      "reason": "Block themes often never fire woocommerce_before_shop_loop, so the block lets owners place filters by hand."
+    }
+  ],
+  "shortcodes": [
+    {
+      "tag": "wb_ajax_filters",
+      "callback": "Wb_Ajax_Filter_Public::filter_preset_shortcode_callback",
+      "atts": ["slug"],
+      "behavior": "No slug renders every enabled preset; slug=\"...\" renders one preset. Same output as the block and the archive auto-render."
+    }
+  ],
+  "admin_pages": [
+    {
+      "page": "wc-ajax-filter-settings",
+      "type": "shared Wbcom settings shell (lib/wbcom-settings/)",
+      "capability": "manage_options (menu) / manage_woocommerce (data actions)",
+      "parent": "wbcomplugins (WB Plugins)",
+      "tabs": ["overview", "wb-ajax-filter-presets (Your Filters)", "stored-data (Stored Data)", "advanced", "license"],
+      "file": "admin/class-wb-ajax-filter-admin.php:boot_settings_page"
+    }
+  ],
+  "admin_screens": {
+    "Overview": "Read-first dashboard: active presets, live fields, archives rendered on (get_overview_stats).",
+    "Your Filters": "Preset builder - create/duplicate/delete presets, drag-sort fields, per-field config (tab-filters.php + preset builder modal).",
+    "Stored Data": "WP_List_Table of presets: paginate, status views/filter, bulk enable/disable/delete, JSON+CSV export (tab-data.php, Wb_Ajax_Filter_Data_Screen, Wb_Ajax_Filter_Presets_List_Table).",
+    "Advanced": "General + search + customization option groups (tab-advanced.php).",
+    "License": "EDD SL license activation (tab-license.php)."
+  },
+  "ajax": [
+    { "action": "load_create_filter_template_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "create_filter_preset_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "check_filter_preset_title_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "duplicate_filter_preset_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "delete_filter_preset_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "duplicate_single_filter_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "delete_single_filter_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "enable_disable_filter_preset_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "select2_get_terms_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "add_price_range_field_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "enable_disable_single_filter_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "edit_preset_post_title_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "customize_term_text_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "sortable_single_filters_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "check_custom_field_exists_wb", "priv": true, "nopriv": false, "nonce": "ajax-nonce", "cap": "manage_woocommerce" },
+    { "action": "get_ajax_search_autocomplete_title_wb", "priv": true, "nopriv": true, "nonce": "public search nonce", "cap": "public (shopper autocomplete)" }
+  ],
+  "admin_post": [
+    { "action": "wb_ajax_filter_export", "handler": "Wb_Ajax_Filter_Data_Screen::handle_export", "nonce": "wb_ajax_filter_export", "cap": "manage_woocommerce", "formats": ["json", "csv"] }
+  ],
+  "frontend_hooks": [
+    "woocommerce_before_shop_loop (add_wb_ajax_filters)",
+    "woocommerce_no_products_found (add_wb_ajax_filters)",
+    "woocommerce_product_query @999 (wb_ajax_filter_modify_wc_product_query)",
+    "posts_search @9999 (wb_ajax_filters_product_search_by_sku)",
+    "woocommerce_redirect_single_search_result",
+    "wp_footer (loader markup)"
+  ],
+  "hooks_fired": [
+    "wb_ajax_filter_fields",
+    "wb_ajax_filter_after_filter_fields",
+    "wb_ajax_filter_before_filter_fields",
+    "wb_ajax_filter_before_content",
+    "wb_ajax_filter_after_content",
+    "wb_ajax_filter_before_admin_general_settings",
+    "wb_ajax_filter_after_admin_general_settings",
+    "wb_ajax_filter_before_admin_search_settings",
+    "wb_ajax_filter_after_admin_search_settings",
+    "wb_ajax_filter_before_admin_search_option_settings",
+    "wb_ajax_filter_after_admin_search_option_settings",
+    "wb_ajax_filter_before_admin_customization_settings",
+    "wb_ajax_filter_after_admin_customization_settings"
+  ],
+  "filter_seams": [
+    "wb_ajax_filter_settings_nav_groups",
+    "wb_ajax_filter_settings_tab_content",
+    "wb_ajax_filter_get_preset_filters",
+    "wb_ajax_filter_restrict_products",
+    "wb_ajax_filter_restrict_terms",
+    "wb_ajax_filter_custom_field_search_limit"
+  ],
+  "templates": {
+    "overridable_via": "wc_get_template - copy into yourtheme/wb-ajax-filter/ keeping relative path",
+    "dirs": ["templates/filters/", "templates/filters/global/", "templates/filters/filter-tax/items/", "templates/shortcode/", "templates/public/", "templates/admin/", "templates/admin/field/"]
+  },
+  "cron": [],
+  "tables": [],
+  "seed": {
+    "default_preset": "Wb_Ajax_Filter_Activator::maybe_seed_default_preset on init@20; latched by wb_ajax_filter_default_preset_seeded option so it retries on updates that skip the activation hook."
+  }
+}
