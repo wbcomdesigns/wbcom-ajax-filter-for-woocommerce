@@ -66,7 +66,7 @@ class Wb_Ajax_Filter_Blocks {
 		}
 
 		$this->block_type = register_block_type(
-			WB_AJAX_FILTER_PATH . 'assets/blocks/filters',
+			WB_AJAX_FILTER_PLUGIN_PATH . 'assets/blocks/filters',
 			array(
 				'render_callback' => array( $this, 'render_filters_block' ),
 			)

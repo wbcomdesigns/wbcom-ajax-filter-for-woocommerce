@@ -51,6 +51,22 @@ if ( ! defined( 'WB_AJAX_FILTER_PLUGIN_PATH' ) ) {
 	define( 'WB_AJAX_FILTER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 }
 
+if ( ! defined( 'WB_AJAX_FILTER_TEMPLATE_PATH' ) ) {
+	define( 'WB_AJAX_FILTER_TEMPLATE_PATH', WB_AJAX_FILTER_PLUGIN_PATH . 'templates/' );
+}
+
+/**
+ * Load the plugin text domain for translation.
+ *
+ * @since 1.0.0
+ */
+add_action(
+	'init',
+	function () {
+		load_plugin_textdomain( 'wb-ajax-filter', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+);
+
 /*
  * The shared Wbcom settings screen (Pattern A) is a bundled library: every Wbcom
  * plugin ships its own copy, each copy registers its version, and the newest
@@ -71,19 +87,7 @@ function wb_ajax_filter_activate() {
 	Wb_Ajax_Filter_Activator::activate();
 }
 
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-wb-ajax-filter-deactivator.php
- *
- * @since 1.0.0
- */
-function wb_ajax_filter_deactivate() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wb-ajax-filter-deactivator.php';
-	Wb_Ajax_Filter_Deactivator::deactivate();
-}
-
 register_activation_hook( __FILE__, 'wb_ajax_filter_activate' );
-register_deactivation_hook( __FILE__, 'wb_ajax_filter_deactivate' );
 
 /**
  * The core plugin class that is used to define internationalization,
