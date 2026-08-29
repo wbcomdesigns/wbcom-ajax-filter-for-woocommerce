@@ -786,3 +786,56 @@ a.wb-ajax-filter-range-remove:focus-visible,
 	outline: 2px solid var(--wb-accent);
 	outline-offset: 2px;
 }
+
+/* Stored Data screen - the WP list table sits inside the shell card, so strip
+ * its stock chrome (outer border, box shadow, row striping) and use token row
+ * dividers only, matching every other premium tab. */
+.wb-ajax-filter-data-screen .wb-ajax-filter-data-export-all {
+	display: flex;
+	gap: 8px;
+	margin: 4px 0 14px;
+}
+
+.wb-ajax-filter-data-screen .subsubsub {
+	margin: 0 0 6px;
+}
+
+.wb-ajax-filter-data-screen .search-box {
+	margin-bottom: 10px;
+}
+
+.wb-ajax-filter-data-screen .tablenav.top {
+	height: auto;
+	margin: 6px 0 4px;
+}
+
+/* Duplicate bulk-actions + repeated header at the foot are redundant on a
+ * presets list, which is inherently small. */
+.wb-ajax-filter-data-screen .tablenav.bottom,
+.wb-ajax-filter-data-screen .wp-list-table tfoot {
+	display: none;
+}
+
+.wb-ajax-filter-data-screen .wp-list-table {
+	border: 0;
+	background: transparent;
+	box-shadow: none;
+}
+
+.wb-ajax-filter-data-screen .wp-list-table thead th,
+.wb-ajax-filter-data-screen .wp-list-table thead td {
+	background: transparent;
+	border-bottom: 1px solid var(--wb-border, #dcdcde);
+	color: var(--wb-muted, #646970);
+}
+
+.wb-ajax-filter-data-screen .wp-list-table tbody th,
+.wb-ajax-filter-data-screen .wp-list-table tbody td {
+	background: transparent;
+	border-bottom: 1px solid var(--wb-border, #dcdcde);
+}
+
+.wb-ajax-filter-data-screen .wp-list-table tbody tr:last-child th,
+.wb-ajax-filter-data-screen .wp-list-table tbody tr:last-child td {
+	border-bottom: 0;
+}

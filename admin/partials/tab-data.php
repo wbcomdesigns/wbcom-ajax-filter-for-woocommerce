@@ -46,11 +46,12 @@ $wb_export_all_csv  = wp_nonce_url(
 ?>
 <div class="wb-ajax-filter-data-screen">
 
-	<p class="wb-ajax-filter-data-intro">
-		<?php esc_html_e( 'Every filter preset this plugin has stored on your site. Enable, disable or delete presets here; export carries the full field configuration, so a JSON file can move presets to another site or travel with a support ticket. The full JSON export also includes the plugin settings.', 'wb-ajax-filter' ); ?>
-	</p>
-
 	<?php
+	Wbcom_Settings_Page::card_open(
+		__( 'Stored presets', 'wb-ajax-filter' ),
+		__( 'Every filter preset stored on your site. Enable, disable, delete or export them here; a JSON export carries the full field configuration and the plugin settings, so it can move to another site or travel with a support ticket.', 'wb-ajax-filter' )
+	);
+
 	// Result of the action that just redirected back here, if any.
 	echo wp_kses_post( Wb_Ajax_Filter_Data_Screen::result_notice() );
 	?>
@@ -82,4 +83,6 @@ $wb_export_all_csv  = wp_nonce_url(
 		);
 		?>
 	</p>
+
+	<?php Wbcom_Settings_Page::card_close(); ?>
 </div>
