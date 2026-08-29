@@ -23,10 +23,10 @@ defined( 'ABSPATH' ) || exit;
 	<h4><?php echo esc_html( $text ); ?></h4>
 	<p class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper term-label">
 		<label for="term_label"><?php echo esc_html__( 'Label', 'wb-ajax-filter' ); ?></label>
-		<input id="term_label" type="text" name="filters[terms_text][<?php echo esc_html( $term_id ); ?>][label]" value="<?php echo esc_attr( $text ); ?>">
+		<input class="wbcom-input" id="term_label" type="text" name="filters[terms_text][<?php echo esc_html( $term_id ); ?>][label]" value="<?php echo esc_attr( $text ); ?>">
 	</p>
 	<p class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper term-tooltip">
 		<label for="term_tooltip"><?php echo esc_html__( 'Tooltip', 'wb-ajax-filter' ); ?></label>
-		<input id="term_tooltip" type="text" name="filters[terms_text][<?php echo esc_html( $term_id ); ?>][tooltip]" value="<?php echo esc_attr( $tooltip ); ?>">
+		<input class="wbcom-input" id="term_tooltip" type="text" name="filters[terms_text][<?php echo esc_html( $term_id ); ?>][tooltip]" value="<?php echo esc_attr( $tooltip ); ?>">
 	</p>
 </div>

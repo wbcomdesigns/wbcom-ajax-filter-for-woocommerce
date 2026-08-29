@@ -56,10 +56,10 @@ $wb_export_all_csv  = wp_nonce_url(
 	?>
 
 	<p class="wb-ajax-filter-data-export-all">
-		<a href="<?php echo esc_url( $wb_export_all_json ); ?>" class="button">
+		<a href="<?php echo esc_url( $wb_export_all_json ); ?>" class="wbcom-btn">
 			<?php esc_html_e( 'Export all (JSON)', 'wb-ajax-filter' ); ?>
 		</a>
-		<a href="<?php echo esc_url( $wb_export_all_csv ); ?>" class="button">
+		<a href="<?php echo esc_url( $wb_export_all_csv ); ?>" class="wbcom-btn">
 			<?php esc_html_e( 'Export list (CSV)', 'wb-ajax-filter' ); ?>
 		</a>
 	</p>

@@ -109,6 +109,11 @@ $wb_snapshot[] = array(
 		? __( 'Filters use the custom colours set under Advanced instead of your theme\'s styling.', 'wb-ajax-filter' )
 		: __( 'Filters inherit your theme\'s colours and typography.', 'wb-ajax-filter' ),
 );
+
+Wbcom_Settings_Page::card_open(
+	__( 'At a glance', 'wb-ajax-filter' ),
+	__( 'The plugin state and headline numbers for this store right now.', 'wb-ajax-filter' )
+);
 ?>
 
 <div class="wb-ajax-overview-meta">
@@ -184,6 +189,8 @@ $wb_snapshot[] = array(
 </div>
 
 <?php
+Wbcom_Settings_Page::card_close();
+
 Wbcom_Settings_Page::card_open(
 	__( 'Current configuration', 'wb-ajax-filter' ),
 	__( 'What a shopper experiences with the options saved right now.', 'wb-ajax-filter' )

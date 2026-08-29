@@ -262,14 +262,14 @@
 
 			// Show/hide fields according to filter for values
 			function hideToggleElements( showClass ) {
-				jQuery( '.wb-ajax-filter-toggle-content-row' ).each(
+				jQuery( '.wb-ajax-filter-toggle-content .wbcom-field-group' ).each(
 					function () {
 						if ( ! jQuery( this ).hasClass( 'wb-show-style-toggle' ) ) {
 								jQuery( this ).show();
 						}
 					}
 				);
-				jQuery( '.wb-ajax-filter-toggle-content-row' ).each(
+				jQuery( '.wb-ajax-filter-toggle-content .wbcom-field-group' ).each(
 					function () {
 						if ( ! jQuery( this ).hasClass( 'wb-all-toggle' ) && ! jQuery( this ).hasClass( 'wb-' + showClass + '-toggle' ) && ! jQuery( this ).hasClass( 'wb-show-style-toggle' ) ) {
 								jQuery( this ).hide();
@@ -426,9 +426,9 @@
 				'change',
 				function () {
 					if ( jQuery( this ).is( ':checked' ) ) {
-						jQuery( this ).closest( '.wb-ajax-filter-toggle-content-row' ).next( '.wb-ajax-filter-toggle-content-row' ).show();
+						jQuery( this ).closest( '.wbcom-field-group' ).next( '.wbcom-field-group' ).show();
 					} else {
-						jQuery( this ).closest( '.wb-ajax-filter-toggle-content-row' ).next( '.wb-ajax-filter-toggle-content-row' ).hide();
+						jQuery( this ).closest( '.wbcom-field-group' ).next( '.wbcom-field-group' ).hide();
 					}
 				}
 			);
@@ -575,9 +575,9 @@
 				'select[name="filters[taxonomy]"]',
 				function () {
 					if ( jQuery( this ).val() != '' ) {
-						jQuery( this ).closest( '.wb-ajax-filter-toggle-content-row' ).next( '.wb-tax-toggle' ).show( 250 );
+						jQuery( this ).closest( '.wbcom-field-group' ).next( '.wb-tax-toggle' ).show( 250 );
 					} else {
-						jQuery( this ).closest( '.wb-ajax-filter-toggle-content-row' ).next( '.wb-tax-toggle' ).hide( 250 );
+						jQuery( this ).closest( '.wbcom-field-group' ).next( '.wb-tax-toggle' ).hide( 250 );
 					}
 				}
 			);
