@@ -17,19 +17,19 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 	$style = '';
 }
 ?>
-<div class="wb-ajax-filter-toggle-content-row wb-price-range-toggle wb-tax-toggle wb-review-toggle wb-stock-sale-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label><?php esc_html_e( 'Adaptive filtering', 'wb-ajax-filter' ); ?></label>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-radio-field-wrapper">
-		<div class="wb-ajax-filter-radio " data-value="hide" data-type="radio">
-			<div class="wb-ajax-filter-radio__row">
-				<input id="hidden_term" type="radio" name="filters[adoptive]" class="wb-input wb-filter-type-tax wb-filter-type-price-range wb-filter-type-review wb-filter-type-stock-sale" value="hide" <?php echo ( isset( $filters['adoptive'] ) && 'hide' === $filters['adoptive'] ) ? 'checked' : ''; ?>>
-				<label for="hidden_term"><?php esc_html_e( 'Unavailable terms will be hidden.', 'wb-ajax-filter' ); ?></label>
-			</div>
-			<div class="wb-ajax-filter-radio__row">
-				<input id="visible_term" type="radio" name="filters[adoptive]" class="wb-input wb-filter-type-tax wb-filter-type-price-range wb-filter-type-review wb-filter-type-stock-sale" value="show" <?php echo ( isset( $filters['adoptive'] ) && 'show' === $filters['adoptive'] ) ? 'checked' : ''; ?>>
-				<label for="visible_term"><?php esc_html_e( 'Unavailable terms will be visible but not clickable.', 'wb-ajax-filter' ); ?></label>
-			</div>
-		</div>
+<div class="wbcom-field wbcom-field-group wb-price-range-toggle wb-tax-toggle wb-review-toggle wb-stock-sale-toggle" style="<?php echo esc_attr( $style ); ?>">
+	<div class="wbcom-field-info">
+		<label><?php esc_html_e( 'Adaptive filtering', 'wb-ajax-filter' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Choose how to handle filter options that show no results. Choose to hide them or make them visible (this will show them in lighter grey and not clickable).', 'wb-ajax-filter' ); ?></p>
 	</div>
-	<span class="description"><?php esc_html_e( 'Choose how to handle filter options that show no results. Choose to hide them or make them visible (this will show them in lighter grey and not clickable).', 'wb-ajax-filter' ); ?></span>
+	<div class="wbcom-field-control">
+		<label>
+			<input id="hidden_term" type="radio" name="filters[adoptive]" class="wb-input wb-filter-type-tax wb-filter-type-price-range wb-filter-type-review wb-filter-type-stock-sale" value="hide" <?php echo ( isset( $filters['adoptive'] ) && 'hide' === $filters['adoptive'] ) ? 'checked' : ''; ?>>
+			<span class="description"><?php esc_html_e( 'Unavailable terms will be hidden.', 'wb-ajax-filter' ); ?></span>
+		</label>
+		<label>
+			<input id="visible_term" type="radio" name="filters[adoptive]" class="wb-input wb-filter-type-tax wb-filter-type-price-range wb-filter-type-review wb-filter-type-stock-sale" value="show" <?php echo ( isset( $filters['adoptive'] ) && 'show' === $filters['adoptive'] ) ? 'checked' : ''; ?>>
+			<span class="description"><?php esc_html_e( 'Unavailable terms will be visible but not clickable.', 'wb-ajax-filter' ); ?></span>
+		</label>
+	</div>
 </div>

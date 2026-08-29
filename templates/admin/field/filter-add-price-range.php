@@ -42,19 +42,17 @@ $highest_price = $prod->get_price();
 	<p class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper min">
 		<span class="wb_price_range_min_error" hidden></span>
 		<label for="wb_price_ranges_<?php echo esc_html( $count ); ?>_min"><?php esc_html_e( 'Minimum price', 'wb-ajax-filter' ); ?></label>
-		<input type="number" class="wb-input wb-filter-type-price-range-min" data-highest-price=<?php echo esc_attr( $highest_price ); ?>  name="filters[price_ranges][<?php echo esc_html( $count ); ?>][min]" id="wb_price_ranges_<?php echo esc_html( $count ); ?>_min" value="<?php echo ( isset( $range['min'] ) && '' !== $range['min'] ) ? esc_html( $range['min'] ) : ''; ?>">
+		<input type="number" class="wbcom-input wb-input wb-filter-type-price-range-min" data-highest-price=<?php echo esc_attr( $highest_price ); ?>  name="filters[price_ranges][<?php echo esc_html( $count ); ?>][min]" id="wb_price_ranges_<?php echo esc_html( $count ); ?>_min" value="<?php echo ( isset( $range['min'] ) && '' !== $range['min'] ) ? esc_html( $range['min'] ) : ''; ?>">
 	</p>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper unlimited" style="<?php echo esc_attr( $style ); ?>">
+	<div class="wb-ajax-filter-field-wrapper unlimited" style="<?php echo esc_attr( $style ); ?>">
 		<label for="wb_price_ranges_<?php echo esc_html( $count ); ?>_unlimited"><?php esc_html_e( 'Show "&amp; Above" in last range', 'wb-ajax-filter' ); ?></label>
-		<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
-			<div class="wb-ajax-filter-onoff-container ">
-				<input type="checkbox" id="wb_price_ranges_<?php echo esc_html( $count ); ?>_unlimited" class="wb-ajax-filter-on_off wb-input wb-filter-type-price-range wb-filter-type-price-range-unlimited" name="filters[price_ranges][<?php echo esc_html( $count ); ?>][unlimited]" value="yes" <?php echo ( isset( $range['unlimited'] ) && 'yes' === $range['unlimited'] ) ? 'checked' : ''; ?>>
-				<span class="wb-ajax-filter-onoff" data-text-on="YES" data-text-off="NO"></span>
-			</div>
-		</div>
+		<label class="wbcom-toggle">
+			<input type="checkbox" id="wb_price_ranges_<?php echo esc_html( $count ); ?>_unlimited" class="wb-input wb-filter-type-price-range wb-filter-type-price-range-unlimited" name="filters[price_ranges][<?php echo esc_html( $count ); ?>][unlimited]" value="yes" <?php echo ( isset( $range['unlimited'] ) && 'yes' === $range['unlimited'] ) ? 'checked' : ''; ?>>
+			<span class="wbcom-toggle-slider"></span>
+		</label>
 	</div>
 	<p class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper max" style="<?php echo ( isset( $range['unlimited'] ) && 'yes' === $range['unlimited'] ) ? 'display:none' : ''; ?>">
 		<label for="wb_price_ranges_<?php echo esc_html( $count ); ?>_max"><?php esc_html_e( 'Maximum price', 'wb-ajax-filter' ); ?></label>
-		<input type="number" name="filters[price_ranges][<?php echo esc_html( $count ); ?>][max]" id="wb_price_ranges_<?php echo esc_html( $count ); ?>_max" class="wb-input wb-filter-type-price-range-max" value="<?php echo ( isset( $range['max'] ) && '' !== $range['max'] ) ? esc_html( $range['max'] ) : ''; ?>">
+		<input type="number" name="filters[price_ranges][<?php echo esc_html( $count ); ?>][max]" id="wb_price_ranges_<?php echo esc_html( $count ); ?>_max" class="wbcom-input wb-input wb-filter-type-price-range-max" value="<?php echo ( isset( $range['max'] ) && '' !== $range['max'] ) ? esc_html( $range['max'] ) : ''; ?>">
 	</p>
 </div>

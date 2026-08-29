@@ -17,12 +17,13 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 	$style = '';
 }
 ?>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label for="select_taxonomy">
-		<?php esc_html_e( 'Choose taxonomy', 'wb-ajax-filter' ); ?>
-	</label>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-		<select id="select_taxonomy" name="filters[taxonomy]" class="wc-enhanced-select taxonomy enhanced wb-input wb-filter-type-tax" data-value="" tabindex="-1" aria-hidden="true">
+<div class="wbcom-field wbcom-field-group wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
+	<div class="wbcom-field-info">
+		<label for="select_taxonomy"><?php esc_html_e( 'Choose taxonomy', 'wb-ajax-filter' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Select which product attribute to filter by.', 'wb-ajax-filter' ); ?></p>
+	</div>
+	<div class="wbcom-field-control">
+		<select id="select_taxonomy" name="filters[taxonomy]" class="wbcom-select wc-enhanced-select taxonomy enhanced wb-input wb-filter-type-tax" data-value="" tabindex="-1" aria-hidden="true">
 			<option value=""><?php esc_html_e( 'Select taxonomy', 'wb-ajax-filter' ); ?></option>
 			<?php
 			$taxonomies = get_object_taxonomies( 'product', 'name' );
@@ -36,29 +37,36 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 			?>
 		</select>
 	</div>
-	<span class="description"><?php esc_html_e( 'Select which product attribute to filter by.', 'wb-ajax-filter' ); ?></span>
 </div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?><?php echo ( ! isset( $filters['taxonomy'] ) || ( isset( $filters['taxonomy'] ) && '' === $filters['taxonomy'] ) ) ? 'display:none' : ''; ?>">
-	<label for="wb_ajax_filter_select2_terms"><?php esc_html_e( 'Choose terms', 'wb-ajax-filter' ); ?></label>
-	<select id="wb_ajax_filter_select2_terms" class="wb-input wb-filter-type-tax" name="filters[terms][]" multiple="multiple" data-selected_terms='<?php echo ( isset( $filters['terms'] ) ) ? wp_json_encode( $filters['terms'] ) : ''; ?>' style="width:99%;max-width:25em;">
-	</select>
-	<span class="description"><?php esc_html_e( 'Select which terms to use for filtering', 'wb-ajax-filter' ); ?></span>
+<div class="wbcom-field wbcom-field-group wb-tax-toggle" style="<?php echo esc_attr( $style ); ?><?php echo ( ! isset( $filters['taxonomy'] ) || ( isset( $filters['taxonomy'] ) && '' === $filters['taxonomy'] ) ) ? 'display:none' : ''; ?>">
+	<div class="wbcom-field-info">
+		<label for="wb_ajax_filter_select2_terms"><?php esc_html_e( 'Choose terms', 'wb-ajax-filter' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Select which terms to use for filtering', 'wb-ajax-filter' ); ?></p>
+	</div>
+	<div class="wbcom-field-control">
+		<select id="wb_ajax_filter_select2_terms" class="wb-input wb-filter-type-tax" name="filters[terms][]" multiple="multiple" data-selected_terms='<?php echo ( isset( $filters['terms'] ) ) ? wp_json_encode( $filters['terms'] ) : ''; ?>' style="width:99%;max-width:25em;">
+		</select>
+	</div>
 </div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label for="filter_design"><?php esc_html_e( 'Filter type', 'wb-ajax-filter' ); ?></label>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-		<select id="filter_design" name="filters[filter_design]" class="wc-enhanced-select enhanced wb-input wb-filter-type-tax" data-value="checkbox" tabindex="-1" aria-hidden="true">
+<div class="wbcom-field wbcom-field-group wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
+	<div class="wbcom-field-info">
+		<label for="filter_design"><?php esc_html_e( 'Filter type', 'wb-ajax-filter' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Select the filter type for this filter', 'wb-ajax-filter' ); ?></p>
+	</div>
+	<div class="wbcom-field-control">
+		<select id="filter_design" name="filters[filter_design]" class="wbcom-select wc-enhanced-select enhanced wb-input wb-filter-type-tax" data-value="checkbox" tabindex="-1" aria-hidden="true">
 			<option value=""><?php esc_html_e( 'Select Design', 'wb-ajax-filter' ); ?></option>
 			<option value="checkbox" <?php echo ( isset( $filters['filter_design'] ) && 'checkbox' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Checkbox', 'wb-ajax-filter' ); ?></option>
 			<option value="radio" <?php echo ( isset( $filters['filter_design'] ) && 'radio' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Radio', 'wb-ajax-filter' ); ?></option>
 			<option value="select" <?php echo ( isset( $filters['filter_design'] ) && 'select' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Select', 'wb-ajax-filter' ); ?></option>
 		</select>
 	</div>
-	<span class="description"><?php esc_html_e( 'Select the filter type for this filter', 'wb-ajax-filter' ); ?></span>
 </div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label><?php esc_html_e( 'Customize terms', 'wb-ajax-filter' ); ?></label>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
+<div class="wbcom-field wbcom-field-group wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
+	<div class="wbcom-field-info">
+		<label><?php esc_html_e( 'Customize terms', 'wb-ajax-filter' ); ?></label>
+	</div>
+	<div class="wbcom-field-control">
 		<div class="terms-wrapper ui-sortable">
 			<?php
 			if ( isset( $filters['terms_text'] ) ) {
@@ -73,10 +81,13 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 		</div>
 	</div>
 </div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label for="order_by"><?php esc_html_e( 'Order by', 'wb-ajax-filter' ); ?></label>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-		<select id="order_by" name="filters[order_by]" class="wb-ajax-filter-select wb-input wb-filter-type-tax" data-value="name">
+<div class="wbcom-field wbcom-field-group wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
+	<div class="wbcom-field-info">
+		<label for="order_by"><?php esc_html_e( 'Order by', 'wb-ajax-filter' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Select the default order for filter terms', 'wb-ajax-filter' ); ?></p>
+	</div>
+	<div class="wbcom-field-control">
+		<select id="order_by" name="filters[order_by]" class="wbcom-select wb-ajax-filter-select wb-input wb-filter-type-tax" data-value="name">
 			<option value=""><?php esc_html_e( 'Select Order By', 'wb-ajax-filter' ); ?></option>
 			<option value="name" <?php echo ( isset( $filters['order_by'] ) && 'name' === $filters['order_by'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Name', 'wb-ajax-filter' ); ?></option>
 			<option value="slug" <?php echo ( isset( $filters['order_by'] ) && 'slug' === $filters['order_by'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Slug', 'wb-ajax-filter' ); ?></option>
@@ -84,71 +95,73 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 			<option value="term_order" <?php echo ( isset( $filters['order_by'] ) && 'term_order' === $filters['order_by'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Term order', 'wb-ajax-filter' ); ?></option>
 		</select>
 	</div>
-	<span class="description"><?php esc_html_e( 'Select the default order for filter terms', 'wb-ajax-filter' ); ?></span>
 </div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label for="order_type"><?php esc_html_e( 'Order type', 'wb-ajax-filter' ); ?></label>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-select-field-wrapper">
-		<select id="order_type" name="filters[order]" class="wb-ajax-filter-select wb-input wb-filter-type-tax" data-value="">
+<div class="wbcom-field wbcom-field-group wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
+	<div class="wbcom-field-info">
+		<label for="order_type"><?php esc_html_e( 'Order type', 'wb-ajax-filter' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Select the default order for filter terms.', 'wb-ajax-filter' ); ?></p>
+	</div>
+	<div class="wbcom-field-control">
+		<select id="order_type" name="filters[order]" class="wbcom-select wb-ajax-filter-select wb-input wb-filter-type-tax" data-value="">
 			<option value=""><?php esc_html_e( 'Select Order type', 'wb-ajax-filter' ); ?></option>
 			<option value="ASC" <?php echo ( isset( $filters['order'] ) && 'ASC' === $filters['order'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'ASC', 'wb-ajax-filter' ); ?></option>
 			<option value="DESC" <?php echo ( isset( $filters['order'] ) && 'DESC' === $filters['order'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'DESC', 'wb-ajax-filter' ); ?></option>
 		</select>
 	</div>
-	<span class="description"><?php esc_html_e( 'Select the default order for filter terms.', 'wb-ajax-filter' ); ?></span>
 </div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label><?php esc_html_e( 'Show hierarchy', 'wb-ajax-filter' ); ?></label>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-radio-field-wrapper">
-		<div class="wb-ajax-filter-radio " data-value="no" data-type="radio">
-		<div class="wb-ajax-filter-radio__row">
+<div class="wbcom-field wbcom-field-group wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
+	<div class="wbcom-field-info">
+		<label><?php esc_html_e( 'Show hierarchy', 'wb-ajax-filter' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Choose how to show terms hierarchy', 'wb-ajax-filter' ); ?></p>
+	</div>
+	<div class="wbcom-field-control">
+		<label>
 			<input type="radio" class="wb-input wb-filter-type-tax" name="filters[hierarchical]" value="no" <?php echo ( isset( $filters['hierarchical'] ) && 'no' === $filters['hierarchical'] ) ? 'checked' : ''; ?>>
-			<label><?php esc_html_e( 'No, show all terms in same level', 'wb-ajax-filter' ); ?></label>
-		</div>
-		<div class="wb-ajax-filter-radio__row">
+			<span class="description"><?php esc_html_e( 'No, show all terms in same level', 'wb-ajax-filter' ); ?></span>
+		</label>
+		<label>
 			<input type="radio" class="wb-input wb-filter-type-tax" name="filters[hierarchical]" value="parents_only" <?php echo ( isset( $filters['hierarchical'] ) && 'parents_only' === $filters['hierarchical'] ) ? 'checked' : ''; ?>>
-			<label><?php esc_html_e( 'No, show only parent terms', 'wb-ajax-filter' ); ?></label>
-		</div>
-		<div class="wb-ajax-filter-radio__row">
+			<span class="description"><?php esc_html_e( 'No, show only parent terms', 'wb-ajax-filter' ); ?></span>
+		</label>
+		<label>
 			<input type="radio" class="wb-input wb-filter-type-tax" name="filters[hierarchical]" value="collapsed" <?php echo ( isset( $filters['hierarchical'] ) && 'collapsed' === $filters['hierarchical'] ) ? 'checked' : ''; ?>>
-			<label><?php esc_html_e( 'Yes, with terms collapsed', 'wb-ajax-filter' ); ?></label>
-		</div>
-		<div class="wb-ajax-filter-radio__row">
+			<span class="description"><?php esc_html_e( 'Yes, with terms collapsed', 'wb-ajax-filter' ); ?></span>
+		</label>
+		<label>
 			<input type="radio" class="wb-input wb-filter-type-tax" name="filters[hierarchical]" value="expanded" <?php echo ( isset( $filters['hierarchical'] ) && 'expanded' === $filters['hierarchical'] ) ? 'checked' : ''; ?>>
-			<label><?php esc_html_e( 'Yes, with terms expanded', 'wb-ajax-filter' ); ?></label>
-		</div>
-		<div class="wb-ajax-filter-radio__row">
+			<span class="description"><?php esc_html_e( 'Yes, with terms expanded', 'wb-ajax-filter' ); ?></span>
+		</label>
+		<label>
 			<input type="radio" class="wb-input wb-filter-type-tax" name="filters[hierarchical]" value="open" <?php echo ( isset( $filters['hierarchical'] ) && 'open' === $filters['hierarchical'] ) ? 'checked' : ''; ?>>
-			<label><?php esc_html_e( 'Yes, without toggles', 'wb-ajax-filter' ); ?></label>
-		</div>
-		</div>
+			<span class="description"><?php esc_html_e( 'Yes, without toggles', 'wb-ajax-filter' ); ?></span>
+		</label>
 	</div>
-	<span class="description"><?php esc_html_e( 'Choose how to show terms hierarchy', 'wb-ajax-filter' ); ?></span>
 </div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle wb-ajax-filter-multiselect" style="<?php echo esc_attr( $style ); ?><?php echo ( isset( $filters['filter_design'] ) && 'radio' === $filters['filter_design'] ) ? 'display:none' : ''; ?>">
-	<label for="multiple_selection"><?php esc_html_e( 'Allow multiple selection', 'wb-ajax-filter' ); ?></label>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
-		<div class="wb-ajax-filter-onoff-container ">
-			<input id="multiple_selection" type="checkbox" class="on_off wb-input wb-filter-type-tax" name="filters[multiple]" value="yes" <?php echo ( isset( $filters['multiple'] ) && 'yes' === $filters['multiple'] ) ? 'checked' : ''; ?>>
-			<span class="wb-ajax-filter-onoff" data-text-on="YES" data-text-off="NO"></span>
-		</div>
+<div class="wbcom-field wbcom-field-group wb-tax-toggle wb-ajax-filter-multiselect" style="<?php echo esc_attr( $style ); ?><?php echo ( isset( $filters['filter_design'] ) && 'radio' === $filters['filter_design'] ) ? 'display:none' : ''; ?>">
+	<div class="wbcom-field-info">
+		<label for="multiple_selection"><?php esc_html_e( 'Allow multiple selection', 'wb-ajax-filter' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Enable this to allow users to select multiple terms when filtering products.', 'wb-ajax-filter' ); ?></p>
 	</div>
-	<span class="description"><?php esc_html_e( 'Enable this to allow users to select multiple terms when filtering products.', 'wb-ajax-filter' ); ?></span>
-</div>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle wb-ajax-filter-multiselect" style="<?php echo esc_attr( $style ); ?><?php echo ( isset( $filters['multiple'] ) && 'yes' === $filters['multiple'] ) ? '' : 'display:none;'; ?><?php echo ( isset( $filters['filter_design'] ) && 'radio' === $filters['filter_design'] ) ? 'display:none' : ''; ?>">
-	<label><?php esc_html_e( 'Multiselect relation', 'wb-ajax-filter' ); ?></label>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-radio-field-wrapper">
-		<div class="wb-ajax-filter-radio " data-value="and" data-type="radio">
-			<div class="wb-ajax-filter-radio__row">
-				<input type="radio" class="wb-input wb-filter-type-tax" name="filters[relation]" value="and" <?php echo ( isset( $filters['relation'] ) && 'and' === $filters['relation'] ) ? 'checked' : ''; ?>>
-				<label><?php esc_html_e( 'AND - Results need to match all selected terms at the same time.', 'wb-ajax-filter' ); ?></label>
-			</div>
-			<div class="wb-ajax-filter-radio__row">
-				<input type="radio" class="wb-input wb-filter-type-tax" name="filters[relation]" value="or" <?php echo ( isset( $filters['relation'] ) && 'or' === $filters['relation'] ) ? 'checked' : ''; ?>>
-				<label><?php esc_html_e( 'OR - Results need to match at least one of the selected terms.', 'wb-ajax-filter' ); ?></label>
-			</div>
-		</div>
+	<div class="wbcom-field-control">
+		<label class="wbcom-toggle">
+			<input id="multiple_selection" type="checkbox" class="wb-input wb-filter-type-tax" name="filters[multiple]" value="yes" <?php echo ( isset( $filters['multiple'] ) && 'yes' === $filters['multiple'] ) ? 'checked' : ''; ?>>
+			<span class="wbcom-toggle-slider"></span>
+		</label>
 	</div>
-	<span class="description"><?php esc_html_e( 'Choose how selecting multiple terms should behave.', 'wb-ajax-filter' ); ?></span>
 </div>
-
+<div class="wbcom-field wbcom-field-group wb-tax-toggle wb-ajax-filter-multiselect" style="<?php echo esc_attr( $style ); ?><?php echo ( isset( $filters['multiple'] ) && 'yes' === $filters['multiple'] ) ? '' : 'display:none;'; ?><?php echo ( isset( $filters['filter_design'] ) && 'radio' === $filters['filter_design'] ) ? 'display:none' : ''; ?>">
+	<div class="wbcom-field-info">
+		<label><?php esc_html_e( 'Multiselect relation', 'wb-ajax-filter' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Choose how selecting multiple terms should behave.', 'wb-ajax-filter' ); ?></p>
+	</div>
+	<div class="wbcom-field-control">
+		<label>
+			<input type="radio" class="wb-input wb-filter-type-tax" name="filters[relation]" value="and" <?php echo ( isset( $filters['relation'] ) && 'and' === $filters['relation'] ) ? 'checked' : ''; ?>>
+			<span class="description"><?php esc_html_e( 'AND - Results need to match all selected terms at the same time.', 'wb-ajax-filter' ); ?></span>
+		</label>
+		<label>
+			<input type="radio" class="wb-input wb-filter-type-tax" name="filters[relation]" value="or" <?php echo ( isset( $filters['relation'] ) && 'or' === $filters['relation'] ) ? 'checked' : ''; ?>>
+			<span class="description"><?php esc_html_e( 'OR - Results need to match at least one of the selected terms.', 'wb-ajax-filter' ); ?></span>
+		</label>
+	</div>
+</div>

@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 		<div class="wb-ajax-filter-close-modal">
 			<span class="wb-ajax-filter-close">&times;</span>
 		</div>
-		<div class="wb-ajax-filter-modal-content">
+		<div class="wb-ajax-filter-modal-content wbcom-settings-body">
 		</div>
 	</div>
 </div>

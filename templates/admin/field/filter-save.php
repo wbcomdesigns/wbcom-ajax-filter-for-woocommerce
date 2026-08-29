@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for price range fields.
+ * The template for the save filter button.
  *
  * @link       https://wbcomdesigns.com/
  * @since      1.0.0
@@ -12,7 +12,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<div class="wb-ajax-filter-toggle-content-row wb-all-toggle">
+<div class="wbcom-save-bar wb-all-toggle">
 	<div class="spinner"></div>
-	<button id="wb-ajax-filer-create-filter-save" class="save button-primary"><?php echo esc_html__( 'Save Filter', 'wb-ajax-filter' ); ?></button>
+	<button id="wb-ajax-filer-create-filter-save" class="wbcom-btn wbcom-btn--primary save"><?php echo esc_html__( 'Save Filter', 'wb-ajax-filter' ); ?></button>
 </div>

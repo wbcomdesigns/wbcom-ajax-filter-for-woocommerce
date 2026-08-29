@@ -101,48 +101,6 @@ form#filter-preset-create {
 	}
 }
 
-.wb-ajax-filter-toggle-content-row {
-	padding: 25px;
-	overflow: hidden;
-	margin-bottom: 20px !important;
-	background: var(--wb-bg) !important;
-	border: 1px solid rgba(200, 197, 218, 0.30);
-	box-shadow: 5px 5px 20px rgb(32 53 85 / 10%);
-	border-radius: 10px;
-}
-
-.wb-ajax-filter-toggle-content-row label {
-	display: block;
-	font-size: 15px;
-	font-weight: normal;
-	margin-bottom: 1%;
-}
-
-span.view-all-presets {
-	display: block;
-	font-weight: 600;
-	margin-bottom: 2%;
-}
-
-.wb-ajax-filter-radio__row label {
-	display: inline;
-	font-weight: 500;
-}
-
-.wb-ajax-filter-radio__row {
-	margin-bottom: 8px;
-}
-
-.wb-ajax-filter-toggle-content-row span.description {
-	font-style: italic;
-	font-size: 12px;
-	display: block;
-}
-
-.wb-ajax-filter-toggle-content-row button {
-	float: right;
-}
-
 .wb-ajax-filter-onoff-container {
 	display: inline;
 }

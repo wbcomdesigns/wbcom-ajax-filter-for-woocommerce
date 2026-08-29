@@ -22,10 +22,12 @@ if ( isset( $_REQUEST['preset'] ) && '' === $_REQUEST['preset'] ) { //phpcs:igno
 <input type="hidden" name="filters[preset_title]" value="<?php echo esc_html( $name ); ?>">
 <?php $wb_filter_filter_id = isset( $filters['filter_id'] ) ? $filters['filter_id'] : uniqid( 'wb_filter_' ); ?>
 <input type="hidden" name="filters[filter_id]" value="<?php echo esc_attr( $wb_filter_filter_id ); ?>">
-<div class="wb-ajax-filter-toggle-content-row wb-all-toggle">
-	<label for="filter_title"><?php esc_html_e( 'Filter name', 'wb-ajax-filter' ); ?></label>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper">
-		<input id="filter_title" type="text" name="filters[filter_title]" value="<?php echo ( isset( $filters['filter_title'] ) ) ? esc_html( $filters['filter_title'] ) : ''; ?>">
+<div class="wbcom-field wbcom-field-group wb-all-toggle">
+	<div class="wbcom-field-info">
+		<label for="filter_title"><?php esc_html_e( 'Filter name', 'wb-ajax-filter' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Enter a name to identify this filter', 'wb-ajax-filter' ); ?></p>
 	</div>
-	<span class="description"><?php esc_html_e( 'Enter a name to identify this filter', 'wb-ajax-filter' ); ?></span>
+	<div class="wbcom-field-control">
+		<input class="wbcom-input" id="filter_title" type="text" name="filters[filter_title]" value="<?php echo ( isset( $filters['filter_title'] ) ) ? esc_html( $filters['filter_title'] ) : ''; ?>">
+	</div>
 </div>

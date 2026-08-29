@@ -1,6 +1,11 @@
 <?php
 /**
- * The template for displaying filter presets list in admin section.
+ * The template for the "Your Filters" landing - the preset builder entry point.
+ *
+ * The full, paginated list of presets lives on the Stored Data tab
+ * (Wb_Ajax_Filter_Presets_List_Table), which also links each row into this
+ * builder for editing. This screen therefore only offers the "create" entry
+ * and a pointer to that list, rather than maintaining a second copy of it.
  *
  * @link       https://wbcomdesigns.com/
  * @since      1.0.0
@@ -11,60 +16,29 @@
 
 defined( 'ABSPATH' ) || exit;
 
+$wb_create_url = add_query_arg(
+	array( 'action' => 'create' ),
+	Wbcom_Settings_Page::tab_url( Wb_Ajax_Filter_Admin::PAGE_SLUG, 'wb-ajax-filter-presets' )
+);
+$wb_manage_url = Wbcom_Settings_Page::tab_url( Wb_Ajax_Filter_Admin::PAGE_SLUG, 'stored-data' );
 ?>
-<div class="wb-ajax-filter-list-table-section">
-	<div class="wbcom-admin-title-section">
-		<h3><?php esc_html_e( 'Filter Presets', 'wb-ajax-filter' ); ?></h3>
-	</div>
-	<div class="wbcom-admin-option-wrap">
-	<div class="wb-ajax-filter-list-table-section-content">		
-		<div class="wb-ajax-filter-add-preset-button">
-			<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=create&<?php echo ( isset( $_SERVER['QUERY_STRING'] ) ) ? esc_attr( sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) ) : ''; ?>" class="page-title-action">
-				<?php wb_ajax_filter_icon( 'plus', 'wb-ajax-add-preset-icon', 14 ); ?><?php esc_html_e( 'Add Preset', 'wb-ajax-filter' ); ?>
-			</a>
-		</div>
-	</div>
-	<div class="wb-ajax-filter-list-table-content">
-		<table class="wb-ajax-filter-table wp-list-table widefat fixed striped table-view-list affiliates">
-			<thead>
-				<tr>
-					<th scope="col"><?php esc_html_e( 'Preset Name', 'wb-ajax-filter' ); ?></th>
-					<th scope="col"><?php esc_html_e( 'Shortcode', 'wb-ajax-filter' ); ?></th>
-					<th scope="col"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php if ( ! empty( $all_presets ) ) { ?>
-					<?php foreach ( $all_presets as $preset ) { ?>
-						<?php $enabled = get_post_meta( $preset->ID, 'preset_enabled', true ); ?>
-					<tr>
-						<td data-colname="Preset name"><?php echo esc_html( $preset->post_title ); ?></td>
-						<td data-colname="Shortcode">
-							<input class="text-to-copy" type="text" readonly="" value="[wb_ajax_filters slug='<?php echo esc_html( $preset->post_name ); ?>']">
-							<br><span class="wb-shortcode-copy"><?php esc_html_e( 'Shortcode copied to clipboard.', 'wb-ajax-filter' ); ?></span>
-						</td>
-						<td data-colname="Action">
-							<?php
-							$wb_ajax_query_string = isset( $_SERVER['QUERY_STRING'] ) ? sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) : '';
-							?>
-							<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=edit&wb=list&<?php echo esc_attr( $wb_ajax_query_string ); ?>&preset=<?php echo esc_html( $preset->ID ); ?>" class="wb-edit-filter-preset" aria-label="<?php esc_attr_e( 'Edit preset', 'wb-ajax-filter' ); ?>">
-								<?php wb_ajax_filter_icon( 'pencil', '', 18 ); ?>
-							</a>
-							<button type="button" class="wb-copy-filter-preset wb-ajax-icon-button" data-preset="<?php echo esc_attr( $preset->ID ); ?>" aria-label="<?php esc_attr_e( 'Duplicate preset', 'wb-ajax-filter' ); ?>"><?php wb_ajax_filter_icon( 'copy', '', 18 ); ?></button>
-							<button type="button" class="wb-delete-filter-preset wb-ajax-icon-button" data-preset="<?php echo esc_attr( $preset->ID ); ?>" aria-label="<?php esc_attr_e( 'Delete preset', 'wb-ajax-filter' ); ?>"><?php wb_ajax_filter_icon( 'trash', '', 18 ); ?></button>
-							<div class="wb-ajax-filter-onoff-container" data-preset="<?php echo esc_html( $preset->ID ); ?>">
-								<input type="checkbox" class="preset-active-status" value="yes" <?php echo ( 'yes' === $enabled ) ? 'checked' : ''; ?>>
-							</div>
-						</td>
-					</tr>
-					<?php } ?>
-				<?php } else { ?>
-				<tr>
-					<td colspan="3"><?php esc_html_e( 'No presets found.', 'wb-ajax-filter' ); ?></td>
-				</tr>
-				<?php } ?>
-			</tbody>
-		</table>
-	</div>
+<?php
+Wbcom_Settings_Page::card_open(
+	__( 'Filter presets', 'wb-ajax-filter' ),
+	__( 'A preset is a reusable set of filters. Create one here, then place it with its shortcode or enable it to show on shop and archive pages.', 'wb-ajax-filter' )
+);
+?>
+<div class="wb-ajax-filter-preset-actions">
+	<a href="<?php echo esc_url( $wb_create_url ); ?>" class="wbcom-btn wbcom-btn--primary">
+		<?php wb_ajax_filter_icon( 'plus', 'wb-ajax-add-preset-icon', 16 ); ?>
+		<?php esc_html_e( 'Add preset', 'wb-ajax-filter' ); ?>
+	</a>
+	<a href="<?php echo esc_url( $wb_manage_url ); ?>" class="wbcom-btn">
+		<?php esc_html_e( 'Manage saved presets', 'wb-ajax-filter' ); ?>
+	</a>
 </div>
-</div>
+<p class="description">
+	<?php esc_html_e( 'Edit, enable, disable, duplicate, delete and export existing presets on the Stored Data tab.', 'wb-ajax-filter' ); ?>
+</p>
+<?php
+Wbcom_Settings_Page::card_close();

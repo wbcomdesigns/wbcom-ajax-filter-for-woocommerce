@@ -17,12 +17,15 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 	$style = '';
 }
 ?>
-<div class="wb-ajax-filter-toggle-content-row wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
-	<label for="show_count"><?php esc_html_e( 'Show item count for each filter option', 'wb-ajax-filter' ); ?></label>
-	<div class="wb-ajax-filter-field-wrapper wb-ajax-filter-onoff-field-wrapper">
-		<div class="wb-ajax-filter-onoff-container ">
-			<input id="show_count" type="checkbox" class="on_off wb-input wb-filter-type-tax wb-filter-type-price-range wb-filter-type-review wb-filter-type-stock-sale" name="filters[show_count]" value="yes" <?php echo ( isset( $filters['show_count'] ) && 'yes' === $filters['show_count'] ) ? 'checked' : ''; ?>>
-		</div>
+<div class="wbcom-field wbcom-field-group wb-tax-toggle" style="<?php echo esc_attr( $style ); ?>">
+	<div class="wbcom-field-info">
+		<label for="show_count"><?php esc_html_e( 'Show item count for each filter option', 'wb-ajax-filter' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Enable this if you want to show how many items are available for each term.', 'wb-ajax-filter' ); ?></p>
 	</div>
-	<span class="description"><?php esc_html_e( 'Enable this if you want to show how many items are available for each term.', 'wb-ajax-filter' ); ?></span>
+	<div class="wbcom-field-control">
+		<label class="wbcom-toggle">
+			<input id="show_count" type="checkbox" class="wb-input wb-filter-type-tax wb-filter-type-price-range wb-filter-type-review wb-filter-type-stock-sale" name="filters[show_count]" value="yes" <?php echo ( isset( $filters['show_count'] ) && 'yes' === $filters['show_count'] ) ? 'checked' : ''; ?>>
+			<span class="wbcom-toggle-slider"></span>
+		</label>
+	</div>
 </div>
