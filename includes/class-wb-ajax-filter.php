@@ -33,16 +33,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Wb_Ajax_Filter {
 
 	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      Wb_Ajax_Filter_Loader    $loader    Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
-
-	/**
 	 * The unique identifier of this plugin.
 	 *
 	 * @since    1.0.0
@@ -86,23 +76,13 @@ class Wb_Ajax_Filter {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Wb_Ajax_Filter_Loader. Orchestrates the hooks of the plugin.
 	 * - Wb_Ajax_Filter_Admin. Defines all hooks for the admin area.
 	 * - Wb_Ajax_Filter_Public. Defines all hooks for the public side of the site.
-	 *
-	 * Create an instance of the loader which will be used to register the hooks
-	 * with WordPress.
 	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
 	private function load_dependencies() {
-
-		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-loader.php';
 
 		/**
 		 * The one owner of stored-preset queries, record serialization and
@@ -155,8 +135,6 @@ class Wb_Ajax_Filter {
 		 * retryable at runtime (existing sites update without the activation hook firing).
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-activator.php';
-
-		$this->loader = new Wb_Ajax_Filter_Loader();
 	}
 
 	/**
@@ -174,50 +152,50 @@ class Wb_Ajax_Filter {
 		// (plugin updates) or activated before WooCommerce. Latches after the first
 		// successful pass, so this is a single autoloaded get_option() per request.
 		// Priority 20: after WooCommerce registers its taxonomies and after our CPT.
-		$this->loader->add_action( 'init', 'Wb_Ajax_Filter_Activator', 'maybe_seed_default_preset', 20 );
+		add_action( 'init', array( 'Wb_Ajax_Filter_Activator', 'maybe_seed_default_preset' ), 20 );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts', 999 );
+		add_action( 'admin_enqueue_scripts', array( $plugin_admin, 'enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $plugin_admin, 'enqueue_scripts' ), 999 );
 		// Shared Wbcom settings shell (lib/wbcom-settings/): register our screen early,
 		// then make sure the shared parent menu exists before the shell adds submenus at 20.
-		$this->loader->add_action( 'init', $plugin_admin, 'boot_settings_page', 1 );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_parent_menu', 5 );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'wb_ajax_filter_init_plugin_settings' );
+		add_action( 'init', array( $plugin_admin, 'boot_settings_page' ), 1 );
+		add_action( 'admin_menu', array( $plugin_admin, 'register_parent_menu' ), 5 );
+		add_action( 'admin_init', array( $plugin_admin, 'wb_ajax_filter_init_plugin_settings' ) );
 
 		// Stored Data screen: state changes run before any output, downloads via admin-post.
 		$data_screen = new Wb_Ajax_Filter_Data_Screen();
-		$this->loader->add_action( 'admin_init', $data_screen, 'handle_actions' );
-		$this->loader->add_action( 'admin_post_wb_ajax_filter_export', $data_screen, 'handle_export' );
-		$this->loader->add_action( 'admin_footer', $plugin_admin, 'wb_ajax_filter_add_modal_to_admin_footer' );
+		add_action( 'admin_init', array( $data_screen, 'handle_actions' ) );
+		add_action( 'admin_post_wb_ajax_filter_export', array( $data_screen, 'handle_export' ) );
+		add_action( 'admin_footer', array( $plugin_admin, 'wb_ajax_filter_add_modal_to_admin_footer' ) );
 		// Ajax callbacks.
-		$this->loader->add_action( 'wp_ajax_load_create_filter_template_wb', $plugin_admin, 'load_create_filter_template_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_create_filter_preset_wb', $plugin_admin, 'create_filter_preset_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_check_filter_preset_title_wb', $plugin_admin, 'check_filter_preset_title_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_duplicate_filter_preset_wb', $plugin_admin, 'duplicate_filter_preset_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_delete_filter_preset_wb', $plugin_admin, 'delete_filter_preset_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_duplicate_single_filter_wb', $plugin_admin, 'duplicate_single_filter_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_delete_single_filter_wb', $plugin_admin, 'delete_single_filter_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_enable_disable_filter_preset_wb', $plugin_admin, 'enable_disable_filter_preset_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_select2_get_terms_wb', $plugin_admin, 'select2_get_terms_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_add_price_range_field_wb', $plugin_admin, 'add_price_range_field_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_enable_disable_single_filter_wb', $plugin_admin, 'enable_disable_single_filter_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_edit_preset_post_title_wb', $plugin_admin, 'edit_preset_post_title_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_customize_term_text_wb', $plugin_admin, 'customize_term_text_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_sortable_single_filters_wb', $plugin_admin, 'sortable_single_filters_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_check_custom_field_exists_wb', $plugin_admin, 'check_custom_field_exists_wb_callback' );
+		add_action( 'wp_ajax_load_create_filter_template_wb', array( $plugin_admin, 'load_create_filter_template_wb_callback' ) );
+		add_action( 'wp_ajax_create_filter_preset_wb', array( $plugin_admin, 'create_filter_preset_wb_callback' ) );
+		add_action( 'wp_ajax_check_filter_preset_title_wb', array( $plugin_admin, 'check_filter_preset_title_wb_callback' ) );
+		add_action( 'wp_ajax_duplicate_filter_preset_wb', array( $plugin_admin, 'duplicate_filter_preset_wb_callback' ) );
+		add_action( 'wp_ajax_delete_filter_preset_wb', array( $plugin_admin, 'delete_filter_preset_wb_callback' ) );
+		add_action( 'wp_ajax_duplicate_single_filter_wb', array( $plugin_admin, 'duplicate_single_filter_wb_callback' ) );
+		add_action( 'wp_ajax_delete_single_filter_wb', array( $plugin_admin, 'delete_single_filter_wb_callback' ) );
+		add_action( 'wp_ajax_enable_disable_filter_preset_wb', array( $plugin_admin, 'enable_disable_filter_preset_wb_callback' ) );
+		add_action( 'wp_ajax_select2_get_terms_wb', array( $plugin_admin, 'select2_get_terms_wb_callback' ) );
+		add_action( 'wp_ajax_add_price_range_field_wb', array( $plugin_admin, 'add_price_range_field_wb_callback' ) );
+		add_action( 'wp_ajax_enable_disable_single_filter_wb', array( $plugin_admin, 'enable_disable_single_filter_wb_callback' ) );
+		add_action( 'wp_ajax_edit_preset_post_title_wb', array( $plugin_admin, 'edit_preset_post_title_wb_callback' ) );
+		add_action( 'wp_ajax_customize_term_text_wb', array( $plugin_admin, 'customize_term_text_wb_callback' ) );
+		add_action( 'wp_ajax_sortable_single_filters_wb', array( $plugin_admin, 'sortable_single_filters_wb_callback' ) );
+		add_action( 'wp_ajax_check_custom_field_exists_wb', array( $plugin_admin, 'check_custom_field_exists_wb_callback' ) );
 
 		// Hook callback.
-		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_name_field', 10 );
-		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_for_field', 20 );
-		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_tax_field', 30 );
-		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_price_slider_field', 40 );
-		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_order_by_field', 50 );
-		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_price_range_field', 60 );
-		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_stock_field', 70 );
-		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_toggle_field', 80 );
-		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_count_field', 90 );
-		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_adoptive_filtering_field', 100 );
-		$this->loader->add_action( 'wb_ajax_filter_after_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_save_button', 10 );
+		add_action( 'wb_ajax_filter_fields', array( $plugin_admin, 'wb_ajax_filter_create_filter_name_field' ), 10 );
+		add_action( 'wb_ajax_filter_fields', array( $plugin_admin, 'wb_ajax_filter_create_filter_for_field' ), 20 );
+		add_action( 'wb_ajax_filter_fields', array( $plugin_admin, 'wb_ajax_filter_create_filter_tax_field' ), 30 );
+		add_action( 'wb_ajax_filter_fields', array( $plugin_admin, 'wb_ajax_filter_create_filter_price_slider_field' ), 40 );
+		add_action( 'wb_ajax_filter_fields', array( $plugin_admin, 'wb_ajax_filter_create_filter_order_by_field' ), 50 );
+		add_action( 'wb_ajax_filter_fields', array( $plugin_admin, 'wb_ajax_filter_create_filter_price_range_field' ), 60 );
+		add_action( 'wb_ajax_filter_fields', array( $plugin_admin, 'wb_ajax_filter_create_filter_stock_field' ), 70 );
+		add_action( 'wb_ajax_filter_fields', array( $plugin_admin, 'wb_ajax_filter_create_filter_toggle_field' ), 80 );
+		add_action( 'wb_ajax_filter_fields', array( $plugin_admin, 'wb_ajax_filter_create_filter_count_field' ), 90 );
+		add_action( 'wb_ajax_filter_fields', array( $plugin_admin, 'wb_ajax_filter_create_filter_adoptive_filtering_field' ), 100 );
+		add_action( 'wb_ajax_filter_after_filter_fields', array( $plugin_admin, 'wb_ajax_filter_create_filter_save_button' ), 10 );
 	}
 
 	/**
@@ -231,44 +209,35 @@ class Wb_Ajax_Filter {
 
 		$plugin_public = new Wb_Ajax_Filter_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_scripts' ) );
 
-		$this->loader->add_action( 'woocommerce_before_shop_loop', $plugin_public, 'add_wb_ajax_filters' );
+		add_action( 'woocommerce_before_shop_loop', array( $plugin_public, 'add_wb_ajax_filters' ) );
 
-		$this->loader->add_action( 'woocommerce_product_query', $plugin_public, 'wb_ajax_filter_modify_wc_product_query', 999 );
-		$this->loader->add_action( 'wp_footer', $plugin_public, 'add_wb_ajax_filters_loader_in_footer' );
+		add_action( 'woocommerce_product_query', array( $plugin_public, 'wb_ajax_filter_modify_wc_product_query' ), 999 );
+		add_action( 'wp_footer', array( $plugin_public, 'add_wb_ajax_filters_loader_in_footer' ) );
 		// Ajax callback. Registered for nopriv too: most shoppers browse logged out,
 		// and admin-ajax.php only routes wp_ajax_ for authenticated users.
-		$this->loader->add_action( 'wp_ajax_get_ajax_search_autocomplete_title_wb', $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' );
-		$this->loader->add_action( 'wp_ajax_nopriv_get_ajax_search_autocomplete_title_wb', $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' );
+		add_action( 'wp_ajax_get_ajax_search_autocomplete_title_wb', array( $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' ) );
+		add_action( 'wp_ajax_nopriv_get_ajax_search_autocomplete_title_wb', array( $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' ) );
 		// Shortcode callback.
-		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_public, 'filter_preset_shortcode_callback', 10, 1 );
+		add_shortcode( 'wb_ajax_filters', array( $plugin_public, 'filter_preset_shortcode_callback' ) );
 
 		// Gutenberg block: same renderer as the shortcode, placeable on block themes.
 		$plugin_blocks = new Wb_Ajax_Filter_Blocks( $plugin_public );
-		$this->loader->add_action( 'init', $plugin_blocks, 'register_blocks' );
-		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_blocks, 'localize_editor_presets' );
+		add_action( 'init', array( $plugin_blocks, 'register_blocks' ) );
+		add_action( 'enqueue_block_editor_assets', array( $plugin_blocks, 'localize_editor_presets' ) );
 
-		$this->loader->add_action( 'woocommerce_redirect_single_search_result', $plugin_public, 'wb_ajax_filter_redirect_single_search_result' );
+		add_action( 'woocommerce_redirect_single_search_result', array( $plugin_public, 'wb_ajax_filter_redirect_single_search_result' ) );
 
 		// Added filters when no products found.
-		$this->loader->add_action( 'woocommerce_no_products_found', $plugin_public, 'add_wb_ajax_filters' );
+		add_action( 'woocommerce_no_products_found', array( $plugin_public, 'add_wb_ajax_filters' ) );
 
-		$this->loader->add_action( 'posts_search', $plugin_public, 'wb_ajax_filters_product_search_by_sku', 9999, 2 );
+		add_action( 'posts_search', array( $plugin_public, 'wb_ajax_filters_product_search_by_sku' ), 9999, 2 );
 
 		// REST API: the stored presets, readable and moderatable by store managers.
 		$rest_controller = new Wb_Ajax_Filter_REST_Controller();
-		$this->loader->add_action( 'rest_api_init', $rest_controller, 'register_routes' );
-	}
-
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function run() {
-		$this->loader->run();
+		add_action( 'rest_api_init', array( $rest_controller, 'register_routes' ) );
 	}
 
 	/**
