@@ -76,24 +76,9 @@ class Wb_Ajax_Filter {
 			$this->version = '1.0.0';
 		}
 		$this->plugin_name = 'wb-ajax-filter';
-		$this->define_constants();
 		$this->load_dependencies();
-		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-	}
-
-	/**
-	 * Define plugin constants that are use entire plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   public
-	 */
-	public function define_constants() {
-		$this->define( 'WB_AJAX_FILTER', __FILE__ );
-		$this->define( 'WB_AJAX_FILTER_URL', plugin_dir_url( __DIR__ ) );
-		$this->define( 'WB_AJAX_FILTER_PATH', plugin_dir_path( __DIR__ ) );
-		$this->define( 'WB_AJAX_FILTER_TEMPLATE_PATH', plugin_dir_path( __DIR__ ) . '/templates/' );
 	}
 
 	/**
@@ -102,7 +87,6 @@ class Wb_Ajax_Filter {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Wb_Ajax_Filter_Loader. Orchestrates the hooks of the plugin.
-	 * - Wb_Ajax_Filter_I18n. Defines internationalization functionality.
 	 * - Wb_Ajax_Filter_Admin. Defines all hooks for the admin area.
 	 * - Wb_Ajax_Filter_Public. Defines all hooks for the public side of the site.
 	 *
@@ -119,12 +103,6 @@ class Wb_Ajax_Filter {
 		 * core plugin.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-loader.php';
-
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-i18n.php';
 
 		/**
 		 * The one owner of stored-preset queries, record serialization and
@@ -179,22 +157,6 @@ class Wb_Ajax_Filter {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-activator.php';
 
 		$this->loader = new Wb_Ajax_Filter_Loader();
-	}
-
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Wb_Ajax_Filter_I18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function set_locale() {
-
-		$plugin_i18n = new Wb_Ajax_Filter_I18n();
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 	}
 
 	/**
@@ -321,16 +283,6 @@ class Wb_Ajax_Filter {
 	}
 
 	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    Wb_Ajax_Filter_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
-	}
-
-	/**
 	 * Retrieve the version number of the plugin.
 	 *
 	 * @since     1.0.0
@@ -338,21 +290,5 @@ class Wb_Ajax_Filter {
 	 */
 	public function get_version() {
 		return $this->version;
-	}
-
-	/**
-	 * Define constant if not already defined
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string      $name Name.
-	 * @param string|bool $value Value.
-	 *
-	 * @return void
-	 */
-	private function define( $name, $value ) {
-		if ( ! defined( $name ) ) {
-			define( $name, $value );
-		}
 	}
 }

@@ -106,7 +106,7 @@ class Wb_Ajax_Filter_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-admin' . $extension, array(), $this->version, 'all' );
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_PLUGIN_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -127,7 +127,7 @@ class Wb_Ajax_Filter_Admin {
 			$path      = '/min';
 		}
 
-		wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_PLUGIN_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
 

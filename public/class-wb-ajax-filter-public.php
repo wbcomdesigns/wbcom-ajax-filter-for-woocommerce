@@ -107,8 +107,8 @@ class Wb_Ajax_Filter_Public {
 			$path      = is_rtl() ? '/rtl' : '/min';
 		}
 
-		wp_enqueue_style( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/css/ion.rangeSlider.min.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'wb-ion-rangeslider', WB_AJAX_FILTER_PLUGIN_URL . 'assets/css/ion.rangeSlider.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'wb-select2', WB_AJAX_FILTER_PLUGIN_URL . 'assets/css/select2.min.css', array(), $this->version, 'all' );
 		// Depends on the vendor styles so the plugin sheet prints after them: its
 		// :focus-visible rules replace the outlines the vendor CSS removes.
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-public' . $extension, array( 'wb-ion-rangeslider', 'wb-select2' ), $this->version, 'all' );
@@ -148,8 +148,8 @@ class Wb_Ajax_Filter_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/wb-ajax-filter-public' . $extension, array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'jquery-ui-slider' );
-		wp_enqueue_script( 'wb-ion-rangeslider', WB_AJAX_FILTER_URL . 'assets/js/ion.rangeSlider.min.js', array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'wb-ion-rangeslider', WB_AJAX_FILTER_PLUGIN_URL . 'assets/js/ion.rangeSlider.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'wb-select2', WB_AJAX_FILTER_PLUGIN_URL . 'assets/js/select2.min.js', array( 'jquery' ), $this->version, true );
 		wp_localize_script(
 			$this->plugin_name,
 			'wbcom_plugin_installer_params',
