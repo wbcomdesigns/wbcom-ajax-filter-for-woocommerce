@@ -9,13 +9,15 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
+defined( 'ABSPATH' ) || exit;
+
 $wb_ajax_filter_search_settings         = get_option( 'wb_ajax_filter_search_settings' );
 $wb_ajax_filter_search_content_settings = get_option( 'wb_ajax_filter_search_content_settings' );
 if ( isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_ajax_filter_search_settings['enable_search'] ) {
 
 $selected_category = ( isset( $_GET['product_cat'] ) && !empty( $_GET['product_cat'] ) ) ? sanitize_text_field( $_GET['product_cat'] ) : ''; //phpcs:ignore
 
-?>
+	?>
 <div class="wb-ajax-filter-ajaxsearch-filters-container" style="display: flex;">
 	<div class="wb-ajax-filter-ajaxsearch-filters" style="display: flex;">
 		<?php if ( isset( $wb_ajax_filter_search_settings['show_search_list'] ) && 'yes' === $wb_ajax_filter_search_settings['show_search_list'] ) { ?>
@@ -29,8 +31,9 @@ $selected_category = ( isset( $_GET['product_cat'] ) && !empty( $_GET['product_c
 		</div>
 		<?php } ?>
 		<?php if ( isset( $wb_ajax_filter_search_settings['show_category_list'] ) && 'yes' === $wb_ajax_filter_search_settings['show_category_list'] ) { ?>
-		<div class="wb-ajax-filter-ajaxsearchform-select wb-ajax-filter-ajaxsearchform-select-category"><?php
-			
+		<div class="wb-ajax-filter-ajaxsearchform-select wb-ajax-filter-ajaxsearchform-select-category">
+			<?php
+
 			$wb_ajax_category_dropdown = wp_dropdown_categories(
 				array(
 					'taxonomy'        => array( 'product_cat' ),
@@ -42,11 +45,11 @@ $selected_category = ( isset( $_GET['product_cat'] ) && !empty( $_GET['product_c
 					'show_count'      => true,
 					'value_field'     => 'slug',
 					'echo'            => true,
-					'selected'        => get_query_var('product_cat'), 
+					'selected'        => get_query_var( 'product_cat' ),
 				)
 			);
-			
-		?>
+
+			?>
 		</div>
 		<?php } ?>
 	</div>
@@ -61,7 +64,7 @@ $selected_category = ( isset( $_GET['product_cat'] ) && !empty( $_GET['product_c
 	<?php endif; ?>
 	<div class="wb-search-submit-container"><input type="submit" value="<?php echo ( isset( $wb_ajax_filter_search_settings['search_submit_label'] ) && '' !== $wb_ajax_filter_search_settings['search_submit_label'] ) ? esc_attr( $wb_ajax_filter_search_settings['search_submit_label'] ) : 'Search'; ?>"> </div>
 </div>
-<?php
+	<?php
 
 }// end of if
 

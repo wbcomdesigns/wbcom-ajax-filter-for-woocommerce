@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Register all actions and filters for the plugin
  *
@@ -9,6 +8,10 @@
  * @package    Wb_Ajax_Filter
  * @subpackage Wb_Ajax_Filter/includes
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Register all actions and filters for the plugin.
@@ -60,18 +63,17 @@ class Wb_Ajax_Filter_Loader {
 		$this->actions   = array();
 		$this->filters   = array();
 		$this->shortcode = array();
-
 	}
 
 	/**
 	 * Add a new action to the collection to be registered with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @param    string               $hook             The name of the WordPress action that is being registered.
-	 * @param    object               $component        A reference to the instance of the object on which the action is defined.
-	 * @param    string               $callback         The name of the function definition on the $component.
-	 * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
-	 * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
+	 * @param    string $hook             The name of the WordPress action that is being registered.
+	 * @param    object $component        A reference to the instance of the object on which the action is defined.
+	 * @param    string $callback         The name of the function definition on the $component.
+	 * @param    int    $priority         Optional. The priority at which the function should be fired. Default is 10.
+	 * @param    int    $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
 	 */
 	public function add_action( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
 		$this->actions = $this->add( $this->actions, $hook, $component, $callback, $priority, $accepted_args );
@@ -81,11 +83,11 @@ class Wb_Ajax_Filter_Loader {
 	 * Add a new filter to the collection to be registered with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @param    string               $hook             The name of the WordPress filter that is being registered.
-	 * @param    object               $component        A reference to the instance of the object on which the filter is defined.
-	 * @param    string               $callback         The name of the function definition on the $component.
-	 * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
-	 * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1
+	 * @param    string $hook             The name of the WordPress filter that is being registered.
+	 * @param    object $component        A reference to the instance of the object on which the filter is defined.
+	 * @param    string $callback         The name of the function definition on the $component.
+	 * @param    int    $priority         Optional. The priority at which the function should be fired. Default is 10.
+	 * @param    int    $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
 	 */
 	public function add_filter( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
 		$this->filters = $this->add( $this->filters, $hook, $component, $callback, $priority, $accepted_args );
@@ -95,9 +97,9 @@ class Wb_Ajax_Filter_Loader {
 	 * Add a new shortcode to the collection to be registered with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @param    string               $name             The name of the WordPress shortcode that is being registered.
-	 * @param    object               $component        A reference to the instance of the object on which the filter is defined.
-	 * @param    string               $callback         The name of the function definition on the $component.
+	 * @param    string $name             The name of the WordPress shortcode that is being registered.
+	 * @param    object $component        A reference to the instance of the object on which the filter is defined.
+	 * @param    string $callback         The name of the function definition on the $component.
 	 */
 	public function add_shortcode( $name, $component, $callback ) {
 		$this->shortcode = $this->add( $this->shortcode, $name, $component, $callback, '', '' );
@@ -109,12 +111,12 @@ class Wb_Ajax_Filter_Loader {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @param    array                $hooks            The collection of hooks that is being registered (that is, actions or filters or shortcodes).
-	 * @param    string               $hook             The name of the WordPress filter that is being registered.
-	 * @param    object               $component        A reference to the instance of the object on which the filter is defined.
-	 * @param    string               $callback         The name of the function definition on the $component.
-	 * @param    int                  $priority         The priority at which the function should be fired.
-	 * @param    int                  $accepted_args    The number of arguments that should be passed to the $callback.
+	 * @param    array  $hooks            The collection of hooks that is being registered (that is, actions or filters or shortcodes).
+	 * @param    string $hook             The name of the WordPress filter that is being registered.
+	 * @param    object $component        A reference to the instance of the object on which the filter is defined.
+	 * @param    string $callback         The name of the function definition on the $component.
+	 * @param    int    $priority         The priority at which the function should be fired.
+	 * @param    int    $accepted_args    The number of arguments that should be passed to the $callback.
 	 * @return   array                                  The collection of actions and filters registered with WordPress.
 	 */
 	private function add( $hooks, $hook, $component, $callback, $priority, $accepted_args ) {
@@ -128,7 +130,6 @@ class Wb_Ajax_Filter_Loader {
 		);
 
 		return $hooks;
-
 	}
 
 	/**
@@ -149,7 +150,5 @@ class Wb_Ajax_Filter_Loader {
 		foreach ( $this->shortcode as $hook ) {
 			add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ) );
 		}
-
 	}
-
 }

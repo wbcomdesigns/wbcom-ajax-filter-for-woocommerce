@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
+defined( 'ABSPATH' ) || exit;
+
 if ( isset( $_REQUEST['preset'] ) && '' === $_REQUEST['preset'] ) { //phpcs:ignore
 	$name = ( isset( $_POST['title'] ) && '' !== $_POST['title'] ) ? esc_html( wp_unslash( $_POST['title'] ) ) : 'New filter';// phpcs:ignore
 } else {

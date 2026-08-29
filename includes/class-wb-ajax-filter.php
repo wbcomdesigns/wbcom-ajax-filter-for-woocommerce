@@ -12,6 +12,10 @@
  * @subpackage Wb_Ajax_Filter/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The core plugin class.
  *
@@ -77,7 +81,6 @@ class Wb_Ajax_Filter {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -88,9 +91,9 @@ class Wb_Ajax_Filter {
 	 */
 	public function define_constants() {
 		$this->define( 'WB_AJAX_FILTER', __FILE__ );
-		$this->define( 'WB_AJAX_FILTER_URL', plugin_dir_url( dirname( __FILE__ ) ) );
-		$this->define( 'WB_AJAX_FILTER_PATH', plugin_dir_path( dirname( __FILE__ ) ) );
-		$this->define( 'WB_AJAX_FILTER_TEMPLATE_PATH', plugin_dir_path( dirname( __FILE__ ) ) . '/templates/' );
+		$this->define( 'WB_AJAX_FILTER_URL', plugin_dir_url( __DIR__ ) );
+		$this->define( 'WB_AJAX_FILTER_PATH', plugin_dir_path( __DIR__ ) );
+		$this->define( 'WB_AJAX_FILTER_TEMPLATE_PATH', plugin_dir_path( __DIR__ ) . '/templates/' );
 	}
 
 	/**
@@ -99,7 +102,7 @@ class Wb_Ajax_Filter {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Wb_Ajax_Filter_Loader. Orchestrates the hooks of the plugin.
-	 * - Wb_Ajax_Filter_i18n. Defines internationalization functionality.
+	 * - Wb_Ajax_Filter_I18n. Defines internationalization functionality.
 	 * - Wb_Ajax_Filter_Admin. Defines all hooks for the admin area.
 	 * - Wb_Ajax_Filter_Public. Defines all hooks for the public side of the site.
 	 *
@@ -115,49 +118,73 @@ class Wb_Ajax_Filter {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wb-ajax-filter-loader.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wb-ajax-filter-i18n.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-i18n.php';
+
+		/**
+		 * The one owner of stored-preset queries, record serialization and
+		 * moderation - read by the Stored Data screen, the REST API and exports.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-presets.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
+		 * The settings screen itself is the shared Wbcom shell bundled at
+		 * lib/wbcom-settings/ and registered from the plugin bootstrap.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wb-ajax-filter-admin.php';
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wb-ajax-filter-admin.php';
 
 		/**
-		 * The class responsible for defining all actions that occur in the admin area.
+		 * The Stored Data screen controller: moderation actions on admin_init,
+		 * export downloads on admin-post. The WP_List_Table subclass itself is
+		 * required lazily by the tab partial - core only loads list tables in
+		 * wp-admin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wb-ajax-filter-data-screen.php';
+
+		/**
+		 * REST controller exposing the same preset records to store managers.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-rest-controller.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wb-ajax-filter-public.php';
+		require_once plugin_dir_path( __DIR__ ) . 'public/class-wb-ajax-filter-public.php';
 
-		/** This file adds the plugin license module UI. */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-paid-plugin-settings.php';
+		/**
+		 * The class responsible for the Gutenberg block (block themes have no
+		 * classic WooCommerce hooks to auto-render through).
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-blocks.php';
 
 		/** This file is responsible for the plugin license functionality. */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'edd-license/edd-plugin-license.php';
+		require_once plugin_dir_path( __DIR__ ) . 'edd-license/edd-plugin-license.php';
 
 		/**
 		 * This file contains the general/common functions used in the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wb-ajax-filter-general-functions.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/wb-ajax-filter-general-functions.php';
+
+		/**
+		 * The activator also owns the one-time Default preset seeding, which must be
+		 * retryable at runtime (existing sites update without the activation hook firing).
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wb-ajax-filter-activator.php';
 
 		$this->loader = new Wb_Ajax_Filter_Loader();
-
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Wb_Ajax_Filter_i18n class in order to set the domain and to register the hook
+	 * Uses the Wb_Ajax_Filter_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -165,10 +192,9 @@ class Wb_Ajax_Filter {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Wb_Ajax_Filter_i18n();
+		$plugin_i18n = new Wb_Ajax_Filter_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -182,10 +208,24 @@ class Wb_Ajax_Filter {
 
 		$plugin_admin = new Wb_Ajax_Filter_Admin( $this->get_plugin_name(), $this->get_version() );
 
+		// One-time Default preset seed for installs that never ran the activation hook
+		// (plugin updates) or activated before WooCommerce. Latches after the first
+		// successful pass, so this is a single autoloaded get_option() per request.
+		// Priority 20: after WooCommerce registers its taxonomies and after our CPT.
+		$this->loader->add_action( 'init', 'Wb_Ajax_Filter_Activator', 'maybe_seed_default_preset', 20 );
+
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts', 999 );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wb_ajax_filter_add_admin_settings' );
+		// Shared Wbcom settings shell (lib/wbcom-settings/): register our screen early,
+		// then make sure the shared parent menu exists before the shell adds submenus at 20.
+		$this->loader->add_action( 'init', $plugin_admin, 'boot_settings_page', 1 );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_parent_menu', 5 );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wb_ajax_filter_init_plugin_settings' );
+
+		// Stored Data screen: state changes run before any output, downloads via admin-post.
+		$data_screen = new Wb_Ajax_Filter_Data_Screen();
+		$this->loader->add_action( 'admin_init', $data_screen, 'handle_actions' );
+		$this->loader->add_action( 'admin_post_wb_ajax_filter_export', $data_screen, 'handle_export' );
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'wb_ajax_filter_add_modal_to_admin_footer' );
 		// Ajax callbacks.
 		$this->loader->add_action( 'wp_ajax_load_create_filter_template_wb', $plugin_admin, 'load_create_filter_template_wb_callback' );
@@ -216,7 +256,6 @@ class Wb_Ajax_Filter {
 		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_count_field', 90 );
 		$this->loader->add_action( 'wb_ajax_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_adoptive_filtering_field', 100 );
 		$this->loader->add_action( 'wb_ajax_filter_after_filter_fields', $plugin_admin, 'wb_ajax_filter_create_filter_save_button', 10 );
-		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'wbcom_hide_all_admin_notices_from_setting_page' );
 	}
 
 	/**
@@ -232,22 +271,33 @@ class Wb_Ajax_Filter {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		
+
 		$this->loader->add_action( 'woocommerce_before_shop_loop', $plugin_public, 'add_wb_ajax_filters' );
 
 		$this->loader->add_action( 'woocommerce_product_query', $plugin_public, 'wb_ajax_filter_modify_wc_product_query', 999 );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'add_wb_ajax_filters_loader_in_footer' );
-		// Ajax callback.
+		// Ajax callback. Registered for nopriv too: most shoppers browse logged out,
+		// and admin-ajax.php only routes wp_ajax_ for authenticated users.
 		$this->loader->add_action( 'wp_ajax_get_ajax_search_autocomplete_title_wb', $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' );
+		$this->loader->add_action( 'wp_ajax_nopriv_get_ajax_search_autocomplete_title_wb', $plugin_public, 'get_ajax_search_autocomplete_title_wb_callback' );
 		// Shortcode callback.
 		$this->loader->add_shortcode( 'wb_ajax_filters', $plugin_public, 'filter_preset_shortcode_callback', 10, 1 );
 
+		// Gutenberg block: same renderer as the shortcode, placeable on block themes.
+		$plugin_blocks = new Wb_Ajax_Filter_Blocks( $plugin_public );
+		$this->loader->add_action( 'init', $plugin_blocks, 'register_blocks' );
+		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_blocks, 'localize_editor_presets' );
+
 		$this->loader->add_action( 'woocommerce_redirect_single_search_result', $plugin_public, 'wb_ajax_filter_redirect_single_search_result' );
 
-		//Added filters when no products found.
+		// Added filters when no products found.
 		$this->loader->add_action( 'woocommerce_no_products_found', $plugin_public, 'add_wb_ajax_filters' );
 
 		$this->loader->add_action( 'posts_search', $plugin_public, 'wb_ajax_filters_product_search_by_sku', 9999, 2 );
+
+		// REST API: the stored presets, readable and moderatable by store managers.
+		$rest_controller = new Wb_Ajax_Filter_REST_Controller();
+		$this->loader->add_action( 'rest_api_init', $rest_controller, 'register_routes' );
 	}
 
 	/**
@@ -305,5 +355,4 @@ class Wb_Ajax_Filter {
 			define( $name, $value );
 		}
 	}
-
 }

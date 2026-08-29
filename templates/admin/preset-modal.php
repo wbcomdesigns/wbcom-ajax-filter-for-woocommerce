@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <div class="wb-ajax-filter-modal-container">
 	<div class="wb-ajax-filter-modal-body">

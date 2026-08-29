@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <div class="wb-ajax-filter-toggle-content-row wb-all-toggle">
 	<label for="filter_type"><?php esc_html_e( 'Filter for', 'wb-ajax-filter' ); ?></label>

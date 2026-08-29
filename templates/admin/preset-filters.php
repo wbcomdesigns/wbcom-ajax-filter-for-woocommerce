@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <div class="wb-ajax-filter-list-table-section">
 	<div class="wbcom-admin-title-section">
@@ -18,7 +20,7 @@
 	<div class="wb-ajax-filter-list-table-section-content">		
 		<div class="wb-ajax-filter-add-preset-button">
 			<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=create&<?php echo ( isset( $_SERVER['QUERY_STRING'] ) ) ? esc_attr( sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) ) : ''; ?>" class="page-title-action">
-				<span class="dashicons dashicons-plus-alt2"></span><?php esc_html_e( 'Add Preset', 'wb-ajax-filter' ); ?>
+				<?php wb_ajax_filter_icon( 'plus', 'wb-ajax-add-preset-icon', 14 ); ?><?php esc_html_e( 'Add Preset', 'wb-ajax-filter' ); ?>
 			</a>
 		</div>
 	</div>
@@ -45,11 +47,11 @@
 							<?php
 							$wb_ajax_query_string = isset( $_SERVER['QUERY_STRING'] ) ? sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) : '';
 							?>
-							<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=edit&wb=list&<?php echo esc_attr( $wb_ajax_query_string ); ?>&preset=<?php echo esc_html( $preset->ID ); ?>" class="wb-edit-filter-preset">
-								<span class="dashicons dashicons-edit"></span>
+							<a href="<?php echo esc_url( site_url() ); ?>/wp-admin/admin.php?action=edit&wb=list&<?php echo esc_attr( $wb_ajax_query_string ); ?>&preset=<?php echo esc_html( $preset->ID ); ?>" class="wb-edit-filter-preset" aria-label="<?php esc_attr_e( 'Edit preset', 'wb-ajax-filter' ); ?>">
+								<?php wb_ajax_filter_icon( 'pencil', '', 18 ); ?>
 							</a>
-							<a class="wb-copy-filter-preset" data-preset="<?php echo esc_html( $preset->ID ); ?>"><span class="dashicons dashicons-admin-page"></span></a>
-							<a class="wb-delete-filter-preset" data-preset="<?php echo esc_html( $preset->ID ); ?>"><span class="dashicons dashicons-trash"></span></a>
+							<button type="button" class="wb-copy-filter-preset wb-ajax-icon-button" data-preset="<?php echo esc_attr( $preset->ID ); ?>" aria-label="<?php esc_attr_e( 'Duplicate preset', 'wb-ajax-filter' ); ?>"><?php wb_ajax_filter_icon( 'copy', '', 18 ); ?></button>
+							<button type="button" class="wb-delete-filter-preset wb-ajax-icon-button" data-preset="<?php echo esc_attr( $preset->ID ); ?>" aria-label="<?php esc_attr_e( 'Delete preset', 'wb-ajax-filter' ); ?>"><?php wb_ajax_filter_icon( 'trash', '', 18 ); ?></button>
 							<div class="wb-ajax-filter-onoff-container" data-preset="<?php echo esc_html( $preset->ID ); ?>">
 								<input type="checkbox" class="preset-active-status" value="yes" <?php echo ( 'yes' === $enabled ) ? 'checked' : ''; ?>>
 							</div>

@@ -9,6 +9,10 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $args = array(
 	'posts_per_page' => 1,
 	'post_type'      => 'product',
@@ -17,23 +21,31 @@ $args = array(
 	'order'          => 'desc',
 );
 
-$prices                         = get_posts( $args );
-$prod                           = wc_get_product( $prices[0]->ID );
+$prices = get_posts( $args );
+// A store with no priced products has nothing to slide over; rendering anyway
+// would fatal on $prices[0] below.
+if ( empty( $prices ) ) {
+	return;
+}
+$prod = wc_get_product( $prices[0]->ID );
+if ( ! $prod ) {
+	return;
+}
 $highest_price                  = $prod->get_price();
 $clear_style                    = 'display:none;';
 $toggle_enabled                 = ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? true : false;
 $toggle_class                   = ( $toggle_enabled ) ? 'wb-ajax-accordian' : '';
 $toggle_style                   = ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'display:none' : '';
-$toggle_icon                    = ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'dashicons-arrow-down-alt2' : 'dashicons-arrow-up-alt2';
+$toggle_open                    = ! ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] );
 $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
 ?>
 <div class="wb-ajax-filter-container-single filter-price-slider" role="region" aria-label="Price Filter">
-	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?>" role="button">
+	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?><?php echo ( $toggle_enabled && $toggle_open ) ? ' wb-ajax-open' : ''; ?>" role="button"<?php echo $toggle_enabled ? ' aria-expanded="' . esc_attr( $toggle_open ? 'true' : 'false' ) . '"' : ''; ?>>
 	   
 		<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
 		
 		<?php if ( $toggle_enabled ) : ?>
-			<span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>" aria-hidden="true"></span>
+			<?php wb_ajax_filter_icon( 'chevron-down', 'wb-ajax-toggle-icon' ); ?>
 		<?php endif; ?>
 	</a>
 

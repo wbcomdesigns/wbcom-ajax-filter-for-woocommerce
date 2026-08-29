@@ -1,6 +1,6 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * Plugin Update Checker File..
+ * Plugin Update Checker File.
  *
  * @link       https://wbcomdesigns.com/
  *
@@ -147,7 +147,7 @@ class EDD_WB_Ajax_Filter_Plugin_Updater {
 			$_transient_data = new stdClass();
 		}
 
-		if ( 'plugins.php' == $pagenow && is_multisite() ) {
+		if ( 'plugins.php' === $pagenow && is_multisite() ) {
 			return $_transient_data;
 		}
 
@@ -200,7 +200,7 @@ class EDD_WB_Ajax_Filter_Plugin_Updater {
 			return;
 		}
 
-		if ( $this->name != $file ) {
+		if ( $this->name !== $file ) {
 			return;
 		}
 
@@ -256,8 +256,8 @@ class EDD_WB_Ajax_Filter_Plugin_Updater {
 			$changelog_link = self_admin_url( 'index.php?edd_sl_action=view_plugin_changelog&plugin=' . $this->name . '&slug=' . $this->slug . '&TB_iframe=true&width=772&height=911' );
 
 			if ( empty( $version_info->download_link ) ) {
-				/* translate %1$s , %2$ ,  %3$s */
 				printf(
+					/* translators: %1$s: plugin name, %2$s: opening link tag, %3$s: version number, %4$s: closing link tag. */
 					esc_html__( 'There is a new version of %1$s available. %2$sView version %3$s details%4$s.', 'wb-ajax-filter' ),
 					esc_html( $version_info->name ),
 					'<a target="_blank" class="thickbox" href="' . esc_url( $changelog_link ) . '">',
@@ -265,8 +265,8 @@ class EDD_WB_Ajax_Filter_Plugin_Updater {
 					'</a>'
 				);
 			} else {
-				/* translate %1$s , %2$ ,  %3$s */
 				printf(
+					/* translators: %1$s: plugin name, %2$s: opening details link tag, %3$s: version number, %4$s: closing details link tag, %5$s: opening update link tag, %6$s: closing update link tag. */
 					esc_html__( 'There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s.', 'wb-ajax-filter' ),
 					esc_html( $version_info->name ),
 					'<a target="_blank" class="thickbox" href="' . esc_url( $changelog_link ) . '">',
@@ -299,7 +299,7 @@ class EDD_WB_Ajax_Filter_Plugin_Updater {
 			return $_data;
 		}
 
-		if ( ! isset( $_args->slug ) || ( $_args->slug != $this->slug ) ) {
+		if ( ! isset( $_args->slug ) || ( $_args->slug !== $this->slug ) ) {
 			return $_data;
 		}
 
@@ -387,11 +387,11 @@ class EDD_WB_Ajax_Filter_Plugin_Updater {
 
 		$data = array_merge( $this->api_data, $_data );
 
-		if ( $data['slug'] != $this->slug ) {
+		if ( $data['slug'] !== $this->slug ) {
 			return;
 		}
 
-		if ( trailingslashit( home_url() ) == $this->api_url ) {
+		if ( trailingslashit( home_url() ) === $this->api_url ) {
 			return false; // Don't allow a plugin to ping itself.
 		}
 

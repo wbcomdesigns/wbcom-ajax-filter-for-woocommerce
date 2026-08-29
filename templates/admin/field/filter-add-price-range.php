@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin/field
  */
 
+defined( 'ABSPATH' ) || exit;
+
 $style = 'display:none;';
 if ( isset( $_POST['count'] ) ) { //phpcs:ignore
 	$count = sanitize_text_field( wp_unslash( $_POST['count'] ) ); //phpcs:ignore
@@ -28,14 +30,14 @@ $args = array(
 	'order'          => 'desc',
 );
 
-$prices                         = get_posts( $args );
-$prod                           = wc_get_product( $prices[0]->ID );
-$highest_price                  = $prod->get_price();
+$prices        = get_posts( $args );
+$prod          = wc_get_product( $prices[0]->ID );
+$highest_price = $prod->get_price();
 
 ?>
 <div id="wb_range_<?php echo esc_html( $count ); ?>" class="wb-ajax-filter-range-box" data-range_id="<?php echo esc_html( $count ); ?>">
-	<a href="#" role="button" class="wb-ajax-filter-range-remove">
-		<span class="dashicons dashicons-no-alt"></span>	
+	<a href="#" role="button" class="wb-ajax-filter-range-remove" aria-label="<?php esc_attr_e( 'Remove price range', 'wb-ajax-filter' ); ?>">
+		<?php wb_ajax_filter_icon( 'x', 'wb-ajax-range-remove-icon', 14 ); ?>
 	</a>
 	<p class="wb-ajax-filter-field-wrapper wb-ajax-filter-text-field-wrapper min">
 		<span class="wb_price_range_min_error" hidden></span>

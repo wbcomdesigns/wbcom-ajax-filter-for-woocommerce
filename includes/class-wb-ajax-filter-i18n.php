@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
@@ -24,7 +23,7 @@
  * @subpackage Wb_Ajax_Filter/includes
  * @author     Wbcom Designs <https://wbcomdesigns.com/>
  */
-class Wb_Ajax_Filter_i18n {
+class Wb_Ajax_Filter_I18n {
 
 
 	/**
@@ -39,9 +38,5 @@ class Wb_Ajax_Filter_i18n {
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
-
 	}
-
-
-
 }

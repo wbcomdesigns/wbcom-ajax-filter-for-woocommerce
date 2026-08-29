@@ -9,6 +9,8 @@
  * @subpackage Wb_Ajax_Filter/template/admin
  */
 
+defined( 'ABSPATH' ) || exit;
+
 $style = 'display:none;';
 if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 'orderby' === $filters['type'] ) ) {
 	$style = '';

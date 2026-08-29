@@ -9,19 +9,23 @@
  * @subpackage Wb_Ajax_Filter/template/filters
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $ratings                        = array( '1', '2', '3', '4', '5' );
 $clear_style                    = 'display:none;';
 $toggle_enabled                 = ( isset( $filters['show_toggle'] ) && 'yes' === $filters['show_toggle'] ) ? true : false;
 $toggle_class                   = ( $toggle_enabled ) ? 'wb-ajax-accordian' : '';
 $toggle_style                   = ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'display:none' : '';
-$toggle_icon                    = ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] ) ? 'dashicons-arrow-down-alt2' : 'dashicons-arrow-up-alt2';
+$toggle_open                    = ! ( isset( $filters['toggle_style'] ) && 'closed' === $filters['toggle_style'] );
 $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_options' );
 ?>
 <div class="wb-ajax-filter-container-single wb-ajax-filter-review" id="filter_<?php echo esc_attr( $preset_id . '_' . $filter_count ); ?>" data-filter-type="<?php echo esc_attr( $filters['type'] ); ?>" data-filter-id="<?php echo esc_attr( $filter_count ); ?>" role="region" aria-label="Review Filter">
-	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?>" role="button">
+	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?><?php echo ( $toggle_enabled && $toggle_open ) ? ' wb-ajax-open' : ''; ?>" role="button"<?php echo $toggle_enabled ? ' aria-expanded="' . esc_attr( $toggle_open ? 'true' : 'false' ) . '"' : ''; ?>>
 		<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
 		<?php if ( $toggle_enabled ) : ?>
-		<span class="dashicons <?php echo esc_attr( $toggle_icon ); ?>" aria-hidden="true"></span>
+			<?php wb_ajax_filter_icon( 'chevron-down', 'wb-ajax-toggle-icon' ); ?>
 		<?php endif; ?>
 	</a>
 	<div class="wb-ajax-panel" style="<?php echo ( $toggle_enabled && 'closed' === $toggle_style ) ? 'display:none' : ''; ?>" id="review-filter-panel">
@@ -33,15 +37,19 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 				<select class="wb-ajax-filter-selectible" data-filter="rating_filter">
 					<option value=""><?php esc_html_e( 'Select Ratings', 'wb-ajax-filter' ); ?></option>
 				<?php
-				if( !empty($ratings) && is_array($ratings) ) {
-					foreach ( $ratings as $val ) { ?>
+				if ( ! empty( $ratings ) && is_array( $ratings ) ) {
+					foreach ( $ratings as $val ) {
+						?>
 						<option value="<?php echo esc_attr( $val ); ?>" <?php echo ( isset( $params['rating_filter'] ) && $val === $params['rating_filter'] ) ? 'selected' : ''; ?>>
 							<?php printf( 'Rated %1$s out of 5', esc_html( $val ) ); ?>
 						</option>
-					<?php }//end foreach 
-				}else {?>
+						<?php
+					}//end foreach
+				} else {
+					?>
 					<option value=""><?php esc_html_e( 'No Ratings yet.', 'wb-ajax-filter' ); ?></option>
-				<?php }
+					<?php
+				}
 				?>
 				</select>
 			</div>
