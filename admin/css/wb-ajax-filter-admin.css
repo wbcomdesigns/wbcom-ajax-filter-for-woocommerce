@@ -165,14 +165,22 @@ form#filter-preset-create {
 
 .wb-ajax-filter-colorpicker {
 	display: flex;
+	flex-wrap: wrap;
+	gap: 16px 24px;
 }
 
+/*
+ * Each picker takes the WP colour widget's own width (swatch + 100px input) and
+ * wraps to the next row when it runs out of room. The old 23%-of-parent sizing
+ * assumed a full-width row; inside the settings field it collapsed the pickers
+ * narrower than the fixed-width widget, so the swatch overlapped the input.
+ */
 .wb-ajax-filter-single-colorpicker {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
-	margin-inline-end: 2%;
-	width: 23%;
+	width: auto;
+	margin-inline-end: 0;
 }
 
 .wb-ajax-filter-single-colorpicker label {

@@ -391,7 +391,7 @@ Wbcom_Settings_Page::card_open(
 		</div>
 	</div>
 
-	<div class="wbcom-field wbcom-field-group">
+	<div class="wbcom-field wbcom-field-group wbcom-field--stacked">
 		<div class="wbcom-field-info">
 			<label><?php esc_html_e( 'Filters area colors', 'wb-ajax-filter' ); ?></label>
 		</div>
@@ -413,7 +413,7 @@ Wbcom_Settings_Page::card_open(
 		</div>
 	</div>
 
-	<div class="wbcom-field wbcom-field-group">
+	<div class="wbcom-field wbcom-field-group wbcom-field--stacked">
 		<div class="wbcom-field-info">
 			<label><?php esc_html_e( 'Textual terms colors', 'wb-ajax-filter' ); ?></label>
 		</div>
