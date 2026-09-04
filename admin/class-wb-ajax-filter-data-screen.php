@@ -97,7 +97,15 @@ class Wb_Ajax_Filter_Data_Screen {
 			return;
 		}
 
-		check_admin_referer( self::NONCE_ACTION );
+		// Verify the nonce that actually rode in on this route. Row links carry
+		// their own NONCE_ACTION nonce (wb_data_action); the bulk form submits
+		// via action/action2 under WP_List_Table's core 'bulk-<plural>' nonce.
+		// Keep 'wb_filter_presets' in sync with the list table constructor's plural.
+		if ( isset( $_REQUEST['wb_data_action'] ) ) {
+			check_admin_referer( self::NONCE_ACTION );
+		} else {
+			check_admin_referer( 'bulk-wb_filter_presets' );
+		}
 
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			wp_die( esc_html__( 'You are not allowed to manage filter presets.', 'wb-ajax-filter' ), 403 );
@@ -241,6 +249,10 @@ class Wb_Ajax_Filter_Data_Screen {
 			case 'delete':
 				/* translators: %s: number of presets. */
 				$message = _n( '%s preset deleted.', '%s presets deleted.', $count, 'wb-ajax-filter' );
+				break;
+			case 'created':
+				/* translators: %s: number of presets. */
+				$message = _n( '%s preset created.', '%s presets created.', $count, 'wb-ajax-filter' );
 				break;
 			default:
 				return '';

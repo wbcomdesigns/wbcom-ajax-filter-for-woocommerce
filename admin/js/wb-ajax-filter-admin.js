@@ -132,10 +132,10 @@
 			var urlAction    = url.searchParams.get( "action" );
 			var urlSubAction = url.searchParams.get( "wb" );
 			var urlTab       = url.searchParams.get( "tab" ) ? url.searchParams.get( "tab" ) : false;
-			if (urlTab && urlTab === 'wb-ajax-filter-customization' ) {
+			if (urlTab && urlTab === 'advanced' ) {
 				searchOutputTab();
 			}
-			if (urlTab && urlTab === 'wb-ajax-filter-search') {
+			if (urlTab && urlTab === 'advanced') {
 				jQuery( '#wb_ajax_check_custom_field_option' ).select2(
 					{
 						placeholder :'Select Custom Field',
@@ -387,7 +387,8 @@
 						data: { action: 'create_filter_preset_wb', 'nonce': nonce, 'form_data': queryString },
 						success: function ( response ) {
 							if ( 'filter_created' === response ) {
-								window.location.search = 'page=wc-ajax-filter-settings&tab=wb-ajax-filter-presets';
+								// Land on the list that actually shows the new preset, with a success notice.
+								window.location.search = 'page=wc-ajax-filter-settings&tab=stored-data&wb_data_done=created&wb_data_count=1';
 							}
 							if ('filter_edited' === response) {
 								setFieldValue( 'wb', 'list' );

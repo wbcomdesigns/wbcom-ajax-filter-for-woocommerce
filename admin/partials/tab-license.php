@@ -28,14 +28,10 @@ Wbcom_Settings_Page::card_close();
 
 Wbcom_Settings_Page::card_open(
 	__( 'Help & support', 'wb-ajax-filter' ),
-	__( 'Documentation and help for Ajax Filter for WooCommerce.', 'wb-ajax-filter' )
+	__( 'Help and support for Ajax Filter for WooCommerce.', 'wb-ajax-filter' )
 );
 ?>
 <ul class="wbcom-feature-list">
-	<li>
-		<i data-lucide="book-open"></i>
-		<a href="https://docs.wbcomdesigns.com/doc_category/ajax-filter-woocommerce/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Documentation', 'wb-ajax-filter' ); ?></a>
-	</li>
 	<li>
 		<i data-lucide="life-buoy"></i>
 		<a href="https://wbcomdesigns.com/support/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Support center', 'wb-ajax-filter' ); ?></a>

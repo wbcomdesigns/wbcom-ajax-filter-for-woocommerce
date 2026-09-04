@@ -67,7 +67,7 @@ $wb_export_all_csv  = wp_nonce_url(
 	<form method="get" action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>">
 		<input type="hidden" name="page" value="<?php echo esc_attr( Wb_Ajax_Filter_Admin::PAGE_SLUG ); ?>" />
 		<input type="hidden" name="tab" value="stored-data" />
-		<?php wp_nonce_field( Wb_Ajax_Filter_Data_Screen::NONCE_ACTION ); ?>
+		<?php // No _wpnonce here: WP_List_Table::display() already emits the bulk nonce ('bulk-wb_filter_presets'). A second _wpnonce would collide on the GET submit and win, breaking bulk-action verification. ?>
 		<?php $wb_data_table->views(); ?>
 		<?php $wb_data_table->search_box( __( 'Search presets', 'wb-ajax-filter' ), 'wb-ajax-filter-preset' ); ?>
 		<?php $wb_data_table->display(); ?>

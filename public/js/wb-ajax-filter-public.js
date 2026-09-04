@@ -276,6 +276,9 @@
 							addRemoveAjaxSearchfieldsOnChange( custom, customValue );
 						}
 					}
+					// Honour the "What to search" scope dropdown; empty/product keeps the clean product-only default.
+					let scope = jQuery( '.wb-ajax-filter-post-type' ).val();
+					addRemoveAjaxSearchfieldsOnChange( 'post_type', ( scope && scope !== 'product' ) ? scope : '' );
 					if ( filterValue != null || searchCategory != 0 || customValue != '' ) {
 						loadFilteredResults();
 					}
@@ -324,6 +327,9 @@
 						}
 					}
 
+					// Honour the "What to search" scope dropdown; empty/product keeps the clean product-only default.
+					let scope = jQuery( '.wb-ajax-filter-post-type' ).val();
+					addRemoveAjaxSearchfieldsOnChange( 'post_type', ( scope && scope !== 'product' ) ? scope : '' );
 					if (filterValue == null && searchCategory == 0 && customValue == '' ) {
 						loadFilteredResults();
 					}

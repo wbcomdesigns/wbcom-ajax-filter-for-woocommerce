@@ -89,16 +89,17 @@ form#filter-preset-create {
 	text-decoration: none;
 }
 
-.wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
-	padding: 25px;
-	height: 600px;
-	overflow-y: scroll;
+/* Scroll the whole modal as one unit so the Save Filter bar (rendered after
+   this block) is always reachable, and there is no inner-vs-outer double
+   scrollbar with enhanced-select fields. */
+.wb-ajax-filter-modal-content {
+	max-height: 85vh;
+	overflow-y: auto;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1480px) {
-	.wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
-		height: 440px;
-	}
+.wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
+	padding: 25px;
+	height: auto;
 }
 
 .wb-ajax-filter-toggle-content-row {
@@ -145,6 +146,56 @@ span.view-all-presets {
 
 .wb-ajax-filter-onoff-container {
 	display: inline;
+}
+
+/* Toggle switch for modal on/off fields (e.g. Allow multiple selection). The
+   .wb-ajax-filter-onoff span was unstyled, so the on/off state was invisible. */
+.wb-ajax-filter-modal-body .wb-ajax-filter-onoff-container {
+	position: relative;
+	display: inline-block;
+}
+
+.wb-ajax-filter-modal-body .wb-ajax-filter-onoff-container input.on_off {
+	position: absolute;
+	top: 0;
+	inset-inline-start: 0;
+	width: 46px;
+	height: 24px;
+	margin: 0;
+	opacity: 0;
+	cursor: pointer;
+	z-index: 2;
+}
+
+.wb-ajax-filter-modal-body .wb-ajax-filter-onoff {
+	display: inline-block;
+	width: 46px;
+	height: 24px;
+	border-radius: 24px;
+	background: var(--wb-border);
+	position: relative;
+	vertical-align: middle;
+	transition: background 0.2s;
+}
+
+.wb-ajax-filter-modal-body .wb-ajax-filter-onoff::before {
+	content: "";
+	position: absolute;
+	top: 3px;
+	inset-inline-start: 3px;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: var(--wb-accent-fg);
+	transition: transform 0.2s;
+}
+
+.wb-ajax-filter-modal-body input.on_off:checked + .wb-ajax-filter-onoff {
+	background: var(--wb-accent);
+}
+
+.wb-ajax-filter-modal-body input.on_off:checked + .wb-ajax-filter-onoff::before {
+	transform: translateX(22px);
 }
 
 .wb-ajax-filter-list-table-section-content {
@@ -263,12 +314,13 @@ span.view-all-presets {
 }
 
 .wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box {
-	width: 17%;
+	width: calc(33.333% - 1%);
 	margin: 0.5%;
 	background: var(--wb-surface);
 	border-radius: 5px;
 	padding: 1%;
 	position: relative;
+	box-sizing: border-box;
 }
 
 .wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box p {
@@ -358,12 +410,28 @@ a.wb-ajax-filter-add-button.button-primary.wb-add-new-filter:hover {
 	height: auto;
 }
 
+.wb-ajax-filter-text-field-wrapper {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
 .wb-ajax-filter-text-field-wrapper input[type="text"] {
 	height: 38px;
-	width: 100%;
+	flex: 1 1 240px;
+	width: auto;
 	background-color: var(--wb-surface);
 	border-radius: 8px;
 	border-color: var(--wb-border);
+}
+
+/* Keep the inline Save button the same height as the name input it sits beside. */
+.wb-ajax-filter-text-field-wrapper a.wb-ajax-filter-save-title-button.wb-add-new-filter {
+	width: auto;
+	min-width: 100px;
+	margin-top: 0;
+	line-height: 38px;
 }
 
 #filter-preset-create .select2-container .select2-selection--multiple {

@@ -54,6 +54,11 @@ if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) { //phpcs:
 				</a>
 				<?php } ?>
 			</div>
+			<?php if ( ! isset( $_REQUEST['preset'] ) ) : //phpcs:ignore ?>
+			<p class="description wb-ajax-filter-save-hint">
+				<?php esc_html_e( 'This preset is saved automatically when you add its first filter below.', 'wb-ajax-filter' ); ?>
+			</p>
+			<?php endif; ?>
 		</div>
 	</div>
 

@@ -112,7 +112,13 @@ class Wb_Ajax_Filter_Public {
 		// Depends on the vendor styles so the plugin sheet prints after them: its
 		// :focus-visible rules replace the outlines the vendor CSS removes.
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/wb-ajax-filter-public' . $extension, array( 'wb-ion-rangeslider', 'wb-select2' ), $this->version, 'all' );
-		wp_add_inline_style( $this->plugin_name, $this->wb_ajax_add_custom_css_to_frontend() );
+		// Only inject the hardcoded custom colours when the site opted into the custom
+		// style. Under the default "theme" style the container falls through to the
+		// --wb-* token bridge, which follows the theme (incl. dark mode).
+		$customization = get_option( 'wb_ajax_filter_admin_customization_options' );
+		if ( is_array( $customization ) && isset( $customization['filters_style'] ) && 'custom' === $customization['filters_style'] ) {
+			wp_add_inline_style( $this->plugin_name, $this->wb_ajax_add_custom_css_to_frontend() );
+		}
 	}
 
 	/**

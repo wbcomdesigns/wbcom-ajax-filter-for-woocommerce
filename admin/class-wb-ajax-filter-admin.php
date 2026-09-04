@@ -1077,6 +1077,8 @@ class Wb_Ajax_Filter_Admin {
 			if ( $post_id ) {
 				$filters[] = $filter;
 				update_post_meta( $post_id, '_wb_filter', $filters );
+				// Enable on create so the preset renders immediately; rendering gates on preset_enabled === 'yes'.
+				update_post_meta( $post_id, 'preset_enabled', 'yes' );
 				return 'filter_created';
 			}
 		} else {
