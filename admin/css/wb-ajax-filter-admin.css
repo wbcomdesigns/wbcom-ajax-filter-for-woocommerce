@@ -839,3 +839,9 @@ a.wb-ajax-filter-range-remove:focus-visible,
 .wb-ajax-filter-data-screen .wp-list-table tbody tr:last-child td {
 	border-bottom: 0;
 }
+
+/* Custom colours are greyed out unless the "custom" style is chosen (they do not apply otherwise). */
+.wb-ajax-filter-colorpicker.wb-ajax-colorpicker-disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}

@@ -16,12 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 $clear_style = 'display:none;';
 $attributes  = wc_get_attribute_taxonomy_names();
 if ( isset( $filters['taxonomy'] ) ) {
-	$terms           = get_terms(
-		array(
-			'taxonomy'   => wp_unslash( $filters['taxonomy'] ),
-			'hide_empty' => false,
-		),
-	);
 	$filter_taxonomy = $filters['taxonomy'];
 	if ( in_array( $filters['taxonomy'], $attributes, true ) ) {
 		$filter_taxonomy = str_replace( 'pa_', 'filter_', $filters['taxonomy'] );
@@ -52,14 +46,18 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 			if ( isset( $filters['terms'] ) && count( $filters['terms'] ) > 0 ) {
 				$terms_order_by  = ( isset( $filters['order_by'] ) ) ? $filters['order_by'] : 'name';
 				$terms_order     = ( isset( $filters['order'] ) ) ? $filters['order'] : 'ASC';
+				$old_terms_array = $filters['terms'];
+				// Sort only the preset's selected terms, not the whole taxonomy - a store with
+				// thousands of terms used to load every one of them on each render just to reorder
+				// the handful this filter shows.
 				$term_args       = array(
 					'taxonomy'   => $filters['taxonomy'],
+					'include'    => wp_list_pluck( $old_terms_array, 'id' ),
 					'orderby'    => $terms_order_by,
 					'order'      => $terms_order,
 					'hide_empty' => false,
 				);
 				$sorted_terms    = get_terms( $term_args );
-				$old_terms_array = $filters['terms'];
 				unset( $filters['terms'] );
 				$new_terms_array = array();
 				foreach ( $sorted_terms as $stm ) {
