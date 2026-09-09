@@ -140,6 +140,28 @@ a.wb-ajax-reset-all-filters.button .wb-icon {
 	margin-inline-end: 5px;
 }
 
+/*
+ * Apply/Reset buttons carry the theme accent explicitly. With no background of their own they
+ * inherited the ambient context and fell back to WooCommerce's default grey on shortcode pages.
+ * Scoped under .woocommerce (the shortcode's own wrapper) so it outranks `.woocommerce a.button`.
+ */
+.woocommerce a.wb-ajax-apply-all-filters.button,
+.woocommerce a.wb-ajax-reset-all-filters.button,
+a.wb-ajax-apply-all-filters.button,
+a.wb-ajax-reset-all-filters.button {
+	background: var(--wb-accent);
+	color: var(--wb-accent-fg);
+	border: 1px solid var(--wb-accent);
+}
+
+.woocommerce a.wb-ajax-apply-all-filters.button:hover,
+.woocommerce a.wb-ajax-reset-all-filters.button:hover,
+a.wb-ajax-apply-all-filters.button:hover,
+a.wb-ajax-reset-all-filters.button:hover {
+	filter: brightness(0.95);
+	color: var(--wb-accent-fg);
+}
+
 /*Filter Section UI*/
 .wb-ajax-filter-container-single h4.filter-title {
 	margin-bottom: 10px;
