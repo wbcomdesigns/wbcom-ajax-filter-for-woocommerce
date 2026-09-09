@@ -104,15 +104,18 @@
 				}
 			);
 
-			// Enable select2 js
-			jQuery( '.wb-ajax-search_categories' ).select2();
-			jQuery( '.wb-ajax-filter-post-type' ).select2();
-			jQuery( 'select.wb-ajax-filter-selectible' ).select2();
+			// Enable select2 js. The dropdownCssClass tags this plugin's own dropdowns so the
+			// dark-mode styles (public CSS) can target them without touching other plugins'
+			// select2 controls (e.g. WooCommerce checkout).
+			jQuery( '.wb-ajax-search_categories' ).select2( { dropdownCssClass: 'wb-ajax-filter-s2-dropdown' } );
+			jQuery( '.wb-ajax-filter-post-type' ).select2( { dropdownCssClass: 'wb-ajax-filter-s2-dropdown' } );
+			jQuery( 'select.wb-ajax-filter-selectible' ).select2( { dropdownCssClass: 'wb-ajax-filter-s2-dropdown' } );
 
 			// Enable select2 autocomplete js
 			jQuery( '#wb_ajax_search_input' ).select2(
 				{
 					tags: true,
+					dropdownCssClass: 'wb-ajax-filter-s2-dropdown',
 					placeholder: wbcom_plugin_installer_params.wb_ajax_filter_search_label,
 					ajax: {
 						url: wbcom_plugin_installer_params.ajax_url,

@@ -769,3 +769,49 @@ input.wb-ajax-filter-selectible:focus-visible,
 	outline: 2px solid var(--wb-accent);
 	outline-offset: 2px;
 }
+
+/* -------------------------------------------------------------------------
+ * Dark mode: the select2 dropdown is appended to <body>, outside the filter
+ * container's token scope, so its options (coloured with the light --wb-text
+ * in dark mode) sat on select2's default white panel and lost contrast
+ * (Reign / BuddyX). Give this plugin's own dropdowns (tagged via
+ * dropdownCssClass 'wb-ajax-filter-s2-dropdown') a dark panel. Scoped to the
+ * plugin so WooCommerce and other select2 controls are untouched.
+ * ------------------------------------------------------------------------- */
+:root[data-bx-mode="dark"] .select2-dropdown.wb-ajax-filter-s2-dropdown {
+	background-color: #23262f;
+	border-color: rgba( 255, 255, 255, 0.18 );
+}
+:root[data-bx-mode="dark"] .select2-dropdown.wb-ajax-filter-s2-dropdown .select2-results__option {
+	color: #e6e8ec;
+}
+:root[data-bx-mode="dark"] .select2-dropdown.wb-ajax-filter-s2-dropdown .select2-results__option--highlighted[aria-selected],
+:root[data-bx-mode="dark"] .select2-dropdown.wb-ajax-filter-s2-dropdown .select2-results__option[aria-selected="true"] {
+	background-color: rgba( 255, 255, 255, 0.1 );
+	color: #ffffff;
+}
+:root[data-bx-mode="dark"] .select2-dropdown.wb-ajax-filter-s2-dropdown .select2-search__field {
+	background-color: #1b1e26;
+	color: #e6e8ec;
+	border-color: rgba( 255, 255, 255, 0.18 );
+}
+
+@media ( prefers-color-scheme: dark ) {
+	:root:not([data-bx-mode]) .select2-dropdown.wb-ajax-filter-s2-dropdown {
+		background-color: #23262f;
+		border-color: rgba( 255, 255, 255, 0.18 );
+	}
+	:root:not([data-bx-mode]) .select2-dropdown.wb-ajax-filter-s2-dropdown .select2-results__option {
+		color: #e6e8ec;
+	}
+	:root:not([data-bx-mode]) .select2-dropdown.wb-ajax-filter-s2-dropdown .select2-results__option--highlighted[aria-selected],
+	:root:not([data-bx-mode]) .select2-dropdown.wb-ajax-filter-s2-dropdown .select2-results__option[aria-selected="true"] {
+		background-color: rgba( 255, 255, 255, 0.1 );
+		color: #ffffff;
+	}
+	:root:not([data-bx-mode]) .select2-dropdown.wb-ajax-filter-s2-dropdown .select2-search__field {
+		background-color: #1b1e26;
+		color: #e6e8ec;
+		border-color: rgba( 255, 255, 255, 0.18 );
+	}
+}
