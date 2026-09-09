@@ -595,7 +595,13 @@ class Wb_Ajax_Filter_Public {
 		}
 		$enable_filter_actions = ! empty( $presets ) ? self::wb_ajax_filter_presets_are_enabled( $presets ) : false;
 
-		$render_setting = ( isset( $wb_ajax_filter_search_settings['enable_search'] ) || ( $enable_filter_actions ) ) ? true : false;
+		// Search counts as "on" only when its value is 'yes', not merely when the key exists - an
+		// isset() check treated a saved 'no' as enabled, so a disabled preset with search off
+		// still printed the title and Reset chrome over an empty block. This matches the search
+		// form's own 'yes' check below.
+		$search_enabled = isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_ajax_filter_search_settings['enable_search'];
+
+		$render_setting = ( $search_enabled || $enable_filter_actions ) ? true : false;
 
 		$customization_options = get_option( 'wb_ajax_filter_admin_customization_options' );
 		$columns               = isset( $customization_options['filters_per_column'] ) ? $customization_options['filters_per_column'] : 5;

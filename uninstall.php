@@ -28,3 +28,35 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+
+// Plugin options + EDD licence keys.
+$wb_ajax_filter_options = array(
+	'wb_ajax_filter_admin_general_options',
+	'wb_ajax_filter_admin_customization_options',
+	'wb_ajax_filter_search_settings',
+	'wb_ajax_filter_search_content_settings',
+	'wb_ajax_filter_default_preset_seeded',
+	'edd_wbcom_ajax_filter_license_key',
+	'edd_wbcom_ajax_filter_license_status',
+);
+foreach ( $wb_ajax_filter_options as $wb_ajax_filter_option ) {
+	delete_option( $wb_ajax_filter_option );
+}
+
+// Licence-check cache.
+delete_transient( 'edd_wbcom_ajax_filter_license_key_data' );
+
+// Filter-preset posts. Their meta (_wb_filter, parent_preset, preset_enabled) is removed
+// with the post. ponytail: single-site cleanup; wrap in a get_sites() loop if a network
+// uninstall ever needs to sweep every blog.
+$wb_ajax_filter_presets = get_posts(
+	array(
+		'post_type'   => 'wb_filter_preset',
+		'post_status' => 'any',
+		'numberposts' => -1,
+		'fields'      => 'ids',
+	)
+);
+foreach ( $wb_ajax_filter_presets as $wb_ajax_filter_preset_id ) {
+	wp_delete_post( $wb_ajax_filter_preset_id, true );
+}

@@ -127,6 +127,21 @@
 			}
 
 			jQuery( ".wb-ajax-color-picker" ).wpColorPicker();
+
+			// Custom colours only apply when the style is "custom". Grey the pickers out
+			// otherwise, so the backend does not offer editable colours that the frontend
+			// ignores (the stored values are kept, just disabled). Follows the radio.
+			var wbToggleColorPickers = function () {
+				var style     = jQuery( 'input[name="wb_ajax_filter_admin_customization_options[filters_style]"]:checked' ).val();
+				var isCustom  = ( 'custom' === style );
+				jQuery( '.wb-ajax-filter-colorpicker' ).toggleClass( 'wb-ajax-colorpicker-disabled', ! isCustom );
+				jQuery( '.wb-ajax-color-picker' ).each( function () {
+					jQuery( this ).wpColorPicker( isCustom ? 'enable' : 'disable' );
+				} );
+			};
+			wbToggleColorPickers();
+			jQuery( document ).on( 'change', 'input[name="wb_ajax_filter_admin_customization_options[filters_style]"]', wbToggleColorPickers );
+
 			var url_string   = window.location.href
 			var url          = new URL( url_string );
 			var urlAction    = url.searchParams.get( "action" );

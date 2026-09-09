@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) || exit;
 				<tr>
 					<th scope="col"><?php esc_html_e( 'Preset Name', 'wb-ajax-filter' ); ?></th>
 					<th scope="col"><?php esc_html_e( 'Shortcode', 'wb-ajax-filter' ); ?></th>
-					<th scope="col"></th>
+					<th scope="col"><?php esc_html_e( 'Action', 'wb-ajax-filter' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>

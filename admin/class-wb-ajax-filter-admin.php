@@ -496,21 +496,26 @@ class Wb_Ajax_Filter_Admin {
 		if ( ! isset( $_POST['title'] ) ) {
 			exit;
 		}
+		$title   = sanitize_text_field( wp_unslash( $_POST['title'] ) );
 		$args    = array(
-			'post_type'    => 'wb_filter_preset',
-			'post_status'  => 'publish',
-			'number_posts' => -1,
+			'post_type'   => 'wb_filter_preset',
+			'post_status' => 'publish',
+			'numberposts' => -1,
 		);
 		$filters = get_posts( $args );
+
+		// Compare against EVERY preset. The old loop used the invalid arg 'number_posts' (so
+		// get_posts returned only its default five) and die()d inside the first iteration on
+		// either branch - so it really only ever checked the first preset.
+		$exists = false;
 		foreach ( $filters as $filter ) {
-			if ( strtolower( $filter->post_title ) === sanitize_text_field( wp_unslash( $_POST['title'] ) ) || sanitize_text_field( wp_unslash( $_POST['title'] ) ) === $filter->post_title ) {
-				echo 'exists';
-				die();
-			} else {
-				echo 'not exists';
-				die();
+			if ( strtolower( $filter->post_title ) === strtolower( $title ) ) {
+				$exists = true;
+				break;
 			}
 		}
+
+		echo $exists ? 'exists' : 'not exists';
 		die();
 	}
 	/**
@@ -530,9 +535,9 @@ class Wb_Ajax_Filter_Admin {
 		$preset_data = get_post( $preset_id );
 		$filters     = get_post_meta( $preset_id, '_wb_filter', true );
 		$args        = array(
-			'post_type'    => 'wb_filter_preset',
-			'number_posts' => -1,
-			'meta_query'   => array(
+			'post_type'   => 'wb_filter_preset',
+			'numberposts' => -1,
+			'meta_query'  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Bounded admin-only duplicate action.
 				array(
 					'key'     => 'parent_preset',
 					'value'   => $preset_id,
