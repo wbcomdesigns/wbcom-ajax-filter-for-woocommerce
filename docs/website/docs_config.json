@@ -1,0 +1,76 @@
+{
+  "parent_category": "wbcom-ajax-filter-for-woocommerce",
+  "subcategories": [
+    {
+      "slug": "getting-started",
+      "name": "Getting Started",
+      "docs": [
+        "getting-started/01-introduction.md",
+        "getting-started/02-installation.md",
+        "getting-started/03-quick-start.md"
+      ]
+    },
+    {
+      "slug": "configuration",
+      "name": "Configuration",
+      "docs": [
+        "configuration/01-general-settings.md",
+        "configuration/02-search-settings.md",
+        "configuration/03-customization-settings.md"
+      ]
+    },
+    {
+      "slug": "filter-presets",
+      "name": "Filter Presets",
+      "docs": [
+        "filter-presets/01-creating-presets.md",
+        "filter-presets/02-managing-presets.md",
+        "filter-presets/03-storing-data.md"
+      ]
+    },
+    {
+      "slug": "frontend-display",
+      "name": "Frontend Display",
+      "docs": [
+        "frontend-display/01-shortcode.md",
+        "frontend-display/02-block.md",
+        "frontend-display/03-auto-render.md",
+        "frontend-display/04-theme-overrides.md"
+      ]
+    },
+    {
+      "slug": "rest-api",
+      "name": "REST API",
+      "docs": [
+        "rest-api/01-overview.md",
+        "rest-api/02-endpoints.md",
+        "rest-api/03-authentication.md"
+      ]
+    },
+    {
+      "slug": "developer-guide",
+      "name": "Developer Guide",
+      "docs": [
+        "developer-guide/01-hooks-filters.md",
+        "developer-guide/02-template-overrides.md",
+        "developer-guide/03-extending-presets.md"
+      ]
+    },
+    {
+      "slug": "troubleshooting",
+      "name": "Troubleshooting",
+      "docs": [
+        "troubleshooting/01-common-issues.md",
+        "troubleshooting/02-debugging.md"
+      ]
+    },
+    {
+      "slug": "faq",
+      "name": "FAQ",
+      "docs": [
+        "faq/01-general.md",
+        "faq/02-technical.md"
+      ]
+    }
+  ]
+}
