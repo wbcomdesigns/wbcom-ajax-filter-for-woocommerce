@@ -1,24 +1,28 @@
 # Introduction
 
-Wbcom Ajax Filter for WooCommerce adds real-time AJAX product filtering to your WooCommerce shop archives. Shoppers can narrow results by taxonomy, price, stock, rating, and order-by without page reloads.
+Wbcom Ajax Filter for WooCommerce adds real-time product filtering to your WooCommerce shop archives. Shoppers narrow results by category, attribute, price, stock status, rating, and sort order -- all without a page reload.
 
-The plugin stores filter configurations as reusable **presets** (a custom post type). One store can run different filter layouts on different pages.
+Filter configurations are saved as **presets**. Each preset is a named set of filter fields you build in the admin, and you can assign different presets to different archive pages. On first activation, a "Default" preset is created with category, price, availability, and attribute filters, so your store filters work out of the box.
 
-## Key Features
+## What Shoppers See
 
-- AJAX filtering on shop, category, tag, and search archives.
-- Filter by attribute, category, price range, stock status, rating, and custom fields.
-- Gutenberg block for block themes and the site editor.
-- Shortcode `[wb_ajax_filters]` for classic themes.
-- Automatic rendering on WooCommerce archive pages.
-- Theme-overridable templates via `wc_get_template`.
-- REST API for headless and mobile clients.
-- Stored Data screen for moderation and export.
+- A filter panel on shop, category, and tag archives (or wherever you place the block or shortcode).
+- Live product grid updates as they adjust filters -- no page reload.
+- Active-filter chips showing what is selected, with one-click removal.
+- A mobile-friendly drawer that collapses behind a "Filters" button on small screens.
+
+## What Store Owners Get
+
+- A visual preset builder with drag-and-drop field ordering.
+- An Overview tab showing how many presets are active and how many filter fields are live.
+- A Stored Data tab for browsing, moderating, and exporting all presets.
+- Theme integration through CSS custom properties -- the filter follows your brand colors automatically.
+- A REST API for headless storefronts and external integrations.
 
 ## Requirements
 
 - WordPress 4.0 or higher.
-- WooCommerce plugin (active).
+- WooCommerce (active). The plugin deactivates itself if WooCommerce is missing.
 
 ## Quick Links
 

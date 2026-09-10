@@ -2,47 +2,40 @@
 
 ## What shortcode does the plugin provide?
 
-`[wb_ajax_filters]` – renders every enabled preset. Use `slug="your-preset-slug"` to render a specific preset.
+`[wb_ajax_filters]` renders every published, enabled preset, newest first. Use `[wb_ajax_filters slug="your-preset-slug"]` to render one specific preset. Disabled presets are never rendered, even when their slug is given.
 
 ## What block does the plugin provide?
 
-**Ajax Product Filters** (`wb-ajax-filter/filters`) – place in block themes and the Site Editor. Choose a preset from the block sidebar.
+The **Ajax Product Filters** block (`wb-ajax-filter/filters`). In the block sidebar choose **All enabled presets** or a specific one. It renders through the same code path as the shortcode, so output is identical.
 
 ## Is there a REST API?
 
-Yes. `GET /wb-ajax-filter/v1/presets` lists presets; `GET /wb-ajax-filter/v1/presets/<id>` returns a single preset. All endpoints require `manage_woocommerce` capability.
+Yes. Everything is under `/wp-json/wb-ajax-filter/v1/presets`. List presets with `GET`, fetch one with `GET /presets/<id>`, enable/disable or rename with `POST/PUT/PATCH /presets/<id>`, and delete with `DELETE /presets/<id>`. Every route requires the `manage_woocommerce` capability - there is no public read path. See [REST API](../rest-api/01-overview.md).
 
-## How do I add custom filter types?
+## Can I add custom filter types?
 
-Hook into `wb_ajax_filter_get_preset_filters` to add a custom filter configuration, and `woocommerce_product_query` to modify the product query.
+Code-only, but yes. Inject a field array through the `wb_ajax_filter_get_preset_filters` filter, render it from a `filter-<type>.php` template in your theme, and handle the query parameter on `woocommerce_product_query`. See [Extending Presets](../developer-guide/03-extending-presets.md).
 
 ## How do I disable automatic rendering on archives?
 
-Remove the action hooks:
+The automatic hooks are registered as an object method, so plain `remove_action( ..., 'add_wb_ajax_filters', 10 )` will not work. Use the matching instance snippet in [Auto Render](../frontend-display/03-auto-render.md), then place the block or shortcode manually.
 
-```php
-remove_action( 'woocommerce_before_shop_loop', 'add_wb_ajax_filters', 10 );
-remove_action( 'woocommerce_no_products_found', 'add_wb_ajax_filters', 10 );
-```
-
-Then use the shortcode or block to place filters manually.
-
-## Where are the plugin’s options stored?
+## Where are the plugin's options stored?
 
 In `wp_options`:
 
-- `wb_ajax_filter_admin_general_options`
-- `wb_ajax_filter_admin_customization_options`
-- `wb_ajax_filter_search_settings`
-- `wb_ajax_filter_search_content_settings`
+- `wb_ajax_filter_admin_general_options` - filtering behaviour
+- `wb_ajax_filter_admin_customization_options` - appearance
+- `wb_ajax_filter_search_settings` - product search
+- `wb_ajax_filter_search_content_settings` - search scope
 
-Presets are stored as `wb_filter_preset` custom post type with `_wb_filter` and `preset_enabled` meta.
+Presets are posts of the `wb_filter_preset` custom post type, with `_wb_filter` (field configuration) and `preset_enabled` post meta.
 
-## How do I export presets?
+## How do I export and import presets?
 
-Use the **Stored Data** tab → **Export JSON** or **Export CSV** buttons, or call the REST API `GET /wb-ajax-filter/v1/presets?with_config=true`.
+Open **WB Plugins → Ajax Filter → Stored Data** and use **Export JSON** or **Export CSV**. The full JSON export carries every preset's configuration plus the plugin's option groups, so one file is a complete support snapshot. There is no import button - restored configurations are applied by support.
 
 ## Next Steps
 
-- [Developer Guide](../developer-guide/01-hooks-filters.md)
+- [Hooks and Filters](../developer-guide/01-hooks-filters.md)
 - [REST API Endpoints](../rest-api/02-endpoints.md)

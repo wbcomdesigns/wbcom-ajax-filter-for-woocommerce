@@ -1,6 +1,8 @@
 # REST API Overview
 
-The plugin exposes a REST API for headless storefronts, mobile apps, and external integrations. The API provides the same preset data available in the admin Stored Data screen.
+The plugin exposes its stored filter presets over the WordPress REST API for headless storefronts, mobile apps, external dashboards, and any integration that needs the same data the admin screens show.
+
+The API is **admin-only by design**: preset configuration names custom field keys and taxonomy structure, so it is store-management data, not a public catalogue. Every route requires a user with the `manage_woocommerce` capability.
 
 ## Base URL
 
@@ -8,29 +10,45 @@ The plugin exposes a REST API for headless storefronts, mobile apps, and externa
 /wp-json/wb-ajax-filter/v1/
 ```
 
-## Authentication
+## What You Can Do
 
-All endpoints require the `manage_woocommerce` capability. Requests must be authenticated with a user who has this capability.
+- List presets with pagination, search, status filtering, and sorting.
+- Fetch one preset including its full field configuration.
+- Enable, disable, or rename a preset.
+- Delete a preset permanently.
 
 ## Response Format
 
-Responses follow the standard WP REST API envelope:
+Responses are plain JSON arrays or objects - no extra wrapper. Pagination totals travel in HTTP response headers, not in the body:
+
+- `X-WP-Total` - total number of presets.
+- `X-WP-TotalPages` - total pages at the current page size.
+
+### Example record
 
 ```json
 {
-  "data": [ ... ],
-  "headers": {
-    "X-WP-Total": 10,
-    "X-WP-TotalPages": 2
-  }
+  "id": 12,
+  "title": "Clothing Archive",
+  "enabled": true,
+  "fields_total": 4,
+  "fields_enabled": 4,
+  "created": "2026-08-01T09:12:00+00:00",
+  "modified": "2026-08-14T15:40:22+00:00",
+  "config": [
+    {
+      "filter_id": "wb_filter_66ab9...",
+      "filter_title": "Category",
+      "type": "tax",
+      "taxonomy": "product_cat"
+    }
+  ]
 }
 ```
 
-## Rate Limiting
+The `config` field only appears when the request asks for it (`with_config=true`, or on a single-record fetch).
 
-There are no built‑in rate limits, but we recommend caching responses when possible.
+## Related Pages
 
-## Next Steps
-
-- [Endpoints](02-endpoints.md) – detailed endpoint reference.
-- [Authentication](03-authentication.md) – how to authenticate requests.
+- [Endpoints](02-endpoints.md) - every route, parameter, and response.
+- [Authentication](03-authentication.md) - how to authenticate requests.

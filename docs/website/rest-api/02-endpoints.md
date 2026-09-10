@@ -1,70 +1,82 @@
 # REST API Endpoints
 
-All endpoints are under the `wb-ajax-filter/v1` namespace and require `manage_woocommerce` capability.
+All routes live under `wb-ajax-filter/v1` and require the `manage_woocommerce` capability. Pagination totals are returned in the `X-WP-Total` and `X-WP-TotalPages` response headers.
 
 ## List Presets
 
 ```
-GET /wb-ajax-filter/v1/presets
+GET /wp-json/wb-ajax-filter/v1/presets
 ```
 
 ### Parameters
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `page` | integer | 1 | Page number. |
-| `per_page` | integer | 10 | Items per page. Values above `100` are accepted and clamped to `100`. |
-| `search` | string | – | Search preset titles. |
-| `status` | string | `all` | Filter by status (`all`, `enabled`, `disabled`). |
-| `orderby` | string | `title` | Sort field (`title`, `date`, `id`). |
-| `order` | string | `asc` | Sort order (`asc`, `desc`). |
-| `with_config` | boolean | false | Include the full `_wb_filter` config. |
+| Parameter | Type | Default | Allowed | Description |
+|-----------|------|---------|---------|-------------|
+| `page` | int | 1 | >= 1 | Page number. |
+| `per_page` | int | 10 | 1 - 100 | Records per page. Values above 100 are rejected. |
+| `search` | string | (empty) | any | Only presets whose title matches. |
+| `status` | string | `all` | `all`, `enabled`, `disabled` | Filter by enabled state. |
+| `orderby` | string | `title` | `title`, `date`, `id` | Sort field. |
+| `order` | string | `asc` | `asc`, `desc` | Sort direction. |
+| `with_config` | boolean | `false` | true / false | Include each preset's full `config` in the response. |
 
 ### Response
 
-Returns an array of preset objects. Totals are returned in `X-WP-Total` and `X-WP-TotalPages` headers.
+A JSON array of preset records. Each record includes `id`, `title`, `enabled`, `fields_total`, `fields_enabled`, `created`, and `modified`. The full field configuration is included only when `with_config=true`.
 
-## Get Single Preset
-
-```
-GET /wb-ajax-filter/v1/presets/<id>
-```
-
-Returns a single preset object, including its full `_wb_filter` config.
-
-## Update Preset
+## Get a Single Preset
 
 ```
-POST /wb-ajax-filter/v1/presets/<id>
+GET /wp-json/wb-ajax-filter/v1/presets/<id>
 ```
 
-The route also accepts `PUT` and `PATCH` (registered as `EDITABLE`).
+Returns one preset record, always including its full `config` field.
 
-### Request Body
+## Update a Preset
+
+```
+POST /wp-json/wb-ajax-filter/v1/presets/<id>
+```
+
+Also accepts `PUT` and `PATCH`. Use it to enable or disable a preset and rename it:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `enabled` | boolean | Enable or disable the preset. |
+| `enabled` | boolean | `true` renders the preset to shoppers; `false` hides it. |
 | `title` | string | New title for the preset. |
 
-Only these two fields can be modified via the API.
+Only these two fields are editable through the API. Omitting a field leaves it unchanged. Returns the updated record including its full config.
 
-## Delete Preset
+## Delete a Preset
 
 ```
-DELETE /wb-ajax-filter/v1/presets/<id>
+DELETE /wp-json/wb-ajax-filter/v1/presets/<id>
 ```
 
-Permanently deletes the preset. This action cannot be undone.
+Permanently deletes the preset and its saved field configuration. This matches the **Stored Data** tab's delete action and cannot be undone - there is no Trash. Returns:
 
-## Error Responses
+```json
+{
+  "deleted": true,
+  "previous": {
+    "id": 12,
+    "title": "Clothing Archive",
+    "...": "..."
+  }
+}
+```
 
-- `400 Bad Request` – invalid parameters.
-- `401 Unauthorized` – missing or invalid authentication.
-- `403 Forbidden` – user lacks `manage_woocommerce` capability.
-- `404 Not Found` – preset not found.
+## Errors
 
-## Next Steps
+| Status | Meaning |
+|--------|---------|
+| `400` | A parameter is invalid (for example, `per_page` above 100). |
+| `401` | Not authenticated. |
+| `403` | Authenticated but the user lacks `manage_woocommerce`. |
+| `404` | The preset does not exist (or is not a published preset). |
+| `500` | The update or delete could not be completed. |
 
-- [Overview](01-overview.md) – authentication and response format.
-- [Authentication](03-authentication.md) – how to authenticate requests.
+## Related Pages
+
+- [Overview](01-overview.md) - base URL and response format.
+- [Authentication](03-authentication.md) - authenticating with application passwords.

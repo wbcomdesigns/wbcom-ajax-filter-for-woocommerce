@@ -29,13 +29,22 @@
       ]
     },
     {
+      "slug": "admin-panel",
+      "name": "Admin Panel",
+      "docs": [
+        "admin-panel/01-overview.md"
+      ]
+    },
+    {
       "slug": "frontend-display",
       "name": "Frontend Display",
       "docs": [
         "frontend-display/01-shortcode.md",
         "frontend-display/02-block.md",
         "frontend-display/03-auto-render.md",
-        "frontend-display/04-theme-overrides.md"
+        "frontend-display/04-theme-overrides.md",
+        "frontend-display/05-mobile-layout.md",
+        "frontend-display/06-theme-colours.md"
       ]
     },
     {

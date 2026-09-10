@@ -1,53 +1,53 @@
-# Authentication
+# REST API Authentication
 
-All REST API endpoints require a user with the `manage_woocommerce` capability.
+Every route requires a user with the `manage_woocommerce` capability - the same role the **Stored Data** screen needs. The permission check fails closed: nobody can reach the preset data without this capability.
 
-## WordPress Application Passwords
+## How to Authenticate
 
-The simplest way to authenticate is with WordPress Application Passwords (built into WordPress 5.6+).
+Use a WordPress **Application Password**, which is the built-in way to authenticate programmatic REST API requests.
 
-1. Go to **Users → Your Profile**.
-2. Scroll to **Application Passwords**.
-3. Enter a name (e.g., “REST API”) and click **Add New Application Password**.
-4. Copy the generated password.
+1. In wp-admin, go to **Users > Profile**.
+2. Scroll to **Application Passwords**, give one a name (for example `storefront-sync`), and click **Add New Application Password**.
+3. Copy the generated password - it is shown only once. If the section is missing, your host blocks it; see [Troubleshooting](../troubleshooting/01-common-issues.md).
 
-Use the application password in the `Authorization` header:
-
-```
-Authorization: Basic base64(username:application_password)
-```
-
-## JWT Authentication
-
-If you use a JWT plugin (e.g., JWT Authentication for WP REST API), include the token in the `Authorization` header:
-
-```
-Authorization: Bearer your_jwt_token
-```
-
-## Cookie Authentication
-
-For same‑origin requests (e.g., from wp‑admin), you can use nonce‑based authentication:
-
-1. Add `_wpnonce` parameter to the request.
-2. The nonce is available in the admin footer as `wpApiSettings.nonce`.
-
-## Example cURL Request
+### Curl
 
 ```bash
-curl -X GET \
-  https://example.com/wp-json/wb-ajax-filter/v1/presets \
-  -H 'Authorization: Basic base64(username:application_password)'
+curl -u "your-username:your-application-password" \
+  "https://your-site.com/wp-json/wb-ajax-filter/v1/presets"
 ```
 
-## Permissions
+### Basic auth in JavaScript
 
-Only users with `manage_woocommerce` capability can:
+```js
+const user = 'store-manager';
+const pass = 'xxxx xxxx xxxx xxxx xxxx xxxx';
 
-- List, view, update, and delete presets.
-- Access the Stored Data screen.
+const res = await fetch('https://your-site.com/wp-json/wb-ajax-filter/v1/presets', {
+  headers: {
+    'Authorization': 'Basic ' + btoa(`${user}:${pass}`)
+  }
+});
+```
 
-## Next Steps
+## Error Responses
 
-- [Endpoints](02-endpoints.md) – detailed endpoint reference.
-- [Overview](01-overview.md) – response format and base URL.
+| Status | Meaning |
+|--------|---------|
+| `401` | No credentials sent, or the credentials are wrong. |
+| `403` | Credentials are valid but the user lacks `manage_woocommerce`. |
+
+Both return a JSON error body:
+
+```json
+{
+  "code": "rest_forbidden",
+  "message": "You are not allowed to access filter presets.",
+  "data": { "status": 403 }
+}
+```
+
+## Related Pages
+
+- [Overview](01-overview.md) - base URL and response format.
+- [Endpoints](02-endpoints.md) - every route and parameter.

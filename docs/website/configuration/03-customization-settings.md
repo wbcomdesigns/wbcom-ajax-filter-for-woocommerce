@@ -1,53 +1,55 @@
-# Customization Settings
+# Appearance
 
-These settings adjust the appearance of the filter block. You can let the filter follow your theme’s style or override colors manually.
+Customise how the filter block looks. Configure it on the **Advanced** tab (**WB Plugins → Ajax Filter → Advanced**) in the **Appearance** card.
+
+![The Appearance card on the Advanced tab](./../images/advanced-appearance.webp)
 
 ## Filters Area Title
 
-A heading shown above the filter block. Leave empty to hide.
+A heading shown above the filter block (default: "Filters"). Leave it empty to hide it.
 
 ## Options Style
 
-- **Theme style** (default) – inherits colors and fonts from your active theme.
-- **Custom style** – uses the custom colors defined below.
+- **Theme style** (default) - the filter inherits your theme's colours and fonts automatically through CSS custom properties. Works out of the box with BuddyX, Reign, and any theme that exposes standard WordPress palette colours.
+- **Custom style** - uses the colours you pick below and overrides the theme.
 
-## Filters Area Colors (Custom Style)
+## Filters Area Colours
 
-| Control | Description |
-|---------|-------------|
-| **Titles** | Color of filter headings. |
-| **Background** | Background color of the filter area. |
-| **Accent** | Color used for active states and links. |
+These apply when "Custom style" is selected:
 
-## Textual Terms Colors (Custom Style)
+| Control | Used For |
+|---------|----------|
+| **Titles** | Filter headings (default: black) |
+| **Background** | The filter panel background (default: white) |
+| **Accent** | Active states, links, the price-slider fill (default: blue) |
 
-These settings apply to text-based filter terms (e.g., category names, attribute labels).
+## Textual Terms Colours
 
-| Control | Description |
-|---------|-------------|
-| **Text** | Default text color. |
-| **Text hover** | Text color on hover. |
-| **Text active** | Text color when selected. |
-| **Tooltip text** | Text color inside tooltips. |
+Colours for text-based filter terms (category and attribute names):
+
+| Control | Used For |
+|---------|----------|
+| **Text** | Default term text (default: black) |
+| **Text hover** | Term text on hover (default: black) |
+| **Text active** | Term text when selected (default: orange) |
+| **Tooltip text** | Text inside tooltips (default: black) |
 
 ## Layout
 
-### Filter columns
-
-Number of filters displayed in a row on desktop (2–5).
+- **Filter columns** - how many filters sit in a row on desktop, from 2 to 5 (default: 5). On mobile, filters always stack into a single column.
 
 ## Ajax Loader
 
-The spinner shown while results load.
+The spinner shown while results load:
 
-- **Default loader** – the plugin’s built-in spinner.
-- **Custom loader** – upload a GIF to use as the loading indicator.
+- **Default loader** - the plugin's built-in spinner.
+- **Custom loader** - upload a GIF to use as the loading indicator. GIF only. "Reset to default" clears it and restores the built-in spinner.
 
 ## Saving Changes
 
-Click **Save Changes** to store your settings. Colors are parsed at page load; changes appear immediately after save.
+Click **Save Changes** at the bottom of the card. Colour changes appear immediately on the frontend.
 
-## Next Steps
+## Related
 
-- [General Settings](01-general-settings.md) – filter behaviour options.
-- [Search Settings](02-search-settings.md) – configure the search field.
+- [Filtering Behaviour](01-general-settings.md) - how filters apply.
+- [Product Search](02-search-settings.md) - the search field with autocomplete.

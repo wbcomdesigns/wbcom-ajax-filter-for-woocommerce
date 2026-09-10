@@ -1,6 +1,6 @@
 # Shortcode
 
-The `[wb_ajax_filters]` shortcode renders filter presets on any page, post, or widget area.
+The `[wb_ajax_filters]` shortcode renders filter presets on any page, post, or widget area. It works on classic themes, block themes, and anywhere shortcodes are allowed.
 
 ## Basic Usage
 
@@ -8,23 +8,21 @@ The `[wb_ajax_filters]` shortcode renders filter presets on any page, post, or w
 [wb_ajax_filters]
 ```
 
-This renders **every enabled preset** in the order they were created.
+This renders every **enabled** preset. Enabled presets appear newest-first; disabled presets are skipped.
 
-## Specify a Preset
-
-To render a single preset by its slug:
+## Render a Single Preset
 
 ```
 [wb_ajax_filters slug="your-preset-slug"]
 ```
 
-The slug is the preset’s post slug (visible in the preset editor URL).
+The `slug` attribute targets one preset by its post slug. A slug-only render still checks the preset's enabled state - a disabled preset renders nothing.
 
 ## Attributes
 
-| Attribute | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `slug` | No | (all enabled presets) | The slug of a specific preset to render. |
+| Attribute | Default | Description |
+|-----------|---------|-------------|
+| `slug` | (all enabled presets) | The slug of a specific preset to render. |
 
 ## Examples
 
@@ -34,7 +32,7 @@ Render all enabled presets:
 [wb_ajax_filters]
 ```
 
-Render only the “shop-sidebar” preset:
+Render only the "shop-sidebar" preset:
 
 ```
 [wb_ajax_filters slug="shop-sidebar"]
@@ -42,16 +40,17 @@ Render only the “shop-sidebar” preset:
 
 ## Where to Place
 
-- **Pages/Posts** – insert the shortcode in the content editor.
-- **Widgets** – add a Shortcode widget and paste the shortcode.
-- **Templates** – use `do_shortcode('[wb_ajax_filters]')` in theme templates.
+- **Pages and posts** - insert the shortcode in the content editor.
+- **Widget areas** - use a Shortcode widget and paste the shortcode.
+- **Theme templates** - call `do_shortcode( '[wb_ajax_filters]' )` from a template file.
 
 ## Notes
 
-- The shortcode output is identical to the block and the automatic archive placement.
-- If no presets are enabled, the shortcode renders nothing.
+- The output is identical to the block and the automatic archive placement.
+- If no presets are enabled, the block area renders nothing - not even a heading or reset button.
+- The product search box shows only on the shop page and category and tag archives, even when the shortcode is placed on an ordinary page. This is deliberate: the search results grid only exists on those archive pages.
 
-## Next Steps
+## Related Pages
 
-- [Block](02-block.md) – place filters in block themes.
-- [Auto Render](03-auto-render.md) – automatic placement on WooCommerce archives.
+- [Block](02-block.md) - place filters in block themes.
+- [Auto Render](03-auto-render.md) - automatic placement on WooCommerce archives.

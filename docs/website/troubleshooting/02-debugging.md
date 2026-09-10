@@ -1,8 +1,10 @@
 # Debugging
 
-## Enable WordPress Debug Mode
+Work down this list in order. Most filter issues come from one of the first three steps.
 
-Add these lines to your `wp-config.php`:
+## 1. Enable WordPress Debug Mode
+
+Add these lines to `wp-config.php`:
 
 ```php
 define( 'WP_DEBUG', true );
@@ -10,37 +12,39 @@ define( 'WP_DEBUG_LOG', true );
 define( 'WP_DEBUG_DISPLAY', false );
 ```
 
-Errors will be logged to `wp-content/debug.log`.
+PHP notices, warnings, and fatal errors are written to `wp-content/debug.log`. Leave `WP_DEBUG_DISPLAY` off on a live store - you do not want raw PHP errors in front of shoppers.
 
-## Check the Debug Log
+## 2. Check the Log
 
-Look for errors related to `wb-ajax-filter` in `wp-content/debug.log`.
+Look at the tail of `wp-content/debug.log`. Filter-related messages mention the plugin's text domain, `wb-ajax-filter`, or its class names. Every fatal error logs the file and line that caused it.
 
-## Browser Console
+## 3. Check the Browser Console
 
-1. Open your browser’s developer tools (F12).
-2. Go to the **Console** tab.
-3. Look for JavaScript errors or failed network requests.
+1. Open developer tools (F12).
+2. Console tab - look for JavaScript errors and failed network requests.
+3. Network tab - filter by `wb-ajax` to see the AJAX filter calls; a red row means the request failed.
 
-## Common Debug Steps
+## 4. Test a Clean Setup
 
-1. **Disable other plugins** – test for conflicts.
-2. **Switch to a default theme** – rule out theme issues.
-3. **Clear caches** – page cache, object cache, CDN.
-4. **Verify WooCommerce is active** – the plugin deactivates itself without WooCommerce.
+- **Deactivate other plugins** - filter conflicts first. Keep only Ajax Filter and WooCommerce, then re-enable the rest one by one.
+- **Switch to a default theme** - a theme that does not fire `woocommerce_before_shop_loop` (typically a block theme) will not auto-render filters; place them with the block or shortcode instead.
+- **Clear caches** - page cache, object cache, and CDN. A stale cache looks exactly like "my filters do not work".
 
-## REST API Debugging
+## 5. Confirm WooCommerce Is Active
 
-Use a tool like Postman or cURL to test API endpoints directly:
+The plugin self-deactivates if WooCommerce is not active - you would already have seen the banner, but a half-started restructure can leave the plugin inactive with old cache still serving.
+
+## 6. Test the REST API Isolating
+
+Hit the endpoint directly to separate the API from the frontend:
 
 ```bash
-curl -X GET \
-  https://example.com/wp-json/wb-ajax-filter/v1/presets \
-  -H 'Authorization: Basic base64(username:application_password)'
+curl -u "storemanager:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  "https://your-site.com/wp-json/wb-ajax-filter/v1/presets?per_page=5"
 ```
 
-Check the response status and message.
+A `401`/`403` means the credentials or role are the problem. An empty array with `200` and `X-WP-Total: 0` means there are simply no presets (see [Common Issues](01-common-issues.md)).
 
-## Next Steps
+## Related Pages
 
-- [Common Issues](01-common-issues.md) – solutions to frequent problems.
+- [Common Issues](01-common-issues.md) - the usual fixes for each symptom.
