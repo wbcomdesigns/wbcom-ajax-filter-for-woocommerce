@@ -54,9 +54,15 @@ form#filter-preset-create {
 
 .wb-ajax-filter-modal-body {
 	background-color: var(--wb-bg);
-	width: 50%;
-	left: 25%;
-	top: 10%;
+	/* Responsive, centred, and the scroll container itself - the fixed 50%/left:25% was too
+	   narrow on small screens (the term select overflowed it) and the Save bar, a sibling after
+	   the inner scroll box, fell below the fold with no scrollbar reaching it. */
+	width: min( 920px, 92vw );
+	left: 50%;
+	transform: translateX( -50% );
+	top: 5%;
+	max-height: 90vh;
+	overflow-y: auto;
 	position: absolute;
 }
 
@@ -91,13 +97,35 @@ form#filter-preset-create {
 
 .wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
 	padding: 25px;
-	height: 600px;
-	overflow-y: scroll;
+	/* Height/scroll moved to .wb-ajax-filter-modal-body so the Save bar (a sibling after this
+	   block) scrolls into view instead of being clipped below a fixed 600px inner scroll box. */
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1480px) {
-	.wb-ajax-filter-modal-content .wb-ajax-filter-toggle-content {
-		height: 440px;
+/*
+ * AJAX-driven select2 controls (Choose terms, Order options) have an empty source
+ * <select> with no intrinsic width, so their flex control column collapses to a
+ * sliver and the dropdown clips against the modal edge. Give the control column a
+ * width floor and let select2 fill it; stack every row on narrow screens so a wide
+ * control never overflows the modal (out-specifies the shell's 782px forced-row rule).
+ */
+.wb-ajax-filter-modal-container .wbcom-field-control {
+	min-width: 260px;
+}
+
+.wb-ajax-filter-modal-container .wbcom-field-control .select2-container {
+	width: 100% !important;
+	max-width: 420px;
+}
+
+@media screen and (max-width: 680px) {
+	.wb-ajax-filter-modal-container .wbcom-settings-body .wbcom-field-group {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.wb-ajax-filter-modal-container .wbcom-settings-body .wbcom-field-control {
+		min-width: 0;
+		width: 100%;
 	}
 }
 

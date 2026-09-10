@@ -889,9 +889,39 @@ class Wb_Ajax_Filter_Admin {
 	 */
 	public function wb_ajax_filter_init_plugin_settings() {
 		register_setting( 'wb_ajax_filter_admin_general_options', 'wb_ajax_filter_admin_general_options' );
-		register_setting( 'wb_ajax_filter_admin_customization_options', 'wb_ajax_filter_admin_customization_options' );
+		register_setting(
+			'wb_ajax_filter_admin_customization_options',
+			'wb_ajax_filter_admin_customization_options',
+			array( 'sanitize_callback' => array( $this, 'wb_ajax_filter_sanitize_customization_options' ) )
+		);
 		register_setting( 'wb_ajax_filter_search_settings', 'wb_ajax_filter_search_settings' );
 		register_setting( 'wb_ajax_filter_search_settings', 'wb_ajax_filter_search_content_settings' );
+	}
+
+	/**
+	 * Restore a colour to its coded default when the picker's Clear button empties it.
+	 *
+	 * The WP colour pickers Clear to an empty string, which was stored verbatim (no sanitize),
+	 * so the storefront emitted `background:;` and the filter area rendered white. Mapping each
+	 * empty colour back to its activator-seed default here makes Clear mean "reset to default"
+	 * everywhere - the admin swatch, the reloaded field, and the front end - from one place.
+	 *
+	 * @since 1.3.1
+	 * @param array $input Submitted customization options.
+	 * @return array
+	 */
+	public function wb_ajax_filter_sanitize_customization_options( $input ) {
+		$input = is_array( $input ) ? $input : array();
+
+		$color_defaults = wb_ajax_filter_customization_defaults();
+
+		foreach ( $color_defaults as $key => $default ) {
+			if ( empty( $input[ $key ] ) ) {
+				$input[ $key ] = $default;
+			}
+		}
+
+		return $input;
 	}
 
 	/**

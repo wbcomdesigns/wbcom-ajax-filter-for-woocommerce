@@ -292,3 +292,32 @@ if ( ! function_exists( 'get_taxonomy_child_terms_count' ) ) {
 		return wb_ajax_filter_get_taxonomy_child_terms_count( $parent_term_id, $taxonomy );
 	}
 }
+
+if ( ! function_exists( 'wb_ajax_filter_customization_defaults' ) ) {
+
+	/**
+	 * Canonical default colours for the Appearance customization options.
+	 *
+	 * Single source of truth for the activator seed, the settings sanitizer, the
+	 * admin colour-picker markup (value fallback + Clear/Default target) and the
+	 * frontend CSS. Keeping one copy is deliberate: these literals previously
+	 * lived in three places that drifted - the template shipped white (#fff)
+	 * accent/hover/active/tooltip defaults while the activator and sanitizer used
+	 * sensible ones, so selecting "Custom style" turned the filter area white.
+	 *
+	 * @since 1.3.1
+	 *
+	 * @return array<string,string> Option key => default hex colour.
+	 */
+	function wb_ajax_filter_customization_defaults() {
+		return array(
+			'filters_area_titles_color'        => '#000000',
+			'filters_area_background_color'    => '#ffffff',
+			'filters_area_accent_color'        => '#1e73be',
+			'textual_terms_text_color'         => '#000000',
+			'textual_terms_hover_text_color'   => '#000000',
+			'textual_terms_active_text_color'  => '#db4e32',
+			'textual_terms_tooltip_text_color' => '#000000',
+		);
+	}
+}

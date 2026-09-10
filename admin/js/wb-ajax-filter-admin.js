@@ -126,7 +126,12 @@
 				);
 			}
 
-			jQuery( ".wb-ajax-color-picker" ).wpColorPicker();
+			// Pass each field's data-default-color so the picker's "Default" link (and the
+			// value the Clear/Default flow restores) is the real default, not empty/white.
+			jQuery( ".wb-ajax-color-picker" ).each( function () {
+				var $picker = jQuery( this );
+				$picker.wpColorPicker( { defaultColor: $picker.data( 'default-color' ) || false } );
+			} );
 
 			// Custom colours only apply when the style is "custom". Grey the pickers out
 			// otherwise, so the backend does not offer editable colours that the frontend
