@@ -41,17 +41,19 @@ class Wb_Ajax_Filter_Activator {
 			'show_active_labels'    => 'yes',
 			'scroll_top'            => 'yes',
 		);
-		$wb_ajax_filter_settings['wb_ajax_filter_admin_customization_options'] = array(
-			'filters_title'                    => 'Filters',
-			'filters_area_titles_color'        => '#000000',
-			'filters_area_background_color'    => '#ffffff',
-			'filters_area_accent_color'        => '#1e73be',
-			'filters_style'                    => 'theme',
-			'textual_terms_text_color'         => '#000000',
-			'textual_terms_hover_text_color'   => '#000000',
-			'textual_terms_active_text_color'  => '#db4e32',
-			'textual_terms_tooltip_text_color' => '#000000',
-			'ajax_loader_style'                => 'default',
+		// Colour defaults come from the one canonical helper (shared with the sanitizer,
+		// the admin pickers and the frontend). Load it defensively in case activation
+		// runs before the plugin's dependencies are wired.
+		if ( ! function_exists( 'wb_ajax_filter_customization_defaults' ) ) {
+			require_once plugin_dir_path( __DIR__ ) . 'includes/wb-ajax-filter-general-functions.php';
+		}
+		$wb_ajax_filter_settings['wb_ajax_filter_admin_customization_options'] = array_merge(
+			array(
+				'filters_title'     => 'Filters',
+				'filters_style'     => 'theme',
+				'ajax_loader_style' => 'default',
+			),
+			wb_ajax_filter_customization_defaults()
 		);
 		$wb_ajax_filter_settings['wb_ajax_filter_search_settings']             = array(
 			'enable_search'       => 'yes',

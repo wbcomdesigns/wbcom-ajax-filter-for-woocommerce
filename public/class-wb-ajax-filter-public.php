@@ -188,6 +188,15 @@ class Wb_Ajax_Filter_Public {
 		}
 
 		/*
+		 * Only emit the custom colour CSS when the owner picked the "custom" style. It was
+		 * injected unconditionally, so "Theme style" still overrode the theme - a setting that
+		 * saved and did nothing. Gating here lets Theme style fall back to the theme's colours.
+		 */
+		if ( ! isset( $css_settings['filters_style'] ) || 'custom' !== $css_settings['filters_style'] ) {
+			return '';
+		}
+
+		/*
 		 * The option is shared with non-colour settings (filters_per_column), so a
 		 * colour key can be absent. An empty value produces an invalid declaration
 		 * the CSS parser drops, which lets the --wb-* theme-token defaults in
@@ -433,18 +442,33 @@ class Wb_Ajax_Filter_Public {
 				return array(); // Nothing to search.
 			}
 
-			$like_query   = '%' . $wpdb->esc_like( $query ) . '%';
-			$like_clauses = array();
+			// Honour the "match more words" setting: 'and' requires every word, 'or' matches any word.
+			$word_relation = ( isset( $search_filter_settings['search_type_more_words'] ) && 'or' === $search_filter_settings['search_type_more_words'] ) ? 'OR' : 'AND';
 
-			foreach ( $searchable_fields as $field ) {
-				$like_clauses[] = $wpdb->prepare( "$field LIKE %s", $like_query ); //phpcs:ignore
+			$words = preg_split( '/\s+/', trim( $query ), -1, PREG_SPLIT_NO_EMPTY );
+			if ( empty( $words ) ) {
+				$words = array( $query );
 			}
 
-			if ( $include_sku ) {
-				$like_clauses[] = $wpdb->prepare( 'pm.meta_value LIKE %s', $like_query );
+			$word_groups = array();
+			foreach ( $words as $word ) {
+				$like_query    = '%' . $wpdb->esc_like( $word ) . '%';
+				$field_clauses = array();
+
+				foreach ( $searchable_fields as $field ) {
+					$field_clauses[] = $wpdb->prepare( "$field LIKE %s", $like_query ); //phpcs:ignore
+				}
+
+				if ( $include_sku ) {
+					$field_clauses[] = $wpdb->prepare( 'pm.meta_value LIKE %s', $like_query );
+				}
+
+				if ( ! empty( $field_clauses ) ) {
+					$word_groups[] = '(' . implode( ' OR ', $field_clauses ) . ')';
+				}
 			}
 
-			$where_clause = implode( ' OR ', $like_clauses );
+			$where_clause = implode( ' ' . $word_relation . ' ', $word_groups );
 
 			// Dynamic limit fallback.
 			$limit = isset( $search_settings['posts_per_page'] ) ? intval( $search_settings['posts_per_page'] ) : $limit;
@@ -761,6 +785,9 @@ class Wb_Ajax_Filter_Public {
 		$search_settings         = get_option( 'wb_ajax_filter_admin_general_options' );
 		$search_content_settings = get_option( 'wb_ajax_filter_search_content_settings' );
 
+		// Preserve any meta_query already on the product query so each clause below appends instead of overwriting.
+		$meta_query = ( isset( $q->query_vars['meta_query'] ) && is_array( $q->query_vars['meta_query'] ) ) ? $q->query_vars['meta_query'] : array();
+
 		if ( ! empty( $params ) && ( isset( $params['instock_filter'] ) || isset( $params['onsale_filter'] ) ) ) {
 
 			if ( array_key_exists( 'instock_filter', $params ) ) {
@@ -779,7 +806,7 @@ class Wb_Ajax_Filter_Public {
 			}
 			$q->query_vars['meta_query'] = $meta_query;
 		}
-		if ( ! empty( $params ) && isset( $search_settings['hide_out_of_stock'] ) && 'yes' === $search_settings['hide_out_of_stock'] ) {
+		if ( isset( $search_settings['hide_out_of_stock'] ) && 'yes' === $search_settings['hide_out_of_stock'] ) {
 
 			$meta_query[]                = array(
 				'key'     => '_stock_status',

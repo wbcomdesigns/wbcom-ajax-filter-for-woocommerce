@@ -27,6 +27,10 @@ $wb_search        = is_array( $wb_search ) ? $wb_search : array();
 $wb_search_scope  = is_array( $wb_search_scope ) ? $wb_search_scope : array();
 $wb_customization = is_array( $wb_customization ) ? $wb_customization : array();
 
+// Canonical colour defaults - shared with the sanitizer, activator and frontend so the
+// picker value fallback and its Clear/Default target never drift back to a white theme.
+$wb_color_defaults = wb_ajax_filter_customization_defaults();
+
 $wb_search_enabled = isset( $wb_search['enable_search'] ) && 'yes' === $wb_search['enable_search'];
 
 Wbcom_Settings_Page::card_open(
@@ -399,15 +403,15 @@ Wbcom_Settings_Page::card_open(
 			<div class="wb-ajax-filter-colorpicker">
 				<div class="wb-ajax-filter-single-colorpicker colorpicker">
 					<label><?php esc_html_e( 'Titles', 'wb-ajax-filter' ); ?></label>
-					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[filters_area_titles_color]" value="<?php echo esc_attr( isset( $wb_customization['filters_area_titles_color'] ) ? $wb_customization['filters_area_titles_color'] : '#1e73be' ); ?>">
+					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[filters_area_titles_color]" value="<?php echo esc_attr( isset( $wb_customization['filters_area_titles_color'] ) ? $wb_customization['filters_area_titles_color'] : $wb_color_defaults['filters_area_titles_color'] ); ?>" data-default-color="<?php echo esc_attr( $wb_color_defaults['filters_area_titles_color'] ); ?>">
 				</div>
 				<div class="wb-ajax-filter-single-colorpicker colorpicker">
 					<label><?php esc_html_e( 'Background', 'wb-ajax-filter' ); ?></label>
-					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[filters_area_background_color]" value="<?php echo esc_attr( isset( $wb_customization['filters_area_background_color'] ) ? $wb_customization['filters_area_background_color'] : '#fff' ); ?>">
+					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[filters_area_background_color]" value="<?php echo esc_attr( isset( $wb_customization['filters_area_background_color'] ) ? $wb_customization['filters_area_background_color'] : $wb_color_defaults['filters_area_background_color'] ); ?>" data-default-color="<?php echo esc_attr( $wb_color_defaults['filters_area_background_color'] ); ?>">
 				</div>
 				<div class="wb-ajax-filter-single-colorpicker colorpicker">
 					<label><?php esc_html_e( 'Accent', 'wb-ajax-filter' ); ?></label>
-					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[filters_area_accent_color]" value="<?php echo esc_attr( isset( $wb_customization['filters_area_accent_color'] ) ? $wb_customization['filters_area_accent_color'] : '#fff' ); ?>">
+					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[filters_area_accent_color]" value="<?php echo esc_attr( isset( $wb_customization['filters_area_accent_color'] ) ? $wb_customization['filters_area_accent_color'] : $wb_color_defaults['filters_area_accent_color'] ); ?>" data-default-color="<?php echo esc_attr( $wb_color_defaults['filters_area_accent_color'] ); ?>">
 				</div>
 			</div>
 		</div>
@@ -421,19 +425,19 @@ Wbcom_Settings_Page::card_open(
 			<div class="wb-ajax-filter-colorpicker">
 				<div class="wb-ajax-filter-single-colorpicker colorpicker">
 					<label><?php esc_html_e( 'Text', 'wb-ajax-filter' ); ?></label>
-					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[textual_terms_text_color]" value="<?php echo esc_attr( isset( $wb_customization['textual_terms_text_color'] ) ? $wb_customization['textual_terms_text_color'] : '#1e73be' ); ?>">
+					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[textual_terms_text_color]" value="<?php echo esc_attr( isset( $wb_customization['textual_terms_text_color'] ) ? $wb_customization['textual_terms_text_color'] : $wb_color_defaults['textual_terms_text_color'] ); ?>" data-default-color="<?php echo esc_attr( $wb_color_defaults['textual_terms_text_color'] ); ?>">
 				</div>
 				<div class="wb-ajax-filter-single-colorpicker colorpicker">
 					<label><?php esc_html_e( 'Text hover', 'wb-ajax-filter' ); ?></label>
-					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[textual_terms_hover_text_color]" value="<?php echo esc_attr( isset( $wb_customization['textual_terms_hover_text_color'] ) ? $wb_customization['textual_terms_hover_text_color'] : '#fff' ); ?>">
+					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[textual_terms_hover_text_color]" value="<?php echo esc_attr( isset( $wb_customization['textual_terms_hover_text_color'] ) ? $wb_customization['textual_terms_hover_text_color'] : $wb_color_defaults['textual_terms_hover_text_color'] ); ?>" data-default-color="<?php echo esc_attr( $wb_color_defaults['textual_terms_hover_text_color'] ); ?>">
 				</div>
 				<div class="wb-ajax-filter-single-colorpicker colorpicker">
 					<label><?php esc_html_e( 'Text active', 'wb-ajax-filter' ); ?></label>
-					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[textual_terms_active_text_color]" value="<?php echo esc_attr( isset( $wb_customization['textual_terms_active_text_color'] ) ? $wb_customization['textual_terms_active_text_color'] : '#fff' ); ?>">
+					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[textual_terms_active_text_color]" value="<?php echo esc_attr( isset( $wb_customization['textual_terms_active_text_color'] ) ? $wb_customization['textual_terms_active_text_color'] : $wb_color_defaults['textual_terms_active_text_color'] ); ?>" data-default-color="<?php echo esc_attr( $wb_color_defaults['textual_terms_active_text_color'] ); ?>">
 				</div>
 				<div class="wb-ajax-filter-single-colorpicker colorpicker">
 					<label><?php esc_html_e( 'Tooltip text', 'wb-ajax-filter' ); ?></label>
-					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[textual_terms_tooltip_text_color]" value="<?php echo esc_attr( isset( $wb_customization['textual_terms_tooltip_text_color'] ) ? $wb_customization['textual_terms_tooltip_text_color'] : '#fff' ); ?>">
+					<input class="wb-ajax-color-picker" name="wb_ajax_filter_admin_customization_options[textual_terms_tooltip_text_color]" value="<?php echo esc_attr( isset( $wb_customization['textual_terms_tooltip_text_color'] ) ? $wb_customization['textual_terms_tooltip_text_color'] : $wb_color_defaults['textual_terms_tooltip_text_color'] ); ?>" data-default-color="<?php echo esc_attr( $wb_color_defaults['textual_terms_tooltip_text_color'] ); ?>">
 				</div>
 			</div>
 		</div>

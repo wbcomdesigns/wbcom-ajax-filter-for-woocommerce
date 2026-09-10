@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 		<p class="description"><?php esc_html_e( 'Select the parameters you wish to filter for', 'wb-ajax-filter' ); ?></p>
 	</div>
 	<div class="wbcom-field-control">
-		<select id="filter_type" name="filters[type]" class="wbcom-select wc-enhanced-select enhanced" data-value="tax" tabindex="-1" aria-hidden="true">
+		<select id="filter_type" name="filters[type]" class="wbcom-select" data-value="tax">
 			<option value="tax" <?php echo ( isset( $filters['type'] ) && 'tax' === $filters['type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Taxonomy', 'wb-ajax-filter' ); ?></option>
 			<option value="orderby" <?php echo ( isset( $filters['type'] ) && 'orderby' === $filters['type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Order by', 'wb-ajax-filter' ); ?></option>
 			<option value="price_range" <?php echo ( isset( $filters['type'] ) && 'price_range' === $filters['type'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Price Range', 'wb-ajax-filter' ); ?></option>

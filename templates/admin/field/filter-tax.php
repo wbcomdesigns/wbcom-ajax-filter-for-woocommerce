@@ -23,7 +23,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 		<p class="description"><?php esc_html_e( 'Select which product attribute to filter by.', 'wb-ajax-filter' ); ?></p>
 	</div>
 	<div class="wbcom-field-control">
-		<select id="select_taxonomy" name="filters[taxonomy]" class="wbcom-select wc-enhanced-select taxonomy enhanced wb-input wb-filter-type-tax" data-value="" tabindex="-1" aria-hidden="true">
+		<select id="select_taxonomy" name="filters[taxonomy]" class="wbcom-select taxonomy wb-input wb-filter-type-tax" data-value="">
 			<option value=""><?php esc_html_e( 'Select taxonomy', 'wb-ajax-filter' ); ?></option>
 			<?php
 			$taxonomies = get_object_taxonomies( 'product', 'name' );
@@ -54,7 +54,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 		<p class="description"><?php esc_html_e( 'Select the filter type for this filter', 'wb-ajax-filter' ); ?></p>
 	</div>
 	<div class="wbcom-field-control">
-		<select id="filter_design" name="filters[filter_design]" class="wbcom-select wc-enhanced-select enhanced wb-input wb-filter-type-tax" data-value="checkbox" tabindex="-1" aria-hidden="true">
+		<select id="filter_design" name="filters[filter_design]" class="wbcom-select wb-input wb-filter-type-tax" data-value="checkbox">
 			<option value=""><?php esc_html_e( 'Select Design', 'wb-ajax-filter' ); ?></option>
 			<option value="checkbox" <?php echo ( isset( $filters['filter_design'] ) && 'checkbox' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Checkbox', 'wb-ajax-filter' ); ?></option>
 			<option value="radio" <?php echo ( isset( $filters['filter_design'] ) && 'radio' === $filters['filter_design'] ) ? 'selected' : ''; ?>><?php esc_html_e( 'Radio', 'wb-ajax-filter' ); ?></option>
