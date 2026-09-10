@@ -34,11 +34,13 @@
 
 1. **Search disabled** – in **Search Settings**, toggle “Enable search” on.
 2. **Preset doesn’t include search** – ensure the preset has a search field added.
+3. **Wrong page type** – the search box only renders on the shop page, product category, and product tag archives. It does not appear when the block or shortcode is placed on an ordinary page, regardless of settings.
 
 **Solution:**
 
 - Enable search in Search Settings.
 - Edit the preset and add a search field.
+- Place the block/shortcode on the shop page, a product category page, or a product tag page for the search box to appear.
 
 ## Shortcode Not Rendering
 

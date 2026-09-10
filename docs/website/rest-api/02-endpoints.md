@@ -13,7 +13,7 @@ GET /wb-ajax-filter/v1/presets
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `page` | integer | 1 | Page number. |
-| `per_page` | integer | 10 | Items per page (1–100). |
+| `per_page` | integer | 10 | Items per page. Values above `100` are accepted and clamped to `100`. |
 | `search` | string | – | Search preset titles. |
 | `status` | string | `all` | Filter by status (`all`, `enabled`, `disabled`). |
 | `orderby` | string | `title` | Sort field (`title`, `date`, `id`). |

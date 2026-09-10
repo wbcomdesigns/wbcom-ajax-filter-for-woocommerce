@@ -4,7 +4,7 @@ These settings control the product search field inside the filter block, includi
 
 ## Enable Search
 
-Toggle the search field on or off. When enabled, a search box appears in the filter block.
+Toggle the search field on or off. When enabled, the search box appears in the filter block on the shop page, product category pages, and product tag pages.
 
 ## Search Field Labels
 
