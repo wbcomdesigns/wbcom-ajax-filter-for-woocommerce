@@ -41,7 +41,7 @@ $wb_snapshot = array();
 
 $wb_snapshot[] = array(
 	'icon' => 'store',
-	'text' => __( 'Filters render on the shop page and on every product category and tag archive. The [wb_ajax_filters] shortcode places them on any other page.', 'wb-ajax-filter' ),
+	'text' => __( 'Filters render on the shop page and on every product category and tag archive. The <code>[wb_ajax_filters]</code> shortcode places them on any other page.', 'wb-ajax-filter' ),
 );
 
 if ( ( ! isset( $wb_general['ajax_filters'] ) || 'yes' === $wb_general['ajax_filters'] ) ) {
@@ -117,7 +117,7 @@ Wbcom_Settings_Page::card_open(
 ?>
 
 <div class="wb-ajax-overview-meta">
-	<span class="wbcom-badge">
+	<span class="wbcom-badge wbcom-badge--muted">
 		<?php
 		echo esc_html(
 			sprintf(
@@ -200,7 +200,7 @@ Wbcom_Settings_Page::card_open(
 	<?php foreach ( $wb_snapshot as $wb_line ) : ?>
 		<li>
 			<i data-lucide="<?php echo esc_attr( $wb_line['icon'] ); ?>"></i>
-			<span><?php echo esc_html( $wb_line['text'] ); ?></span>
+			<span><?php echo wp_kses( $wb_line['text'], array( 'code' => array() ) ); ?></span>
 		</li>
 	<?php endforeach; ?>
 </ul>

@@ -68,25 +68,27 @@ form#filter-preset-create {
 
 .wb-ajax-filter-close-modal {
 	background: var(--wb-bg);
-	width: 30px;
-	height: 30px;
+	width: 36px;
+	height: 36px;
+	border: 1px solid var(--wb-border);
 	border-radius: 50%;
 	z-index: 99;
-	text-align: center;
-	line-height: 20px;
-	vertical-align: middle;
-	top: -10px;
-	right: -10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/* Inset from the corner (was -10px, hanging off the modal edge). */
+	top: 12px;
+	right: 12px;
 	cursor: pointer;
 	position: absolute;
+	box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
 }
 
 .wb-ajax-filter-close {
-	font-size: 26px;
+	font-size: 22px;
 	font-weight: bold;
 	color: var(--wb-danger);
-	left: 0;
-	line-height: 30px;
+	line-height: 1;
 }
 
 .wb-ajax-filter-close:hover,
@@ -117,10 +119,30 @@ form#filter-preset-create {
 	max-width: 420px;
 }
 
+/*
+ * Radio / checkbox option rows (Show hierarchy, Multiselect relation, etc.):
+ * keep each option on one line and wrap between options, instead of letting a
+ * long label break mid-phrase ("Yes, without / toggles") or clip at the edge.
+ */
+.wb-ajax-filter-modal-container .wbcom-field-control label:has( > input[type="radio"] ),
+.wb-ajax-filter-modal-container .wbcom-field-control label:has( > input[type="checkbox"] ) {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	white-space: nowrap;
+	margin: 0 18px 8px 0;
+}
+
 @media screen and (max-width: 680px) {
 	.wb-ajax-filter-modal-container .wbcom-settings-body .wbcom-field-group {
 		flex-direction: column;
 		align-items: stretch;
+	}
+
+	/* Stacked column: reset the label's row flex-basis so it does not become a
+	   tall gap above the control (basis is read along the main axis). */
+	.wb-ajax-filter-modal-container .wbcom-settings-body .wbcom-field-group > .wbcom-field-info {
+		flex: 0 0 auto;
 	}
 
 	.wb-ajax-filter-modal-container .wbcom-settings-body .wbcom-field-control {

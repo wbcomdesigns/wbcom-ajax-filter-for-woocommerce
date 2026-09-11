@@ -751,6 +751,22 @@
 .wbcom-settings-body .wbcom-field-group {
 	flex-direction: row;
 	align-items: center;
+	/*
+	 * Keep the control beside its label in a bounded column, not pinned to the
+	 * far card edge. The old justify-content:space-between + flex:0 0 auto pushed
+	 * every control hundreds of px right of its label on wide screens.
+	 */
+	justify-content: flex-start;
+}
+
+.wbcom-settings-body .wbcom-field-group > .wbcom-field-info {
+	flex: 0 1 260px;
+}
+
+.wbcom-settings-body .wbcom-field-group > .wbcom-field-control {
+	flex: 1 1 auto;
+	max-width: 420px;
+	min-width: 0;
 }
 
 /*
@@ -766,6 +782,15 @@
 .wbcom-settings-body .wbcom-field-group.wbcom-field--stacked .wbcom-field-control {
 	flex: 1 1 auto;
 	width: 100%;
+}
+
+/*
+ * When the group stacks (column), the label must NOT keep its row flex-basis:
+ * flex-basis is read along the main axis, so a 260px width basis becomes a 260px
+ * HEIGHT here, opening a large gap above the control. Reset to natural height.
+ */
+.wbcom-settings-body .wbcom-field-group.wbcom-field--stacked > .wbcom-field-info {
+	flex: 0 0 auto;
 }
 
 .wbcom-settings-body .wbcom-field-info {

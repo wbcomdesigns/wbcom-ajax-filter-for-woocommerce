@@ -46,9 +46,16 @@ Closes the four gaps every store owner and developer expects - a block, an admin
 * Improve  - Mobile filter collapses behind one Filters toggle below 640px so products stay above the fold, and active-filter chips show human labels.
 * Improve  - Admin panel rebuilt on the shared settings shell with a version pill, dependency state and a tab registry.
 * Improve  - Accessibility pass: keyboard-reachable controls, visible focus rings, RTL-correct spacing, and inline SVG icons that render for logged-out shoppers.
+* Improve  - Settings controls sit beside their labels in a bounded column on every tab, with the version pill using the shared muted badge and each Advanced save button naming what it saves.
+* Improve  - Filter builder modal aligns its controls and radio options, adds a larger inset close button, and stacks cleanly on mobile.
 * Fix      - Search autocomplete now works for logged-out shoppers through a public, nonce-verified endpoint.
 * Fix      - Native browser alert() and confirm() dialogs replaced with an accessible, localized in-page dialog.
+* Fix      - Legacy or malformed presets no longer emit PHP warnings; unknown filter types are skipped and a missing title degrades to an empty heading.
+* Fix      - The presets REST endpoint rejects out-of-range page and per_page values with a 400 instead of silently clamping them.
+* Fix      - Empty filter wrappers are no longer printed when no preset is enabled and search is off.
 * Security - Close an authentication bypass in preset create, delete and duplicate handlers; every admin action passes one fail-closed capability gate.
+* Security - Query-string filter parameters are sanitized before they are used in output or product queries.
+* Dev      - New wb_ajax_filter_show_search filter to override where the product search box renders (default: shop and category/tag archives).
 
 = 1.2.0 =
 * Fix - Fixed error message show on save options

@@ -168,10 +168,16 @@ class Wb_Ajax_Filter_Public {
 	 * @return void
 	 */
 	public function add_wb_ajax_filters() {
+		// The shortcode returns '' when nothing renders; don't wrap that in an empty
+		// content-container div on the shop/archive.
+		$markup = do_shortcode( '[wb_ajax_filters]' );
+		if ( '' === trim( $markup ) ) {
+			return;
+		}
 		$customization_options = get_option( 'wb_ajax_filter_admin_customization_options' );
 		$columns               = isset( $customization_options['filters_per_column'] ) ? $customization_options['filters_per_column'] : 5;
 		echo '<div class="wb-ajax-filter-content-container filter-columns-' . esc_attr( $columns ) . '">';
-		echo do_shortcode( '[wb_ajax_filters]' );
+		echo $markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already-escaped shortcode markup.
 		echo '</div>';
 	}
 
@@ -595,20 +601,25 @@ class Wb_Ajax_Filter_Public {
 
 		$wb_ajax_filter_search_settings = get_option( 'wb_ajax_filter_search_settings' );
 
-		if ( isset( $_GET ) ) { //phpcs:ignore
-			$params     = array();
-			$get_params = $_GET; //phpcs:ignore
-			foreach ( $get_params as $key => $val ) {
-				$values = explode( ',', $val );
-				if ( count( $values ) > 1 ) {
-					$tmp = array();
-					foreach ( $values as $val ) {
-						$tmp[] = $val;
-					}
-					$params[ $key ] = $tmp;
-				} else {
-					$params[ $key ] = $val;
-				}
+		// Read-only filter state from the query string. No nonce: this only reads the
+		// current filter selection to render UI; it changes nothing. Sanitize keys and
+		// values before use so nothing raw from $_GET reaches markup or queries.
+		$params = array();
+		foreach ( $_GET as $key => $val ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display of filter state.
+			$key = sanitize_key( $key );
+			if ( '' === $key ) {
+				continue;
+			}
+			$val = wp_unslash( $val );
+			if ( is_array( $val ) ) {
+				$params[ $key ] = array_map( 'sanitize_text_field', $val );
+				continue;
+			}
+			$values = explode( ',', $val );
+			if ( count( $values ) > 1 ) {
+				$params[ $key ] = array_map( 'sanitize_text_field', $values );
+			} else {
+				$params[ $key ] = sanitize_text_field( $val );
 			}
 		}
 		$enable_filter_actions = ! empty( $presets ) ? self::wb_ajax_filter_presets_are_enabled( $presets ) : false;
@@ -620,6 +631,12 @@ class Wb_Ajax_Filter_Public {
 		$search_enabled = isset( $wb_ajax_filter_search_settings['enable_search'] ) && 'yes' === $wb_ajax_filter_search_settings['enable_search'];
 
 		$render_setting = ( $search_enabled || $enable_filter_actions ) ? true : false;
+
+		// Nothing to render (no enabled preset and search off): return empty so we do not
+		// echo hollow .woocommerce / .wb-ajax-filter-content-container wrappers.
+		if ( ! $render_setting ) {
+			return trim( ob_get_clean() );
+		}
 
 		$customization_options = get_option( 'wb_ajax_filter_admin_customization_options' );
 		$columns               = isset( $customization_options['filters_per_column'] ) ? $customization_options['filters_per_column'] : 5;
@@ -666,7 +683,13 @@ class Wb_Ajax_Filter_Public {
 		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
 			wb_ajax_filter_get_template( 'filters/global/reset-filters.php' );
 		}
-		if ( ( is_shop() || is_product_category() || is_product_tag() ) && isset( $wb_ajax_filter_search_settings['enable_search'] ) && ( 'yes' === $wb_ajax_filter_search_settings['enable_search'] ) ) {
+		// Search renders only on shop / category / tag archives by design: the search
+		// submits against the WooCommerce product loop, which only those pages have, so
+		// a search box on a plain page would have no results grid to drive. This is
+		// documented (frontend-display/01-shortcode.md). Advanced sites can override
+		// the placement via the wb_ajax_filter_show_search filter.
+		$show_search = ( is_shop() || is_product_category() || is_product_tag() ) && $search_enabled;
+		if ( apply_filters( 'wb_ajax_filter_show_search', $show_search, $search_enabled ) ) {
 			?>
 			<div class="wb-ajax-search-container">
 				<form method="GET" action="">

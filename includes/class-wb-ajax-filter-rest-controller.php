@@ -267,6 +267,9 @@ class Wb_Ajax_Filter_REST_Controller extends WP_REST_Controller {
 				'type'              => 'integer',
 				'default'           => 1,
 				'minimum'           => 1,
+				// A custom sanitize_callback suppresses WP's automatic schema validation,
+				// so bounds (minimum/maximum) go unenforced unless we opt back in explicitly.
+				'validate_callback' => 'rest_validate_request_arg',
 				'sanitize_callback' => 'absint',
 			),
 			'per_page'    => array(
@@ -275,6 +278,7 @@ class Wb_Ajax_Filter_REST_Controller extends WP_REST_Controller {
 				'default'           => 10,
 				'minimum'           => 1,
 				'maximum'           => Wb_Ajax_Filter_Presets::MAX_PER_PAGE,
+				'validate_callback' => 'rest_validate_request_arg',
 				'sanitize_callback' => 'absint',
 			),
 			'search'      => array(
