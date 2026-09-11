@@ -16,7 +16,7 @@ if ( empty( $filters ) || ( ! empty( $filters ) && isset( $filters['type'] ) && 
 	$style = '';
 }
 ?>
-<div class="wbcom-field wbcom-field-group wb-price-range-toggle" style="<?php echo esc_attr( $style ); ?>">
+<div class="wbcom-field wbcom-field-group wbcom-field--stacked wb-price-range-toggle" style="<?php echo esc_attr( $style ); ?>">
 	<div class="wbcom-field-info">
 		<label><?php esc_html_e( 'Customize price ranges', 'wb-ajax-filter' ); ?></label>
 	</div>

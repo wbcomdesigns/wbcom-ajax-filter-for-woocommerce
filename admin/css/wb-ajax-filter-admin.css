@@ -276,19 +276,35 @@ form#filter-preset-create {
 .wb-ajax-filter-ranges-wrapper.ui-sortable {
 	display: flex;
 	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 12px;
 }
 
 .wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box {
-	width: 17%;
-	margin: 0.5%;
+	/* A readable card per range: was width:17%, which crushed the box to ~70px
+	   in the old right-hand control column and wrapped every label vertically. */
+	flex: 0 1 220px;
+	min-width: 200px;
+	margin: 0;
 	background: var(--wb-surface);
-	border-radius: 5px;
-	padding: 1%;
+	border: 1px solid var(--wb-border);
+	border-radius: 6px;
+	padding: 14px;
 	position: relative;
 }
 
-.wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box p {
-	margin: 5px 0;
+.wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box p,
+.wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box .wb-ajax-filter-field-wrapper {
+	margin: 0 0 10px;
+}
+
+.wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box .wb-ajax-filter-field-wrapper:last-child {
+	margin-bottom: 0;
+}
+
+.wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box label {
+	display: block;
+	margin-bottom: 4px;
 }
 
 .wb-ajax-filter-ranges-wrapper .wb-ajax-filter-range-box input[type=number] {

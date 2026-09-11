@@ -53,6 +53,7 @@ Closes the four gaps every store owner and developer expects - a block, an admin
 * Fix      - Legacy or malformed presets no longer emit PHP warnings; unknown filter types are skipped and a missing title degrades to an empty heading.
 * Fix      - The presets REST endpoint rejects out-of-range page and per_page values with a 400 instead of silently clamping them.
 * Fix      - Empty filter wrappers are no longer printed when no preset is enabled and search is off.
+* Fix      - The Customize price ranges builder now spans the full width with readable range cards, instead of being crushed into a narrow right-hand column with wrapped labels.
 * Security - Close an authentication bypass in preset create, delete and duplicate handlers; every admin action passes one fail-closed capability gate.
 * Security - Query-string filter parameters are sanitized before they are used in output or product queries.
 * Dev      - New wb_ajax_filter_show_search filter to override where the product search box renders (default: shop and category/tag archives).
