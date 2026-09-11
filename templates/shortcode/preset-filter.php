@@ -29,9 +29,17 @@ $base_url .= isset( $_SERVER['REDIRECT_URL'] ) ? sanitize_text_field( wp_unslash
 			<input type="hidden" id="wb_scroll_top_after_load_result" name="scroll_top_after_load_results" value="<?php echo ( isset( $wb_ajax_filter_general_options['scroll_top'] ) ) ? esc_attr( $wb_ajax_filter_general_options['scroll_top'] ) : ''; ?>">
 			<?php
 			$filter_count = 0;
-			foreach ( $all_filters as $filters ) {
+			foreach ( (array) $all_filters as $filters ) {
+				// Legacy/malformed presets may lack a type or carry an unknown one;
+				// skip rather than build 'filters/filter-.php' and warn on a missing include.
+				if ( empty( $filters['type'] ) ) {
+					continue;
+				}
 				if ( strpos( $filters['type'], '_' ) !== false ) {
 					$filters['type'] = str_replace( '_', '-', $filters['type'] );
+				}
+				if ( ! file_exists( WB_AJAX_FILTER_TEMPLATE_PATH . 'filters/filter-' . $filters['type'] . '.php' ) ) {
+					continue;
 				}
 				// Theme override: yourtheme/wb-ajax-filter/filters/filter-<type>.php
 				// (legacy flat copies at yourtheme/wb-ajax-filter/filter-<type>.php still win).

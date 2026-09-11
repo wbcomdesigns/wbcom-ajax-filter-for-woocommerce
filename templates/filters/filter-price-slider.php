@@ -42,7 +42,7 @@ $wb_ajax_filter_general_options = get_option( 'wb_ajax_filter_admin_general_opti
 <div class="wb-ajax-filter-container-single filter-price-slider" role="region" aria-label="Price Filter">
 	<a href="javascript:void(0)" class="wb-ajax-filter-toggle <?php echo esc_attr( $toggle_class ); ?><?php echo ( $toggle_enabled && $toggle_open ) ? ' wb-ajax-open' : ''; ?>" role="button"<?php echo $toggle_enabled ? ' aria-expanded="' . esc_attr( $toggle_open ? 'true' : 'false' ) . '"' : ''; ?>>
 	   
-		<h4 class="filter-title"><?php echo esc_html( $filters['filter_title'] ); ?></h4>
+		<h4 class="filter-title"><?php echo esc_html( isset( $filters['filter_title'] ) ? $filters['filter_title'] : '' ); ?></h4>
 		
 		<?php if ( $toggle_enabled ) : ?>
 			<?php wb_ajax_filter_icon( 'chevron-down', 'wb-ajax-toggle-icon' ); ?>
