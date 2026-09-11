@@ -683,9 +683,13 @@ class Wb_Ajax_Filter_Public {
 		if ( $render_setting && isset( $wb_ajax_filter_general_options['show_reset'] ) && isset( $wb_ajax_filter_general_options['reset_button_position'] ) && 'before_filters' === $wb_ajax_filter_general_options['reset_button_position'] ) {
 			wb_ajax_filter_get_template( 'filters/global/reset-filters.php' );
 		}
-		// Render the search form wherever the shortcode/block renders (not only on
-		// shop/category/tag archives) whenever search is enabled.
-		if ( $search_enabled ) {
+		// Search renders only on shop / category / tag archives by design: the search
+		// submits against the WooCommerce product loop, which only those pages have, so
+		// a search box on a plain page would have no results grid to drive. This is
+		// documented (frontend-display/01-shortcode.md). Advanced sites can override
+		// the placement via the wb_ajax_filter_show_search filter.
+		$show_search = ( is_shop() || is_product_category() || is_product_tag() ) && $search_enabled;
+		if ( apply_filters( 'wb_ajax_filter_show_search', $show_search, $search_enabled ) ) {
 			?>
 			<div class="wb-ajax-search-container">
 				<form method="GET" action="">

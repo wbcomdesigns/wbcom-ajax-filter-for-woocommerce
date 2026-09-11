@@ -84,7 +84,7 @@ Judge against 10,000 store owners, not the happy path.
 - [ ] **Owner setup:** a non-developer can build a preset from Your Filters without the docs - field labels say what they do (category, price, rating), not the option key behind them; the preset picker in the block sidebar names presets by title. **[browser]**
 - [ ] **Shopper path:** walk shop -> apply two filters -> narrow to a result -> reset. Count the clicks; no dead end, no step where applying a filter silently no-ops or leaves an empty grid with no "no products / reset" affordance (`woocommerce_no_products_found` still shows the filters). **[browser]**
 - [ ] **Stored Data as support tool:** an owner sent to Stored Data can find a preset, toggle it, and export a JSON/CSV snapshot to attach to a ticket without touching phpMyAdmin. The full export doubles as a config snapshot (carries the option groups). **[browser]**
-- [ ] **REST honesty:** hitting `/presets` without `manage_woocommerce` returns 401/403 (fail-closed), a bad `id` returns 404, and `per_page` over 100 is clamped, not honoured. Errors say what went wrong. **[code]** **[browser]**
+- [ ] **REST honesty:** hitting `/presets` without `manage_woocommerce` returns 401/403 (fail-closed), a bad `id` returns 404, and `per_page` over 100 is rejected with a 400 rest_invalid_param (not silently clamped). Errors say what went wrong. **[code]** **[browser]**
 - [ ] **Same-class sweep:** every friction found - is the same shape broken on another placement (block vs shortcode vs archive), theme, viewport or state the tester never opened? All three placements share one renderer, so a render bug fixed in one must be verified in the other two. Prove the sweep. **[browser]** **[code]**
 
 ## Phase 8 - Release sign-off
