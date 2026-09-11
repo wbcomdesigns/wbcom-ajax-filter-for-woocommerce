@@ -784,6 +784,15 @@
 	width: 100%;
 }
 
+/*
+ * When the group stacks (column), the label must NOT keep its row flex-basis:
+ * flex-basis is read along the main axis, so a 260px width basis becomes a 260px
+ * HEIGHT here, opening a large gap above the control. Reset to natural height.
+ */
+.wbcom-settings-body .wbcom-field-group.wbcom-field--stacked > .wbcom-field-info {
+	flex: 0 0 auto;
+}
+
 .wbcom-settings-body .wbcom-field-info {
 	flex: 1 1 auto;
 }
