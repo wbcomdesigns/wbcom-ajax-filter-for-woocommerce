@@ -146,7 +146,7 @@ Wbcom_Settings_Page::card_open(
 	<?php do_action( 'wb_ajax_filter_after_admin_general_settings', $wb_general ); ?>
 
 	<div class="wbcom-save-bar">
-		<?php submit_button( __( 'Save Changes', 'wb-ajax-filter' ), 'wbcom-btn wbcom-btn--primary', 'submit', false ); ?>
+		<?php submit_button( __( 'Save filtering behaviour', 'wb-ajax-filter' ), 'wbcom-btn wbcom-btn--primary', 'submit', false ); ?>
 	</div>
 </form>
 <?php
@@ -326,6 +326,7 @@ Wbcom_Settings_Page::card_open(
 			</div>
 			<div class="wbcom-field-control wbcom-ajax-check-custom-option">
 				<select id="wb_ajax_check_custom_field_option" name="wb_ajax_filter_search_content_settings[cf_name]">
+					<option value=""><?php esc_html_e( '— None (default) —', 'wb-ajax-filter' ); ?></option>
 					<?php if ( isset( $wb_search_scope['cf_name'] ) && '' !== $wb_search_scope['cf_name'] ) : ?>
 						<option value="<?php echo esc_attr( $wb_search_scope['cf_name'] ); ?>" selected><?php echo esc_html( $wb_search_scope['cf_name'] ); ?></option>
 					<?php endif; ?>
@@ -351,7 +352,7 @@ Wbcom_Settings_Page::card_open(
 	<?php do_action( 'wb_ajax_filter_after_admin_search_settings', $wb_search ); ?>
 
 	<div class="wbcom-save-bar">
-		<?php submit_button( __( 'Save Changes', 'wb-ajax-filter' ), 'wbcom-btn wbcom-btn--primary', 'submit', false ); ?>
+		<?php submit_button( __( 'Save search settings', 'wb-ajax-filter' ), 'wbcom-btn wbcom-btn--primary', 'submit', false ); ?>
 	</div>
 </form>
 <?php
@@ -492,7 +493,7 @@ Wbcom_Settings_Page::card_open(
 	<?php do_action( 'wb_ajax_filter_after_admin_customization_settings', $wb_customization ); ?>
 
 	<div class="wbcom-save-bar">
-		<?php submit_button( __( 'Save Changes', 'wb-ajax-filter' ), 'wbcom-btn wbcom-btn--primary', 'submit', false ); ?>
+		<?php submit_button( __( 'Save appearance', 'wb-ajax-filter' ), 'wbcom-btn wbcom-btn--primary', 'submit', false ); ?>
 	</div>
 </form>
 <?php
