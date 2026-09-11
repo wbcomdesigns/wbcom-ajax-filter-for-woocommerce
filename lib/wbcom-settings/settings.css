@@ -6,7 +6,7 @@
  * two products cannot drift into looking like two different admin experiences.
  *
  * @package Wbcom_Settings
- * @version 1.0.2
+ * @version 1.0.3
  */
 
 .wbcom-admin *,
@@ -813,10 +813,55 @@
 	min-height: 90px;
 }
 
+/*
+ * Choice groups (radio lists) inside a field control render as inline-flex
+ * chips: each option stays on one line so a long option label
+ * ("With an \"Apply filters\" button") never breaks mid-phrase, and the group
+ * wraps BETWEEN whole options when the column is narrow. Before this, options
+ * were display:inline + white-space:normal, so long labels split across lines
+ * and read as broken. Scoped to radio inputs, so .wbcom-toggle switches and
+ * single checkboxes are untouched.
+ */
+.wbcom-settings-body .wbcom-field-control:has(> label input[type="radio"]) {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 18px;
+}
+
+.wbcom-settings-body .wbcom-field-control > label:has(input[type="radio"]) {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+	white-space: nowrap;
+}
+
 @media screen and (max-width: 782px) {
 	.wbcom-settings-body .wbcom-field-group {
 		flex-direction: row;
 		align-items: flex-start;
+	}
+}
+
+/*
+ * Phone: stack the label over a full-width control. The two-column row starves
+ * the control column on a narrow screen, so a bounded input or a nowrap radio
+ * chip ("With an \"Apply filters\" button") clips at the viewport edge. Stacking
+ * gives every control the full width and lets choice chips wrap cleanly.
+ */
+@media screen and (max-width: 600px) {
+	.wbcom-settings-body .wbcom-field-group {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.wbcom-settings-body .wbcom-field-group > .wbcom-field-info {
+		flex: 0 0 auto;
+	}
+
+	.wbcom-settings-body .wbcom-field-group > .wbcom-field-control {
+		max-width: none;
 	}
 }
 

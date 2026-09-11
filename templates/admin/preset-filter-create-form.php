@@ -58,6 +58,6 @@ if ( isset( $_REQUEST['action'] ) && ( 'edit' === $_REQUEST['action'] || 'load_c
 			do_action( 'wb_ajax_filter_after_filter_fields', $filters );
 		?>
 	</form>
-<div>
+</div>
 <?php
 
