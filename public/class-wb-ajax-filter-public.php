@@ -366,21 +366,6 @@ class Wb_Ajax_Filter_Public {
 	}
 
 	/**
-	 * Check string inside string
-	 *
-	 * @param string $content The content.
-	 * @param string $find  The string to be searched inside content.
-	 * @since    1.0.0
-	 */
-	public function wb_check_content_contains_string( $content, $find ) {
-		if ( strpos( $content, $find ) !== false || strpos( $content, ucfirst( $find ) ) !== false || strpos( $content, strtolower( $find ) ) !== false ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
 	 * Ajax search box autocomplete callback.
 	 *
 	 * @since    1.0.0
@@ -507,7 +492,6 @@ class Wb_Ajax_Filter_Public {
 
 		if ( is_shop() || is_product_category() || is_product_tag() ) {
 			$params = $_GET; //phpcs:ignore
-			$meta_query = array();
 			if ( isset( $params['preset'] ) ) {
 				$preset_id = absint( $params['preset'] );
 
