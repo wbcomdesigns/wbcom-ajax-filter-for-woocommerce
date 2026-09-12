@@ -41,6 +41,7 @@ The plugin exposes action and filter hooks at every layer: the preset builder fo
 | `wb_ajax_filter_restrict_products` | `$matched_products` | Restrict the products the search autocomplete returns. |
 | `wb_ajax_filter_restrict_terms` | `$results`, `$taxonomy` | Restrict which taxonomy terms show as filter options in the preset builder. |
 | `wb_ajax_filter_custom_field_search_limit` | `$limit` (default 30) | Change how many custom-field matches the search returns. |
+| `wb_ajax_filter_show_search` | `$show_search` (bool), `$search_enabled` (bool) | Override whether (and where) the product search box renders. Default: it shows on the shop page and category/tag archives only, because the search submits against the WooCommerce product loop those pages provide. |
 | `wb_ajax_filter_settings_nav_groups` | `$groups` | Declare or modify the admin settings navigation. |
 
 ## Example
@@ -55,6 +56,15 @@ add_filter( 'wb_ajax_filter_get_preset_filters', function ( $filters, $preset_id
         }
     }
     return $filters;
+}, 10, 2 );
+```
+
+Show the product search box on every page where the filters render, not just the shop and archive pages:
+
+```php
+add_filter( 'wb_ajax_filter_show_search', function ( $show_search, $search_enabled ) {
+    // Only force it on when the admin has enabled search at all.
+    return $search_enabled;
 }, 10, 2 );
 ```
 
