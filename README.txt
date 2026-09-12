@@ -4,7 +4,7 @@ Donate link: https://wbcomdesigns.com/contact/
 Tags: WooCommerce plugin Addon
 Requires at least: 4.0
 Tested up to: 6.9
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,15 @@ Yes. Use [wb_ajax_filters] to render every enabled preset, or [wb_ajax_filters s
 Yes. Copy any file from the plugin's templates/ directory into yourtheme/wb-ajax-filter/ keeping the same relative path - for example yourtheme/wb-ajax-filter/filters/filter-tax.php or yourtheme/wb-ajax-filter/public/search-form.php. Templates load through wc_get_template, so plugin updates never overwrite your copies. Flat-path copies made before 1.2.2 (yourtheme/wb-ajax-filter/filter-tax.php, yourtheme/wb-ajax-filter/search-form.php) keep working. If you override filters/filter-tax/items/checkbox.php or radio.php, copy term-children.php alongside them.
 
 == Changelog ==
+= 1.3.1 - September 2026 =
+
+Maintenance release: preset editing, mobile layout and taxonomy-filter fixes, plus developer documentation.
+
+* Fix      - Stored Data, Advanced and License sections no longer render blank while editing a filter preset.
+* Fix      - Filter settings radio options no longer wrap mid-label and stack cleanly on phones.
+* Fix      - Legacy or malformed taxonomy filters no longer emit an undefined-variable warning.
+* Dev      - Documented the wb_ajax_filter_show_search filter and refreshed the translation template.
+
 = 1.3.0 - August 2026 =
 
 Closes the four gaps every store owner and developer expects - a block, an admin screen for stored data, a REST API and a test-ready shell - alongside a security fix and a full accessibility pass.
