@@ -48,8 +48,6 @@ The block works in block themes, the Site Editor, and classic themes with block 
 
 Visit your shop page. You should see filter fields -- category checkboxes, a price slider, availability toggles. Adjust a filter and watch the product grid update without a page reload.
 
-![The shop page with the automatic filter block and search](./../images/shop-filters.webp)
-
 ## Next Steps
 
 - [Create additional presets](../filter-presets/01-creating-presets.md) for different archive pages.
