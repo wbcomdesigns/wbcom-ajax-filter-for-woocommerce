@@ -12,8 +12,6 @@ On classic themes the plugin places filters automatically on WooCommerce archive
 
 The plugin hooks into `woocommerce_before_shop_loop` and runs the same renderer as the shortcode and block, so the markup, styling, and behaviour are identical everywhere. A filtered page with no products still shows the filters so shoppers can change their selection.
 
-![Filters render automatically on the shop page, with an active-filter chip above the panel](./../images/shop-filtered.webp)
-
 ## Mobile Layout
 
 Below 640px, the filter stack collapses behind a **Filters** button with a badge showing how many filters are active. Tapping it opens the panel. Active-filter chips stay visible outside the drawer so shoppers always see what's selected.
