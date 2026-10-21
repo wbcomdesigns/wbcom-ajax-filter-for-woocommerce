@@ -2,9 +2,12 @@
 Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/contact/
 Tags: WooCommerce plugin Addon
-Requires at least: 4.0
-Tested up to: 6.9
-Stable tag: 1.3.1
+Requires at least: 6.5
+Tested up to: 7.1
+Requires PHP: 8.1
+Stable tag: 1.3.2
+WC requires at least: 4.0
+WC tested up to: 11.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +35,10 @@ Yes. Use [wb_ajax_filters] to render every enabled preset, or [wb_ajax_filters s
 Yes. Copy any file from the plugin's templates/ directory into yourtheme/wb-ajax-filter/ keeping the same relative path - for example yourtheme/wb-ajax-filter/filters/filter-tax.php or yourtheme/wb-ajax-filter/public/search-form.php. Templates load through wc_get_template, so plugin updates never overwrite your copies. Flat-path copies made before 1.2.2 (yourtheme/wb-ajax-filter/filter-tax.php, yourtheme/wb-ajax-filter/search-form.php) keep working. If you override filters/filter-tax/items/checkbox.php or radio.php, copy term-children.php alongside them.
 
 == Changelog ==
+= 1.3.2 - October 2026 =
+
+* Dev      - Declared the supported range in the plugin header and readme (Requires PHP 8.1, Requires at least 6.5, Tested up to WordPress 7.1, Requires Plugins: woocommerce, WooCommerce tested up to 11.2); PHP lint matrix covers 8.1 to 8.5.
+
 = 1.3.1 - September 2026 =
 
 Maintenance release: preset editing, mobile layout and taxonomy-filter fixes, plus developer documentation.

@@ -15,13 +15,19 @@
  * Plugin Name:       Wbcom Designs - Ajax Filter For WooCommerce
  * Plugin URI:        https://wbcomdesigns.com/downloads/wbcom-ajax-filter-for-woocommerce/
  * Description:       Provide your customers with a smooth and responsive shopping experience. Filter products by attributes, categories, and more using real-time AJAX requests, no more waiting for page reloads.
- * Version:           1.3.1
+ * Version:           1.3.2
  * Author:            Wbcom Designs
  * Author URI:        https://wbcomdesigns.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       wb-ajax-filter
  * Domain Path:       /languages
+ * Requires at least: 6.5
+ * Tested up to:      7.1
+ * Requires PHP:      8.1
+ * Requires Plugins:  woocommerce
+ * WC requires at least: 4.0
+ * WC tested up to:   11.2
  */
 
 // If this file is called directly, abort.
@@ -36,7 +42,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 
 if ( ! defined( 'WB_AJAX_FILTER_VERSION' ) ) {
-	define( 'WB_AJAX_FILTER_VERSION', '1.3.1' );
+	define( 'WB_AJAX_FILTER_VERSION', '1.3.2' );
 }
 
 if ( ! defined( 'WB_AJAX_FILTER_PLUGIN_URL' ) ) {
