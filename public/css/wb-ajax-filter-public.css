@@ -572,8 +572,9 @@ a.wb-ajax-filter-toggle.wb-ajax-accordian {
 	transition: 0.4s;
 }
 
+/* A fixed em step reads as nesting at any sidebar width (5% was ~7px). */
 li.filter-item.wb-ajax-level-1 {
-	margin-inline-start: 5%;
+	margin-inline-start: 1.5em;
 }
 
 a.wb-term-label.wb-tooltip-added small.item-count {
