@@ -97,7 +97,13 @@ class Wb_Ajax_Filter_Data_Screen {
 			return;
 		}
 
-		check_admin_referer( self::NONCE_ACTION );
+		// Row links are signed with NONCE_ACTION; the bulk form carries the
+		// list table's own bulk-<plural> nonce (WP_List_Table prints it).
+		if ( isset( $_REQUEST['wb_data_action'] ) ) {
+			check_admin_referer( self::NONCE_ACTION );
+		} else {
+			check_admin_referer( 'bulk-wb_filter_presets' );
+		}
 
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			wp_die( esc_html__( 'You are not allowed to manage filter presets.', 'wb-ajax-filter' ), 403 );

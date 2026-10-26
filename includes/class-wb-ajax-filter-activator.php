@@ -234,7 +234,7 @@ class Wb_Ajax_Filter_Activator {
 			'filter_design'  => 'checkbox',
 			'order_by'       => 'name',
 			'order'          => 'ASC',
-			'hierarchical'   => 'no',
+			'hierarchical'   => is_taxonomy_hierarchical( $taxonomy ) ? 'open' : 'no',
 			'multiple'       => 'yes',
 			'relation'       => 'or',
 			'filter_enabled' => 'yes',

@@ -37,6 +37,10 @@ Yes. Copy any file from the plugin's templates/ directory into yourtheme/wb-ajax
 == Changelog ==
 = 1.3.2 - October 2026 =
 
+* Improve  - New default filter presets show product categories nested under their parent category.
+* Fix      - Choosing a subcategory (from the search bar or the URL) now ticks its checkbox in the Category filter.
+* Fix      - Subcategories are indented clearly under their parent when the filter shows the hierarchy.
+* Fix      - Bulk actions on the Stored Data screen (delete, enable, disable, export) no longer fail with "The link you followed has expired".
 * Dev      - Declared the supported range in the plugin header and readme (Requires PHP 8.1, Requires at least 6.5, Tested up to WordPress 7.1, Requires Plugins: woocommerce, WooCommerce tested up to 11.2); PHP lint matrix covers 8.1 to 8.5.
 
 = 1.3.1 - September 2026 =
