@@ -1,85 +1,53 @@
 {
+  "product": "Ajax Filter For WooCommerce",
+  "productType": "plugin",
+  "shortId": "ajaxfilter",
   "parent_category": "wbcom-ajax-filter-for-woocommerce",
-  "subcategories": [
+  "sections": [
     {
-      "slug": "getting-started",
       "name": "Getting Started",
-      "docs": [
-        "getting-started/01-introduction.md",
-        "getting-started/02-installation.md",
-        "getting-started/03-quick-start.md"
-      ]
+      "folder": "getting-started",
+      "description": "Install the plugin and publish your first filter in a few minutes."
     },
     {
-      "slug": "configuration",
       "name": "Configuration",
-      "docs": [
-        "configuration/01-general-settings.md",
-        "configuration/02-search-settings.md",
-        "configuration/03-customization-settings.md"
-      ]
+      "folder": "configuration",
+      "description": "General, search and customization settings that control how filters look and behave."
     },
     {
-      "slug": "filter-presets",
       "name": "Filter Presets",
-      "docs": [
-        "filter-presets/01-creating-presets.md",
-        "filter-presets/02-managing-presets.md",
-        "filter-presets/03-storing-data.md"
-      ]
+      "folder": "filter-presets",
+      "description": "Create, manage and understand the saved filter sets your shop uses."
     },
     {
-      "slug": "admin-panel",
       "name": "Admin Panel",
-      "docs": [
-        "admin-panel/01-overview.md"
-      ]
+      "folder": "admin-panel",
+      "description": "A tour of the admin screens where you manage the plugin."
     },
     {
-      "slug": "frontend-display",
       "name": "Frontend Display",
-      "docs": [
-        "frontend-display/01-shortcode.md",
-        "frontend-display/02-block.md",
-        "frontend-display/03-auto-render.md",
-        "frontend-display/04-theme-overrides.md",
-        "frontend-display/05-mobile-layout.md",
-        "frontend-display/06-theme-colours.md"
-      ]
+      "folder": "frontend-display",
+      "description": "Show filters with the shortcode, the block or automatic rendering, and match your theme."
     },
     {
-      "slug": "rest-api",
       "name": "REST API",
-      "docs": [
-        "rest-api/01-overview.md",
-        "rest-api/02-endpoints.md",
-        "rest-api/03-authentication.md"
-      ]
+      "folder": "rest-api",
+      "description": "Read filter data and results over the REST API, with authentication details."
     },
     {
-      "slug": "developer-guide",
       "name": "Developer Guide",
-      "docs": [
-        "developer-guide/01-hooks-filters.md",
-        "developer-guide/02-template-overrides.md",
-        "developer-guide/03-extending-presets.md"
-      ]
+      "folder": "developer-guide",
+      "description": "Hooks, filters and template overrides for extending the plugin."
     },
     {
-      "slug": "troubleshooting",
-      "name": "Troubleshooting",
-      "docs": [
-        "troubleshooting/01-common-issues.md",
-        "troubleshooting/02-debugging.md"
-      ]
-    },
-    {
-      "slug": "faq",
       "name": "FAQ",
-      "docs": [
-        "faq/01-general.md",
-        "faq/02-technical.md"
-      ]
+      "folder": "faq",
+      "description": "Quick answers to common questions."
+    },
+    {
+      "name": "Troubleshooting",
+      "folder": "troubleshooting",
+      "description": "Fix common problems and debug filters that do not behave."
     }
   ]
 }
